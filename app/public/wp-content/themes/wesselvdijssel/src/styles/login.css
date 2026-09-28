@@ -1,0 +1,52 @@
+/* stylelint-disable selector-id-pattern */
+
+/* Brand navy ($hue-dark-1). Plain CSS outside the webpack build, so the values are repeated here */
+.login {
+	background: #00244d;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+#login {
+	position: relative;
+	backdrop-filter: blur(3px);
+	background-color: rgba(255, 255, 255, 0.15);
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	border-radius: 5px;
+	max-width: 460px;
+	width: calc(100% - 40px);
+	padding: 50px;
+}
+
+.interim-login #login {
+	padding: 20px 10px;
+}
+
+.login h1 a {
+	background-image: url("../../assets/login-logo.svg") !important;
+	background-size: contain;
+	display: block;
+	margin: 0;
+	height: 100px;
+	width: 150px;
+}
+
+#login-message {
+	margin-top: 24px;
+}
+
+.login #backtoblog,
+.login #nav {
+	padding: 0;
+}
+
+.login #backtoblog a,
+.login #nav a {
+	color: #fff;
+}
+
+.login .privacy-policy-page-link:last-child {
+	margin-bottom: 0;
+}

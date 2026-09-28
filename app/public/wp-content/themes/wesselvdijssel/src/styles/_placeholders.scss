@@ -1,0 +1,82 @@
+@use "abstracts" as *;
+
+%btn {
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	column-gap: 10px;
+	position: relative;
+	text-decoration: none;
+	color: $hue-dark-1;
+	line-height: 1;
+	font-weight: $font-weight-bold;
+	padding: 15px 20px;
+	border-radius: 5px;
+	border: 1px solid;
+	cursor: pointer;
+	transition:
+		color 0.4s ease-in-out,
+		background-color 0.4s ease-in-out,
+		border-color 0.4s ease-in-out;
+
+	&:hover,
+	&:focus {
+		text-decoration: none;
+	}
+
+	// Keyboard focus gets an outline on top of the hover colors (WCAG 2.4.7)
+	&:focus-visible {
+		outline: 2px solid $focus-color;
+		outline-offset: 2px;
+	}
+}
+
+// Accent button: navy text on accent (5.38:1), hover/focus navy with white text (15.45:1)
+%btn--primary {
+	background-color: $btn-primary;
+	border-color: $btn-primary;
+	color: $hue-dark-1;
+
+	@extend %btn;
+
+	&:hover,
+	&:focus {
+		background-color: $hue-dark-1;
+		border-color: $hue-dark-1;
+		color: $hue-white;
+	}
+}
+
+// Outline button: navy on white or light surfaces, never accent text
+%btn--secondary {
+	background-color: $hue-white;
+	border-color: $hue-dark-1;
+	color: $hue-dark-1;
+
+	@extend %btn;
+
+	&:hover,
+	&:focus {
+		background-color: $hue-dark-1;
+		border-color: $hue-dark-1;
+		color: $hue-white;
+	}
+}
+
+%header-footer-wrapper {
+	@include bp("narrow") {
+		width: 700px;
+	}
+
+	@include bp("normal") {
+		width: 960px;
+	}
+
+	@include bp("large") {
+		width: 1180px;
+	}
+
+	@include bp("xl") {
+		width: 1280px;
+	}
+}

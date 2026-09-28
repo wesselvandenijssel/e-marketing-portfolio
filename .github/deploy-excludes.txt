@@ -1,0 +1,41 @@
+# Paths never shipped to the production server.
+# Files listed here are also protected from rsync --delete on the receiving side.
+
+# Version control and CI
+.git*
+.github/
+.claude/
+CLAUDE.md
+
+# Project docs and dev scripts: internal notes, must not be publicly fetchable
+docs/
+bin/
+README.md
+
+# Local-only secrets and tokens
+.env
+.screenshots-token
+.npmrc
+
+# Build tooling — assets are compiled in CI, the server only needs dist/
+webpack.config.ts
+tsconfig.json
+eslint.config.mjs
+.stylelintrc.js
+.editorconfig
+.nvmrc
+package.json
+package-lock.json
+playwright.config.ts
+composer.json
+composer.lock
+
+# Dependencies — node_modules is deployed selectively (Font Awesome kit only)
+node_modules/
+
+# Screenshot artefacts
+playwright/
+.playwright-mcp/
+
+# macOS cruft
+.DS_Store

@@ -1,0 +1,57 @@
+@use "abstracts" as *;
+
+/**
+* write in kebab case, ref: https://developer.wordpress.org/block-editor/how-to-guides/themes/theme-support/#block-color-palettes
+* Slugs match src/functions/custom-color-palette.php
+*/
+.has-navy-background-color {
+	background-color: $hue-dark-1;
+}
+
+.has-navy-color {
+	color: $hue-dark-1;
+}
+
+.has-blauw-tekst-background-color {
+	background-color: $hue-accent-text;
+}
+
+.has-blauw-tekst-color {
+	color: $hue-accent-text;
+}
+
+.has-grijs-background-color {
+	background-color: $hue-grey-1;
+}
+
+.has-grijs-color {
+	color: $hue-grey-1;
+}
+
+.has-lichtblauw-background-color {
+	background-color: $hue-accent-light;
+}
+
+.has-lichtblauw-color {
+	color: $hue-accent-light;
+}
+
+.has-lichtgrijs-background-color {
+	background-color: $hue-light-1;
+}
+
+.has-lichtgrijs-color {
+	color: $hue-light-1;
+}
+
+.has-wit-background-color {
+	background-color: $hue-white;
+}
+
+.has-wit-color {
+	color: $hue-white;
+}
+
+.has-dark-to-light-gradient {
+	background: linear-gradient(135deg, $hue-dark-1 0%, $hue-accent-light 100%);
+}

@@ -1,0 +1,5 @@
+@use "abstracts" as *;
+
+// Self-hosted Public Sans: only the two weights the theme uses (no request to Google)
+@include font-face("Public Sans", "PublicSans-Regular", "400");
+@include font-face("Public Sans", "PublicSans-SemiBold", "600");

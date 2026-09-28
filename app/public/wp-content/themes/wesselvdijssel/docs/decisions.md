@@ -1,0 +1,147 @@
+# Beslissingen
+
+Log van keuzes en afwijkingen van [plan.md](plan.md). Nieuwste onderaan. Verwijder nooit een regel. Een vervangen beslissing krijgt "Vervangen door D-xxx".
+
+Format per beslissing: datum, beslissing, reden, gevolg.
+
+## D-001: Positionering "front-end developer"
+
+- **Datum:** 2026-09-28
+- **Beslissing:** Wessel presenteert zich op de publieke site als front-end developer (antwoord 1).
+- **Reden:** keuze van Wessel. Het sluit aan op de live site en zijn opleiding aan de HU.
+- **Gevolg:** hero, SEO-titels, tagline en Person-schema gebruiken "front-end developer".
+- **Risico:** de opdracht (Datapunt 9) zegt dat het publieke deel "Wessel promoot als online marketer". Wessel heeft dat risico zelf afgewogen. Dit wordt niet opnieuw voorgesteld.
+
+## D-002: Het stagebedrijf en klantnamen mogen als CV-content
+
+- **Datum:** 2026-09-28
+- **Beslissing:** de stage bij het stagebedrijf en klantnamen (zoals SCX Solar en Rentwereld) mogen op de pagina Ervaring en bij projecten staan (antwoord 2).
+- **Reden:** het is echte werkervaring. Het gaat niet om branding van het thema.
+- **Gevolg:** het thema, de opties, de formulieren en de login blijven vrij van de oude branding. Treffers in de content van Ervaring en van `project`-posts zijn toegestaan. De rapporten van de branding-check en de dry-run vermelden ze als uitzondering. Voer een search-replace op de oude bureaunaam nooit uit over alle tabellen, alleen gericht.
+
+## D-003: Eén gedeeld beoordelaarsaccount
+
+- **Datum:** 2026-09-28
+- **Beslissing:** er komt één WordPress-gebruiker met de rol `portfolio_beoordelaar` (antwoord 3).
+- **Gevolg:** de inloggegevens deelt Wessel zelf met de docenten. Het wachtwoord komt nooit in git, `docs/` of de rapporten.
+
+## D-004: Text domain wijkt af van de mapnaam
+
+- **Datum:** 2026-09-28
+- **Beslissing:** de text domain en de PHP-prefixes worden `wesselvandenijssel`. De themamap blijft `wesselvdijssel` (antwoord 4).
+- **Gevolg:** in `style.css` staat `Text Domain: wesselvandenijssel`. `load_theme_textdomain()` gebruikt dezelfde naam.
+
+## D-005: Pagina's blijven onder Contact, testberichten gaan weg
+
+- **Datum:** 2026-09-28
+- **Beslissing:** Bedankt, Privacy statement en Disclaimer blijven subpagina's van Contact. De 7 testberichten worden verwijderd (antwoord 5).
+- **Gevolg:** de GF-bevestiging stuurt door naar de pagina Bedankt (`/contact/bedankt/`), niet naar `/bedankt`. Die eis uit `CLAUDE.md` geldt hier als "doorsturen naar de Bedankt-pagina". De testberichten worden in stap 0 verwijderd, na `wp db export`.
+
+## D-006: Plugins blijven ongewijzigd
+
+- **Datum:** 2026-09-28
+- **Beslissing:** er worden geen plugins aan- of uitgezet (antwoord 6). Dat geldt ook voor `afl-wc-utm` en de `wesselvdijssel-*`-plugins.
+- **Gevolg:** WP Rocket blijft uit. Gaat hij later toch aan, dan eerst de beschermde pagina's uitsluiten (zie het plan, login-gedeelte, punt 4).
+
+## D-007: Eerste commit pas na stap 2
+
+- **Datum:** 2026-09-28
+- **Beslissing:** er wordt niets gecommit tot stap 2 klaar is. Ook de docs-commit uit de opdracht vervalt. Stap 0 start zonder commit.
+- **Reden:** keuze van Wessel.
+- **Gevolg:** stap 0 tot en met 2 krijgen `Klaar` zonder commit-hash. Na stap 2 volgt een voorstel voor de commits. Vanaf stap 3 geldt weer één commit per stap. `CLAUDE.md` bestaat alleen lokaal, want de root-`.gitignore` sluit het uit.
+
+## D-008: De plugin customer-journey staat bewust aan
+
+- **Datum:** 2026-09-28
+- **Beslissing:** `wesselvdijssel-customer-journey` is actief. Wessel heeft hem zelf aangezet en regel 50 hersteld.
+- **Gevolg:** dit is een aanvulling op D-006. De plugin blijft aan en wordt vanuit het thema niet aangepast.
+
+## D-009: Gebruiker 1 hernoemd, login `wesselvandenijssel`
+
+- **Datum:** 2026-09-28
+- **Beslissing:** gebruiker 1 is aangepast:
+  - de login ging van de oude bureaunaam naar `wesselvandenijssel`
+  - de naam is "Wessel van den IJssel"
+  - het e-mailadres is info@wesselvandenijssel.nl
+  - de auteur-slug is `wesselvandenijssel`
+- **Reden:** akkoord van Wessel. De loginnaam was vrij te kiezen. Er is gekozen voor dezelfde naam als de text domain.
+- **Gevolg:** het wachtwoord is ongewijzigd. Inloggen gaat voortaan met `wesselvandenijssel` of met het e-mailadres. De auteur-URL is `/author/wesselvandenijssel/`, de oude auteur-URL geeft 404.
+
+## D-010: `local-site.json` regelt Wessel zelf
+
+- **Datum:** 2026-09-28
+- **Beslissing:** Wessel laat Local `local-site.json` in de site-root opnieuw aanmaken.
+- **Gevolg:** tot die tijd wijst `npm run dev-watch` (BrowserSync) naar `base-theme.local`. `npm run dev` en `npm run build` werken wel.
+
+## D-011: Stap 3 (merkstijl) vóór stap 1 en 2
+
+- **Datum:** 2026-09-28
+- **Beslissing:** Wessel leverde de huisstijl aan. Stap 3 is uitgevoerd voordat stap 1 en 2 klaar waren.
+- **Gevolg:** blokken die in stap 2 worden gekopieerd, gebruiken meteen het nieuwe palet en volgen de contrastregels in `CLAUDE.md`.
+
+## D-012: Aanvullingen op de huisstijl
+
+- **Datum:** 2026-09-28
+- **Beslissing:** de volgende punten ontbraken in de brief of botsten met WCAG. Ze zijn zo ingevuld:
+  1. **Foutkleur `#b42318`:** de oude `#f00` haalt maar 4.00:1 op wit. De nieuwe kleur haalt 5.92:1 of meer op elke lichte achtergrond.
+  2. **Randen van invoervelden in `$hue-grey-1`:** `$hue-grey-2` haalt 1.23:1 op wit, te weinig voor een veldrand (minimaal 3:1). Grey-2 blijft voor decoratieve scheidingslijnen.
+  3. **Secundaire en filterknoppen:** navy rand en navy tekst. De oude code gebruikte `$btn-primary` als tekstkleur, en dat zou `#00a3e0` op wit worden.
+  4. **Editorpalet zonder `#00a3e0`:** het palet wordt ook voor tekstkleur gebruikt.
+  5. **Hero:** navy-overlay van 65% onder de witte tekst.
+  6. **Pagina en formulier:** de pagina-achtergrond is nu `$hue-light-1` (`main` was wit) en de formulierkaart wit, zoals de brief vraagt.
+  7. **Focusring:** zichtbare keyboard-focus, 2px navy. De oude `%btn` had `outline: none`.
+  8. **Subfooter:** van 12px naar 14px, de kleinste stijl in de typografietabel.
+- **Reden:** WCAG 2.2 AA en de regels uit de brief.
+- **Gevolg:** Wessel kan de foutkleur nog wijzigen. Een vervanger moet minimaal 4.5:1 halen op `#e5f6fc`.
+
+## D-013: Geen commit voor de huisstijl
+
+- **Datum:** 2026-09-28
+- **Beslissing:** de opdracht vroeg om een commit "style: add brand colors and typography". Die is niet gemaakt, want D-007 geldt nog: eerst committen na stap 2.
+- **Gevolg:** de commitboodschap staat klaar voor het commitvoorstel na stap 2. Commit eerder alleen als Wessel dat expliciet vraagt.
+
+## D-014: Public Sans zelf hosten
+
+- **Datum:** 2026-09-28
+- **Beslissing:** Public Sans wordt zelf gehost, niet via Google Fonts. Dit vervangt de Google Fonts-aanpak uit stap 3.
+- **Reden:** keuze van Wessel. Er gaat geen IP-adres naar Google, dus het privacy statement hoeft Google Fonts niet te noemen.
+- **Gevolg:**
+  - `PublicSans-Regular` en `PublicSans-SemiBold` (woff2 + woff) komen van het bureaublad (`~/Desktop/fonts/Public Sans/`) en staan nu in `src/fonts/`
+  - de licentie staat in `src/fonts/LICENSE.txt`
+  - `@font-face` staat in `components/_fonts.scss`, met een preload in `enqueueing.php`
+
+## D-015: Formulier-toegankelijkheid opgelost vóór stap 4
+
+- **Datum:** 2026-09-28
+- **Beslissing:** drie formulierpunten zijn nu al opgelost, op verzoek van Wessel:
+  - Telefoon is optioneel
+  - de labels zijn zichtbaar
+  - de foutsamenvatting van Gravity Forms is zichtbaar
+- **Gevolg:** in stap 4 blijven voor het formulier over: de privacy-toestemming, de honeypot en het doorsturen naar Bedankt. De placeholders zijn gebleven naast de labels.
+
+## D-016: Geen oude bureaunaam in Markdown
+
+- **Datum:** 2026-09-28
+- **Beslissing:** geen enkel `.md`-bestand in het project noemt nog de oude bureaunaam of de afkortingen ervan.
+- **Reden:** keuze van Wessel.
+- **Gevolg:**
+  - De docs spreken van "het stagebedrijf", "de oude branding" of "het base-theme".
+  - De zoekpatronen staan in `bin/check-branding.sh`, niet in `CLAUDE.md`.
+  - De README's van de plugins `wesselvdijssel-widgets` en `wesselvdijssel-customer-journey` zijn wel aangepast. Wessel gaf daar expliciet toestemming voor, als uitzondering op het verbod op wijzigingen in pluginbestanden. Alleen de README's zijn aangepast, niet de PHP.
+  - De globale `~/.claude/CLAUDE.md` valt buiten dit project en is niet aangeraakt.
+
+## D-017: Deploy en Font Awesome-token zoals in het lumie-project
+
+- **Datum:** 2026-09-28
+- **Beslissing:** het Font Awesome-token komt niet in git. Het staat als repository secret in GitHub (Wessel koos repository secrets in plaats van een environment). De deploy-workflow is overgenomen uit lumie.
+- **Gevolg:**
+  - `.npmrc` staat in de `.gitignore` van het thema. Hij was nooit gecommit, want er zijn nog geen commits.
+  - In de repository-root staan nu `.github/workflows/deploy.yml` en `.github/deploy-excludes.txt`, overgenomen uit lumie. De afwijkingen:
+    - geen `environment: production`, want de secrets zijn repository secrets
+    - de namen van thema en plugins
+    - `docs/`, `bin/`, `README.md`, `playwright.config.ts` en de composer-bestanden gaan niet naar de server
+    - een extra controle stopt de deploy als een plugin leeg uit de checkout komt
+  - De trigger is een push naar `master`, zoals in lumie. Deze repo werkt nu op `main`, dus er gaat niets automatisch live tot er een `master`-branch is.
+  - De root-`.gitignore` laat nu ook `wesselvdijssel-widgets` toe. Die ontbrak.
+  - Het thema heeft nu ook lumie's `cleanup-screenshots.yml` en `approve-bot-workflow-runs.yml`. Workflows in de themamap draaien niet op GitHub, want alleen die in de root doen dat.
+- **Opgelost (akkoord van Wessel):** de eigen `.git`-mappen van beide plugins zijn verplaatst naar `app/git-backups/` (genegeerd door git). Er waren geen niet-gepushte commits of stashes. De plugins komen nu als gewone bestanden in de repo (125 en 124 bestanden). `app/git-backups/` mag weg zodra alles gecommit is.

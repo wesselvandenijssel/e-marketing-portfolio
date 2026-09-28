@@ -1,0 +1,111 @@
+@use "abstracts" as *;
+
+.hero {
+	$hero: &;
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+
+	&--900 {
+		min-height: 300px;
+
+		@include bp("narrow") {
+			min-height: 600px;
+		}
+
+		@include bp("normal") {
+			min-height: 600px;
+		}
+
+		@include bp("large") {
+			min-height: 900px;
+		}
+	}
+
+	&__media-wrapper {
+		position: absolute;
+		overflow: hidden;
+		inset: 0;
+		margin: 0 auto;
+
+		// Navy overlay so the white hero text stays at least 5:1, even on a white photo
+		&::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background-color: rgba($hue-dark-1, 0.65);
+			pointer-events: none;
+		}
+	}
+
+	&__media {
+		height: 100% !important; // Overwrite .entry-content img
+
+		&--image {
+			display: block;
+			object-fit: cover;
+			width: 100%;
+		}
+
+		&--video {
+			overflow: hidden;
+			pointer-events: none;
+
+			> div {
+				top: 50%;
+				transform: translateY(-50%);
+				min-height: 100%;
+			}
+
+			.w-chrome {
+				height: 100% !important;
+			}
+
+			.w-video-wrapper > video {
+				object-fit: cover !important;
+			}
+
+			.w-ui-container {
+				display: none !important;
+			}
+
+			wistia-player {
+				height: 100%;
+			}
+		}
+
+		&--mobile {
+			@include bp("narrow") {
+				display: none;
+			}
+		}
+
+		&--desktop {
+			@include bp("mobile") {
+				display: none;
+			}
+		}
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		color: $hue-white;
+		position: relative;
+		padding-block: 80px;
+
+		a:focus-visible {
+			outline-color: $hue-white;
+		}
+
+		.titles {
+			max-width: 600px;
+		}
+
+		.content-layout {
+			max-width: 600px;
+		}
+	}
+}

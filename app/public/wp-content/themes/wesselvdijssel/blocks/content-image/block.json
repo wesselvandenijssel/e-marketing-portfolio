@@ -1,0 +1,12 @@
+{
+	"name": "acf/content-image",
+	"title": "Content met afbeelding",
+	"acf": {
+		"mode": "preview"
+	},
+	"supports": {
+		"anchor": true,
+		"align": false,
+		"mode": false
+	}
+}

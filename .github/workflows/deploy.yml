@@ -1,0 +1,245 @@
+name: Deploy to production
+
+on:
+    push:
+        branches:
+            - master
+    workflow_dispatch:
+        inputs:
+            dry_run:
+                description: "Dry run — report what would change without writing anything"
+                type: boolean
+                default: false
+
+# Never let two deploys write to the server at the same time.
+concurrency:
+    group: deploy-production
+    cancel-in-progress: false
+
+jobs:
+    deploy:
+        name: Build and deploy
+        runs-on: ubuntu-latest
+        timeout-minutes: 20
+        # Secrets are repository secrets (Settings > Secrets and variables > Actions), no environment needed
+
+        env:
+            THEME_SRC: app/public/wp-content/themes/wesselvdijssel
+            PLUGINS_SRC: app/public/wp-content/plugins
+            PLUGINS: "wesselvdijssel-customer-journey wesselvdijssel-widgets"
+            # enqueueing.php loads this kit's CSS straight from node_modules and filemtime()s
+            # it, so this one package ships even though node_modules as a whole does not.
+            FA_KIT: node_modules/@awesome.me/kit-47e6dc046c
+            FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
+            SSH_HOST: ${{ secrets.SSH_HOST }}
+            SSH_USER: ${{ secrets.SSH_USER }}
+            SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
+            # -4: runners have no IPv6, so a host with an AAAA record otherwise fails with
+            # "Network is unreachable". BatchMode: without it ssh falls back to a password
+            # prompt, which reports key problems as auth failures.
+            SSH_OPTS: -4 -i ~/.ssh/deploy_key -p ${{ secrets.SSH_PORT || '22' }} -o ConnectTimeout=20 -o BatchMode=yes -o IdentitiesOnly=yes
+            DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) && '--dry-run' || '' }}
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            # A secret pasted with a trailing newline splits the remote rsync command across
+            # two lines, which the remote shell cannot execute. Clean the value once here
+            # and let every later step inherit it.
+            - name: Normalize deployment target
+              env:
+                  RAW_REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
+              run: |
+                  clean="$(printf '%s' "$RAW_REMOTE_PATH" | tr -d '\r\n' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+                  clean="${clean%/}"
+                  case "$clean" in
+                      "") echo "::error::REMOTE_PATH secret is empty." ; exit 1 ;;
+                      /* | "~"*) ;;
+                      *) echo "::error::REMOTE_PATH must be an absolute path, e.g. /home/<user>/domains/<domain>/public_html" ; exit 1 ;;
+                  esac
+                  echo "REMOTE_PATH=$clean" >> "$GITHUB_ENV"
+
+            # The build takes minutes, so reject a bad key or an unreachable server first.
+            - name: Verify credentials and server
+              env:
+                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                  SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+              run: |
+                  mkdir -p ~/.ssh
+                  printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+                  chmod 600 ~/.ssh/deploy_key
+                  printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+                  chmod 644 ~/.ssh/known_hosts
+
+                  if ! ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null 2>&1; then
+                      echo "::error::SSH_PRIVATE_KEY is not a valid unencrypted private key. Store the full private key file, BEGIN and END lines included, with no passphrase."
+                      exit 1
+                  fi
+                  if [ ! -s ~/.ssh/known_hosts ]; then
+                      echo "::error::SSH_KNOWN_HOSTS is empty. Set it to the output of: ssh-keyscan -p <port> <host>"
+                      exit 1
+                  fi
+                  # Occasionally a runner IP cannot reach the host on the first try, so retry
+                  # before failing the whole deploy.
+                  for attempt in 1 2 3; do
+                      if nc -z -4 -w 15 "$SSH_HOST" "$SSH_PORT"; then
+                          reachable=1
+                          break
+                      fi
+                      echo "Attempt $attempt failed to reach $SSH_HOST:$SSH_PORT, retrying..."
+                      sleep 10
+                  done
+                  if [ -z "${reachable:-}" ]; then
+                      echo "::error::Cannot reach $SSH_HOST on port $SSH_PORT over IPv4 after three attempts."
+                      exit 1
+                  fi
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  cache: npm
+                  cache-dependency-path: app/public/wp-content/themes/wesselvdijssel/package-lock.json
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: "8.2"
+                  tools: composer:v2
+                  coverage: none
+
+            # npm expands ${FONTAWESOME_TOKEN} at read time, so the token never lands on disk.
+            - name: Configure private npm registry
+              working-directory: ${{ env.THEME_SRC }}
+              run: |
+                  cat > .npmrc <<'EOF'
+                  @awesome.me:registry=https://npm.fontawesome.com/
+                  @fortawesome:registry=https://npm.fontawesome.com/
+                  //npm.fontawesome.com/:_authToken=${FONTAWESOME_TOKEN}
+                  EOF
+
+            - name: Install npm dependencies
+              working-directory: ${{ env.THEME_SRC }}
+              run: npm ci
+
+            # Runs ESLint and Stylelint as part of the webpack build — lint errors fail here.
+            - name: Build theme assets
+              working-directory: ${{ env.THEME_SRC }}
+              run: npm run build
+
+            # src/functions/autoload.php requires vendor/autoload.php at runtime.
+            - name: Install Composer dependencies
+              working-directory: ${{ env.THEME_SRC }}
+              run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+
+            - name: Verify build output
+              working-directory: ${{ env.THEME_SRC }}
+              run: |
+                  for file in dist/main.css dist/main.js dist/admin.css dist/fancybox/fancybox.js vendor/autoload.php "$FA_KIT/icons/css/all.min.css"; do
+                      if [ ! -f "$file" ]; then
+                          echo "::error::Expected build artefact missing: $file"
+                          exit 1
+                      fi
+                  done
+
+                  # A plugin that was committed as an embedded git repo checks out as an empty
+                  # folder, and rsync --delete would then wipe that plugin on the server.
+                  for plugin in $PLUGINS; do
+                      if [ ! -f "$GITHUB_WORKSPACE/$PLUGINS_SRC/$plugin/$plugin.php" ]; then
+                          echo "::error::Plugin $plugin is missing its main file in the checkout. Is it committed as an embedded repo instead of as files?"
+                          exit 1
+                      fi
+                  done
+
+            # rsync runs with --delete, so a misdirected REMOTE_PATH would erase whatever is
+            # there. Confirm the target is a WordPress root before anything is written, and
+            # create the directories rsync itself will not create.
+            - name: Prepare remote directories
+              run: |
+                  ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" \
+                      "REMOTE_PATH='$REMOTE_PATH' PLUGINS='$PLUGINS' FA_KIT='$FA_KIT' DRY_RUN='$DRY_RUN' bash -s" <<'REMOTE'
+                  set -e
+                  case "$REMOTE_PATH" in "~/"*) REMOTE_PATH="$HOME/${REMOTE_PATH#\~/}" ;; esac
+
+                  if [ ! -d "$REMOTE_PATH" ]; then
+                      echo "::error::REMOTE_PATH does not exist on the server: $REMOTE_PATH"
+                      exit 1
+                  fi
+                  if [ ! -f "$REMOTE_PATH/wp-config.php" ] || [ ! -d "$REMOTE_PATH/wp-includes" ]; then
+                      echo "::error::REMOTE_PATH is not a WordPress root (wp-config.php and/or wp-includes missing). Refusing to deploy, because rsync --delete would erase its contents."
+                      exit 1
+                  fi
+
+                  if [ -n "$DRY_RUN" ]; then
+                      echo "Dry run: leaving the server untouched."
+                      exit 0
+                  fi
+
+                  # node_modules is excluded from the theme sync, so the kit's parent
+                  # directories are never created by it.
+                  mkdir -p "$REMOTE_PATH/wp-content/themes/wesselvdijssel/$FA_KIT"
+                  for plugin in $PLUGINS; do
+                      mkdir -p "$REMOTE_PATH/wp-content/plugins/$plugin"
+                  done
+                  REMOTE
+
+            - name: Deploy theme
+              run: |
+                  rsync -rlptzv --delete $DRY_RUN \
+                      --exclude-from=.github/deploy-excludes.txt \
+                      -e "ssh $SSH_OPTS" \
+                      "$THEME_SRC/" \
+                      "$SSH_USER@$SSH_HOST:$REMOTE_PATH/wp-content/themes/wesselvdijssel/"
+
+            - name: Deploy Font Awesome kit
+              run: |
+                  rsync -rlptzv --delete $DRY_RUN \
+                      -e "ssh $SSH_OPTS" \
+                      "$THEME_SRC/$FA_KIT/" \
+                      "$SSH_USER@$SSH_HOST:$REMOTE_PATH/wp-content/themes/wesselvdijssel/$FA_KIT/"
+
+            - name: Deploy custom plugins
+              run: |
+                  for plugin in $PLUGINS; do
+                      echo "--- $plugin ---"
+                      rsync -rlptzv --delete $DRY_RUN \
+                          --exclude-from=.github/deploy-excludes.txt \
+                          -e "ssh $SSH_OPTS" \
+                          "$PLUGINS_SRC/$plugin/" \
+                          "$SSH_USER@$SSH_HOST:$REMOTE_PATH/wp-content/plugins/$plugin/"
+                  done
+
+            # Excluded paths are protected from rsync --delete, so anything put on the server
+            # by other means (a manual FTP push, an older deploy) would stay there forever and
+            # remain publicly fetchable — including secrets.
+            - name: Remove development files from the server
+              if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
+              run: |
+                  ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "REMOTE_PATH='$REMOTE_PATH' bash -s" <<'REMOTE'
+                  set -e
+                  case "$REMOTE_PATH" in "~/"*) REMOTE_PATH="$HOME/${REMOTE_PATH#\~/}" ;; esac
+                  THEME="$REMOTE_PATH/wp-content/themes/wesselvdijssel"
+                  for f in .npmrc .env .screenshots-token CLAUDE.md package.json package-lock.json \
+                           webpack.config.ts tsconfig.json eslint.config.mjs .stylelintrc.js \
+                           .editorconfig .nvmrc .DS_Store .git .github .claude playwright .playwright-mcp \
+                           docs bin README.md playwright.config.ts composer.json composer.lock; do
+                      if [ -e "$THEME/$f" ]; then
+                          rm -rf "$THEME/$f"
+                          echo "removed: $f"
+                      fi
+                  done
+                  REMOTE
+
+            # filemtime() cache-busting changes on deploy, but WP Rocket keeps serving cached
+            # HTML that references the old asset URLs until its cache is cleared.
+            - name: Flush caches
+              if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
+              run: |
+                  ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" \
+                      "cd '$REMOTE_PATH' && wp cache flush --skip-plugins --skip-themes && wp rocket clean --confirm" \
+                      || echo "::warning::Cache flush failed or WP-CLI is unavailable — clear caches manually."
+
+            - name: Remove SSH key
+              if: always()
+              run: rm -f ~/.ssh/deploy_key
