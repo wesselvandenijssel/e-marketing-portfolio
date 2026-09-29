@@ -11,7 +11,7 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 | 2 | Blokken kopiëren en opschonen | Klaar | 2026-09-29 | geen (D-029) | [stap 2](reports/2026-09-29-stap-2-blokken.md) |
 | 3 | Merkstijl in `_variables.scss` | Klaar (vóór stap 1–2, D-011) | 2026-09-28 | geen (D-013) | [stap 3](reports/2026-09-28-stap-3-huisstijl.md) |
 | 4 | Pagina's, menu's, formulier, Yoast | Klaar (met INVULLEN-punten) | 2026-09-29 | geen (D-029) | [stap 4](reports/2026-09-29-stap-4-paginas.md) |
-| 5 | Content en kwaliteitscheck | Gepland | | | |
+| 5 | Content en kwaliteitscheck | Klaar, met INVULLEN-punten (D-035) | 2026-09-29 | geen (D-029) | [stap 7](reports/2026-09-29-stap-7-content-seo.md) |
 | 6 | Menu en footer (extra opdracht) | Klaar (D-033) | 2026-09-29 | geen (D-029) | [stap 6](reports/2026-09-29-stap-6-menu-footer.md) |
 
 ## Stap 0: backup, thema activeren, branding opschonen
@@ -73,9 +73,14 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 
 ## Stap 5: content en kwaliteitscheck
 
-- [ ] Content per pagina (live site als basis, `[INVULLEN]` waar feiten ontbreken)
-- [ ] Nederlandse alt-teksten
-- [ ] Mobiel, tablet en desktop testen, formulier testen, beschermd deel uitgelogd testen, foutlog en console controleren
+- [x] Content per pagina, met de live site als basis en `[INVULLEN]` waar feiten ontbreken
+- [x] Nederlandse alt-teksten bij alle afbeeldingen
+- [x] Yoast bij alle publieke pagina's en projecten
+- [x] Gebruik van AI, met APA-vermelding
+- [x] Getest op mobiel (390), tablet (820) en desktop (1440): geen overloop, 1 h1 per pagina, geen JS-fouten
+- [x] Formulier, melding en redirect getest (stap 4)
+- [x] Beschermd deel uitgelogd getest (stap 5)
+- [x] PHP-foutlog en console gecontroleerd
 
 ## Open punten voor Wessel
 

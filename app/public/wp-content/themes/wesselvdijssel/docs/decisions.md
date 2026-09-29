@@ -301,3 +301,13 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Datum:** 2026-09-29
 - **Beslissing:** Wessel haalde ook uitleg-commentaar weg uit PHP buiten `blocks/` en `components/`: de kop van `src/inc/protected-section.php` en regels in `functions.php` en `theme-support.php`. Code in dit thema krijgt daarom alleen PHPDoc boven functies en de vaste bestandskoppen. Uitleg hoort in `docs/`.
 - **Gevolg:** dit breidt D-020 uit naar alle code in het thema.
+
+## D-035: Blogpagina via home.php, teksten vertaald
+
+- **Datum:** 2026-09-29
+- **Beslissing:**
+  - **`home.php`:** nieuw. Die toont de blokken van de berichtenpagina. Nadat Blog de berichtenpagina werd, gebruikte WordPress `index.php`, en daar bleef de pagina leeg.
+  - **Blog-blok:** krijgt de lege staat "Er zijn nog geen berichten.". Het filter heet nu "Alle berichten".
+  - **Teksten:** vaste teksten in het thema zijn in het Nederlands en in de je-vorm gezet: de reacties, "Naar de inhoud", "Menu openen", "Pagina %s" en de pagina zonder zoekresultaten, die nu ook een link naar Home heeft in plaats van een `onclick`-knop.
+  - **Menu op tabletbreedte (740–979 px):** menu-items breken niet af, de tekst is 15px en de knop is compacter. Daardoor past het menu op één regel.
+- **Gevolg:** de content-audit vindt geen placeholders, geen afbeeldingen zonder alt, geen verboden woorden of u-vorm, en geen Engelse teksten op de publieke pagina's.
