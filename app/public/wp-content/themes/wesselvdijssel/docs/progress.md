@@ -8,9 +8,9 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 |---|---|---|---|---|---|
 | 0 | Backup, thema activeren, branding opschonen | Klaar | 2026-09-28 | geen (D-007) | [stap 0](reports/2026-09-28-stap-0-opschonen.md) |
 | 1 | CPT `project`, beschermd gedeelte, rol | Deels (CPT klaar, D-018) | | | |
-| 2 | Blokken kopiëren en opschonen | Klaar | 2026-09-29 | nog niet (D-007) | [stap 2](reports/2026-09-29-stap-2-blokken.md) |
+| 2 | Blokken kopiëren en opschonen | Klaar | 2026-09-29 | geen (D-029) | [stap 2](reports/2026-09-29-stap-2-blokken.md) |
 | 3 | Merkstijl in `_variables.scss` | Klaar (vóór stap 1–2, D-011) | 2026-09-28 | geen (D-013) | [stap 3](reports/2026-09-28-stap-3-huisstijl.md) |
-| 4 | Pagina's, menu's, formulier, Yoast | Klaar (met INVULLEN-punten) | 2026-09-29 | nog niet (D-007) | [stap 4](reports/2026-09-29-stap-4-paginas.md) |
+| 4 | Pagina's, menu's, formulier, Yoast | Klaar (met INVULLEN-punten) | 2026-09-29 | geen (D-029) | [stap 4](reports/2026-09-29-stap-4-paginas.md) |
 | 5 | Content en kwaliteitscheck | Gepland | | | |
 
 ## Stap 0: backup, thema activeren, branding opschonen
@@ -85,9 +85,7 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
    - Gebruik van AI: controleren en aanvullen
    - Projecten: het resultaat van SCX Solar en van The Souks
 2. **Cv:** op Ervaring is nog geen downloadknop. `Professioneel CV A4.pdf` in je Downloads is een lege template.
-3. **Tracking-plugins (D-025):** de plugins customer-journey en UTM verzamelen meer dan naam, e-mail, telefoon en bericht. Laten staan of uitzetten?
-4. **Foto:** er is een betere portretfoto nodig. De huidige is 400 × 400 px, uit je oude site.
-5. **Server (D-027):** op emarketing.wesselvandenijssel.nl staat nu lumie. Ook ontbreken daar de database-migratie, de themaactivatie en `blog_public` = 1.
-6. **Watcher:** herstart je webpack-watcher, zie het rapport van stap 2.
-7. **Commits (D-007):** stap 2 tot en met 4 zijn nog niet gecommit.
-8. **WooCommerce-concept:** de pagina "Terugbetaal- en retourneringsbeleid" (ID 166). Mag die weg?
+3. **Foto:** er is een betere portretfoto nodig. De huidige is 400 × 400 px, uit je oude site.
+4. **Server (D-027):** op emarketing.wesselvandenijssel.nl staat nu lumie. Ook ontbreken daar de database-migratie, de themaactivatie en `blog_public` = 1.
+5. **Watcher:** herstart je webpack-watcher, zie het rapport van stap 2.
+6. **Commits (D-029):** er wordt niets gecommit tot je daarom vraagt. Stap 0 tot en met 4 staan nog als wijzigingen klaar.

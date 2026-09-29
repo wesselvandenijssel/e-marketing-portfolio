@@ -43,7 +43,7 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Beslissing:** er worden geen plugins aan- of uitgezet (antwoord 6). Dat geldt ook voor `afl-wc-utm` en de `wesselvdijssel-*`-plugins.
 - **Gevolg:** WP Rocket blijft uit. Gaat hij later toch aan, dan eerst de beschermde pagina's uitsluiten (zie het plan, login-gedeelte, punt 4).
 
-## D-007: Eerste commit pas na stap 2
+## D-007: Eerste commit pas na stap 2 (commitdeel vervangen door D-029)
 
 - **Datum:** 2026-09-28
 - **Beslissing:** er wordt niets gecommit tot stap 2 klaar is. Ook de docs-commit uit de opdracht vervalt. Stap 0 start zonder commit.
@@ -238,3 +238,20 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - Op die installatie staat nu een kopie van lumie, met het thema `lumie` actief.
   - Een deploy zet het thema en de plugins ernaast, maar activeert niets en zet geen database over.
   - `blog_public` moet daar op 1 staan. Lokaal staat hij op 0, waardoor de hele site op noindex staat.
+
+## D-028: Tracking-plugins blijven aan
+
+- **Datum:** 2026-09-29
+- **Beslissing:** de plugins customer-journey en UTM blijven actief (keuze van Wessel).
+- **Gevolg:** het privacy statement blijft zoals het is en beschrijft de extra gegevens: de bekeken pagina's, de browser en, met toestemming, UTM-gegevens. Dit wijkt af van de regel "alleen naam, e-mail, telefoon en bericht". Wessel heeft dat risico afgewogen. Pas het privacy statement aan als er een cookiebanner of statistieken bij komen.
+
+## D-029: Niet committen tot Wessel erom vraagt
+
+- **Datum:** 2026-09-29
+- **Beslissing:** het commitvoorstel na stap 2 (branch `feature/blocks` met een PR) is afgewezen. Er wordt niets gecommit of gepusht tot Wessel daar zelf om vraagt.
+- **Gevolg:** dit vervangt het commitdeel van D-007. Stappen krijgen `Klaar` zonder commit-hash.
+
+## D-030: WooCommerce-concept verwijderd
+
+- **Datum:** 2026-09-29
+- **Beslissing:** de conceptpagina "Terugbetaal- en retourneringsbeleid" (ID 166) is verwijderd, na een backup (`app/sql/2026-09-29-voor-verwijderen-166.sql`).
