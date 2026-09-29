@@ -1,0 +1,123 @@
+@use "abstracts" as *;
+
+.project-details {
+	display: flex;
+	flex-direction: column;
+	gap: pxtorem(40);
+
+	&__facts {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: pxtorem(16) pxtorem(30);
+		margin: 0;
+		padding: pxtorem(24);
+		border-radius: 12px;
+		background-color: $hue-accent-light;
+		color: $hue-dark-1;
+
+		@include bp("narrow") {
+			grid-template-columns: repeat(2, 1fr);
+			padding: pxtorem(30);
+		}
+	}
+
+	&__fact {
+		dt {
+			margin-bottom: pxtorem(4);
+			font-size: pxtorem(14);
+			font-weight: $font-weight-bold;
+			color: $hue-dark-1;
+		}
+
+		dd {
+			margin: 0;
+		}
+
+		a {
+			color: $hue-dark-1;
+			text-decoration: underline;
+
+			&:hover,
+			&:focus {
+				color: $hue-accent-text;
+			}
+		}
+
+		&--tools {
+			@include bp("narrow") {
+				grid-column: 1 / -1;
+			}
+		}
+	}
+
+	&__tools {
+		display: flex;
+		flex-wrap: wrap;
+		gap: pxtorem(8);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	& &__tools &__tool {
+		margin: 0;
+		padding: pxtorem(4) pxtorem(12);
+
+		&::before {
+			content: none;
+		}
+	}
+
+	&__tool {
+		border-radius: 100vw;
+		background-color: $hue-white;
+		font-size: pxtorem(14);
+		font-weight: $font-weight-bold;
+	}
+
+	&__heading {
+		margin-bottom: pxtorem(12);
+	}
+
+	& &__images {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: pxtorem(16);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		@include bp("narrow") {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	& &__images &__image-item {
+		margin: 0;
+		padding: 0;
+
+		&::before {
+			content: none;
+		}
+	}
+
+	&__image-link {
+		display: block;
+		overflow: hidden;
+		border-radius: 12px;
+
+		&:focus-visible {
+			outline: 2px solid $focus-color;
+			outline-offset: 2px;
+		}
+	}
+
+	&__image {
+		display: block;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 16 / 10;
+		object-fit: cover;
+		object-position: top;
+	}
+}

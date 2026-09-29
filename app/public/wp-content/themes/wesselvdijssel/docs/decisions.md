@@ -184,3 +184,57 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - **Uploads zonder Imagick:** de WebP-omzetting in `focalpoint.php` crashte elke upload als Imagick ontbreekt. Nu blijft dan het origineel staan.
   - **Tijdlijn:** de algemene regel `.entry-content ol` gaf de tijdlijn nummers en een marge. De tijdlijnregel is nu specifieker.
   - **Editor-typografie:** de editor gebruikte een schreeflettertype. `admin.scss` zet nu Public Sans en navy op `.editor-styles-wrapper`.
+
+## D-023: Projecten als pagina met blok, met vaste projectvelden
+
+- **Datum:** 2026-09-29
+- **Beslissing:** "Projecten" is een pagina (`/projecten/`) met het projectblok en een categoriefilter. Er is geen CPT-archief, en dat volgt het plan. Losse projecten hebben vaste velden:
+  - opdrachtgever
+  - periode
+  - website
+  - tools
+  - opdracht
+  - mijn rol
+  - aanpak
+  - resultaat
+  - beelden
+- **Gevolg:** de velden staan in `src/functions/acf/post-types/project.php` en worden getoond via het component `project-details` in `single-project.php`.
+
+## D-024: Projectinhoud alleen uit bewijs
+
+- **Datum:** 2026-09-29
+- **Beslissing:** de 8 projecten komen uit:
+  - de git-commits van Wessel in de Local-sites
+  - zijn stagelogboek (september 2023 tot mei 2024)
+  - de case-pagina's van het stagebedrijf
+- **Gevolg:**
+  - "Aanpak" noemt alleen wat uit commits en logboek blijkt.
+  - Resultaatcijfers staan er als "Het team meldt …" en komen letterlijk uit de case. Er staat een link naar de bron bij.
+  - Zonder case is het resultaat `[INVULLEN]`. Dat geldt voor SCX Solar en The Souks.
+  - De projectbeelden zijn screenshots van de live websites, gemaakt op 29-09-2026.
+
+## D-025: Formulier slaat geen IP-adres meer op
+
+- **Datum:** 2026-09-29
+- **Beslissing:** in formulier 1 staat "IP-adres niet opslaan" aan (`personalData.preventIP`).
+- **Gevolg:** het formulier bewaart naam, e-mail, telefoon, bericht en toestemming. De plugins voegen daar twee dingen aan toe:
+  - de customer-journey-plugin: de bekeken pagina's
+  - Gravity Forms: de browser (user agent)
+
+  UTM-gegevens slaat de UTM-plugin alleen op met toestemming, en die wordt nu niet gevraagd. Het privacy statement beschrijft dit. Of de twee tracking-plugins aan blijven, beslist Wessel. De opdracht zegt "alleen naam, e-mail, telefoon en bericht".
+
+## D-026: Iconen in de stijl regular
+
+- **Datum:** 2026-09-29
+- **Beslissing:** icoonblokken gebruiken de stijl "regular".
+- **Reden:** de Font Awesome-kit bevat per stijl maar een deel van de iconen. Zo heeft solid geen `cube` en `circle-play`.
+- **Gevolg:** een nieuw icoon kan in de editor gekozen worden, maar werkt alleen als het in de kit staat. De kit is van het stagebedrijf en kan alleen via hun account worden uitgebreid.
+
+## D-027: Deploydoel gevonden
+
+- **Datum:** 2026-09-29
+- **Beslissing:** `REMOTE_PATH` is `/home/<gebruiker>/domains/wesselvandenijssel.nl/public_html/emarketing` (subdomein als submap). De droge run is volledig groen.
+- **Gevolg:**
+  - Op die installatie staat nu een kopie van lumie, met het thema `lumie` actief.
+  - Een deploy zet het thema en de plugins ernaast, maar activeert niets en zet geen database over.
+  - `blog_public` moet daar op 1 staan. Lokaal staat hij op 0, waardoor de hele site op noindex staat.
