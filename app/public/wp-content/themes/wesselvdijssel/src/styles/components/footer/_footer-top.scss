@@ -35,6 +35,15 @@
 		}
 	}
 
+	&__text {
+		max-width: 320px;
+
+		a {
+			color: inherit;
+			text-decoration: underline;
+		}
+	}
+
 	&__menu {
 		.folded {
 			display: none;

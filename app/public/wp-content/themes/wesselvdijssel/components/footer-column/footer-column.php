@@ -30,6 +30,11 @@ switch ($column_value['acf_fc_layout']):
 		echo $block_title->getTitle();
 		break;
 
+	case 'text':
+		if (empty($column_value['text'])) break; ?>
+		<div class="footer__text"><?= wp_kses_post($column_value['text']); ?></div>
+		<?php break;
+
 	case 'image':
 		if (!empty($column_value['image_group'])) {
 			layout("image", [

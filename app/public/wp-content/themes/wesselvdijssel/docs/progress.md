@@ -12,6 +12,7 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 | 3 | Merkstijl in `_variables.scss` | Klaar (vóór stap 1–2, D-011) | 2026-09-28 | geen (D-013) | [stap 3](reports/2026-09-28-stap-3-huisstijl.md) |
 | 4 | Pagina's, menu's, formulier, Yoast | Klaar (met INVULLEN-punten) | 2026-09-29 | geen (D-029) | [stap 4](reports/2026-09-29-stap-4-paginas.md) |
 | 5 | Content en kwaliteitscheck | Gepland | | | |
+| 6 | Menu en footer (extra opdracht) | Klaar (D-033) | 2026-09-29 | geen (D-029) | [stap 6](reports/2026-09-29-stap-6-menu-footer.md) |
 
 ## Stap 0: backup, thema activeren, branding opschonen
 

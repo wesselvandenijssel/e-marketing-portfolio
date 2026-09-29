@@ -282,3 +282,22 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Datum:** 2026-09-29
 - **Beslissing:** twee dingen zijn verplaatst naar een hook. `register_nav_menus()` staat nu op `init`. De veldgroepen van de clones (button, footer-column, title) en de page-settings (author, popups) staan nu op `acf/init`.
 - **Gevolg:** de melding `_load_textdomain_just_in_time` voor `wesselvandenijssel` is weg. De homepagina is pixel-identiek, en de clones werken.
+
+## D-033: Menu en footer
+
+- **Datum:** 2026-09-29
+- **Beslissing:**
+  - **Hoofdmenu** (locaties `primary` en `primary_mobile`): Home, Over mij, Ervaring, Projecten, Blog, Contact, plus "Portfolio (login)". Die laatste is een aangepaste link naar `/portfolio-minor/` met de class `menu-button`, en ziet eruit als de primaire knop.
+  - **Footermenu** (nieuw, "Footer"): Disclaimer, Privacy statement, Sitemap en Gebruik van AI.
+  - **Sitemapmenu:** gekoppeld aan de locatie `sitemap`.
+- **Reden:** een aangepaste link in plaats van een paginalink. Het beveiligingsfilter verbergt paginalinks naar het portfolio voor bezoekers zonder toegang, en de knop moet voor iedereen zichtbaar zijn.
+- **Gevolg:** de footer heeft vier kolommen: intro, Navigatie, Contact (e-mail + LinkedIn) en Informatie (het footermenu). De subfooter toont "© [jaar] wesselvandenijssel".
+  - **Nieuwe layout:** voor de intro is de layout "Tekst" toegevoegd aan de footerkolom-clone.
+  - **Social media:** in de opties staat alleen LinkedIn. De placeholders voor Facebook en Instagram uit het base-theme zijn verwijderd.
+  - **Bekende bug:** `header.php` leest `header['buttons']`, maar het veld heet `buttons_group`, dus header-knoppen uit de opties verschijnen nooit. Omdat de knop nu in het menu staat, is dit niet opgelost.
+
+## D-034: Geen uitleg-commentaar in code
+
+- **Datum:** 2026-09-29
+- **Beslissing:** Wessel haalde ook uitleg-commentaar weg uit PHP buiten `blocks/` en `components/`: de kop van `src/inc/protected-section.php` en regels in `functions.php` en `theme-support.php`. Code in dit thema krijgt daarom alleen PHPDoc boven functies en de vaste bestandskoppen. Uitleg hoort in `docs/`.
+- **Gevolg:** dit breidt D-020 uit naar alle code in het thema.

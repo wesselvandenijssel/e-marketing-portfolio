@@ -1,4 +1,5 @@
 @use "abstracts" as *;
+@use "placeholders" as *;
 
 .main-navigation {
 	@include bp("mobile") {
@@ -212,6 +213,14 @@
 			display: flex;
 			flex-wrap: wrap;
 			align-items: center;
+		}
+
+		&.menu-button > a {
+			@extend %btn--primary;
+
+			@include bp("mobile") {
+				margin-inline: 10px;
+			}
 		}
 
 		/* stylelint-disable-next-line selector-class-pattern */

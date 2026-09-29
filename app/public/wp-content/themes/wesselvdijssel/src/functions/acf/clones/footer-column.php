@@ -52,6 +52,25 @@ add_action('acf/init', function () {
 					],
 
 					[
+						'key' => 'clone_footer_column_content_layout_text',
+						'name' => 'text',
+						'label' => esc_html__('Tekst', 'wesselvandenijssel'),
+						'display' => 'block',
+						'sub_fields' => [
+							[
+								'key' => 'clone_footer_column_content_layout_text_text',
+								'label' => esc_html__('Tekst', 'wesselvandenijssel'),
+								'name' => 'text',
+								'type' => 'wysiwyg',
+								'tabs' => 'visual',
+								'toolbar' => 'basic',
+								'media_upload' => false,
+								'delay' => true,
+							],
+						],
+					],
+
+					[
 						'key' => 'clone_footer_column_content_layout_image',
 						'name' => 'image',
 						'label' => esc_html__('Afbeelding', 'wesselvandenijssel'),
