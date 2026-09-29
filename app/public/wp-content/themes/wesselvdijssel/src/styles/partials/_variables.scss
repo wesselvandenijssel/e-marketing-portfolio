@@ -1,37 +1,24 @@
 @use "functions" as *;
 
-/*********************
-COLORS
-*********************/
-// Single source of truth for the brand. Contrast ratios are listed in the theme CLAUDE.md.
-// WARNING: never put white text on $hue-accent-1, and never use $hue-accent-1 as a text color on light backgrounds.
+$hue-dark-1: #00244d;
+$hue-accent-1: #00a3e0;
+$hue-accent-text: #0077a8;
+$hue-accent-light: #e5f6fc;
 
-// Brand
-$hue-dark-1: #00244d; // Text, headings, logo, button hover/focus
-$hue-accent-1: #00a3e0; // Buttons, icons, highlights, surfaces (always with navy text)
-$hue-accent-text: #0077a8; // Links and blue text on light backgrounds
-$hue-accent-light: #e5f6fc; // Light surfaces between sections
+$hue-light-1: #f8fafc;
+$hue-white: #fff;
+$hue-grey-1: #475569;
+$hue-grey-2: #e2e8f0;
 
-// Neutral
-$hue-light-1: #f8fafc; // Page background
-$hue-white: #fff; // Cards, forms
-$hue-grey-1: #475569; // Labels, captions, and form field borders (needs 3:1)
-$hue-grey-2: #e2e8f0; // Decorative borders and dividers only (1.23:1 on white)
+$form-error: #b42318;
+$focus-color: $hue-dark-1;
 
-// Functional
-$form-error: #b42318; // Gravity Forms errors: at least 5.9:1 on every light background
-$focus-color: $hue-dark-1; // Focus outline on light backgrounds; use $hue-white on navy
-
-// Base-theme names, mapped onto the brand palette so existing partials keep working
 $text-color: $hue-dark-1;
 $link-color: $hue-accent-text;
 $btn-primary: $hue-accent-1;
 $light-gray: $hue-light-1;
 $gray: $hue-grey-2;
 
-/*********************
-OTHERS
-*********************/
 $site-width: 100%;
 
 $mobile-font-size: pxtorem(16);
@@ -50,9 +37,6 @@ $pad-extra-large: 120px;
 
 $pad-normal-half: 60px;
 
-/*********************
-FA ICONS
-*********************/
 $fa-email: "\f0e0";
 $fa-phone: "\f095";
 $fa-address: "\f3c5";
@@ -119,3 +103,5 @@ $fa-chevron-circle-up: "\f139";
 $fa-chevron-circle-right: "\f138";
 $fa-chevron-circle-left: "\f137";
 $fa-chevron-circle-down: "\f13a";
+
+$fa-quote-left: "\f10d";

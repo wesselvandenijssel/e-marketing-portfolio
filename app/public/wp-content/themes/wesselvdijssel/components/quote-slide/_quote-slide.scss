@@ -1,0 +1,98 @@
+@use "abstracts" as *;
+
+.quote-slide {
+	$self: &;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: pxtorem(24);
+	margin: 0;
+	padding: pxtorem(56) pxtorem(20) pxtorem(32);
+	background-color: $hue-white;
+	color: $hue-dark-1;
+	text-align: center;
+	position: relative;
+
+	@include bp("narrow") {
+		padding: pxtorem(72) pxtorem(48) pxtorem(40);
+	}
+
+	&::before {
+		content: $fa-quote-left;
+		font-family: $fa;
+		font-weight: 900;
+		font-size: pxtorem(32);
+		line-height: 1;
+		color: $hue-accent-1;
+		position: absolute;
+		top: pxtorem(20);
+		left: 50%;
+		transform: translateX(-50%);
+
+		@include bp("narrow") {
+			font-size: pxtorem(40);
+			top: pxtorem(24);
+		}
+	}
+
+	&.swiper-slide {
+		height: auto;
+	}
+
+	#{$self}__quote {
+		max-width: pxtorem(760);
+		margin: 0;
+		padding: 0;
+		border: 0;
+		font-size: pxtorem(18);
+		font-weight: $font-weight-regular;
+		line-height: 1.5;
+
+		@include bp("narrow") {
+			font-size: pxtorem(22);
+		}
+
+		p {
+			margin: 0;
+		}
+	}
+
+	&__caption {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: pxtorem(16);
+		text-align: left;
+	}
+
+	&__image {
+		flex-shrink: 0;
+		width: pxtorem(64);
+		height: pxtorem(64) !important;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+
+	&__person {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__name {
+		font-size: pxtorem(16);
+		font-weight: $font-weight-bold;
+		line-height: 1.4;
+
+		@include bp("narrow") {
+			font-size: pxtorem(18);
+		}
+	}
+
+	&__role {
+		font-size: pxtorem(16);
+		line-height: 1.4;
+		color: $hue-grey-1;
+	}
+}

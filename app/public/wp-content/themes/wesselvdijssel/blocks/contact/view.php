@@ -2,7 +2,7 @@
 defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 
 /**
- * Contact Block Template.
+ * Contactformulier Block Template.
  */
 
 $section = general_section($block, [
@@ -29,7 +29,6 @@ echo !is_admin() ? '[raw]' : '';
 				if (function_exists('gravity_form')) {
 					$field_values = [];
 
-					// Check for entry ID to pre-populate form fields
 					$entry_id = get_validated_entry_id();
 
 					if ($entry_id) {

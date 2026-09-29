@@ -1,0 +1,158 @@
+@use "abstracts" as *;
+
+$timeline-dot: 16px;
+$timeline-line: 2px;
+$timeline-rail: 32px;
+$timeline-gutter: 40px;
+
+.timeline {
+	&__header {
+		margin-bottom: pxtoem(40);
+
+		.titles:not(:last-child) {
+			margin-bottom: pxtoem(20);
+		}
+	}
+
+	& &__list {
+		position: relative;
+		margin: 0;
+		padding: 0 0 0 $timeline-rail;
+		list-style: none;
+
+		@include bp("normal") {
+			padding-left: 0;
+		}
+
+		&::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: ($timeline-dot - $timeline-line) * 0.5;
+			width: $timeline-line;
+			background-color: $hue-grey-2;
+
+			@include bp("normal") {
+				left: 50%;
+				transform: translateX(-50%);
+			}
+		}
+	}
+
+	&__item {
+		position: relative;
+
+		@include bp("normal") {
+			width: calc(50% - #{$timeline-gutter});
+
+			&:nth-child(odd) {
+				margin-right: auto;
+
+				&::before {
+					left: auto;
+					right: -($timeline-gutter + $timeline-dot * 0.5);
+				}
+			}
+
+			&:nth-child(even) {
+				margin-left: auto;
+
+				&::before {
+					left: -($timeline-gutter + $timeline-dot * 0.5);
+				}
+			}
+		}
+
+		&:not(:last-child) {
+			margin-bottom: pxtorem(24);
+
+			@include bp("normal") {
+				margin-bottom: pxtorem(32);
+			}
+		}
+
+		&::before {
+			content: "";
+			position: absolute;
+			top: pxtorem(24);
+			left: -$timeline-rail;
+			width: $timeline-dot;
+			height: $timeline-dot;
+			border-radius: 50%;
+			background-color: $hue-accent-1;
+
+			@include bp("narrow") {
+				top: pxtorem(30);
+			}
+		}
+	}
+
+	&__card {
+		display: flex;
+		flex-direction: column;
+		padding: pxtorem(20);
+		border-radius: 10px;
+		background-color: $hue-white;
+		color: $hue-dark-1;
+
+		@include bp("narrow") {
+			padding: pxtorem(24) pxtorem(30);
+		}
+	}
+
+	&__period {
+		order: -1;
+		margin: 0 0 pxtorem(6);
+		font-size: pxtorem(14);
+		font-weight: $font-weight-bold;
+		color: $hue-grey-1;
+
+		@include bp("narrow") {
+			font-size: pxtorem(16);
+		}
+	}
+
+	&__title {
+		margin: 0;
+	}
+
+	&__meta {
+		margin: pxtorem(4) 0 0;
+		font-size: pxtorem(16);
+		color: $hue-grey-1;
+	}
+
+	&__organisation + &__location {
+		&::before {
+			content: "\00b7";
+			margin-right: 0.3em;
+		}
+	}
+
+	&__description {
+		margin-top: pxtorem(12);
+	}
+
+	&__link {
+		align-self: flex-start;
+		margin-top: pxtorem(12);
+		color: $hue-accent-text;
+		font-weight: $font-weight-bold;
+		text-decoration: underline;
+
+		&:hover,
+		&:focus {
+			color: $hue-dark-1;
+		}
+
+		&:focus-visible {
+			outline: 2px solid $focus-color;
+			outline-offset: 2px;
+		}
+	}
+
+	&__buttons {
+		margin-top: pxtoem(40);
+	}
+}

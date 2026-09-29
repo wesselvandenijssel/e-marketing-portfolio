@@ -145,3 +145,42 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - De root-`.gitignore` laat nu ook `wesselvdijssel-widgets` toe. Die ontbrak.
   - Het thema heeft nu ook lumie's `cleanup-screenshots.yml` en `approve-bot-workflow-runs.yml`. Workflows in de themamap draaien niet op GitHub, want alleen die in de root doen dat.
 - **Opgelost (akkoord van Wessel):** de eigen `.git`-mappen van beide plugins zijn verplaatst naar `app/git-backups/` (genegeerd door git). Er waren geen niet-gepushte commits of stashes. De plugins komen nu als gewone bestanden in de repo (125 en 124 bestanden). `app/git-backups/` mag weg zodra alles gecommit is.
+
+## D-018: CPT `project` gebouwd in stap 2
+
+- **Datum:** 2026-09-29
+- **Beslissing:** het CPT `project` en de taxonomie `project_category` zijn samen met het projectblok gebouwd, omdat het blok ze nodig heeft.
+- **Gevolg:** van stap 1 is dit deel klaar. Het beschermde gedeelte, de rol en het beoordelaarsaccount staan nog open.
+
+## D-019: Beeldformaten hersteld en aangevuld
+
+- **Datum:** 2026-09-29
+- **Beslissing:** het base-theme las de instelling voor beeldformaten uit `options`, maar die staat op `utilities`. Daardoor werd geen enkel eigen formaat aangemaakt. Dit is opgelost in `post-thumbnails.php` en `acf/clones/image.php`.
+- **Gevolg:**
+  - de nieuwe formaten `Portrait`, `Content`, `Avatar` en `Project card` zijn toegevoegd (zie blocks.md)
+  - bestaande uploads krijgen de nieuwe formaten pas na `wp media regenerate`
+
+## D-020: Commentaarbeleid
+
+- **Datum:** 2026-09-29
+- **Beslissing** (Wessel):
+  - SCSS-bestanden bevatten geen commentaar. Alleen `/* stylelint-disable … */`-instructies blijven.
+  - PHP- en TS-bestanden in `blocks/` en `components/` bevatten alleen de vaste kop: `// Exit if accessed directly.` achter de ABSPATH-regel, en in `view.php` `/** <Titel> Block Template. */`.
+- **Gevolg:**
+  - de herkomst van blokken staat in `docs/blocks.md`, niet meer als `Source:`-regel in `config.php`
+  - lege SCSS-bestanden die alleen commentaar bevatten zijn verwijderd, met hun `@use`
+  - de gecompileerde CSS en de screenshots zijn identiek aan die van vóór het strippen
+
+## D-021: Iconen in Icoonblokken als `<i>`-element
+
+- **Datum:** 2026-09-29
+- **Beslissing:** het veld "icoon" (ACF Font Awesome) levert een `<i>`-element. Het blok toont dat element in een `aria-hidden`-span.
+- **Reden:** iconen die een redacteur zelf kiest, kunnen niet via vaste codepoints in `_variables.scss`. Dit is een uitzondering op de regel "iconen via pseudo-elementen".
+
+## D-022: Fouten uit het base-theme opgelost tijdens stap 2
+
+- **Datum:** 2026-09-29
+- **Beslissing:** drie fouten uit het base-theme zijn opgelost:
+  - **Uploads zonder Imagick:** de WebP-omzetting in `focalpoint.php` crashte elke upload als Imagick ontbreekt. Nu blijft dan het origineel staan.
+  - **Tijdlijn:** de algemene regel `.entry-content ol` gaf de tijdlijn nummers en een marge. De tijdlijnregel is nu specifieker.
+  - **Editor-typografie:** de editor gebruikte een schreeflettertype. `admin.scss` zet nu Public Sans en navy op `.editor-styles-wrapper`.

@@ -1,0 +1,84 @@
+@use "abstracts" as *;
+
+.cta-banner {
+	&__card {
+		display: flex;
+		flex-direction: column;
+		row-gap: $pad-mobile-small;
+		overflow: hidden;
+		border-radius: 8px;
+		padding: $pad-mobile-small;
+
+		@include bp("narrow") {
+			border-radius: 16px;
+			padding: 40px;
+		}
+
+		@include bp("normal") {
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+			column-gap: 36px;
+			padding: 0 40px;
+		}
+
+		@include bp("large") {
+			padding: 0 60px;
+		}
+
+		&--light {
+			background-color: $hue-accent-light;
+			color: $hue-dark-1;
+		}
+
+		&--dark {
+			background-color: $hue-dark-1;
+			color: $hue-white;
+
+			a:focus-visible,
+			.btn:focus-visible {
+				outline-color: $hue-white;
+			}
+
+			.btn {
+				&:hover,
+				&:focus {
+					border-color: $hue-white;
+				}
+			}
+		}
+	}
+
+	&__content {
+		@include bp("normal") {
+			max-width: 500px;
+			padding-block: 60px;
+		}
+	}
+
+	&__image-wrapper {
+		display: none;
+
+		@include bp("normal") {
+			display: flex;
+			align-items: flex-end;
+			align-self: flex-end;
+			justify-content: center;
+			flex-shrink: 0;
+		}
+	}
+
+	&__image {
+		display: block;
+		object-fit: contain;
+		max-height: 235px;
+		width: auto;
+	}
+
+	.buttons {
+		@include bp("normal") {
+			flex-shrink: 0;
+			padding-block: 60px;
+		}
+	}
+}

@@ -43,7 +43,6 @@ if (!empty($swiper)) {
 		<div class="post__content">
 			<div class="post__meta">
 				<?php
-				// Build meta items array
 				$meta_items = [];
 
 				if (!empty($author)) {
@@ -54,7 +53,6 @@ if (!empty($swiper)) {
 					$meta_items[] = '<span class="post__meta-item post__meta-item--date">' . esc_html($date) . '</span>';
 				}
 
-				// Output meta items with separator
 				echo implode('<span class="post__separator">|</span>', $meta_items);
 				?>
 			</div>
@@ -62,7 +60,6 @@ if (!empty($swiper)) {
 			<h3 class="post__title">
 				<?= esc_html($title); ?>
 			</h3>
-
 
 			<span class="btn btn--read-more post__button"><?= esc_html__('Lees verder', 'wesselvandenijssel'); ?></span>
 		</div>

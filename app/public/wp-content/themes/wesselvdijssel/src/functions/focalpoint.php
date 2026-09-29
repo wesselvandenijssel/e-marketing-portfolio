@@ -40,6 +40,11 @@ function hook_focus_point_methods(): void {
 				return $file;
 			}
 
+			// Without the Imagick extension the conversion would fatal and break every upload; keep the original file
+			if (!class_exists('Imagick')) {
+				return $file;
+			}
+
 			// Load the image using Imagick
 			$image = new Imagick($old_file_path);
 

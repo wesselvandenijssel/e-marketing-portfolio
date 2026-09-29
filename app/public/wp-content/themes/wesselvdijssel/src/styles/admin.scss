@@ -1,6 +1,10 @@
 @use "sass:meta";
+@use "abstracts" as *;
 
 .editor-styles-wrapper {
+	font-family: $public-sans;
+	color: $text-color;
+
 	@include meta.load-css("partials/*");
 	@include meta.load-css("components/main");
 	@include meta.load-css("../../blocks/*/*.scss");
@@ -81,7 +85,6 @@ body {
 	-moz-osx-font-smoothing: unset !important;
 }
 
-/* Patterns */
 .site-editor-php {
 	.interface-interface-skeleton {
 		&__sidebar {
@@ -114,7 +117,6 @@ body {
 	}
 }
 
-/* Focuspoint */
 body.post-type-attachment.modal-open {
 	.thumbnail {
 		text-align: center;

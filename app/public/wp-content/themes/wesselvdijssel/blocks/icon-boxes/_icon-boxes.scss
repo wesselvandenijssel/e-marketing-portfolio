@@ -1,0 +1,122 @@
+@use "abstracts" as *;
+
+.icon-boxes {
+	$icon-boxes: &;
+
+	.titles {
+		@include centered-content;
+	}
+
+	&__grid {
+		display: grid;
+		gap: 20px;
+
+		@include bp("narrow") {
+			gap: 30px;
+		}
+
+		&--cols-2,
+		&--cols-3,
+		&--cols-4 {
+			@include bp("narrow") {
+				grid-template-columns: repeat(2, 1fr);
+			}
+		}
+
+		&--cols-3 {
+			@include bp("normal") {
+				grid-template-columns: repeat(3, 1fr);
+			}
+		}
+
+		&--cols-4 {
+			@include bp("large") {
+				grid-template-columns: repeat(4, 1fr);
+			}
+		}
+	}
+
+	&__box {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		row-gap: 12px;
+		background-color: $hue-white;
+		border: 1px solid $hue-grey-2;
+		border-radius: 8px;
+		color: $hue-dark-1;
+		padding: 28px 24px;
+
+		@include bp("narrow") {
+			padding: 32px 28px;
+		}
+
+		&--link {
+			text-decoration: none;
+
+			@media (prefers-reduced-motion: no-preference) {
+				transition:
+					border-color 0.3s ease,
+					box-shadow 0.3s ease,
+					transform 0.3s ease;
+
+				&:hover,
+				&:focus {
+					transform: translateY(-4px);
+				}
+			}
+
+			&:hover,
+			&:focus {
+				border-color: $hue-dark-1;
+				box-shadow: 0 6px 24px rgba($hue-dark-1, 0.08);
+				text-decoration: none;
+
+				#{$icon-boxes}__title {
+					text-decoration: underline;
+				}
+			}
+
+			&:focus-visible {
+				outline: 2px solid $focus-color;
+				outline-offset: 2px;
+			}
+		}
+	}
+
+	&__icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: 56px;
+		height: 56px;
+		border-radius: 50%;
+		background-color: $hue-accent-1;
+		color: $hue-dark-1;
+		font-size: pxtorem(24);
+		line-height: 1;
+		margin-bottom: 8px;
+	}
+
+	&__title {
+		font-size: pxtorem(18);
+		font-weight: $font-weight-bold;
+		line-height: 1.3;
+
+		@include bp("narrow") {
+			font-size: pxtorem(20);
+		}
+	}
+
+	&__text {
+		font-size: pxtorem(16);
+		line-height: 1.6;
+		margin: 0;
+	}
+
+	.buttons {
+		justify-content: center;
+		margin-top: pxtoem(40);
+	}
+}
