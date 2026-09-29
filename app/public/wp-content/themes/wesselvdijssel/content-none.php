@@ -12,12 +12,12 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 	</h2>
 
 	<p class="post__excerpt">
-		<?= esc_html__('Helaas, maar er zijn geen resultaten gevonden voor uw zoekopdracht. Probeer het opnieuw met andere zoekwoorden.', 'wesselvandenijssel'); ?>
+		<?= esc_html__('Er zijn geen resultaten voor je zoekopdracht. Probeer het opnieuw met andere zoekwoorden.', 'wesselvandenijssel'); ?>
 	</p>
 
 	<div class="buttons">
-		<button class="btn btn--primary" onclick="window.history.go(-1); return false;">
-			<?= esc_html__('Terug naar de vorige pagina', 'wesselvandenijssel'); ?>
-		</button>
+		<a class="btn btn--primary" href="<?= esc_url(home_url('/')); ?>">
+			<?= esc_html__('Naar de homepagina', 'wesselvandenijssel'); ?>
+		</a>
 	</div>
 </div>
