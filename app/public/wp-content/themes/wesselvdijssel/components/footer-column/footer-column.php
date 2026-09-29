@@ -18,7 +18,7 @@ switch ($column_value['acf_fc_layout']):
 			$column_value['title'],
 		);
 
-		$block_title->setType('h4');
+		$block_title->setType('h2');
 
 		if (!empty($column_value['title_type'])) {
 

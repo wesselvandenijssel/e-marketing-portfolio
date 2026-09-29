@@ -8,6 +8,8 @@ $link = $link ?? [];
 $author = $author ?? '';
 $date = $date ?? '';
 $swiper = $swiper ?? false;
+$heading_level = isset($heading_level) ? max(2, min(6, absint($heading_level))) : 3;
+$heading = 'h' . $heading_level;
 
 if (empty($title) || empty($image)) return;
 
@@ -57,9 +59,9 @@ if (!empty($swiper)) {
 				?>
 			</div>
 
-			<h3 class="post__title">
+			<<?= $heading; ?> class="post__title h3">
 				<?= esc_html($title); ?>
-			</h3>
+			</<?= $heading; ?>>
 
 			<span class="btn btn--read-more post__button"><?= esc_html__('Lees verder', 'wesselvandenijssel'); ?></span>
 		</div>

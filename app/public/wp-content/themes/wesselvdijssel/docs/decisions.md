@@ -341,3 +341,18 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - header, footer en popups worden overgeslagen
   - Swiper-slides animeren niet los, omdat slides buiten beeld nooit in beeld komen
 - **Gevolg:** `main.js` wordt ongeveer 20 KB groter.
+
+## D-038: HTML-validatie, kopniveaus en sizes
+
+- **Datum:** 2026-09-29
+- **Beslissing:** fouten uit de W3C-validator op Home opgelost:
+  - **`sizes` zonder `srcset`:** een filter op `wp_get_attachment_image_attributes` in `post-thumbnails.php` haalt `sizes` weg als een afbeelding geen `srcset` heeft. Dat geldt voor alle afbeeldingen, niet alleen de projectkaart.
+  - **Sub- en suptitel:** `BlockTitle` maakt er een `<p>` van in plaats van een `<h3>`. Het zijn geen koppen, maar een regel onder of boven de titel.
+  - **Kopniveaus:**
+    - de titels van de footerkolommen zijn `<h2>` met de klasse `h4`
+    - de zoekresultaten zijn `<h2>` met de klasse `h3`
+    - "Over de auteur" is `<h2>` met de klasse `h4`
+    - de tweede h1 op de auteurspagina is nu een h2
+    - de blogkaart krijgt `heading_level`, net als de projectkaart
+  - `.h3` en `.h4` hebben nu zelf `line-height: 1.3`, zodat een `<h2 class="h4">` er hetzelfde uitziet als een `<h4>`.
+- **Gevolg:** geen overgeslagen kopniveaus en geen `sizes` zonder `srcset` meer op de 15 geteste URL's. Het uiterlijk is gelijk gebleven (zelfde grootte, regelhoogte en marge).

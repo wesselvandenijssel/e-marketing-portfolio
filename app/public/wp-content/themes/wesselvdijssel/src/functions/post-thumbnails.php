@@ -25,3 +25,18 @@ function hook_thumbnail_methods(): void {
 		add_image_size('Avatar', 128, 128, true);
 	}
 }
+
+add_filter('wp_get_attachment_image_attributes', 'wesselvandenijssel_remove_sizes_without_srcset', 99);
+
+/**
+ * Removes the sizes attribute from images without a srcset, which is invalid HTML.
+ *
+ * @param array $attr The image attributes
+ */
+function wesselvandenijssel_remove_sizes_without_srcset(array $attr): array {
+	if (empty($attr['srcset'])) {
+		unset($attr['sizes']);
+	}
+
+	return $attr;
+}

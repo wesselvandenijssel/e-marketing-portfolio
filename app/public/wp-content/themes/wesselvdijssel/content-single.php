@@ -78,7 +78,7 @@ $post_url = get_permalink();
 		<section class="section single__author-info pad--top-small pad--bottom-medium">
 			<div class="columns-12 center">
 				<div class="single__author-info-wrapper">
-					<h4 class="single__author-info-title"><?= esc_html__('Over de auteur', 'wesselvandenijssel'); ?></h4>
+					<h2 class="single__author-info-title h4"><?= esc_html__('Over de auteur', 'wesselvandenijssel'); ?></h2>
 					<a class="single__author-info-wrapper-inner" href="<?= esc_url(get_author_posts_url($author_id)); ?>">
 						<?php
 						$author_image = get_field('image', 'user_' . $author_id);

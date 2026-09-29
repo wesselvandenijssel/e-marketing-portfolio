@@ -79,6 +79,18 @@ if ($is_overview) {
 $query = new WP_Query($args);
 
 $total = $query->max_num_pages;
+
+$post_heading_level = 2;
+
+if (!empty($block_title['main_title'])) {
+	$title_type = $block_title['type'] ?? 'default';
+	$title_level = in_array($title_type, ['h1', 'h2', 'h3'], true)
+		? (int) substr($title_type, 1)
+		: calculate_title_element($block);
+
+	$post_heading_level = min($title_level + 1, 6);
+}
+
 echo !is_admin() ? '[raw]' : '';
 ?>
 
@@ -164,6 +176,7 @@ echo !is_admin() ? '[raw]' : '';
 							'author' => get_the_author(),
 							'date' => get_the_date('d M Y'),
 							'swiper' => !$is_overview,
+							'heading_level' => $post_heading_level,
 						]);
 					endwhile;
 				else : ?>

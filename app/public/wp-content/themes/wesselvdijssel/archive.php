@@ -41,6 +41,7 @@ get_header(); ?>
 							],
 							'author' => get_the_author(),
 							'date' => get_the_date('d M Y'),
+							'heading_level' => 2,
 						]);
 					endwhile;
 				else :
