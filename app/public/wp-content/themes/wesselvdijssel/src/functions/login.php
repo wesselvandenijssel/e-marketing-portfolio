@@ -19,5 +19,5 @@ function wesselvandenijssel_login_url() {
 
 // calling it only on the login page
 add_action('login_enqueue_scripts', 'wesselvandenijssel_login_css', 10);
-add_filter('login_headertitle', 'wesselvandenijssel_login_title');
+add_filter('login_headertext', 'wesselvandenijssel_login_title');
 add_filter('login_headerurl', 'wesselvandenijssel_login_url');

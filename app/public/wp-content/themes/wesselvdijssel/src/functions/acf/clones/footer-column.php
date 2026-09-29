@@ -1,7 +1,7 @@
 <?php
 defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 
-if (function_exists('acf_add_local_field_group')) :
+add_action('acf/init', function () {
 	acf_add_local_field_group([
 		'key' => 'clone_footer_column',
 		'title' => esc_html__('Kloon: Footer kolom', 'wesselvandenijssel'),
@@ -47,6 +47,25 @@ if (function_exists('acf_add_local_field_group')) :
 								],
 								'default_value' => 'h4',
 								'return_format' => 'value',
+							],
+						],
+					],
+
+					[
+						'key' => 'clone_footer_column_content_layout_text',
+						'name' => 'text',
+						'label' => esc_html__('Tekst', 'wesselvandenijssel'),
+						'display' => 'block',
+						'sub_fields' => [
+							[
+								'key' => 'clone_footer_column_content_layout_text_text',
+								'label' => esc_html__('Tekst', 'wesselvandenijssel'),
+								'name' => 'text',
+								'type' => 'wysiwyg',
+								'tabs' => 'visual',
+								'toolbar' => 'basic',
+								'media_upload' => false,
+								'delay' => true,
 							],
 						],
 					],
@@ -174,5 +193,4 @@ if (function_exists('acf_add_local_field_group')) :
 			],
 		],
 	]);
-
-endif;
+});

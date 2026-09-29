@@ -89,7 +89,7 @@ $contact_details = get_field('contact_details', 'options');
 					<?= get_logo(['class' => 'header__logo']); ?>
 
 					<nav id="site-navigation" class="main-navigation" itemscope itemtype="http://schema.org/SiteNavigationElement">
-						<div class="menu-toggle" role="button" tabindex="0" aria-label="<?= esc_attr__('Open menu', 'wesselvandenijssel'); ?>" aria-expanded="false">
+						<div class="menu-toggle" role="button" tabindex="0" aria-label="<?= esc_attr__('Menu openen', 'wesselvandenijssel'); ?>" aria-expanded="false">
 							<div class="menu-toggle__lines">
 								<div class="menu-toggle__burger">
 									<span class="menu-toggle__burger-line menu-toggle__burger-line--first"></span>
@@ -103,7 +103,7 @@ $contact_details = get_field('contact_details', 'options');
 							</div>
 							<span class="menu-toggle__text"><?= esc_html__('Menu', 'wesselvandenijssel'); ?></span>
 						</div>
-						<a class="skip-link screen-reader-text" href="#content"><?= esc_html__('Skip to content', 'wesselvandenijssel'); ?></a>
+						<a class="skip-link screen-reader-text" href="#content"><?= esc_html__('Naar de inhoud', 'wesselvandenijssel'); ?></a>
 
 						<div class="main-navigation__content">
 							<?php wp_nav_menu(

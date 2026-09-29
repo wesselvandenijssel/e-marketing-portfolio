@@ -43,7 +43,7 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Beslissing:** er worden geen plugins aan- of uitgezet (antwoord 6). Dat geldt ook voor `afl-wc-utm` en de `wesselvdijssel-*`-plugins.
 - **Gevolg:** WP Rocket blijft uit. Gaat hij later toch aan, dan eerst de beschermde pagina's uitsluiten (zie het plan, login-gedeelte, punt 4).
 
-## D-007: Eerste commit pas na stap 2
+## D-007: Eerste commit pas na stap 2 (commitdeel vervangen door D-029)
 
 - **Datum:** 2026-09-28
 - **Beslissing:** er wordt niets gecommit tot stap 2 klaar is. Ook de docs-commit uit de opdracht vervalt. Stap 0 start zonder commit.
@@ -184,3 +184,160 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - **Uploads zonder Imagick:** de WebP-omzetting in `focalpoint.php` crashte elke upload als Imagick ontbreekt. Nu blijft dan het origineel staan.
   - **Tijdlijn:** de algemene regel `.entry-content ol` gaf de tijdlijn nummers en een marge. De tijdlijnregel is nu specifieker.
   - **Editor-typografie:** de editor gebruikte een schreeflettertype. `admin.scss` zet nu Public Sans en navy op `.editor-styles-wrapper`.
+
+## D-023: Projecten als pagina met blok, met vaste projectvelden
+
+- **Datum:** 2026-09-29
+- **Beslissing:** "Projecten" is een pagina (`/projecten/`) met het projectblok en een categoriefilter. Er is geen CPT-archief, en dat volgt het plan. Losse projecten hebben vaste velden:
+  - opdrachtgever
+  - periode
+  - website
+  - tools
+  - opdracht
+  - mijn rol
+  - aanpak
+  - resultaat
+  - beelden
+- **Gevolg:** de velden staan in `src/functions/acf/post-types/project.php` en worden getoond via het component `project-details` in `single-project.php`.
+
+## D-024: Projectinhoud alleen uit bewijs
+
+- **Datum:** 2026-09-29
+- **Beslissing:** de 8 projecten komen uit:
+  - de git-commits van Wessel in de Local-sites
+  - zijn stagelogboek (september 2023 tot mei 2024)
+  - de case-pagina's van het stagebedrijf
+- **Gevolg:**
+  - "Aanpak" noemt alleen wat uit commits en logboek blijkt.
+  - Resultaatcijfers staan er als "Het team meldt …" en komen letterlijk uit de case. Er staat een link naar de bron bij.
+  - Zonder case is het resultaat `[INVULLEN]`. Dat geldt voor SCX Solar en The Souks.
+  - De projectbeelden zijn screenshots van de live websites, gemaakt op 29-09-2026.
+
+## D-025: Formulier slaat geen IP-adres meer op
+
+- **Datum:** 2026-09-29
+- **Beslissing:** in formulier 1 staat "IP-adres niet opslaan" aan (`personalData.preventIP`).
+- **Gevolg:** het formulier bewaart naam, e-mail, telefoon, bericht en toestemming. De plugins voegen daar twee dingen aan toe:
+  - de customer-journey-plugin: de bekeken pagina's
+  - Gravity Forms: de browser (user agent)
+
+  UTM-gegevens slaat de UTM-plugin alleen op met toestemming, en die wordt nu niet gevraagd. Het privacy statement beschrijft dit. Of de twee tracking-plugins aan blijven, beslist Wessel. De opdracht zegt "alleen naam, e-mail, telefoon en bericht".
+
+## D-026: Iconen in de stijl regular
+
+- **Datum:** 2026-09-29
+- **Beslissing:** icoonblokken gebruiken de stijl "regular".
+- **Reden:** de Font Awesome-kit bevat per stijl maar een deel van de iconen. Zo heeft solid geen `cube` en `circle-play`.
+- **Gevolg:** een nieuw icoon kan in de editor gekozen worden, maar werkt alleen als het in de kit staat. De kit is van het stagebedrijf en kan alleen via hun account worden uitgebreid.
+
+## D-027: Deploydoel gevonden
+
+- **Datum:** 2026-09-29
+- **Beslissing:** `REMOTE_PATH` is `/home/<gebruiker>/domains/wesselvandenijssel.nl/public_html/emarketing` (subdomein als submap). De droge run is volledig groen.
+- **Gevolg:**
+  - Op die installatie staat nu een kopie van lumie, met het thema `lumie` actief.
+  - Een deploy zet het thema en de plugins ernaast, maar activeert niets en zet geen database over.
+  - `blog_public` moet daar op 1 staan. Lokaal staat hij op 0, waardoor de hele site op noindex staat.
+
+## D-028: Tracking-plugins blijven aan
+
+- **Datum:** 2026-09-29
+- **Beslissing:** de plugins customer-journey en UTM blijven actief (keuze van Wessel).
+- **Gevolg:** het privacy statement blijft zoals het is en beschrijft de extra gegevens: de bekeken pagina's, de browser en, met toestemming, UTM-gegevens. Dit wijkt af van de regel "alleen naam, e-mail, telefoon en bericht". Wessel heeft dat risico afgewogen. Pas het privacy statement aan als er een cookiebanner of statistieken bij komen.
+
+## D-029: Niet committen tot Wessel erom vraagt
+
+- **Datum:** 2026-09-29
+- **Beslissing:** het commitvoorstel na stap 2 (branch `feature/blocks` met een PR) is afgewezen. Er wordt niets gecommit of gepusht tot Wessel daar zelf om vraagt.
+- **Gevolg:** dit vervangt het commitdeel van D-007. Stappen krijgen `Klaar` zonder commit-hash.
+
+## D-030: WooCommerce-concept verwijderd
+
+- **Datum:** 2026-09-29
+- **Beslissing:** de conceptpagina "Terugbetaal- en retourneringsbeleid" (ID 166) is verwijderd, na een backup (`app/sql/2026-09-29-voor-verwijderen-166.sql`).
+
+## D-031: Beschermd gedeelte via status "Privé" en een eigen rol
+
+- **Datum:** 2026-09-29
+- **Beslissing:** "Portfolio minor" en de 11 subpagina's hebben de status Privé. Alleen beheerders en de rol `portfolio_beoordelaar` (capabilities `read` en `read_private_pages`) kunnen ze lezen.
+- **Reden:** er waren twee opties.
+  - **A. Een wachtwoord op de hoofdpagina.** Het wachtwoord geldt niet voor subpagina's, titels lekken via REST, zoeken en sitemaps, en je kunt geen toegang intrekken.
+  - **B. Login met een rol.** Bij B dwingt WordPress zelf de afscherming af, overal. Dit is een verbetering op het plan, dat eigen filters noemde.
+
+  Gekozen is B, met de status Privé van WordPress.
+- **Gevolg:** `src/inc/protected-section.php` voegt toe:
+  - een redirect naar de login voor elke URL onder `/portfolio-minor/`, ook als de pagina niet bestaat
+  - noindex/nofollow in de meta en in de header
+  - no-cache en `DONOTCACHEPAGE`
+  - geen OG- of Twitter-tags
+  - een tweede uitsluiting uit sitemaps en menu's
+  - titels zonder "Privé:"
+  - geen wp-admin en geen adminbalk voor de beoordelaar
+
+  Het gedeelde account is `beoordelaar` (D-003). Het wachtwoord staat niet in de repo of in `docs/`.
+- **Let op:** bestanden die je op deze pagina's uploadt (pdf, afbeeldingen) blijven bereikbaar via hun directe URL in `/wp-content/uploads/`. Zet daar geen cijfers of feedback in als je dat niet openbaar wilt.
+
+## D-032: Vertalingen laden niet meer te vroeg
+
+- **Datum:** 2026-09-29
+- **Beslissing:** twee dingen zijn verplaatst naar een hook. `register_nav_menus()` staat nu op `init`. De veldgroepen van de clones (button, footer-column, title) en de page-settings (author, popups) staan nu op `acf/init`.
+- **Gevolg:** de melding `_load_textdomain_just_in_time` voor `wesselvandenijssel` is weg. De homepagina is pixel-identiek, en de clones werken.
+
+## D-033: Menu en footer
+
+- **Datum:** 2026-09-29
+- **Beslissing:**
+  - **Hoofdmenu** (locaties `primary` en `primary_mobile`): Home, Over mij, Ervaring, Projecten, Blog, Contact, plus "Portfolio (login)". Die laatste is een aangepaste link naar `/portfolio-minor/` met de class `menu-button`, en ziet eruit als de primaire knop.
+  - **Footermenu** (nieuw, "Footer"): Disclaimer, Privacy statement, Sitemap en Gebruik van AI.
+  - **Sitemapmenu:** gekoppeld aan de locatie `sitemap`.
+- **Reden:** een aangepaste link in plaats van een paginalink. Het beveiligingsfilter verbergt paginalinks naar het portfolio voor bezoekers zonder toegang, en de knop moet voor iedereen zichtbaar zijn.
+- **Gevolg:** de footer heeft vier kolommen: intro, Navigatie, Contact (e-mail + LinkedIn) en Informatie (het footermenu). De subfooter toont "© [jaar] wesselvandenijssel".
+  - **Nieuwe layout:** voor de intro is de layout "Tekst" toegevoegd aan de footerkolom-clone.
+  - **Social media:** in de opties staat alleen LinkedIn. De placeholders voor Facebook en Instagram uit het base-theme zijn verwijderd.
+  - **Bekende bug:** `header.php` leest `header['buttons']`, maar het veld heet `buttons_group`, dus header-knoppen uit de opties verschijnen nooit. Omdat de knop nu in het menu staat, is dit niet opgelost.
+
+## D-034: Geen uitleg-commentaar in code
+
+- **Datum:** 2026-09-29
+- **Beslissing:** Wessel haalde ook uitleg-commentaar weg uit PHP buiten `blocks/` en `components/`: de kop van `src/inc/protected-section.php` en regels in `functions.php` en `theme-support.php`. Code in dit thema krijgt daarom alleen PHPDoc boven functies en de vaste bestandskoppen. Uitleg hoort in `docs/`.
+- **Gevolg:** dit breidt D-020 uit naar alle code in het thema.
+
+## D-035: Blogpagina via home.php, teksten vertaald
+
+- **Datum:** 2026-09-29
+- **Beslissing:**
+  - **`home.php`:** nieuw. Die toont de blokken van de berichtenpagina. Nadat Blog de berichtenpagina werd, gebruikte WordPress `index.php`, en daar bleef de pagina leeg.
+  - **Blog-blok:** krijgt de lege staat "Er zijn nog geen berichten.". Het filter heet nu "Alle berichten".
+  - **Teksten:** vaste teksten in het thema zijn in het Nederlands en in de je-vorm gezet: de reacties, "Naar de inhoud", "Menu openen", "Pagina %s" en de pagina zonder zoekresultaten, die nu ook een link naar Home heeft in plaats van een `onclick`-knop.
+  - **Menu op tabletbreedte (740–979 px):** menu-items breken niet af, de tekst is 15px en de knop is compacter. Daardoor past het menu op één regel.
+- **Gevolg:** de content-audit vindt geen placeholders, geen afbeeldingen zonder alt, geen verboden woorden of u-vorm, en geen Engelse teksten op de publieke pagina's.
+
+## D-036: Eindcontrole, laatste meldingen opgelost
+
+- **Datum:** 2026-09-29
+- **Beslissing:** tijdens de eindcontrole zijn deze fouten opgelost:
+  - **Loginpagina:** stak op mobiel 62px uit, door ontbrekende `box-sizing`. Ook had hij te weinig contrast, doordat links, "Taal" en "Wijzigen" in WordPress-blauw of grijs op navy stonden. De inlogknop heeft nu de merkkleuren.
+  - **`login.php`:** gebruikt `login_headertext` in plaats van de verouderde `login_headertitle`.
+  - **`gravity-forms.php`:** `$reply_footer_html` werd alleen gezet als er een telefoonnummer was, wat een warning gaf bij elke bevestigingsmail. De mailtekst staat nu in de je-vorm.
+- **Niet opgelost (plugins, pluginbestanden worden niet aangepast):**
+  - PHP 8.5-deprecations in Yoast SEO (`null` als array-index), WP Migrate DB Pro en lh-multipart-email (`mb_convert_encoding`)
+  - deprecations van de WP-CLI-tool zelf
+
+  Die verdwijnen bij updates van de plugins, of op een server met een oudere PHP-versie.
+
+## D-037: Scrollanimaties met motion
+
+- **Datum:** 2026-09-29
+- **Beslissing:** het thema krijgt scrollanimaties in de stijl van damsteegtwaterwerken en van-der-donk, met de library `motion` 13.1.0 (dezelfde versie als van-der-donk). Alles staat in `src/scripts/files/animations.ts` en `src/styles/components/_animations.scss`.
+  - **Koppen** (`.titles .main-title`, h2/h3 in `.content-layout`): elke regel schuift uit een masker omhoog, regel na regel (damsteegtwaterwerken, `text-animate.ts`).
+  - **Tekst** (subtitel, alinea's, lijsten, knoppen): schuift 24px omhoog en faadt in.
+  - **Groepen** (icon-boxes, projecten, statistieken, tijdlijn, galerij, logo's, blogoverzicht, projectdetails): elk item faadt omhoog, met een kleine vertraging per item.
+  - **Losse elementen:** portretfoto, afbeelding bij content-image, contactformulier, quote-slider, blogslider.
+  - **CTA-banner:** de kaart opent in de breedte met een `clip-path` terwijl je scrolt (van-der-donk, `image-banner`).
+  - **Hero:** het blauwe vlak achter de portretfoto beweegt tot 40px mee met het scrollen.
+- **Regels:**
+  - de beginstand (onzichtbaar) geldt alleen als het script de klassen heeft gezet, dus zonder JavaScript is alles zichtbaar
+  - bij `prefers-reduced-motion: reduce` draait er niets
+  - header, footer en popups worden overgeslagen
+  - Swiper-slides animeren niet los, omdat slides buiten beeld nooit in beeld komen
+- **Gevolg:** `main.js` wordt ongeveer 20 KB groter.

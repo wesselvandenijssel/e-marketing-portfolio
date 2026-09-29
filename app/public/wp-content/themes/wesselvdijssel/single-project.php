@@ -49,7 +49,7 @@ get_header(); ?>
 
 								<?php if (!$is_locked && has_post_thumbnail()) : ?>
 									<div class="image">
-										<?= wp_get_attachment_image(get_post_thumbnail_id(), 'large', false, ['class' => 'single__image']); ?>
+										<?= wp_get_attachment_image(get_post_thumbnail_id(), 'Hero 900', false, ['class' => 'single__image', 'fetchpriority' => 'high']); ?>
 									</div>
 								<?php endif; ?>
 							</div>
@@ -58,6 +58,18 @@ get_header(); ?>
 					</div>
 				</div>
 			</section>
+
+			<?php if (!$is_locked) : ?>
+				<section class="section centered-content pad--top-medium">
+					<div class="columns-12 center">
+						<div class="centered-content__wrapper">
+							<div class="content-layout">
+								<?php component('project-details', ['post_id' => get_the_ID()]); ?>
+							</div>
+						</div>
+					</div>
+				</section>
+			<?php endif; ?>
 
 			<div id="read-more" class="single__content">
 				<?php the_content(); ?>

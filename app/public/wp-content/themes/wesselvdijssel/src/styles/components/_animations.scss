@@ -1,0 +1,23 @@
+@use "abstracts" as *;
+
+.text-reveal {
+	&__mask {
+		display: inline-block;
+		overflow: hidden;
+		vertical-align: top;
+		padding-bottom: 0.12em;
+		margin-bottom: -0.12em;
+	}
+
+	&__word {
+		display: inline-block;
+		transform: translateY(120%);
+		opacity: 0;
+	}
+}
+
+.reveal-fade,
+.reveal-item {
+	transform: translateY(pxtorem(24));
+	opacity: 0;
+}

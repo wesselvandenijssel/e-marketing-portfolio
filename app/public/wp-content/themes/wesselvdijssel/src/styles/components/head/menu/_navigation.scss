@@ -1,4 +1,5 @@
 @use "abstracts" as *;
+@use "placeholders" as *;
 
 .main-navigation {
 	@include bp("mobile") {
@@ -214,6 +215,18 @@
 			align-items: center;
 		}
 
+		&.menu-button > a {
+			@extend %btn--primary;
+
+			@include bp("mobile") {
+				margin-inline: 10px;
+			}
+
+			@include bp-only("narrow", "normal") {
+				padding: 10px 14px;
+			}
+		}
+
 		/* stylelint-disable-next-line selector-class-pattern */
 		&.current_page_item,
 		&.current-page-ancestor {
@@ -246,6 +259,11 @@
 			@include bp("narrow") {
 				padding: 0;
 				line-height: 1;
+				white-space: nowrap;
+			}
+
+			@include bp-only("narrow", "normal") {
+				font-size: pxtorem(15);
 			}
 		}
 	}

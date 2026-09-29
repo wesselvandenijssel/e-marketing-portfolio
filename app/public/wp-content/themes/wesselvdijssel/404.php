@@ -24,30 +24,38 @@ get_header(); ?>
 
 					else :
 
-						$title = new BlockTitle(esc_html__('De opgevraagde pagina kan niet gevonden worden', 'wesselvandenijssel'));
-						$title->setSubtitle(esc_html__('404 error', 'wesselvandenijssel'));
-						$title->setType(
-							'h2'
-						);
+						$title = new BlockTitle(esc_html__('Deze pagina bestaat niet', 'wesselvandenijssel'));
+						$title->setSubtitle(esc_html__('Foutcode 404', 'wesselvandenijssel'));
+						$title->setType('h1');
 						echo $title->getTitle();
+
+						$projects_page = get_page_by_path('projecten');
+						$contact_page = get_page_by_path('contact');
 					?>
 
-						<p>
-							<?= wp_kses_post(sprintf(
-								__('De pagina die u zoekt is verwijderd of verplaatst. Wellicht dat u de juiste informatie kunt
-							vinden via onze <a href="%s" title="%s">%s</a> of <a href="%s" title="%s">%s</a>', 'wesselvandenijssel'),
-								esc_url(home_url('/')),
-								esc_attr__('Homepagina', 'wesselvandenijssel'),
-								esc_html__('homepagina', 'wesselvandenijssel'),
-								esc_url(get_permalink(12)),
-								esc_attr__('Contactpagina', 'wesselvandenijssel'),
-								esc_html__('contactpagina', 'wesselvandenijssel'),
-							)); ?>
-						</p>
+						<p><?= esc_html__('De pagina die je zoekt is verplaatst of verwijderd. Ga terug naar de homepagina, bekijk mijn projecten of neem contact met me op.', 'wesselvandenijssel'); ?></p>
+
 						<div class="buttons">
-							<button class="btn btn--primary" onclick="window.history.go(-1); return false;">
-								<?= esc_html__('Terug naar de vorige pagina', 'wesselvandenijssel'); ?>
-							</button>
+							<?php
+							$home_button = new BlockButton(esc_html__('Naar de homepagina', 'wesselvandenijssel'));
+							$home_button->set_type('btn btn--primary');
+							$home_button->set_link(home_url('/'), esc_attr__('Naar de homepagina', 'wesselvandenijssel'), '');
+							echo $home_button->get_button();
+
+							if ($projects_page instanceof WP_Post) {
+								$projects_button = new BlockButton(esc_html__('Bekijk mijn projecten', 'wesselvandenijssel'));
+								$projects_button->set_type('btn btn--secondary');
+								$projects_button->set_link(get_permalink($projects_page), esc_attr__('Bekijk mijn projecten', 'wesselvandenijssel'), '');
+								echo $projects_button->get_button();
+							}
+
+							if ($contact_page instanceof WP_Post) {
+								$contact_button = new BlockButton(esc_html__('Neem contact op', 'wesselvandenijssel'));
+								$contact_button->set_type('btn btn--secondary');
+								$contact_button->set_link(get_permalink($contact_page), esc_attr__('Neem contact op', 'wesselvandenijssel'), '');
+								echo $contact_button->get_button();
+							}
+							?>
 						</div>
 					<?php endif; ?>
 				</div>

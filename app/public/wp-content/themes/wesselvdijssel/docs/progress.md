@@ -7,11 +7,14 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 | Stap | Onderwerp | Status | Datum klaar | Commit | Rapport |
 |---|---|---|---|---|---|
 | 0 | Backup, thema activeren, branding opschonen | Klaar | 2026-09-28 | geen (D-007) | [stap 0](reports/2026-09-28-stap-0-opschonen.md) |
-| 1 | CPT `project`, beschermd gedeelte, rol | Deels (CPT klaar, D-018) | | | |
-| 2 | Blokken kopiëren en opschonen | Klaar | 2026-09-29 | nog niet (D-007) | [stap 2](reports/2026-09-29-stap-2-blokken.md) |
+| 1 | CPT `project`, beschermd gedeelte, rol | Klaar (D-018, D-031) | 2026-09-29 | geen (D-029) | [stap 1 + 5](reports/2026-09-29-stap-5-portfolio-minor.md) |
+| 2 | Blokken kopiëren en opschonen | Klaar | 2026-09-29 | geen (D-029) | [stap 2](reports/2026-09-29-stap-2-blokken.md) |
 | 3 | Merkstijl in `_variables.scss` | Klaar (vóór stap 1–2, D-011) | 2026-09-28 | geen (D-013) | [stap 3](reports/2026-09-28-stap-3-huisstijl.md) |
-| 4 | Pagina's, menu's, formulier, Yoast | Gepland | | | |
-| 5 | Content en kwaliteitscheck | Gepland | | | |
+| 4 | Pagina's, menu's, formulier, Yoast | Klaar (met INVULLEN-punten) | 2026-09-29 | geen (D-029) | [stap 4](reports/2026-09-29-stap-4-paginas.md) |
+| 5 | Content en kwaliteitscheck | Klaar, met INVULLEN-punten (D-035) | 2026-09-29 | geen (D-029) | [stap 7](reports/2026-09-29-stap-7-content-seo.md) |
+| 6 | Menu en footer (extra opdracht) | Klaar (D-033) | 2026-09-29 | geen (D-029) | [stap 6](reports/2026-09-29-stap-6-menu-footer.md) |
+| 7 | Eindcontrole | Klaar (D-036) | 2026-09-29 | geen (D-029) | [stap 8](reports/2026-09-29-stap-8-controle.md) |
+| – | Scrollanimaties (extra opdracht) | Klaar (D-037) | 2026-09-29 | geen (D-029) | [animaties](reports/2026-09-29-animaties.md) |
 
 ## Stap 0: backup, thema activeren, branding opschonen
 
@@ -31,9 +34,10 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 ## Stap 1: CPT `project`, beschermd gedeelte, rol
 
 - [x] CPT `project` + taxonomie `project_category` (`has_archive => false`, slug `projecten`) (D-018)
-- [ ] `src/inc/protected-section.php`: rol, toegangscheck, geen lekken via REST, feeds, zoeken, sitemap of OG, noindex, geen cache
-- [ ] Beoordelaarsaccount aanmaken (wachtwoord niet in de repo)
-- [ ] Test als uitgelogde bezoeker
+- [x] `src/inc/protected-section.php`: rol, toegangscheck, geen lekken via REST, feeds, zoeken, sitemap of OG, noindex, geen cache (D-031)
+- [x] Beoordelaarsaccount `beoordelaar` aangemaakt (wachtwoord niet in de repo)
+- [x] Getest als uitgelogde bezoeker en als beoordelaar
+- [x] Melding over vertalingen die te vroeg laden opgelost (D-032)
 
 ## Stap 2: blokken kopiëren en opschonen
 
@@ -60,29 +64,38 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 
 ## Stap 4: pagina's, menu's, formulier, Yoast
 
-- [ ] Nieuwe pagina's: Over mij, Ervaring, Projecten, Gebruik van AI, Portfolio minor + 10 subpagina's
-- [ ] Blog (ID 136) instellen als berichtenpagina
-- [ ] Hoofdmenu en footermenu (met de link naar Gebruik van AI)
-- [x] Formulier: Telefoon optioneel, zichtbare labels, zichtbare foutsamenvatting (D-015)
-- [ ] Formulier: privacy-toestemming, honeypot, doorsturen naar Bedankt
-- [ ] Yoast: focus-keyphrase, SEO-titel en metabeschrijving per publieke pagina
+- [x] Nieuwe pagina's: Over mij, Ervaring, Projecten, Gebruik van AI. Home, Contact, Bedankt, Privacy statement en Disclaimer zijn opnieuw gevuld.
+- [x] Portfolio minor + 11 subpagina's met vaste opbouw en `[INVULLEN]` (D-031)
+- [x] Blog (ID 136) ingesteld als berichtenpagina
+- [x] Hoofdmenu, sitemapmenu, footerkolom "Navigatie" en de link naar Gebruik van AI in de subfooter
+- [x] Formulier: Telefoon optioneel, toestemmingsvinkje, honeypot, doorsturen naar Bedankt, meldingen naar info@, geen IP-adres (D-025)
+- [x] 8 projecten met velden, beelden en categorieën (D-023, D-024)
+- [x] 404-pagina in de je-vorm, met knoppen
+- [x] Yoast: focus-keyphrase, SEO-titel en metabeschrijving per publieke pagina en per project; Bedankt op noindex; de site als persoon
 
 ## Stap 5: content en kwaliteitscheck
 
-- [ ] Content per pagina (live site als basis, `[INVULLEN]` waar feiten ontbreken)
-- [ ] Nederlandse alt-teksten
-- [ ] Mobiel, tablet en desktop testen, formulier testen, beschermd deel uitgelogd testen, foutlog en console controleren
+- [x] Content per pagina, met de live site als basis en `[INVULLEN]` waar feiten ontbreken
+- [x] Nederlandse alt-teksten bij alle afbeeldingen
+- [x] Yoast bij alle publieke pagina's en projecten
+- [x] Gebruik van AI, met APA-vermelding
+- [x] Getest op mobiel (390), tablet (820) en desktop (1440): geen overloop, 1 h1 per pagina, geen JS-fouten
+- [x] Formulier, melding en redirect getest (stap 4)
+- [x] Beschermd deel uitgelogd getest (stap 5)
+- [x] PHP-foutlog en console gecontroleerd
 
 ## Open punten voor Wessel
 
-1. `local-site.json` in de site-root opnieuw laten aanmaken door Local (D-010).
-2. Log voortaan in met `wesselvandenijssel` of met info@wesselvandenijssel.nl (D-009).
-3. Er is nog geen logo. Het site-logo en het login-logo blijven voorlopig tekstlogo's.
-4. Contactgegevens: telefoonnummer en adres zijn leeg. Vul ze in of laat ze leeg.
-5. Foutkleur `#b42318` is een eigen keuze (D-012). Akkoord?
-6. De plugin-README's zijn opgeschoond (D-016). De PHP van `wesselvdijssel-widgets` heeft nog de oude Plugin URI, Author URI en update-server van het stagebedrijf. Aanpassen, of zo laten omdat de updates via die server lopen?
-7. `app/git-backups/` (de oude `.git`-mappen van de plugins) mag weg zodra na stap 2 alles gecommit is (D-017).
-8. Repository secrets aanmaken in GitHub (Settings → Secrets and variables → Actions): `FONTAWESOME_TOKEN`, `SSH_HOST`, `SSH_USER`, `SSH_PORT`, `SSH_PRIVATE_KEY`, `SSH_KNOWN_HOSTS` en `REMOTE_PATH`.
-9. Je webpack-watcher (sinds 28-09 22:25) ziet geen nieuwe bestanden. Herstart hem (`npm run dev-watch`), anders missen de nieuwe blokken hun CSS en JS op de site.
-10. Testcontent opruimen vóór stap 4: pagina `BLOKTEST alle blokken`, 3 `BLOKTEST`-projecten, 2 `BLOKTEST`-categorieën en 9 `BLOKTEST`-afbeeldingen.
-11. De conceptpagina "Terugbetaal- en retourneringsbeleid" (ID 166) komt van WooCommerce. Mag die weg?
+1. **`[INVULLEN]` op de site** (ook alle pagina's van Portfolio minor):
+   - Over mij: je merk IK, wat je leert in de minor, hobby's
+   - Ervaring: het startjaar van HBO-ICT, de school en einddatum van de minor, en de omschrijving van de minor
+   - Contact: de reactietermijn
+   - Privacy statement: de bewaartermijn en de hostingpartij
+   - Gebruik van AI: controleren en aanvullen
+   - Projecten: het resultaat van SCX Solar en van The Souks
+2. **Cv:** op Ervaring is nog geen downloadknop. `Professioneel CV A4.pdf` in je Downloads is een lege template.
+3. **Foto:** er is een betere portretfoto nodig. De huidige is 400 × 400 px, uit je oude site.
+4. **Server (D-027):** op emarketing.wesselvandenijssel.nl staat nu lumie. Ook ontbreken daar de database-migratie, de themaactivatie en `blog_public` = 1.
+5. **Watcher:** herstart je webpack-watcher, zodat hij het nieuwe `animations.ts` oppakt (D-037).
+6. **Commits (D-029):** er wordt niets gecommit tot je daarom vraagt. Stap 0 tot en met 4 staan nog als wijzigingen klaar.
+7. **Beoordelaar:** geef de docenten de URL `/portfolio-minor/`, de login `beoordelaar` en het wachtwoord. Op de productieserver maak je het account opnieuw aan, met een nieuw wachtwoord.

@@ -1,6 +1,5 @@
 /* stylelint-disable selector-id-pattern */
 
-/* Brand navy ($hue-dark-1). Plain CSS outside the webpack build, so the values are repeated here */
 .login {
 	background: #00244d;
 	display: flex;
@@ -15,9 +14,16 @@
 	background-color: rgba(255, 255, 255, 0.15);
 	border: 1px solid rgba(255, 255, 255, 0.5);
 	border-radius: 5px;
+	box-sizing: border-box;
 	max-width: 460px;
 	width: calc(100% - 40px);
 	padding: 50px;
+}
+
+@media (width <= 739px) {
+	#login {
+		padding: 24px;
+	}
 }
 
 .interim-login #login {
@@ -49,4 +55,31 @@
 
 .login .privacy-policy-page-link:last-child {
 	margin-bottom: 0;
+}
+
+.login .privacy-policy-page-link a,
+.login .language-switcher label,
+.login .language-switcher .dashicons {
+	color: #fff;
+}
+
+.login .language-switcher .button,
+.login .language-switcher .button:hover,
+.login .language-switcher .button:focus {
+	border-color: #fff;
+	background: transparent;
+	color: #fff;
+}
+
+.wp-core-ui .button-primary {
+	border-color: #00a3e0;
+	background: #00a3e0;
+	color: #00244d;
+}
+
+.wp-core-ui .button-primary:hover,
+.wp-core-ui .button-primary:focus {
+	border-color: #fff;
+	background: #00244d;
+	color: #fff;
 }

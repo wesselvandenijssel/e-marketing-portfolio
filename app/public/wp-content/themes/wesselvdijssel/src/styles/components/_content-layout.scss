@@ -26,6 +26,16 @@
 		}
 	}
 
+	li a:not(.btn) {
+		color: $link-color;
+		text-decoration: underline;
+
+		&:hover,
+		&:focus {
+			color: $hue-dark-1;
+		}
+	}
+
 	ul {
 		li {
 			position: relative;

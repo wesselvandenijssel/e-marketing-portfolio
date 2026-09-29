@@ -114,7 +114,7 @@ echo !is_admin() ? '[raw]' : '';
 			<form class="blog__filter--mobile" method="GET" action="<?= !empty($block['id']) ? '#' . esc_attr($block['id']) : get_the_permalink(); ?>">
 				<select class="blog__filter-select" name="category" aria-label="<?= esc_attr__('Filter', 'wesselvandenijssel'); ?>">
 					<option value="*" <?= !isset($_GET['category']) ? 'selected' : ''; ?>>
-						<?= esc_html__('Alle type blogs', 'wesselvandenijssel'); ?>
+						<?= esc_html__('Alle berichten', 'wesselvandenijssel'); ?>
 					</option>
 
 					<?php if (!empty($terms)) : ?>
@@ -166,7 +166,9 @@ echo !is_admin() ? '[raw]' : '';
 							'swiper' => !$is_overview,
 						]);
 					endwhile;
-				endif; ?>
+				else : ?>
+					<p class="blog__empty"><?= esc_html__('Er zijn nog geen berichten.', 'wesselvandenijssel'); ?></p>
+				<?php endif; ?>
 				<?php if (!$is_overview) : ?>
 				</div>
 

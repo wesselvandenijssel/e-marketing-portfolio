@@ -16,6 +16,8 @@ require_once(get_template_directory() . '/src/functions/theme-support.php');
 require_once(get_template_directory() . '/src/functions/video-helpers.php');
 require(get_template_directory() . '/src/functions/autoload.php');
 
+require_once(get_template_directory() . '/src/inc/protected-section.php');
+
 function wesselvandenijssel_setup() {
 	// let's get language support going, if you need it
 	load_theme_textdomain('wesselvandenijssel', get_template_directory() . '/src/languages');
