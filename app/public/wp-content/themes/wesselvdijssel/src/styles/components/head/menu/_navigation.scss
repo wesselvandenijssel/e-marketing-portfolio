@@ -162,7 +162,6 @@
 			}
 		}
 
-		// Show `.back-to-previous` only on mobile and when there are a minimum of 10 sibling menu items
 		&:has(.menu-item:nth-child(11)) {
 			.back-to-previous {
 				@include bp("mobile") {

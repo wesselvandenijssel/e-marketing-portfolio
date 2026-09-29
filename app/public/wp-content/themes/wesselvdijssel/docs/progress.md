@@ -7,8 +7,8 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 | Stap | Onderwerp | Status | Datum klaar | Commit | Rapport |
 |---|---|---|---|---|---|
 | 0 | Backup, thema activeren, branding opschonen | Klaar | 2026-09-28 | geen (D-007) | [stap 0](reports/2026-09-28-stap-0-opschonen.md) |
-| 1 | CPT `project`, beschermd gedeelte, rol | Gepland | | | |
-| 2 | Blokken kopiëren en opschonen | Gepland | | | |
+| 1 | CPT `project`, beschermd gedeelte, rol | Deels (CPT klaar, D-018) | | | |
+| 2 | Blokken kopiëren en opschonen | Klaar | 2026-09-29 | nog niet (D-007) | [stap 2](reports/2026-09-29-stap-2-blokken.md) |
 | 3 | Merkstijl in `_variables.scss` | Klaar (vóór stap 1–2, D-011) | 2026-09-28 | geen (D-013) | [stap 3](reports/2026-09-28-stap-3-huisstijl.md) |
 | 4 | Pagina's, menu's, formulier, Yoast | Gepland | | | |
 | 5 | Content en kwaliteitscheck | Gepland | | | |
@@ -30,22 +30,23 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 
 ## Stap 1: CPT `project`, beschermd gedeelte, rol
 
-- [ ] CPT `project` + taxonomie `project_category` (`has_archive => false`, slug `projecten`)
+- [x] CPT `project` + taxonomie `project_category` (`has_archive => false`, slug `projecten`) (D-018)
 - [ ] `src/inc/protected-section.php`: rol, toegangscheck, geen lekken via REST, feeds, zoeken, sitemap of OG, noindex, geen cache
 - [ ] Beoordelaarsaccount aanmaken (wachtwoord niet in de repo)
 - [ ] Test als uitgelogde bezoeker
 
 ## Stap 2: blokken kopiëren en opschonen
 
-- [ ] hero: optie portretfoto
-- [ ] icon-boxes (flexercise)
-- [ ] timeline (vink-schilderwerken)
-- [ ] projects + filter (bureau-tromp / damsteegtwaterwerken)
-- [ ] cta-banner (damsteegtwaterwerken)
-- [ ] quote-slider (flexercise)
-- [ ] logo-banner (damsteegtwaterwerken)
-- [ ] statistics (damsteegtwaterwerken)
-- [ ] gallery (damsteegtwaterwerken)
+- [x] hero: optie portretfoto
+- [x] icon-boxes (flexercise)
+- [x] timeline (vink-schilderwerken)
+- [x] projects + filter + CPT (bureau-tromp / damsteegtwaterwerken)
+- [x] cta-banner (damsteegtwaterwerken)
+- [x] quote-slider (flexercise)
+- [x] logo-banner (damsteegtwaterwerken)
+- [x] statistics (damsteegtwaterwerken)
+- [x] gallery (damsteegtwaterwerken)
+- [x] Getest op de testpagina `/bloktest-alle-blokken/`: frontend desktop en mobiel, editor, filter, slider, lightbox
 
 ## Stap 3: merkstijl
 
@@ -82,3 +83,6 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 6. De plugin-README's zijn opgeschoond (D-016). De PHP van `wesselvdijssel-widgets` heeft nog de oude Plugin URI, Author URI en update-server van het stagebedrijf. Aanpassen, of zo laten omdat de updates via die server lopen?
 7. `app/git-backups/` (de oude `.git`-mappen van de plugins) mag weg zodra na stap 2 alles gecommit is (D-017).
 8. Repository secrets aanmaken in GitHub (Settings → Secrets and variables → Actions): `FONTAWESOME_TOKEN`, `SSH_HOST`, `SSH_USER`, `SSH_PORT`, `SSH_PRIVATE_KEY`, `SSH_KNOWN_HOSTS` en `REMOTE_PATH`.
+9. Je webpack-watcher (sinds 28-09 22:25) ziet geen nieuwe bestanden. Herstart hem (`npm run dev-watch`), anders missen de nieuwe blokken hun CSS en JS op de site.
+10. Testcontent opruimen vóór stap 4: pagina `BLOKTEST alle blokken`, 3 `BLOKTEST`-projecten, 2 `BLOKTEST`-categorieën en 9 `BLOKTEST`-afbeeldingen.
+11. De conceptpagina "Terugbetaal- en retourneringsbeleid" (ID 166) komt van WooCommerce. Mag die weg?

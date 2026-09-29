@@ -31,7 +31,7 @@ textarea,
 	color: $text-color;
 	border-radius: 0;
 	box-shadow: none;
-	border: 1px solid $hue-grey-1; // grey-2 is too light for a field boundary (1.23:1), grey-1 gives 7.58:1
+	border: 1px solid $hue-grey-1;
 	width: 100%;
 	background-color: $hue-white;
 	transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out,
@@ -71,7 +71,6 @@ fieldset {
 	margin: 0;
 }
 
-/* Gravity forms */
 .gform_wrapper {
 	.gf_page_steps {
 		display: flex;
@@ -166,7 +165,6 @@ fieldset {
 				display: none;
 			}
 
-			// Visible labels: a placeholder alone disappears while typing and is not a label (WCAG 3.3.2)
 			.gfield_label {
 				display: block;
 				margin-bottom: pxtoem(8);
@@ -373,15 +371,12 @@ fieldset {
 		}
 	}
 
-	// Honeypot
 	.gform_validation_container,
 	.partial_entry_warning,
 	.gform_required_legend {
 		display: none;
 	}
 
-	// Error summary above the form. Gravity Forms moves focus here after a failed submit,
-	// so screen reader users hear that something went wrong.
 	.gform_validation_errors {
 		margin-bottom: pxtoem(20);
 		padding: 15px 20px;
@@ -401,7 +396,6 @@ fieldset {
 			line-height: 1.4;
 		}
 
-		// Gravity Forms' icon font is deregistered, so the empty icon span only takes space
 		.gform-icon {
 			display: none;
 		}

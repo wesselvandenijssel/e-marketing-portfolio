@@ -146,3 +146,88 @@ function custom_popups() {
 	);
 }
 add_action('init', 'custom_popups');
+
+/**
+ * Register the `project` post type for the portfolio projects.
+ *
+ * Single projects live at /projecten/<slug>/. There is no archive, so the page
+ * "Projecten" (slug projecten, holding the projects block) keeps its URL.
+ */
+function wesselvandenijssel_register_project_post_type(): void {
+	register_post_type(
+		'project',
+		[
+			'labels' => [
+				'name' => esc_html__('Projecten', 'wesselvandenijssel'),
+				'singular_name' => esc_html__('Project', 'wesselvandenijssel'),
+				'menu_name' => esc_html__('Projecten', 'wesselvandenijssel'),
+				'all_items' => esc_html__('Alle projecten', 'wesselvandenijssel'),
+				'add_new' => esc_html__('Nieuw project', 'wesselvandenijssel'),
+				'add_new_item' => esc_html__('Nieuw project toevoegen', 'wesselvandenijssel'),
+				'edit_item' => esc_html__('Project bewerken', 'wesselvandenijssel'),
+				'new_item' => esc_html__('Nieuw project', 'wesselvandenijssel'),
+				'view_item' => esc_html__('Project bekijken', 'wesselvandenijssel'),
+				'view_items' => esc_html__('Projecten bekijken', 'wesselvandenijssel'),
+				'search_items' => esc_html__('Projecten zoeken', 'wesselvandenijssel'),
+				'not_found' => esc_html__('Geen projecten gevonden.', 'wesselvandenijssel'),
+				'not_found_in_trash' => esc_html__('Geen projecten gevonden in de prullenbak.', 'wesselvandenijssel'),
+				'featured_image' => esc_html__('Uitgelichte afbeelding', 'wesselvandenijssel'),
+				'set_featured_image' => esc_html__('Uitgelichte afbeelding instellen', 'wesselvandenijssel'),
+				'remove_featured_image' => esc_html__('Uitgelichte afbeelding verwijderen', 'wesselvandenijssel'),
+				'use_featured_image' => esc_html__('Gebruik als uitgelichte afbeelding', 'wesselvandenijssel'),
+				'item_published' => esc_html__('Project gepubliceerd.', 'wesselvandenijssel'),
+				'item_updated' => esc_html__('Project bijgewerkt.', 'wesselvandenijssel'),
+			],
+			'description' => '',
+			'public' => true,
+			'publicly_queryable' => true,
+			'exclude_from_search' => false,
+			'show_ui' => true,
+			'show_in_rest' => true, // Required for the block editor
+			'query_var' => true,
+			'menu_position' => 7,
+			'menu_icon' => 'dashicons-portfolio',
+			'rewrite' => ['slug' => 'projecten', 'with_front' => false],
+			'has_archive' => false, // The page "Projecten" is the overview
+			'capability_type' => 'post',
+			'hierarchical' => false,
+			'supports' => [
+				'title',
+				'editor',
+				'thumbnail',
+				'excerpt',
+				'revisions',
+			],
+		]
+	);
+
+	register_taxonomy(
+		'project_category',
+		['project'],
+		[
+			'hierarchical' => true,
+			'labels' => [
+				'name' => esc_html__('Projectcategorieën', 'wesselvandenijssel'),
+				'singular_name' => esc_html__('Projectcategorie', 'wesselvandenijssel'),
+				'menu_name' => esc_html__('Categorieën', 'wesselvandenijssel'),
+				'search_items' => esc_html__('Projectcategorieën zoeken', 'wesselvandenijssel'),
+				'all_items' => esc_html__('Alle projectcategorieën', 'wesselvandenijssel'),
+				'parent_item' => esc_html__('Bovenliggende projectcategorie', 'wesselvandenijssel'),
+				'parent_item_colon' => esc_html__('Bovenliggende projectcategorie:', 'wesselvandenijssel'),
+				'edit_item' => esc_html__('Projectcategorie bewerken', 'wesselvandenijssel'),
+				'view_item' => esc_html__('Projectcategorie bekijken', 'wesselvandenijssel'),
+				'update_item' => esc_html__('Projectcategorie bijwerken', 'wesselvandenijssel'),
+				'add_new_item' => esc_html__('Nieuwe projectcategorie toevoegen', 'wesselvandenijssel'),
+				'new_item_name' => esc_html__('Naam nieuwe projectcategorie', 'wesselvandenijssel'),
+				'not_found' => esc_html__('Geen projectcategorieën gevonden.', 'wesselvandenijssel'),
+			],
+			'public' => true,
+			'show_ui' => true,
+			'show_admin_column' => true,
+			'show_in_rest' => true,
+			'query_var' => true,
+			'rewrite' => ['slug' => 'projectcategorie', 'with_front' => false],
+		]
+	);
+}
+add_action('init', 'wesselvandenijssel_register_project_post_type');

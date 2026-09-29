@@ -24,14 +24,12 @@
 		text-decoration: none;
 	}
 
-	// Keyboard focus gets an outline on top of the hover colors (WCAG 2.4.7)
 	&:focus-visible {
 		outline: 2px solid $focus-color;
 		outline-offset: 2px;
 	}
 }
 
-// Accent button: navy text on accent (5.38:1), hover/focus navy with white text (15.45:1)
 %btn--primary {
 	background-color: $btn-primary;
 	border-color: $btn-primary;
@@ -47,7 +45,6 @@
 	}
 }
 
-// Outline button: navy on white or light surfaces, never accent text
 %btn--secondary {
 	background-color: $hue-white;
 	border-color: $hue-dark-1;

@@ -22,7 +22,6 @@ switch ($column_value['acf_fc_layout']):
 
 		if (!empty($column_value['title_type'])) {
 
-			// Set the look (heading type) based on the provided title type
 			$block_title->setLook(
 				$column_value['title_type'],
 			);
@@ -39,7 +38,6 @@ switch ($column_value['acf_fc_layout']):
 			]);
 		}
 		break;
-
 
 	case 'contact_details': ?>
 		<?php $contact_details_cf = get_field('contact_details', 'options') ?? []; ?>
@@ -94,11 +92,9 @@ switch ($column_value['acf_fc_layout']):
 		<?php
 		break;
 
-
 	case 'social_media':
 		component('socials');
 		break;
-
 
 	case 'menu':
 		if (!empty($column_value['menu']) && $column_value['menu'] != 'Geen') :

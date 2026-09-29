@@ -1,6 +1,3 @@
-/**
- * @param popupName	The data-popup attribute associated with the popup
- */
 const openPopup = (popupName: string) => {
 	if (!popupName) return;
 
@@ -23,7 +20,6 @@ const openPopup = (popupName: string) => {
 	setTimeout(() => {
 		popups.forEach((el) => el.classList.add("popup--show"));
 
-		// Set focus to first focusable element in popup for accessibility
 		const activePopup = document.querySelector<HTMLElement>(
 			`.popup[data-popup*='${popupName}'].popup--active`
 		);
@@ -34,7 +30,6 @@ const openPopup = (popupName: string) => {
 			if (firstFocusable) {
 				firstFocusable.focus();
 			} else {
-				// If no focusable element, focus the close button
 				const closeButton =
 					activePopup.querySelector<HTMLElement>(".popup__close");
 				closeButton?.focus();
@@ -44,7 +39,6 @@ const openPopup = (popupName: string) => {
 };
 
 const closePopup = () => {
-	// Then close the popups
 	document
 		.querySelectorAll<HTMLElement>(".popup")
 		.forEach((el) => el.classList.remove("popup--active", "popup--show"));
@@ -64,12 +58,10 @@ const closePopup = () => {
 const showPopupButtons = document.querySelectorAll<HTMLElement>(".show-popup");
 
 showPopupButtons.forEach((showPopupButton) => {
-	// Click event
 	showPopupButton.addEventListener("click", () =>
 		openPopup(showPopupButton.dataset.popup ?? "")
 	);
 
-	// Keyboard event for accessibility
 	showPopupButton.addEventListener("keydown", (e) => {
 		if (e.key === "Enter" || e.key === " ") {
 			e.preventDefault();
@@ -83,10 +75,8 @@ const closePopupButtons = document.querySelectorAll<HTMLElement>(
 );
 
 closePopupButtons.forEach((closePopupButton) => {
-	// Click event
 	closePopupButton.addEventListener("click", () => closePopup());
 
-	// Keyboard event for accessibility (only for close buttons, not background)
 	if (closePopupButton.classList.contains("popup__close")) {
 		closePopupButton.addEventListener("keydown", (e) => {
 			if (e.key === "Enter" || e.key === " ") {
@@ -97,7 +87,6 @@ closePopupButtons.forEach((closePopupButton) => {
 	}
 });
 
-// Close popup on Escape key press
 document.addEventListener("keydown", (e) => {
 	if (e.key === "Escape") {
 		const activePopup = document.querySelector(".popup--active");

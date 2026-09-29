@@ -1,0 +1,22 @@
+@use "abstracts" as *;
+
+.statistics {
+	$self: &;
+
+	.titles {
+		margin-bottom: pxtorem(32);
+	}
+
+	#{$self}__grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(pxtorem(220), 1fr));
+		gap: pxtorem(16);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		@include bp("narrow") {
+			gap: pxtorem(24);
+		}
+	}
+}

@@ -1,0 +1,62 @@
+@use "abstracts" as *;
+
+.statistic {
+	$self: &;
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: pxtorem(8);
+	margin: 0;
+	padding: pxtorem(28) pxtorem(20);
+	background-color: $hue-white;
+	border-top: 4px solid $hue-accent-1;
+	color: $hue-dark-1;
+	text-align: center;
+
+	@include bp("normal") {
+		padding: pxtorem(36) pxtorem(24);
+	}
+
+	#{$self}__value,
+	#{$self}__label,
+	#{$self}__description {
+		margin: 0;
+	}
+
+	&__number {
+		display: inline-flex;
+		align-items: baseline;
+		gap: pxtorem(4);
+		font-size: pxtorem(40);
+		font-weight: $font-weight-bold;
+		line-height: 1.1;
+		white-space: nowrap;
+		font-variant-numeric: tabular-nums;
+
+		@include bp("normal") {
+			font-size: pxtorem(56);
+		}
+	}
+
+	&__affix {
+		font-size: 0.6em;
+	}
+
+	&__label {
+		font-size: pxtorem(16);
+		font-weight: $font-weight-bold;
+		line-height: 1.4;
+
+		@include bp("narrow") {
+			font-size: pxtorem(18);
+		}
+	}
+
+	&__description {
+		font-size: pxtorem(16);
+		line-height: 1.5;
+		color: $hue-grey-1;
+	}
+}

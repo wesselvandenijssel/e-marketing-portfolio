@@ -1,0 +1,25 @@
+@use "abstracts" as *;
+
+.quote-slider {
+	.titles {
+		margin-bottom: pxtorem(32);
+	}
+
+	&__slider {
+		position: relative;
+	}
+
+	&__buttons {
+		justify-content: center;
+		padding: pxtorem(4);
+	}
+
+	&__button {
+		cursor: pointer;
+
+		&:focus-visible {
+			outline: 2px solid $focus-color;
+			outline-offset: 2px;
+		}
+	}
+}

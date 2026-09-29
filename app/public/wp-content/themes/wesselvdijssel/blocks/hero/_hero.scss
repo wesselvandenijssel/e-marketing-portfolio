@@ -30,7 +30,6 @@
 		inset: 0;
 		margin: 0 auto;
 
-		// Navy overlay so the white hero text stays at least 5:1, even on a white photo
 		&::after {
 			content: "";
 			position: absolute;
@@ -41,7 +40,7 @@
 	}
 
 	&__media {
-		height: 100% !important; // Overwrite .entry-content img
+		height: 100% !important;
 
 		&--image {
 			display: block;
@@ -106,6 +105,73 @@
 
 		.content-layout {
 			max-width: 600px;
+		}
+	}
+
+	&--portrait {
+		background-color: $hue-accent-light;
+		color: $hue-dark-1;
+		padding-block: $pad-mobile;
+
+		@include bp("normal") {
+			padding-block: $pad-normal;
+		}
+
+		#{$hero}__inner {
+			display: flex;
+			flex-direction: column;
+			gap: 30px;
+
+			@include bp("normal") {
+				flex-direction: row;
+				align-items: center;
+				justify-content: space-between;
+				gap: 60px;
+			}
+		}
+
+		#{$hero}__content {
+			color: $hue-dark-1;
+			padding-block: 0;
+
+			@include bp("normal") {
+				flex: 1 1 55%;
+			}
+
+			a:focus-visible {
+				outline-color: $focus-color;
+			}
+		}
+
+		#{$hero}__portrait {
+			position: relative;
+			order: -1;
+			width: 100%;
+			max-width: 260px;
+
+			@include bp("normal") {
+				order: 0;
+				flex: 0 1 40%;
+				max-width: 460px;
+			}
+
+			&::before {
+				content: "";
+				position: absolute;
+				inset: 20px -20px -20px 20px;
+				border-radius: 24px;
+				background-color: $hue-accent-1;
+			}
+		}
+
+		#{$hero}__portrait-image {
+			position: relative;
+			display: block;
+			width: 100%;
+			height: auto;
+			aspect-ratio: 4 / 5;
+			object-fit: cover;
+			border-radius: 24px;
 		}
 	}
 }
