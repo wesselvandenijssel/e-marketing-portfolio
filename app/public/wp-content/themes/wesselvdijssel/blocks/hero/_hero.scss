@@ -161,6 +161,7 @@
 				inset: 20px -20px -20px 20px;
 				border-radius: 24px;
 				background-color: $hue-accent-1;
+				transform: translateY(var(--portrait-shift, 0));
 			}
 		}
 

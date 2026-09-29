@@ -324,3 +324,20 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - deprecations van de WP-CLI-tool zelf
 
   Die verdwijnen bij updates van de plugins, of op een server met een oudere PHP-versie.
+
+## D-037: Scrollanimaties met motion
+
+- **Datum:** 2026-09-29
+- **Beslissing:** het thema krijgt scrollanimaties in de stijl van damsteegtwaterwerken en van-der-donk, met de library `motion` 13.1.0 (dezelfde versie als van-der-donk). Alles staat in `src/scripts/files/animations.ts` en `src/styles/components/_animations.scss`.
+  - **Koppen** (`.titles .main-title`, h2/h3 in `.content-layout`): elke regel schuift uit een masker omhoog, regel na regel (damsteegtwaterwerken, `text-animate.ts`).
+  - **Tekst** (subtitel, alinea's, lijsten, knoppen): schuift 24px omhoog en faadt in.
+  - **Groepen** (icon-boxes, projecten, statistieken, tijdlijn, galerij, logo's, blogoverzicht, projectdetails): elk item faadt omhoog, met een kleine vertraging per item.
+  - **Losse elementen:** portretfoto, afbeelding bij content-image, contactformulier, quote-slider, blogslider.
+  - **CTA-banner:** de kaart opent in de breedte met een `clip-path` terwijl je scrolt (van-der-donk, `image-banner`).
+  - **Hero:** het blauwe vlak achter de portretfoto beweegt tot 40px mee met het scrollen.
+- **Regels:**
+  - de beginstand (onzichtbaar) geldt alleen als het script de klassen heeft gezet, dus zonder JavaScript is alles zichtbaar
+  - bij `prefers-reduced-motion: reduce` draait er niets
+  - header, footer en popups worden overgeslagen
+  - Swiper-slides animeren niet los, omdat slides buiten beeld nooit in beeld komen
+- **Gevolg:** `main.js` wordt ongeveer 20 KB groter.
