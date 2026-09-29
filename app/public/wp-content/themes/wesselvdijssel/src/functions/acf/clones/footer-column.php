@@ -1,7 +1,7 @@
 <?php
 defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 
-if (function_exists('acf_add_local_field_group')) :
+add_action('acf/init', function () {
 	acf_add_local_field_group([
 		'key' => 'clone_footer_column',
 		'title' => esc_html__('Kloon: Footer kolom', 'wesselvandenijssel'),
@@ -174,5 +174,4 @@ if (function_exists('acf_add_local_field_group')) :
 			],
 		],
 	]);
-
-endif;
+});

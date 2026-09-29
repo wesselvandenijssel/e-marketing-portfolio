@@ -3,12 +3,15 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 
 // wp menus
 add_theme_support('menus');
-register_nav_menus([
-	'primary' => esc_html__('Hoofdmenu', 'wesselvandenijssel'),
-	'primary_mobile' => esc_html__('Hoofdmenu mobiel', 'wesselvandenijssel'),
-	'sitemap' => esc_html__('Sitemap menu', 'wesselvandenijssel'),
-	'top' => esc_html__('Topbar menu', 'wesselvandenijssel'),
-]);
+
+add_action('init', function () {
+	register_nav_menus([
+		'primary' => esc_html__('Hoofdmenu', 'wesselvandenijssel'),
+		'primary_mobile' => esc_html__('Hoofdmenu mobiel', 'wesselvandenijssel'),
+		'sitemap' => esc_html__('Sitemap menu', 'wesselvandenijssel'),
+		'top' => esc_html__('Topbar menu', 'wesselvandenijssel'),
+	]);
+});
 
 // Populate header block with menus
 add_filter('acf/load_field/key=field_623313af249bc', 'acf_load_menu_choices');

@@ -7,7 +7,7 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 | Stap | Onderwerp | Status | Datum klaar | Commit | Rapport |
 |---|---|---|---|---|---|
 | 0 | Backup, thema activeren, branding opschonen | Klaar | 2026-09-28 | geen (D-007) | [stap 0](reports/2026-09-28-stap-0-opschonen.md) |
-| 1 | CPT `project`, beschermd gedeelte, rol | Deels (CPT klaar, D-018) | | | |
+| 1 | CPT `project`, beschermd gedeelte, rol | Klaar (D-018, D-031) | 2026-09-29 | geen (D-029) | [stap 1 + 5](reports/2026-09-29-stap-5-portfolio-minor.md) |
 | 2 | Blokken kopiëren en opschonen | Klaar | 2026-09-29 | geen (D-029) | [stap 2](reports/2026-09-29-stap-2-blokken.md) |
 | 3 | Merkstijl in `_variables.scss` | Klaar (vóór stap 1–2, D-011) | 2026-09-28 | geen (D-013) | [stap 3](reports/2026-09-28-stap-3-huisstijl.md) |
 | 4 | Pagina's, menu's, formulier, Yoast | Klaar (met INVULLEN-punten) | 2026-09-29 | geen (D-029) | [stap 4](reports/2026-09-29-stap-4-paginas.md) |
@@ -31,9 +31,10 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 ## Stap 1: CPT `project`, beschermd gedeelte, rol
 
 - [x] CPT `project` + taxonomie `project_category` (`has_archive => false`, slug `projecten`) (D-018)
-- [ ] `src/inc/protected-section.php`: rol, toegangscheck, geen lekken via REST, feeds, zoeken, sitemap of OG, noindex, geen cache
-- [ ] Beoordelaarsaccount aanmaken (wachtwoord niet in de repo)
-- [ ] Test als uitgelogde bezoeker
+- [x] `src/inc/protected-section.php`: rol, toegangscheck, geen lekken via REST, feeds, zoeken, sitemap of OG, noindex, geen cache (D-031)
+- [x] Beoordelaarsaccount `beoordelaar` aangemaakt (wachtwoord niet in de repo)
+- [x] Getest als uitgelogde bezoeker en als beoordelaar
+- [x] Melding over vertalingen die te vroeg laden opgelost (D-032)
 
 ## Stap 2: blokken kopiëren en opschonen
 
@@ -61,7 +62,7 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 ## Stap 4: pagina's, menu's, formulier, Yoast
 
 - [x] Nieuwe pagina's: Over mij, Ervaring, Projecten, Gebruik van AI. Home, Contact, Bedankt, Privacy statement en Disclaimer zijn opnieuw gevuld.
-- [ ] Portfolio minor + 10 subpagina's (hoort bij stap 1: het beschermde gedeelte)
+- [x] Portfolio minor + 11 subpagina's met vaste opbouw en `[INVULLEN]` (D-031)
 - [x] Blog (ID 136) ingesteld als berichtenpagina
 - [x] Hoofdmenu, sitemapmenu, footerkolom "Navigatie" en de link naar Gebruik van AI in de subfooter
 - [x] Formulier: Telefoon optioneel, toestemmingsvinkje, honeypot, doorsturen naar Bedankt, meldingen naar info@, geen IP-adres (D-025)
@@ -77,7 +78,7 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 
 ## Open punten voor Wessel
 
-1. **`[INVULLEN]` op de site:**
+1. **`[INVULLEN]` op de site** (ook alle pagina's van Portfolio minor):
    - Over mij: je merk IK, wat je leert in de minor, hobby's
    - Ervaring: het startjaar van HBO-ICT, de school en einddatum van de minor, en de omschrijving van de minor
    - Contact: de reactietermijn
@@ -89,3 +90,4 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 4. **Server (D-027):** op emarketing.wesselvandenijssel.nl staat nu lumie. Ook ontbreken daar de database-migratie, de themaactivatie en `blog_public` = 1.
 5. **Watcher:** herstart je webpack-watcher, zie het rapport van stap 2.
 6. **Commits (D-029):** er wordt niets gecommit tot je daarom vraagt. Stap 0 tot en met 4 staan nog als wijzigingen klaar.
+7. **Beoordelaar:** geef de docenten de URL `/portfolio-minor/`, de login `beoordelaar` en het wachtwoord. Op de productieserver maak je het account opnieuw aan, met een nieuw wachtwoord.

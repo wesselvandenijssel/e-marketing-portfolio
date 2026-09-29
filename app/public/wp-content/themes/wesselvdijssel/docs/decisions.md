@@ -255,3 +255,30 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 
 - **Datum:** 2026-09-29
 - **Beslissing:** de conceptpagina "Terugbetaal- en retourneringsbeleid" (ID 166) is verwijderd, na een backup (`app/sql/2026-09-29-voor-verwijderen-166.sql`).
+
+## D-031: Beschermd gedeelte via status "Privé" en een eigen rol
+
+- **Datum:** 2026-09-29
+- **Beslissing:** "Portfolio minor" en de 11 subpagina's hebben de status Privé. Alleen beheerders en de rol `portfolio_beoordelaar` (capabilities `read` en `read_private_pages`) kunnen ze lezen.
+- **Reden:** er waren twee opties.
+  - **A. Een wachtwoord op de hoofdpagina.** Het wachtwoord geldt niet voor subpagina's, titels lekken via REST, zoeken en sitemaps, en je kunt geen toegang intrekken.
+  - **B. Login met een rol.** Bij B dwingt WordPress zelf de afscherming af, overal. Dit is een verbetering op het plan, dat eigen filters noemde.
+
+  Gekozen is B, met de status Privé van WordPress.
+- **Gevolg:** `src/inc/protected-section.php` voegt toe:
+  - een redirect naar de login voor elke URL onder `/portfolio-minor/`, ook als de pagina niet bestaat
+  - noindex/nofollow in de meta en in de header
+  - no-cache en `DONOTCACHEPAGE`
+  - geen OG- of Twitter-tags
+  - een tweede uitsluiting uit sitemaps en menu's
+  - titels zonder "Privé:"
+  - geen wp-admin en geen adminbalk voor de beoordelaar
+
+  Het gedeelde account is `beoordelaar` (D-003). Het wachtwoord staat niet in de repo of in `docs/`.
+- **Let op:** bestanden die je op deze pagina's uploadt (pdf, afbeeldingen) blijven bereikbaar via hun directe URL in `/wp-content/uploads/`. Zet daar geen cijfers of feedback in als je dat niet openbaar wilt.
+
+## D-032: Vertalingen laden niet meer te vroeg
+
+- **Datum:** 2026-09-29
+- **Beslissing:** twee dingen zijn verplaatst naar een hook. `register_nav_menus()` staat nu op `init`. De veldgroepen van de clones (button, footer-column, title) en de page-settings (author, popups) staan nu op `acf/init`.
+- **Gevolg:** de melding `_load_textdomain_just_in_time` voor `wesselvandenijssel` is weg. De homepagina is pixel-identiek, en de clones werken.

@@ -1,7 +1,7 @@
 <?php
 defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 
-if (function_exists('acf_add_local_field_group')) :
+add_action('acf/init', function () {
 	acf_add_local_field_group([
 		'key' => 'settings_popup',
 		'title' => esc_html__('Pop-up instellingen', 'wesselvandenijssel'),
@@ -20,4 +20,4 @@ if (function_exists('acf_add_local_field_group')) :
 			],
 		],
 	]);
-endif;
+});
