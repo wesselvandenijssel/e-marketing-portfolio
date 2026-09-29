@@ -277,7 +277,7 @@ function replace_form_fields_merge_tag($text, $form, $entry, $url_encode, $esc_h
 		<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
 		<head>
-		<title>Bevestiging van uw bericht</title>
+		<title>Bevestiging van je bericht</title>
 		<!--[if !mso]><!-->
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<!--<![endif]-->
@@ -377,12 +377,14 @@ function replace_form_fields_merge_tag($text, $form, $entry, $url_encode, $esc_h
 							<td align="left" style="padding:10px 25px;word-break:break-word;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
 							';
 
+	$reply_footer_html = '';
+
 	if (!empty($contact_details_cf['phone']) && !empty($contact_details_cf['phone_link'])) {
 
 		$reply_footer_html = '
 							<tr>
 								<td align="left" style="padding:10px 25px;padding-top:20px;word-break:break-word;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1;text-align:left;color:#000000">
-									Wilt u liever direct contact? Bel ons gerust via <b><a href="' . esc_url($contact_details_cf['phone_link']['url']) . '" title="' . esc_attr($contact_details_cf['phone_link']['title']) . '">' . esc_html($contact_details_cf['phone']) . '</a></b>.
+									Wil je liever direct contact? Bel me via <b><a href="' . esc_url($contact_details_cf['phone_link']['url']) . '" title="' . esc_attr($contact_details_cf['phone_link']['title']) . '">' . esc_html($contact_details_cf['phone']) . '</a></b>.
 								</td>
 							</tr>';
 	}

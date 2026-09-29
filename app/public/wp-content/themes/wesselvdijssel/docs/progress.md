@@ -13,6 +13,7 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 | 4 | Pagina's, menu's, formulier, Yoast | Klaar (met INVULLEN-punten) | 2026-09-29 | geen (D-029) | [stap 4](reports/2026-09-29-stap-4-paginas.md) |
 | 5 | Content en kwaliteitscheck | Klaar, met INVULLEN-punten (D-035) | 2026-09-29 | geen (D-029) | [stap 7](reports/2026-09-29-stap-7-content-seo.md) |
 | 6 | Menu en footer (extra opdracht) | Klaar (D-033) | 2026-09-29 | geen (D-029) | [stap 6](reports/2026-09-29-stap-6-menu-footer.md) |
+| 7 | Eindcontrole | Klaar (D-036) | 2026-09-29 | geen (D-029) | [stap 8](reports/2026-09-29-stap-8-controle.md) |
 
 ## Stap 0: backup, thema activeren, branding opschonen
 

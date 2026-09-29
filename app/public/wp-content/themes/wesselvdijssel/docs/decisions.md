@@ -311,3 +311,16 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - **Teksten:** vaste teksten in het thema zijn in het Nederlands en in de je-vorm gezet: de reacties, "Naar de inhoud", "Menu openen", "Pagina %s" en de pagina zonder zoekresultaten, die nu ook een link naar Home heeft in plaats van een `onclick`-knop.
   - **Menu op tabletbreedte (740–979 px):** menu-items breken niet af, de tekst is 15px en de knop is compacter. Daardoor past het menu op één regel.
 - **Gevolg:** de content-audit vindt geen placeholders, geen afbeeldingen zonder alt, geen verboden woorden of u-vorm, en geen Engelse teksten op de publieke pagina's.
+
+## D-036: Eindcontrole, laatste meldingen opgelost
+
+- **Datum:** 2026-09-29
+- **Beslissing:** tijdens de eindcontrole zijn deze fouten opgelost:
+  - **Loginpagina:** stak op mobiel 62px uit, door ontbrekende `box-sizing`. Ook had hij te weinig contrast, doordat links, "Taal" en "Wijzigen" in WordPress-blauw of grijs op navy stonden. De inlogknop heeft nu de merkkleuren.
+  - **`login.php`:** gebruikt `login_headertext` in plaats van de verouderde `login_headertitle`.
+  - **`gravity-forms.php`:** `$reply_footer_html` werd alleen gezet als er een telefoonnummer was, wat een warning gaf bij elke bevestigingsmail. De mailtekst staat nu in de je-vorm.
+- **Niet opgelost (plugins, pluginbestanden worden niet aangepast):**
+  - PHP 8.5-deprecations in Yoast SEO (`null` als array-index), WP Migrate DB Pro en lh-multipart-email (`mb_convert_encoding`)
+  - deprecations van de WP-CLI-tool zelf
+
+  Die verdwijnen bij updates van de plugins, of op een server met een oudere PHP-versie.
