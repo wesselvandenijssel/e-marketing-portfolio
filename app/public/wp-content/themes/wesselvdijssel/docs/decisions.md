@@ -659,3 +659,26 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - De cirkel en het woordmerk zijn `aria-hidden`.
 - **Fout voorkomen:** het bestaande anker-script (`randomness.ts`) doet `querySelector(href)`. Daarom wijst de knop naar `#page` en niet naar `#`; dat gaf een JS-fout.
 - **Hoofdmenu:** het item "Home" staat er niet meer in. Dat was niet door deze wijziging; het item zelf ontbreekt in menu 3. De footer volgt het menu.
+
+## D-057: Mobiele check en verbeteringen
+
+- **Datum:** 2026-10-07
+- **Check:** 30 openbare URL's op 320, 375 en 414 px, als mobiel apparaat met touch. Gecontroleerd op:
+  - overloop en elementen buiten beeld
+  - tekst kleiner dan 12px en invoervelden kleiner dan 16px
+  - tikdoelen kleiner dan 24px
+  - kapotte afbeeldingen, JS-fouten en het aantal h1's
+  - Het mobiele menu is getest: openen, submenu, een link volgen en sluiten.
+- **Opgelost:**
+  - **SalaryPerSecond op 320px:** het feitenblok liep 3px over. Het grid is nu `minmax(0, 1fr)` en lange links breken af.
+  - **"Menu"-label onder de hamburger:** van 11 naar 12px, in navy.
+  - **`btn--read-more`** ("Terug naar projecten", "Lees verder"): 4px padding boven en onder, zodat het tikdoel minstens 24px hoog is.
+  - **Sociale iconen** op de auteurspagina en in het auteursvak: minimaal 32 × 32px.
+  - **Toestemmingsvinkje** in het formulier: 20 × 20px, met een navy accentkleur.
+- **Op verzoek van Wessel:**
+  - **Hero:** de portretfoto is op mobiel 170px breed (was 260) en op tablet 220px, met minder ruimte tussen foto en tekst. De Home-hero is op 390px nu 672px hoog (was ongeveer 830).
+  - **Contactformulier:** de kaart is lichtblauw (`$hue-accent-light`) in plaats van wit. De velden blijven wit.
+  - **Auteursfoto** in het auteursvak:
+    - hij werd naast de bio samengedrukt tot ongeveer 16px. Nu `flex-shrink: 0` en 80px.
+    - het formaat is "Avatar" (128px) in plaats van "Author thumb", zodat hij scherp is op retina
+- **Niet aangepast (uitzondering in WCAG 2.5.8):** links in lopende tekst, en footer- en menulinks met genoeg ruimte ertussen.
