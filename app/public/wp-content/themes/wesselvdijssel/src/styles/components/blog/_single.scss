@@ -209,11 +209,15 @@
 	}
 
 	&__author-info-image {
+		flex-shrink: 0;
 		border-radius: 100vw;
-		width: 58px;
-		height: 58px;
+		width: 60px;
 		object-fit: cover;
 		aspect-ratio: 1/1;
+
+		@include bp("narrow") {
+			width: 80px;
+		}
 	}
 
 	&__author-info-content {
@@ -254,6 +258,9 @@
 		transition: 0.4s ease color;
 		display: flex;
 		align-items: center;
+		justify-content: center;
+		min-width: 32px;
+		min-height: 32px;
 
 		&:hover {
 			color: $hue-accent-text;

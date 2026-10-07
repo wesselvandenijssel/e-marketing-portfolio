@@ -444,3 +444,9 @@ fieldset {
 		@extend .btn--secondary !optional;
 	}
 }
+
+.gfield--type-consent input[type="checkbox"] {
+	width: 20px;
+	height: 20px;
+	accent-color: $hue-dark-1;
+}
