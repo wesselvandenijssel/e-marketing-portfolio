@@ -435,3 +435,14 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Eerdere probeersels, afgewezen door Wessel:** de foto met de duim omhoog (375) en de witte hoodie (377).
 - **CSS:** de afbeelding in de CTA heeft vanaf 980px 24px ruimte erboven, zodat het haar niet tegen de bovenrand van de kaart komt.
 - **Niet meer gebruikt:** media 357, 375 en 377 staan nog in de mediabibliotheek. Ze zijn niet verwijderd.
+
+## D-044: Achtergrondblok voor ritme op de pagina's
+
+- **Datum:** 2026-10-07
+- **Beslissing:** het blok "Achtergrond" (`acf/background`) wordt vaker gebruikt, zodat de lichtgrijze pagina's afwisseling krijgen. Lichtblauw is voor secties met witte kaarten. Per pagina staat er hoogstens één navy sectie, als blikvanger.
+  - **Home:** "Uitgelichte projecten" op lichtblauw
+  - **Over mij:** "Waarom ik goed ben als online marketing consultant" op navy, de galerij "Buiten het werk" op lichtblauw
+  - **Ervaring:** "Opleiding" op lichtblauw, "Tools" op navy
+  - **Projecten:** het projectoverzicht op lichtblauw
+- **CSS:** bij `has-navy-background-color` zijn tekst, links en de focusrand automatisch wit, en wordt de primaire knop wit met navy. Zo hoeft de redacteur geen tekstkleur te kiezen. Gewone links (`#0077a8`) zouden op navy maar 3,09:1 halen.
+- **Gevolg:** de CTA-kaarten, de footer en de hero blijven zoals ze waren. Op Contact en Blog staat geen achtergrondblok: Contact heeft één blok, en Blog heeft nog geen berichten.
