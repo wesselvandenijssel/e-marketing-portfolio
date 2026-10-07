@@ -96,7 +96,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 	if ($query->have_posts()) :
 	?>
 
-		<section class="section blog pad--top-medium pad--bottom-medium">
+		<section class="section blog has-background has-lichtblauw-background-color pad--top-medium pad--bottom-medium">
 			<div class="columns-12 center">
 
 				<div class="titles">

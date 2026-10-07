@@ -488,3 +488,50 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Probleem:** op `/blog/` kon je niet scrollen. WordPress geeft `<body>` op de berichtenpagina de class `blog`. Het blog-blok gebruikt dezelfde naam als BEM-blok (`.blog { overflow: hidden; }`), dus de hele pagina kreeg `overflow: hidden`. Ook de andere `.blog`-regels raakten de hele pagina. Daardoor stonden bijvoorbeeld de titels in de footer gecentreerd.
 - **Oplossing:** een filter op `body_class` in `src/functions/cleanup.php` haalt de class `blog` weg. Geen enkele stylesheet of script gebruikt die body-class.
 - **Gevolg:** `/blog/` scrollt weer op desktop en mobiel, en de footertitels staan weer links.
+
+## D-047: LinkedIn-export en Voice Card verwerkt
+
+- **Datum:** 2026-10-07
+- **Bronnen:** de LinkedIn-export van Wessel (Profile.csv, Profile.pdf) en de Voice Card van 19 juli 2026. De geboortedatum, de postcode en de profielstatistieken zijn niet gebruikt.
+- **Openbaar (LinkedIn):**
+  - **Ervaring, Werk:**
+    - MB effect staat nu vanaf juni 2023
+    - nieuw: Social Brothers (stage, augustus 2022 – april 2023, met een link naar Schoolmaaltijden), race marshal bij The Official F1 Racing Centre (juni 2022 – heden), Het BUREAU (junior back-end developer, 2021–2022) en Fiverr (grafisch ontwerper, 2020–2022)
+    - weggelaten: de archiefbijbanen uit 2019–2021, en "Manager sociale media, Instagram", omdat onduidelijk is voor welk account
+  - **Ervaring, Opleiding:**
+    - HBO-ICT van september 2023 tot augustus 2027 (verwacht)
+    - de omschrijving van de minor komt uit de LinkedIn-samenvatting (tracking, GA4, GTM, conversie-optimalisatie)
+    - nieuw: Grafisch Lyceum Utrecht (Webdeveloper, 2020–2023) en vmbo-tl bij O.R.S. Lek en Linge (2016–2020)
+  - **Ervaring, nieuw blok "Meer certificaten en talen":** twee Google-certificaten en vier talen.
+  - **Over mij:**
+    - een concepttekst voor het merk IK op basis van de LinkedIn-samenvatting
+    - wat Wessel in de minor leert
+    - in de hobbytekst: race marshal sinds 2022
+  - **Schoolmaaltijden:** periode 2022–2023. De rol is: tijdens de stage bij Social Brothers.
+- **Beschermd (Voice Card):**
+  - **Voice Card en reflectie (323):** uitleg, samenvatting, sterke punten, valkuilen, in balans en onder druk, leerstijl, ontwikkelpunten, een samenvatting van de competentiematrix (29 competenties) en de drie tips.
+  - **De pdf staat niet in de mediabibliotheek.** Bestanden in `uploads/` zijn openbaar via hun URL, ook als de pagina beschermd is.
+  - **Motivatie (324):** de opleiding en de koppeling met het werk, uit LinkedIn.
+  - **Aanvullende kennis (330):** de certificaten.
+  - Niets uit de Voice Card staat op openbare pagina's.
+- **Open punten:**
+  - **Tegenstrijdigheid:** LinkedIn zegt "MB effect sinds juni 2023" en noemt geen aparte stage. De site heeft ook "Stage webdevelopment MB effect, september 2023 – mei 2024". Die regel is blijven staan.
+  - **Blijft `[INVULLEN]`:** de reflectie, de dialogen, waarom Wessel de Voice Card maakte, en de einddatum en onderwijsinstelling van de minor.
+- **Fout gevonden en opgelost:** het nieuwe blok was een kopie van "Mijn cv", inclusief het ACF-blok-ID. ACF laadt velden per blok-ID, dus beide blokken toonden dezelfde inhoud. Het blok heeft nu een eigen ID. Een scan van alle pagina's vond geen andere dubbele blok-ID's.
+
+## D-048: Yoast-teksten in het Nederlands
+
+- **Datum:** 2026-10-07
+- **Beslissing:** de Engelse standaardteksten in `wpseo_titles` zijn vertaald:
+  - **Kruimelpad:**
+    - "Archives for" is "Archief van"
+    - "You searched for" is "Je zocht naar"
+    - "Error 404: Page not found" is "Pagina niet gevonden"
+  - **Paginatitels:**
+    - auteur: "Berichten van …"
+    - zoeken: "Je zocht naar …"
+    - 404: "Pagina niet gevonden"
+    - categorie: "Berichten over …"
+    - tags en andere archieven: "Archief: …"
+  - De socialtitels van de archieven zijn ook vertaald.
+- **Aanleiding:** Wessel zag "Archives for" in het kruimelpad van de auteurspagina.

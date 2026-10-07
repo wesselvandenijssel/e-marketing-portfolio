@@ -87,8 +87,8 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 ## Open punten voor Wessel
 
 1. **`[INVULLEN]` op de site** (ook alle pagina's van Portfolio minor):
-   - Over mij: je merk IK, wat je leert in de minor (de hobby's zijn ingevuld, D-042)
-   - Ervaring: het startjaar van HBO-ICT, de school en einddatum van de minor, en de omschrijving van de minor
+   - Over mij: concepttekst merk IK nalezen (D-047)
+   - Ervaring: de onderwijsinstelling en einddatum van de minor, en de MB effect-stage controleren (D-047)
    - Privacy statement: de bewaartermijn en de hostingpartij
    - Gebruik van AI: controleren en aanvullen
    - Projecten: het resultaat van SCX Solar en van The Souks; periode, rol en aanpak bij Schoolmaaltijden (D-045)
