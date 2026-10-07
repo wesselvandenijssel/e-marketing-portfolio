@@ -386,3 +386,25 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - **Mobiel:** de toggle in `walker-menu.php` is een `<button>` met `aria-expanded` en het label "Submenu openen". Dat was een `<div>` die je niet met het toetsenbord kon bereiken. `menu-toggle.ts` houdt `aria-expanded` bij.
   - Het ouderitem is onderstreept als je op een subpagina bent (`current-menu-parent`).
 - **Backup:** `wp db export` gaf eerst een leeg bestand, omdat mysqldump de socket van Local niet vond. De menuwijziging was toen al gedaan. Daarna is de backup gemaakt met `--socket`: `app/sql/2026-10-07-na-submenu.sql`. Gebruik die optie voortaan.
+
+## D-041: Eigen foto's op de site
+
+- **Datum:** 2026-10-07
+- **Beslissing:** uit de map Portfolio van Wessel zijn 15 foto's gekozen en geplaatst (media 353–367):
+  - **Home:**
+    - de hero heeft een nieuwe portretfoto, die vervangt de oude van 400 × 400 px
+    - de CTA-kaart heeft een kantoorfoto
+  - **Over mij:**
+    - de hero heeft een buitenfoto
+    - "Mijn passie" en "Mijn persoonlijke kant" zijn nu content-image-blokken met een foto. De tekst is ongewijzigd.
+    - het nieuwe galerijblok "Buiten het werk" heeft 9 foto's: karting, Formule 1, noorderlicht, bergen, bos en kust
+  - **Ervaring:** het introblok is een content-image-blok met een kantoorfoto
+  - **Uitgelichte afbeelding:** Home, Over mij en Ervaring hebben er een, voor Open Graph via Yoast
+- **Privacy:**
+  - **Metadata:** alle foto's zijn opnieuw opgeslagen zonder EXIF. Daarmee zijn ook de GPS-locaties van de vakantiefoto's weg.
+  - **Formaat:** de foto's zijn verkleind tot maximaal 2400px.
+  - **Bestandsnamen:** beschrijvend. De oude namen bevatten de naam van het stagebedrijf.
+  - **Niet gebruikt:** foto's waarop het kenteken van de auto leesbaar is, foto's met het gezicht van iemand anders, en publieksfoto's met herkenbare gezichten.
+  - **Alt-teksten:** in het Nederlands, en ze beschrijven alleen wat te zien is. Bij de kart en de sneeuwscooter staat niet dat Wessel de bestuurder is, want dat is op de foto niet te zien.
+- **Video's:** ook de losse Live Photo-video's staan nu in `Portfolio/Videos`: `portret/` (4) en `vakanties/` (1). Het hero-blok met variant "Achtergrond" en type "Video" neemt een embedcode letterlijk over, dus een Wistia-embed past er direct in.
+- **CTA-animatie:** de clip-path van D-037 sneed de titel af. De inset is nu begrensd op de padding van de kaart min 8px.

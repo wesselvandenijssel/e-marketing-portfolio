@@ -94,7 +94,7 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
    - Gebruik van AI: controleren en aanvullen
    - Projecten: het resultaat van SCX Solar en van The Souks
 2. **Cv:** op Ervaring is nog geen downloadknop. `Professioneel CV A4.pdf` in je Downloads is een lege template.
-3. **Foto:** er is een betere portretfoto nodig. De huidige is 400 × 400 px, uit je oude site.
+3. **Foto:** opgelost, een nieuwe portretfoto staat in de hero (D-041). Voor een hero met video: stuur de Wistia-embedcode.
 4. **Server (D-027):** op emarketing.wesselvandenijssel.nl staat nu lumie. Ook ontbreken daar de database-migratie, de themaactivatie en `blog_public` = 1.
 5. **Watcher:** herstart je webpack-watcher, zodat hij het nieuwe `animations.ts` oppakt (D-037).
 6. **Commits (D-029):** er wordt niets gecommit tot je daarom vraagt. Stap 0 tot en met 4 staan nog als wijzigingen klaar.
