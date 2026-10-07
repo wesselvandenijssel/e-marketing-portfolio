@@ -535,3 +535,24 @@ Format per beslissing: datum, beslissing, reden, gevolg.
     - tags en andere archieven: "Archief: …"
   - De socialtitels van de archieven zijn ook vertaald.
 - **Aanleiding:** Wessel zag "Archives for" in het kruimelpad van de auteurspagina.
+
+## D-049: Correcties van Wessel: geen stage bij MB effect, Flexercise, minor, Schoolmaaltijden
+
+- **Datum:** 2026-10-07
+- **Correctie:** Wessel liep geen stage bij MB effect. Verwijderd of herschreven:
+  - **Ervaring:** de regel "Stage webdevelopment MB effect, september 2023 – mei 2024" is weg
+  - **SCX Solar:** de rol, de samenvatting en de Yoast-beschrijving noemen geen stage meer. De rol is nu "Als front-end developer bij MB effect…".
+  - **Rentwereld:** "sinds mijn stage in 2023" is nu "sinds 2023", en "Tijdens mijn stage een hero-blok…" is nu "Een hero-blok…"
+  - Een zoekactie over alle content vond daarna alleen nog de stage bij Social Brothers. Die klopt.
+- **Nieuw op Ervaring, Werk:**
+  - Flexercise Treatments, bijbaan: beheer van de sociale content en grafische taken
+  - De periode (oktober 2023 – augustus 2026) komt van de LinkedIn-regel "Manager sociale media". Die is dus aan Flexercise gekoppeld.
+- **Minor E-marketing:** Hogeschool Utrecht, september 2026 – januari 2027.
+- **Schoolmaaltijden:**
+  - rol: front-end developer tijdens de stage bij Social Brothers
+  - aanpak: het project vanaf scratch opgezet, en het ontwerp uit Figma nagebouwd
+  - tools: aangevuld met Figma
+- **Beschermd:**
+  - **Voice Card (323):** waarom Wessel de Voice Card aanschafte. Bij de start van de minor stelde hij er zijn groepje mee samen, op basis van de leeruitkomsten, zodat er voor elk sterk punt iemand in het team zit.
+  - **Bijdrage aan het team (328):** dezelfde informatie als inleiding. Wessels rol in het team blijft `[INVULLEN]`.
+  - **Motivatie (324):** de kop "Relatie met mijn stage en werk" is nu "Relatie met mijn werk".
