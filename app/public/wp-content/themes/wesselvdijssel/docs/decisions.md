@@ -622,3 +622,21 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - **Talen:** Portugees is weg uit het cv en uit de talenlijst op Ervaring. Wessel spreekt geen Portugees; de taal kwam uit zijn LinkedIn-export.
 - **Opmaak:** de hobbyregel loopt nu over twee regels. Zodat het cv op één pagina past, is de ruimte in de zijbalk iets kleiner (3,4 mm) en de foto iets kleiner (32 mm).
 - **Bestand:** de pdf op de site (media 417) is vervangen. De URL blijft hetzelfde.
+
+## D-055: Certificaten met controlelinks
+
+- **Datum:** 2026-10-07
+- **Bron:** het certificatenoverzicht op LinkedIn dat Wessel plakte. Dat overzicht was afgekapt na "Cursus online marketing".
+- **Ervaring, "Meer certificaten en talen":** elke naam linkt nu naar de controlepagina, en opent in een nieuw tabblad:
+  - Google Ads Measurement en Google Ads Search (Skillshop, 2026)
+  - Claude Code in Action (Anthropic, 2026)
+  - vier Soofos-cursussen (2025)
+  - "Basisprincipes van online marketing (Google)" heeft nog geen link
+- **Gecontroleerd:**
+  - Skillshop en Skilljar geven 200
+  - Soofos geeft een Cloudflare-controle aan scripts (403). Een gewone browser komt daar wel langs.
+- **Beschermd, Aanvullende kennis (330):** aangevuld met Google Ads Search en Claude Code in Action.
+- **Cv:**
+  - Google Ads Search en Claude Code in Action staan erbij, met klikbare links
+  - de hobby's staan nu onderaan de rechterkolom, zodat de zijbalk op één pagina past
+  - de pdf op de site is vervangen, de URL blijft hetzelfde

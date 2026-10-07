@@ -3,26 +3,61 @@
 
 .footer {
 	&__bottom {
-		text-align: center;
-		padding: 10px 0;
+		position: relative;
 		display: flex;
-		justify-content: center;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
 		margin: 0 auto;
+		padding: 18px 10px 24px;
+		border-top: 1px solid rgba($hue-white, 15%);
 		font-size: pxtorem(14);
-		line-height: 1;
+		line-height: 1.4;
+
+		@include bp("narrow") {
+			padding: 20px 0 28px;
+		}
 
 		@extend %header-footer-wrapper;
 
 		p {
-			margin: 0 0 1.5em;
-
-			&:last-child {
-				margin-bottom: 0;
-			}
+			margin: 0;
 
 			a {
-				text-decoration: none;
+				color: inherit;
 			}
+		}
+	}
+
+	&__top-link {
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 44px;
+		aspect-ratio: 1;
+		border-radius: 50%;
+		background-color: $hue-accent-1;
+		color: $hue-dark-1;
+		text-decoration: none;
+		transition: background-color 0.25s ease, transform 0.25s ease;
+
+		@media (prefers-reduced-motion: no-preference) {
+			&:hover,
+			&:focus-visible {
+				transform: translateY(-4px);
+			}
+		}
+
+		&::before {
+			content: $fa-arrow-up;
+			font-family: $fa;
+			font-weight: 400;
+		}
+
+		&:hover,
+		&:focus-visible {
+			background-color: $hue-white;
 		}
 	}
 }
