@@ -87,9 +87,9 @@
 	}
 
 	&__text {
-		color: #000;
+		color: $hue-dark-1;
 		line-height: 1;
-		font-size: pxtorem(11);
+		font-size: pxtorem(12);
 	}
 
 	&--active {

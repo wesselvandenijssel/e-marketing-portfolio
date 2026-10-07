@@ -19,6 +19,9 @@
 		transition: 0.4s ease color;
 		display: flex;
 		align-items: center;
+		justify-content: center;
+		min-width: 32px;
+		min-height: 32px;
 
 		&:hover {
 			color: $hue-accent-text;
