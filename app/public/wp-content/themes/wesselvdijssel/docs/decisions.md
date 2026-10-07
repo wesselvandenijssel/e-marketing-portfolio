@@ -424,3 +424,14 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - waar hij in de reisverslagen bij naam genoemd wordt: aan het stuur op Tenerife, de drone in de Dolomieten, de drie dagen op het circuit in Hongarije
   - waar zijn eigen foto's het laten zien: het noorderlicht en de sneeuwscooter in Tromsø
 - **Alt-teksten:** de kart (359) en de sneeuwscooter (361) noemen nu Wessel, na bevestiging van Wessel.
+
+## D-043: Uitgesneden foto in de CTA op Home
+
+- **Datum:** 2026-10-07
+- **Beslissing:** het CTA-blok is gemaakt voor een uitgesneden persoon die op de onderrand van de kaart staat (`align-self: flex-end`, maximaal 235px hoog). De rechthoekige kantoorfoto (357) zweefde daardoor in het midden.
+  - **Nieuwe foto:** op verzoek van Wessel een foto uit de kantoorserie van maart, waarop hij in de camera kijkt (379, webp, 87 KB).
+  - **Uitsnijden:** de maskers voor het onderwerp en voor alleen de persoon zijn gecombineerd. Zo vallen bureau, laptop en monitor weg.
+  - **Afsnijden:** de foto is op borsthoogte afgesneden, boven de handen. Een deel van de onderarm zat namelijk achter de laptop.
+- **Eerdere probeersels, afgewezen door Wessel:** de foto met de duim omhoog (375) en de witte hoodie (377).
+- **CSS:** de afbeelding in de CTA heeft vanaf 980px 24px ruimte erboven, zodat het haar niet tegen de bovenrand van de kaart komt.
+- **Niet meer gebruikt:** media 357, 375 en 377 staan nog in de mediabibliotheek. Ze zijn niet verwijderd.
