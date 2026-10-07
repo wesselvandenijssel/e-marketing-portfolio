@@ -120,7 +120,11 @@
 		#{$hero}__inner {
 			display: flex;
 			flex-direction: column;
-			gap: 30px;
+			gap: 20px;
+
+			@include bp("narrow") {
+				gap: 30px;
+			}
 
 			@include bp("normal") {
 				flex-direction: row;
@@ -147,7 +151,11 @@
 			position: relative;
 			order: -1;
 			width: 100%;
-			max-width: 200px;
+			max-width: 170px;
+
+			@include bp("narrow") {
+				max-width: 220px;
+			}
 
 			@include bp("normal") {
 				order: 0;
