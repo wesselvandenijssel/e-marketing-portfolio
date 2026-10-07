@@ -356,3 +356,33 @@ Format per beslissing: datum, beslissing, reden, gevolg.
     - de blogkaart krijgt `heading_level`, net als de projectkaart
   - `.h3` en `.h4` hebben nu zelf `line-height: 1.3`, zodat een `<h2 class="h4">` er hetzelfde uitziet als een `<h4>`.
 - **Gevolg:** geen overgeslagen kopniveaus en geen `sizes` zonder `srcset` meer op de 15 geteste URL's. Het uiterlijk is gelijk gebleven (zelfde grootte, regelhoogte en marge).
+
+## D-039: Donkerblauwe knoppen met witte tekst, en iconen
+
+- **Datum:** 2026-10-07
+- **Beslissing:** Wessel vond navy tekst op `#00a3e0` slecht leesbaar. Navy haalt op die kleur maximaal 5,38:1, en wit maar 2,87:1. Daarom is `$hue-accent-dark: #005a80` toegevoegd, en `$btn-primary` wijst daar nu naar. De keuze van Wessel was donkerblauw met wit, niet navy met wit.
+  - **Witte tekst op `#005a80` (7,57:1, AAA):**
+    - primaire knoppen
+    - de knop "Portfolio (login)" en de verzendknop van het formulier
+    - het actieve filter en het huidige paginanummer
+    - de sliderpijlen, de GF-stap, de uploadknop en de telefoonknop op mobiel
+  - **Hover en focus:** navy met witte tekst (15,45:1).
+  - **Op navy** (de donkere CTA-kaart en de socials in de footer): wit met navy. Bij hover worden ze transparant, met een witte rand. Anders verdween de knop bij hover tegen de navy achtergrond.
+  - **Iconen:** primaire en secundaire knoppen en de verzendknop krijgen een pijl naar rechts op `::after`. Die schuift 4px op bij hover, behalve bij `prefers-reduced-motion`. Kiest de redacteur zelf een icoon (`<i>` in de knop), dan valt de pijl weg. "Portfolio (login)" krijgt het icoon `user`.
+  - `#00a3e0` blijft voor vlakken, decoratie en de notificatiebalk.
+- **Gevolg:** de kleurregels en contrasttabellen in `CLAUDE.md` zijn bijgewerkt. Het menu past met het extra icoon nog op één regel, ook op 740px.
+
+## D-040: Submenu's in het hoofdmenu
+
+- **Datum:** 2026-10-07
+- **Beslissing:** Wessel koos voor twee submenu's:
+  - Over mij ▸ Ervaring, Gebruik van AI
+  - Projecten ▸ Websites, Webshops: eigen links naar `/projecten/?categorie=website` en `?categorie=webshop`, die het projectfilter direct op de juiste categorie zetten
+
+  Bovenin blijven Home, Over mij, Projecten, Blog, Contact en de knop "Portfolio (login)" staan. Ervaring hoort nu onder Over mij en staat niet meer los.
+- **Techniek:**
+  - **Desktop en tablet (vanaf 740px):** het menu opent bij hover en bij `:focus-within`. Met de Tab-toets kom je zo bij alle subitems. Een onzichtbare strook tussen link en dropdown voorkomt dat het menu dichtklapt als je de muis beweegt. Het pijltje draait als het menu open is.
+  - **Base-theme:** daar opende een submenu alleen bij een klik op een `<span>`. De ouderitems zijn hier links, dus dat werkte niet.
+  - **Mobiel:** de toggle in `walker-menu.php` is een `<button>` met `aria-expanded` en het label "Submenu openen". Dat was een `<div>` die je niet met het toetsenbord kon bereiken. `menu-toggle.ts` houdt `aria-expanded` bij.
+  - Het ouderitem is onderstreept als je op een subpagina bent (`current-menu-parent`).
+- **Backup:** `wp db export` gaf eerst een leeg bestand, omdat mysqldump de socket van Local niet vond. De menuwijziging was toen al gedaan. Daarna is de backup gemaakt met `--socket`: `app/sql/2026-10-07-na-submenu.sql`. Gebruik die optie voortaan.

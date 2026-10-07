@@ -4,10 +4,12 @@
 .btn {
 	&--primary {
 		@extend %btn--primary;
+		@extend %btn-icon;
 	}
 
 	&--secondary {
 		@extend %btn--secondary;
+		@extend %btn-icon;
 	}
 
 	&__filter {
@@ -26,7 +28,7 @@
 		&--active {
 			background-color: $btn-primary;
 			border-color: $btn-primary;
-			color: $hue-dark-1;
+			color: $hue-white;
 
 			&:hover,
 			&:focus {

@@ -1,4 +1,5 @@
 @use "abstracts" as *;
+@use "placeholders" as *;
 
 .cta-banner {
 	&__card {
@@ -44,6 +45,10 @@
 				&:hover,
 				&:focus {
 					border-color: $hue-white;
+				}
+
+				&--primary {
+					@extend %btn--on-dark;
 				}
 			}
 		}

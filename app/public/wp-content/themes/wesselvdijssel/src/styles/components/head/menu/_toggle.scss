@@ -126,6 +126,11 @@
 .submenu-toggle {
 	cursor: pointer;
 	display: block;
+	background: none;
+	border: 0;
+	padding: 0;
+	color: inherit;
+	font: inherit;
 
 	@include bp("mobile") {
 		position: relative;

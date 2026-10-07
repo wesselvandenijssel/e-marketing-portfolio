@@ -33,7 +33,7 @@
 %btn--primary {
 	background-color: $btn-primary;
 	border-color: $btn-primary;
-	color: $hue-dark-1;
+	color: $hue-white;
 
 	@extend %btn;
 
@@ -56,6 +56,35 @@
 	&:focus {
 		background-color: $hue-dark-1;
 		border-color: $hue-dark-1;
+		color: $hue-white;
+	}
+}
+
+%btn-icon {
+	@media (prefers-reduced-motion: no-preference) {
+		&:hover::after,
+		&:focus-visible::after {
+			transform: translateX(4px);
+		}
+	}
+
+	&:not(:has(i))::after {
+		content: $fa-arrow-right;
+		font-family: $fa;
+		font-weight: 400;
+		transition: transform 0.3s ease-in-out;
+	}
+}
+
+%btn--on-dark {
+	background-color: $hue-white;
+	border-color: $hue-white;
+	color: $hue-dark-1;
+
+	&:hover,
+	&:focus {
+		background-color: transparent;
+		border-color: $hue-white;
 		color: $hue-white;
 	}
 }

@@ -184,8 +184,8 @@
 			font-weight: 700;
 
 			@include bp("mobile") {
-				background-color: $hue-accent-1;
-				color: $hue-dark-1;
+				background-color: $btn-primary;
+				color: $hue-white;
 				width: 35px;
 				aspect-ratio: 1/1;
 				border-radius: 100%;

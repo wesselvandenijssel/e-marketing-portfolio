@@ -41,9 +41,9 @@
 			color 0.4s ease;
 
 		&.current {
-			background-color: $hue-accent-1;
-			border-color: $hue-accent-1;
-			color: $hue-dark-1;
+			background-color: $btn-primary;
+			border-color: $btn-primary;
+			color: $hue-white;
 			font-weight: 600;
 		}
 
