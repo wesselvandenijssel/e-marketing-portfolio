@@ -556,3 +556,69 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - **Voice Card (323):** waarom Wessel de Voice Card aanschafte. Bij de start van de minor stelde hij er zijn groepje mee samen, op basis van de leeruitkomsten, zodat er voor elk sterk punt iemand in het team zit.
   - **Bijdrage aan het team (328):** dezelfde informatie als inleiding. Wessels rol in het team blijft `[INVULLEN]`.
   - **Motivatie (324):** de kop "Relatie met mijn stage en werk" is nu "Relatie met mijn werk".
+
+## D-050: Eigen projecten, Flexercise-testsite, logboek en oude cv's
+
+- **Datum:** 2026-10-07
+- **Bronnen:** het logboek (logboek.wesselvandenijssel.nl), SalaryPerSecond, RideLoop, de Flexercise-testsite en drie oude cv's van Wessel.
+- **Nieuwe projecten:**
+  - **SalaryPerSecond (409)** en **RideLoop (410):** nieuwe projectcategorie "Eigen project". De inhoud komt van de sites zelf:
+    - SalaryPerSecond: Tailwind CSS, versie 2.0 sinds augustus 2025
+    - RideLoop: een eigen WordPress-thema, Google Maps, Google Places en OpenStreetMap
+  - **Flexercise Treatments (411):** een testversie van de nieuwe site, met een eigen WordPress-thema. Valt onder de categorie "Website".
+  - **Sortering:** de nieuwe projecten hebben een datum net vóór de klantcases, zodat die bovenaan blijven. Home toont vaste projecten en verandert dus niet.
+- **Ervaring:**
+  - **Omschrijvingen:**
+    - Social Brothers: HTML, SCSS, JS/TS, Twig, Svelte. Wessel was front-end developer van Schoolmaaltijden.
+    - Het BUREAU: PHP en Laravel, voor echte externe klanten
+    - Fiverr: freelance ontwerpwerk
+    - MB effect: ook Shopify-webshops, volgens het logboek
+    - Flexercise: de testsite, met een link naar het project
+  - **HBO-ICT:** een link naar het logboek.
+  - **Skills:** aangevuld met Laravel, Twig en Svelte.
+  - **Tools:** aangevuld met Figma en Adobe Creative Cloud.
+- **Beschermd, Aanvullende kennis (330):** het logboek en de eigen projecten als manieren van leren.
+- **Oude cv's niet gebruikt als download:** ze bevatten een huisadres en een telefoonnummer, en ze zijn verouderd.
+  - De profieltekst noemt een eigen F1-simulator. Die staat nog niet op de site, omdat niet duidelijk is of dat nog klopt.
+  - RideLoop en de videomap "motorrijden" wijzen op motorrijden als hobby, maar dat is niet bevestigd.
+
+## D-051: Antwoorden van Wessel verwerkt
+
+- **Datum:** 2026-10-07
+- **Bevestigd door Wessel:**
+  - Hij heeft een eigen F1-simulator en rijdt motor. Beide staan nu in de hobbytekst op Over mij, met een link naar RideLoop.
+  - De LinkedIn-regel "Manager sociale media, Instagram" gaat over zijn baan bij Flexercise Treatments. De periode uit D-049 klopt dus.
+- **RideLoop:** periode mei – juni 2026.
+- **Flexercise:** het werk bestond vooral uit social media-content voor Instagram, LinkedIn, TikTok en Facebook. Dat staat nu op Ervaring en bij het project.
+
+## D-052: Stagedossier Social Brothers verwerkt
+
+- **Datum:** 2026-10-07
+- **Bron:** het stagedossier van Wessel (mbo Webdeveloper, Grafisch Lyceum Utrecht): stageverslag 1 en 2 en het eindverslag. De beoordelingen, de urenverantwoording en de feedbackformulieren zijn niet gebruikt. Namen van collega's en begeleiders staan niet op de site. De tijdelijke uitgepakte kopie is verwijderd.
+- **Ervaring:** de Social Brothers-regel heet nu "Stage junior WordPress-developer". De omschrijving noemt:
+  - **werk:** Gutenberg-blokken met ACF, WooCommerce, WPML, Gravity Forms en Yoast
+  - **livegangen:** Schoolmaaltijden (als front-end developer) en onder meer Aafje, Mezaldi en SNB
+  - **eindopdracht:** een WordPress-handboek van 42 pagina's voor klanten, dat daarna standaard bij de oplevering van een website ging
+  - **presentatie:** de HoloLens 2-presentatie op de Tech Doe dag
+- **Schoolmaaltijden:** de rol noemt dezelfde functietitel.
+- **Geen projectpagina's voor het handboek en Mezaldi.** handboek.wesselvandenijssel.nl is offline, en mezaldi.com stuurt door naar een ander domein. De huidige inhoud is dus niet te controleren.
+
+## D-053: Nieuw cv als pdf, met downloadknop
+
+- **Datum:** 2026-10-07
+- **Beslissing:** een nieuw cv van één A4, op basis van de inhoud van de site. Het volgt de huisstijl: Public Sans, navy en blauw.
+  - **Op verzoek van Wessel:** met telefoonnummer en foto. De foto is een vierkante uitsnede van het nieuwe portret.
+  - **Contact:** alleen woonplaats Utrecht, zonder adres en zonder geboortedatum.
+  - **Pdf met echte tekst,** gemaakt in Chromium (Playwright), zodat recruitersystemen hem kunnen lezen.
+- **Op de site:** media 417, `/wp-content/uploads/2026/10/cv-wessel-van-den-ijssel.pdf`. Ervaring heeft bij "Mijn cv" een korte tekst en de primaire knop "Download mijn cv", die in een nieuw tabblad opent.
+- **Bron om later bij te werken:** `~/Desktop/Portfolio/CV/` met `cv.html`, `foto.jpg` en de pdf. De bron staat bewust niet in het thema of de repo, omdat het telefoonnummer erin staat.
+- **Mezaldi:** in de tekst over Social Brothers staat nu "Mezaldi (nu Mezaldy)". Wessel bevestigde de nieuwe naam.
+
+## D-054: Cv bijgewerkt: simracen, geen Portugees
+
+- **Datum:** 2026-10-07
+- **Beslissing:**
+  - **Hobby:** in het cv staat nu "Formule 1, simracen in mijn eigen simulator en karting". Dat koos Wessel.
+  - **Talen:** Portugees is weg uit het cv en uit de talenlijst op Ervaring. Wessel spreekt geen Portugees; de taal kwam uit zijn LinkedIn-export.
+- **Opmaak:** de hobbyregel loopt nu over twee regels. Zodat het cv op één pagina past, is de ruimte in de zijbalk iets kleiner (3,4 mm) en de foto iets kleiner (32 mm).
+- **Bestand:** de pdf op de site (media 417) is vervangen. De URL blijft hetzelfde.
