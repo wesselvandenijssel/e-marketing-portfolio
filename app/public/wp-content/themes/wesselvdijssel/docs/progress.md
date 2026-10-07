@@ -87,7 +87,7 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 ## Open punten voor Wessel
 
 1. **`[INVULLEN]` op de site** (ook alle pagina's van Portfolio minor):
-   - Over mij: je merk IK, wat je leert in de minor, hobby's
+   - Over mij: je merk IK, wat je leert in de minor (de hobby's zijn ingevuld, D-042)
    - Ervaring: het startjaar van HBO-ICT, de school en einddatum van de minor, en de omschrijving van de minor
    - Contact: de reactietermijn
    - Privacy statement: de bewaartermijn en de hostingpartij

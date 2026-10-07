@@ -163,6 +163,23 @@
 				background-color: $hue-accent-1;
 				transform: translateY(var(--portrait-shift, 0));
 			}
+
+			&--cutout {
+				@include bp("normal") {
+					max-width: 400px;
+				}
+
+				&::before {
+					inset: 28% 0 0;
+					transform: none;
+				}
+
+				#{$hero}__portrait-image {
+					aspect-ratio: auto;
+					object-fit: contain;
+					border-radius: 0;
+				}
+			}
 		}
 
 		#{$hero}__portrait-image {

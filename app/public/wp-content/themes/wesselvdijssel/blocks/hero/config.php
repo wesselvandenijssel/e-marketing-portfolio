@@ -90,6 +90,22 @@ return [
 			],
 		],
 
+		'cutout' => [
+			'label' => esc_html__('Uitgesneden foto', 'wesselvandenijssel'),
+			'instructions' => esc_html__('Zet dit aan bij een foto met een transparante achtergrond (png of webp). De foto staat dan zonder kader op het blauwe vlak.', 'wesselvandenijssel'),
+			'type' => 'true_false',
+			'ui' => true,
+			'conditional_logic' => [
+				[
+					[
+						'field' => 'field_hero_variant',
+						'operator' => '==',
+						'value' => 'portrait',
+					],
+				],
+			],
+		],
+
 		'video' => [
 			'label' => esc_html__('Video', 'wesselvandenijssel'),
 			'type' => 'textarea',

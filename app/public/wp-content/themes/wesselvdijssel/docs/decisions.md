@@ -408,3 +408,19 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - **Alt-teksten:** in het Nederlands, en ze beschrijven alleen wat te zien is. Bij de kart en de sneeuwscooter staat niet dat Wessel de bestuurder is, want dat is op de foto niet te zien.
 - **Video's:** ook de losse Live Photo-video's staan nu in `Portfolio/Videos`: `portret/` (4) en `vakanties/` (1). Het hero-blok met variant "Achtergrond" en type "Video" neemt een embedcode letterlijk over, dus een Wistia-embed past er direct in.
 - **CTA-animatie:** de clip-path van D-037 sneed de titel af. De inset is nu begrensd op de padding van de kaart min 8px.
+
+## D-042: Uitgesneden portret in de hero, hobbytekst uit Polarsteps
+
+- **Datum:** 2026-10-07
+- **Beslissing:**
+  - **Hero:** het hero-blok heeft de nieuwe optie "Uitgesneden foto" (`cutout`), voor de variant "Portret naast tekst". Als die aan staat:
+    - wordt de foto op ware grootte getoond (`full`) en niet bijgesneden tot 4:5
+    - is er geen afgeronde kader
+    - staat het blauwe vlak alleen achter het onderste deel, zodat het hoofd erboven uitsteekt. Het vlak beweegt niet mee met de parallax, anders zweeft de rechte onderrand van de foto in het blauw.
+    - is de foto op desktop maximaal 400px breed
+  - **Home:** gebruikt de uitgesneden foto (media 372, webp met transparantie, 204 KB). De uitgelichte afbeelding voor Open Graph blijft de gewone portretfoto (353), want een transparante foto werkt niet als deelafbeelding.
+- **Uitsnijden:** gedaan met Apple Vision (de functie "onderwerp optillen" van macOS). Een stoelleuning werd als onderdeel van Wessel gezien. Die is met de hand weggehaald. Ook is de foto vlak onder de armen afgesneden.
+- **Hobbytekst bij "Mijn persoonlijke kant":** op basis van de Polarsteps-export. Daarin zitten vier reizen. Alleen de Dolomieten en Hongarije GP zijn van het account van Wessel. Tenerife staat op het account van Isabel en Tromsø op dat van Wesley. Daarom staan in de tekst alleen dingen die Wessel zelf deed, en geen namen van reisgenoten:
+  - waar hij in de reisverslagen bij naam genoemd wordt: aan het stuur op Tenerife, de drone in de Dolomieten, de drie dagen op het circuit in Hongarije
+  - waar zijn eigen foto's het laten zien: het noorderlicht en de sneeuwscooter in Tromsø
+- **Alt-teksten:** de kart (359) en de sneeuwscooter (361) noemen nu Wessel, na bevestiging van Wessel.
