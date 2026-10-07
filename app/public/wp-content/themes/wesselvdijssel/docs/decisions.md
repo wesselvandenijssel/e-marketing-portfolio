@@ -446,3 +446,38 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - **Projecten:** het projectoverzicht op lichtblauw
 - **CSS:** bij `has-navy-background-color` zijn tekst, links en de focusrand automatisch wit, en wordt de primaire knop wit met navy. Zo hoeft de redacteur geen tekstkleur te kiezen. Gewone links (`#0077a8`) zouden op navy maar 3,09:1 halen.
 - **Gevolg:** de CTA-kaarten, de footer en de hero blijven zoals ze waren. Op Contact en Blog staat geen achtergrondblok: Contact heeft één blok, en Blog heeft nog geen berichten.
+
+## D-045: Project Schoolmaaltijden, eerste blogbericht, media opgeruimd
+
+- **Datum:** 2026-10-07
+- **Project Schoolmaaltijden (387):**
+  - Wessel werkte eraan bij de andere vestiging van Social Brothers.
+  - **Ingevuld uit openbare bronnen:**
+    - opdrachtgever: het Nederlandse Rode Kruis en het Jeugdeducatiefonds, in opdracht van OCW
+    - de opdracht
+    - tools: WordPress en WPML, te zien in de broncode van de site
+    - de talen van de site: Nederlands, Engels, Arabisch en Turks
+  - **Resultaat, met bron:**
+    - Hart van Nederland meldde op 29 maart 2023 dat scholen zich via schoolmaaltijden.nl konden aanmelden
+    - Omroep Brabant meldde op 26 mei 2023 dat er 1.302 scholen meededen
+  - **Nog `[INVULLEN]`:** periode, rol en aanpak. Die staan nergens openbaar.
+  - **Afbeelding:** een screenshot van de homepage (385), op 1600 × 1000 px zoals bij de andere projecten.
+- **Blogbericht "SEO verbeteren begint in de code" (388):**
+  - De voorbeelden komen uit de changelog van het standaardthema die Wessel meestuurde. De bureaunaam staat er niet in. De tekst spreekt van "het bureau waar ik werk".
+  - Over de minor staat er alleen in wat vaststaat: de start in september 2026 en de interesse in SEO.
+  - Nieuwe categorie: SEO. Uitgelichte afbeelding: de kantoorfoto 357, die dus niet is verwijderd.
+  - Yoast-velden zijn ingevuld.
+- **Single-template:**
+  - **CSS:** gewone WordPress-koppen, alinea's en lijsten in `.single__content` krijgen marges en de pijl-bullets van `content-layout`. Zo kan Wessel berichten schrijven met gewone blokken.
+  - **Auteursvak:**
+    - de bio "Korte bio" en "Dit is de biografie" is vervangen door de intro uit de footer
+    - de `#`-links naar Facebook en Instagram zijn leeggemaakt
+    - de verwijzing naar het verwijderde logo (58) is weg
+    - LinkedIn staat er nu als gewone user meta. De ACF-verwijzing wees naar een link-veld uit de thema-opties, dat een array verwacht.
+- **Contact:** de reactietermijn is "binnen twee werkdagen". Op de Blog-pagina is de `[INVULLEN]` voor het eerste bericht weggehaald.
+- **Media verwijderd:**
+  - 208: het oude portret van 400 × 400 px
+  - 375: de foto met de duim omhoog
+  - 377: de hoodie
+  - Vooraf is gecontroleerd dat ze nergens gebruikt werden: niet in content, metadata, opties, termmeta of usermeta.
+- **Hobbytekst:** bevestigd door Wessel.

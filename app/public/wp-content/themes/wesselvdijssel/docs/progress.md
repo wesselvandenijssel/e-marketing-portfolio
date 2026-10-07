@@ -89,10 +89,9 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 1. **`[INVULLEN]` op de site** (ook alle pagina's van Portfolio minor):
    - Over mij: je merk IK, wat je leert in de minor (de hobby's zijn ingevuld, D-042)
    - Ervaring: het startjaar van HBO-ICT, de school en einddatum van de minor, en de omschrijving van de minor
-   - Contact: de reactietermijn
    - Privacy statement: de bewaartermijn en de hostingpartij
    - Gebruik van AI: controleren en aanvullen
-   - Projecten: het resultaat van SCX Solar en van The Souks
+   - Projecten: het resultaat van SCX Solar en van The Souks; periode, rol en aanpak bij Schoolmaaltijden (D-045)
 2. **Cv:** op Ervaring is nog geen downloadknop. `Professioneel CV A4.pdf` in je Downloads is een lege template.
 3. **Foto:** opgelost, een nieuwe portretfoto staat in de hero (D-041). Voor een hero met video: stuur de Wistia-embedcode.
 4. **Server (D-027):** op emarketing.wesselvandenijssel.nl staat nu lumie. Ook ontbreken daar de database-migratie, de themaactivatie en `blog_public` = 1.

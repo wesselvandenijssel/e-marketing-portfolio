@@ -44,6 +44,39 @@
 		> figure {
 			max-width: $image-max-width;
 		}
+
+		> .wp-block-heading {
+			margin-top: 1.5em;
+			margin-bottom: 0.5em;
+		}
+
+		> p,
+		> .wp-block-list {
+			margin-bottom: 1.5em;
+		}
+
+		> .wp-block-list li {
+			position: relative;
+			padding-left: 20px;
+
+			@include bp("narrow") {
+				padding-left: 30px;
+			}
+
+			&:not(:last-child) {
+				margin-bottom: 0.75em;
+			}
+
+			&::before {
+				content: $fa-arrow-right;
+				font-family: $fa;
+				font-weight: 400;
+				position: absolute;
+				top: 0;
+				left: 0;
+				color: $hue-accent-1;
+			}
+		}
 	}
 
 	.centered-content {
