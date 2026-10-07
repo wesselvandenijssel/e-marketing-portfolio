@@ -481,3 +481,10 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - 377: de hoodie
   - Vooraf is gecontroleerd dat ze nergens gebruikt werden: niet in content, metadata, opties, termmeta of usermeta.
 - **Hobbytekst:** bevestigd door Wessel.
+
+## D-046: Body-class "blog" verwijderd
+
+- **Datum:** 2026-10-07
+- **Probleem:** op `/blog/` kon je niet scrollen. WordPress geeft `<body>` op de berichtenpagina de class `blog`. Het blog-blok gebruikt dezelfde naam als BEM-blok (`.blog { overflow: hidden; }`), dus de hele pagina kreeg `overflow: hidden`. Ook de andere `.blog`-regels raakten de hele pagina. Daardoor stonden bijvoorbeeld de titels in de footer gecentreerd.
+- **Oplossing:** een filter op `body_class` in `src/functions/cleanup.php` haalt de class `blog` weg. Geen enkele stylesheet of script gebruikt die body-class.
+- **Gevolg:** `/blog/` scrollt weer op desktop en mobiel, en de footertitels staan weer links.
