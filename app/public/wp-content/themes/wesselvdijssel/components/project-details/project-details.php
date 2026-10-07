@@ -53,7 +53,7 @@ $has_facts = $client || $period || $website || $tool_list;
 				<div class="project-details__fact project-details__fact--tools">
 					<dt><?= esc_html__('Tools en technieken', 'wesselvandenijssel'); ?></dt>
 					<dd>
-						<ul class="project-details__tools" role="list">
+						<ul class="project-details__tools">
 							<?php foreach ($tool_list as $tool) : ?>
 								<li class="project-details__tool"><?= esc_html($tool); ?></li>
 							<?php endforeach; ?>
@@ -76,7 +76,7 @@ $has_facts = $client || $period || $website || $tool_list;
 	<?php if (!empty($images)) : ?>
 		<section class="project-details__section">
 			<h2 class="project-details__heading h3"><?= esc_html__('Beelden', 'wesselvandenijssel'); ?></h2>
-			<ul class="project-details__images" role="list">
+			<ul class="project-details__images">
 				<?php foreach ($images as $index => $image_id) :
 					$alt = get_post_meta($image_id, '_wp_attachment_image_alt', true);
 					$label = sprintf(__('Vergroot afbeelding %1$d van %2$d', 'wesselvandenijssel'), $index + 1, count($images)); ?>

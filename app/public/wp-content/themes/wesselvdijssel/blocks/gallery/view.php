@@ -31,7 +31,6 @@ $group = sprintf('%s-gallery', $block['id'] ?? 'gallery');
 $grid_attr = [];
 $grid_attr['class'][] = 'gallery__grid';
 $grid_attr['class'][] = 'gallery__grid--' . $layout;
-$grid_attr['role'] = 'list';
 
 if ($layout === 'grid') {
 	$grid_attr['class'][] = 'gallery__grid--cols-' . $columns;

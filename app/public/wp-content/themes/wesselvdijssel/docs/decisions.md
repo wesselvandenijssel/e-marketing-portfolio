@@ -495,7 +495,7 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Bronnen:** de LinkedIn-export van Wessel (Profile.csv, Profile.pdf) en de Voice Card van 19 juli 2026. De geboortedatum, de postcode en de profielstatistieken zijn niet gebruikt.
 - **Openbaar (LinkedIn):**
   - **Ervaring, Werk:**
-    - MB effect staat nu vanaf juni 2023
+    - het bureau staat nu vanaf juni 2023
     - nieuw: Social Brothers (stage, augustus 2022 – april 2023, met een link naar Schoolmaaltijden), race marshal bij The Official F1 Racing Centre (juni 2022 – heden), Het BUREAU (junior back-end developer, 2021–2022) en Fiverr (grafisch ontwerper, 2020–2022)
     - weggelaten: de archiefbijbanen uit 2019–2021, en "Manager sociale media, Instagram", omdat onduidelijk is voor welk account
   - **Ervaring, Opleiding:**
@@ -515,7 +515,7 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - **Aanvullende kennis (330):** de certificaten.
   - Niets uit de Voice Card staat op openbare pagina's.
 - **Open punten:**
-  - **Tegenstrijdigheid:** LinkedIn zegt "MB effect sinds juni 2023" en noemt geen aparte stage. De site heeft ook "Stage webdevelopment MB effect, september 2023 – mei 2024". Die regel is blijven staan.
+  - **Tegenstrijdigheid:** LinkedIn zegt "bij het bureau sinds juni 2023" en noemt geen aparte stage. De site heeft ook "Stage webdevelopment" bij het bureau (september 2023 – mei 2024). Die regel is blijven staan.
   - **Blijft `[INVULLEN]`:** de reflectie, de dialogen, waarom Wessel de Voice Card maakte, en de einddatum en onderwijsinstelling van de minor.
 - **Fout gevonden en opgelost:** het nieuwe blok was een kopie van "Mijn cv", inclusief het ACF-blok-ID. ACF laadt velden per blok-ID, dus beide blokken toonden dezelfde inhoud. Het blok heeft nu een eigen ID. Een scan van alle pagina's vond geen andere dubbele blok-ID's.
 
@@ -536,12 +536,12 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - De socialtitels van de archieven zijn ook vertaald.
 - **Aanleiding:** Wessel zag "Archives for" in het kruimelpad van de auteurspagina.
 
-## D-049: Correcties van Wessel: geen stage bij MB effect, Flexercise, minor, Schoolmaaltijden
+## D-049: Correcties van Wessel: geen stage bij het bureau, Flexercise, minor, Schoolmaaltijden
 
 - **Datum:** 2026-10-07
-- **Correctie:** Wessel liep geen stage bij MB effect. Verwijderd of herschreven:
-  - **Ervaring:** de regel "Stage webdevelopment MB effect, september 2023 – mei 2024" is weg
-  - **SCX Solar:** de rol, de samenvatting en de Yoast-beschrijving noemen geen stage meer. De rol is nu "Als front-end developer bij MB effect…".
+- **Correctie:** Wessel liep geen stage bij het bureau. Verwijderd of herschreven:
+  - **Ervaring:** de regel "Stage webdevelopment" bij het bureau (september 2023 – mei 2024) is weg
+  - **SCX Solar:** de rol, de samenvatting en de Yoast-beschrijving noemen geen stage meer. De rol is nu "Als front-end developer bij [het bureau]…".
   - **Rentwereld:** "sinds mijn stage in 2023" is nu "sinds 2023", en "Tijdens mijn stage een hero-blok…" is nu "Een hero-blok…"
   - Een zoekactie over alle content vond daarna alleen nog de stage bij Social Brothers. Die klopt.
 - **Nieuw op Ervaring, Werk:**
@@ -572,7 +572,7 @@ Format per beslissing: datum, beslissing, reden, gevolg.
     - Social Brothers: HTML, SCSS, JS/TS, Twig, Svelte. Wessel was front-end developer van Schoolmaaltijden.
     - Het BUREAU: PHP en Laravel, voor echte externe klanten
     - Fiverr: freelance ontwerpwerk
-    - MB effect: ook Shopify-webshops, volgens het logboek
+    - het bureau: ook Shopify-webshops, volgens het logboek
     - Flexercise: de testsite, met een link naar het project
   - **HBO-ICT:** een link naar het logboek.
   - **Skills:** aangevuld met Laravel, Twig en Svelte.
@@ -682,3 +682,60 @@ Format per beslissing: datum, beslissing, reden, gevolg.
     - hij werd naast de bio samengedrukt tot ongeveer 16px. Nu `flex-shrink: 0` en 80px.
     - het formaat is "Avatar" (128px) in plaats van "Author thumb", zodat hij scherp is op retina
 - **Niet aangepast (uitzondering in WCAG 2.5.8):** links in lopende tekst, en footer- en menulinks met genoeg ruimte ertussen.
+
+## D-058: Homepage gericht op wie Wessel wil leren kennen
+
+- **Datum:** 2026-10-07
+- **Aanleiding:** de homepage praatte vooral vanuit Wessel. Hij wil dat bezoekers zich aangesproken voelen, vooral bedrijven die via LinkedIn op de site komen.
+  - Bijsturing 1: Wessel bouwt meestal geen websites voor bezoekers van zijn site.
+  - Bijsturing 2: hij werkt met plezier bij het bureau en is niet op zoek naar een andere baan.
+  - De toon is daarom neutraal: laten zien wat hij kan, en uitnodigen om kennis te maken of te sparren. Geen verkooppraat en geen sollicitatie.
+- **Opbouw van Home:**
+  - **Hero:** de ondertitel is "Front-end developer voor WordPress en Shopify". De tekst zegt wat hij bouwt en eindigt met "Op deze site zie je wat ik bouw, hoe ik werk en wat ik leer." De knoppen zijn "Bekijk mijn projecten" en "Download mijn cv".
+  - **"Wat ik meebreng":** WordPress en Shopify, snelheid en SEO, tracking en marketing, en werken in een team (Git, pull requests, code reviews, CI/CD).
+  - **"Resultaten bij Rentwereld":** een nieuw statistiekenblok op navy: 22% lagere kosten per lead, 4,4% conversie, en binnen 1 jaar alle belangrijke zoektermen op pagina 1. Bron: de case van het bureau.
+  - **Uitgelichte projecten:** Rentwereld, Schoolmaaltijden en Van Aalsburg. Précon is vervangen door Schoolmaaltijden.
+  - **"Ervaring in het kort":** het bureau, Social Brothers, HBO-ICT met de minor, en certificaten. Met de knop "Bekijk mijn ervaring".
+  - **CTA:** "Benieuwd naar mijn werk of wil je sparren? Stuur me een bericht.", met "Neem contact op" en "Download mijn cv".
+  - **Yoast:** een nieuwe titel en beschrijving.
+- **Andere pagina's in dezelfde toon:**
+  - Over mij (CTA): "Wil je kennismaken of sparren over front-end en marketing?"
+  - Projecten (CTA): "Vragen over een project? Stuur me een bericht."
+  - Contact (intro): "een project" is weggehaald
+  - Blogbericht (slotzin): "Wil je sparren over SEO en techniek?"
+
+## D-059: Case "Deze portfolio-website" (GitHub-repository)
+
+- **Datum:** 2026-10-07
+- **Beslissing:** project 425 beschrijft deze site zelf, met een link naar de openbare repository `wesselvandenijssel/e-marketing-portfolio`. De categorie is Eigen project, de periode september – oktober 2026.
+  - **Inhoud:**
+    - het thema, de huisstijl volgens WCAG
+    - het beschermde deel met een eigen rol, en zonder lekken
+    - de Motion-animaties, de deploy met GitHub Actions en de tests met Playwright
+  - **AI-gebruik:** de rol vermeldt Claude Code als AI-assistent, met een link naar Gebruik van AI.
+  - **Afbeelding:** een screenshot van de nieuwe homepage.
+  - De site staat nog niet live. Daarom linkt het websiteveld naar GitHub.
+
+## D-060: Blok "GitHub-activiteit"
+
+- **Datum:** 2026-10-07
+- **Beslissing:** een nieuw ACF-blok `github-activity` met een titel en een GitHub-gebruikersnaam.
+  - **Data:** `src/functions/github.php` haalt de openbare kalender op (`github.com/users/<naam>/contributions`, zonder token). Per dag worden datum, niveau en aantal uitgelezen.
+  - **Cache:** 12 uur in een transient. Als het ophalen mislukt, 1 uur. Lukt het ophalen niet, dan verbergt het blok zich.
+  - **Weergave:**
+    - het totaal van het afgelopen jaar, met de kalender als heatmap in de merkkleuren
+    - een legenda en de knop "Bekijk mijn GitHub"
+    - tooltips in het Nederlands, zoals "32 bijdragen op 7 oktober 2026"
+  - **Toegankelijk:** de kalender is `role="img"` met een aria-label met het totaal.
+  - **Formaat:** de vakjes zijn 11, 13 of 18px, afhankelijk van de breedte, en passen vanaf 980px zonder scrollen. Op mobiel scrolt de kalender horizontaal, en `github-activity.ts` scrolt naar de nieuwste week.
+- **Plaats:** op Ervaring, na Tools. Op 7 oktober 2026 waren het 4.560 bijdragen in het afgelopen jaar.
+
+## D-061: HTML-validatie: achtergrondblok en list-rollen
+
+- **Datum:** 2026-10-07
+- **Meldingen van de W3C-validator:**
+  - **"Section lacks heading":** het achtergrondblok wikkelde zijn inhoud in een eigen `<section>` zonder kop. Het is een wrapper, dus nu een `<div>`. De blokken erin zijn zelf nog wel een `<section>` met een kop. Geen enkele stylesheet of script gebruikt `section.background`.
+  - **"The list role is unnecessary":** `role="list"` stond op `<ul>` en `<ol>` die al een native lijst zijn. Weggehaald bij statistics, timeline, gallery en project-details (tools en afbeeldingen).
+- **Gecontroleerd:**
+  - op Home, Over mij, Ervaring, Projecten en Blog staat geen `<section>` meer zonder kop, en geen `role="list"`
+  - de achtergrondkleuren blijven werken

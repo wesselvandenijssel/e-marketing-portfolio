@@ -30,7 +30,7 @@ echo !is_admin() ? '[raw]' : '';
 			]);
 		} ?>
 
-		<ul class="statistics__grid" role="list">
+		<ul class="statistics__grid">
 			<?php foreach ($statistics as $statistic) :
 				component('statistic', [
 					'prefix' => $statistic['prefix'] ?? '',

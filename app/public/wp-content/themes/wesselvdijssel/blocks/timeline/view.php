@@ -47,7 +47,7 @@ echo !is_admin() ? '[raw]' : '';
 			</div>
 		<?php endif; ?>
 
-		<ol class="timeline__list" role="list">
+		<ol class="timeline__list">
 			<?php foreach ($items as $item) :
 				$period = $item['period'] ?? '';
 				$organisation = $item['organisation'] ?? '';

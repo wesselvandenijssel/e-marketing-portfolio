@@ -38,7 +38,7 @@ if (!empty($block['gradient'])) {
 }
 ?>
 
-<section <?php attr($section); ?>>
+<div <?php attr($section); ?>>
 	<?php if (is_admin()) : ?>
 		<h3> <?= esc_html__("Achtergrond blok", 'wesselvandenijssel'); ?> </h3>
 	<?php endif; ?>
@@ -48,4 +48,4 @@ if (!empty($block['gradient'])) {
 	<?php if (is_admin()) : ?>
 		<h3> <?= esc_html__("Einde achtergrond block", 'wesselvandenijssel'); ?> </h3>
 	<?php endif; ?>
-</section>
+</div>

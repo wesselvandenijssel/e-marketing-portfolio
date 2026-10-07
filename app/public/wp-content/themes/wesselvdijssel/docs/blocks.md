@@ -20,6 +20,7 @@ Overzicht van alle blokken in het thema: waarvoor ze dienen en waar ze vandaan k
 | `logo-banner` | Logo banner | damsteegtwaterwerken `logo-banner` | Tools, certificaten, opdrachtgevers |
 | `gallery` | Galerij | damsteegtwaterwerken `gallery` | Certificaten en projectbeelden met lightbox |
 | `cta-banner` | CTA banner | damsteegtwaterwerken `cta-banner` | Oproep naar Contact, licht of donker |
+| `github-activity` | GitHub-activiteit | Nieuw (D-060) | Openbare GitHub-kalender met totaal, op Ervaring |
 
 ## Componenten
 
