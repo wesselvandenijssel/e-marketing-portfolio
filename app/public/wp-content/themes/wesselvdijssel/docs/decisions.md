@@ -640,3 +640,22 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - Google Ads Search en Claude Code in Action staan erbij, met klikbare links
   - de hobby's staan nu onderaan de rechterkolom, zodat de zijbalk op één pagina past
   - de pdf op de site is vervangen, de URL blijft hetzelfde
+
+## D-056: Rustigere en speelsere footer
+
+- **Datum:** 2026-10-07
+- **Aanleiding:** Wessel vond de footer te vol. Hij mocht ook speelser.
+- **Rustiger:**
+  - Footermenu's tonen alleen hoofditems (`depth => 1` in `footer-column.php`). Navigatie heeft nu 5 links in plaats van 10.
+  - Kolomtitels zijn kleine, blauwe labels in hoofdletters (`#00a3e0` op navy, 5,38:1). De introkolom houdt een grote naam.
+  - Op mobiel staan Navigatie en Informatie naast elkaar, met Contact eronder.
+  - De copyright staat nu in het navy vlak, met een dunne scheidingslijn erboven.
+- **Speelser:**
+  - een lichtblauwe cirkel met een ring, rechtsboven, die langzaam zweeft
+  - "wesselvandenijssel" als groot outline-woordmerk onderaan, half afgesneden
+  - een ronde knop "Terug naar boven" (`#page`), die bij hover omhoog schuift
+  - menulinks krijgen bij hover een pijltje, en het e-mailadres een blauwe onderstreping die beweegt
+  - Bij `prefers-reduced-motion` staan de zweefanimatie en de bewegingen uit.
+  - De cirkel en het woordmerk zijn `aria-hidden`.
+- **Fout voorkomen:** het bestaande anker-script (`randomness.ts`) doet `querySelector(href)`. Daarom wijst de knop naar `#page` en niet naar `#`; dat gaf een JS-fout.
+- **Hoofdmenu:** het item "Home" staat er niet meer in. Dat was niet door deze wijziging; het item zelf ontbreekt in menu 3. De footer volgt het menu.

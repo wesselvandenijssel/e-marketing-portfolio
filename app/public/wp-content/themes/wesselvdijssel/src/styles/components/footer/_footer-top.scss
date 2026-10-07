@@ -128,9 +128,7 @@
 
 	&__menu {
 		a {
-			display: inline-flex;
-			align-items: baseline;
-			gap: 8px;
+			position: relative;
 			color: $hue-white;
 			text-decoration: none;
 
@@ -142,6 +140,11 @@
 
 			&::after {
 				content: $fa-arrow-right;
+				position: absolute;
+				top: 50%;
+				left: calc(100% + 8px);
+				margin-top: -0.5em;
+				line-height: 1;
 				font-family: $fa;
 				font-weight: 400;
 				font-size: 0.8em;
