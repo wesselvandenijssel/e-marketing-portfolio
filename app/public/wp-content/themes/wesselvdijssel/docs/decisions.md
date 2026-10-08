@@ -802,7 +802,7 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 ## D-066: MySpace-verhaal geschrapt
 
 - **Datum:** 2026-10-08
-- **Beslissing:** het plan noemde voor Over mij een "MySpace-verhaal" van de oude live site. Dat klopt niet: Wessel heeft geen MySpace-pagina gehad. De zin is uit de hero van Over mij gehaald. De hero zegt nu: "Bij MB effect bouw ik elke dag aan websites en webshops voor bedrijven."
+- **Beslissing:** het plan noemde voor Over mij een "MySpace-verhaal" van de oude live site. Dat klopt niet: Wessel heeft geen MySpace-pagina gehad. De zin is uit de hero van Over mij gehaald. De hero noemt nu het dagelijkse werk aan websites en webshops bij het stagebedrijf.
 - **Ook:** de portretfoto in de hero heeft op mobiel en tablet 20px ruimte aan de onderkant, zodat het blauwe vlak erachter niet meer tegen de titel staat.
 
 ## D-067: Schema Pro uit, Complianz voor cookietoestemming
@@ -836,3 +836,16 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - Gebruik de Scripts-velden van het thema niet voor tracking. Alles wat cookies plaatst, gaat via GTM met een toestemmingstrigger.
   - De UTM-cookies hebben de vlag `Secure`. Lokaal op `http://` weigert de browser ze. Op https werken ze wel.
   - Bewaartermijnen: formulierberichten 12 maanden (Gravity Forms verwijdert ze automatisch, instelling Personal Data van het contactformulier), GA4 2 maanden voor gebeurtenissen en 14 maanden voor gebruikers (met reset bij nieuwe activiteit). Hosting: Vimexx. Het opslaan van IP-adressen staat uit in het formulier.
+
+## D-069: Klantreis pas na toestemming voor marketing
+
+- **Datum:** 2026-10-08
+- **Beslissing (op verzoek van Wessel):** de customer-journey-plugin schreef elke paginaweergave naar localStorage, ook zonder toestemming en na "Weigeren". De Telecommunicatiewet (art. 11.7a) geldt ook voor localStorage. De uitzondering voor analytische cookies past niet, omdat de klantreis aan een naam en e-mailadres wordt gekoppeld. Het script laadt nu pas na toestemming voor marketing, dezelfde categorie als de UTM-plugin.
+- **Uitvoering:**
+  - `src/functions/complianz.php` voegt het script toe aan de blokkeerlijst van Complianz (`cmplz_known_script_tags`). De plugin zelf is niet aangepast.
+  - In Complianz staat `wesselvdijssel_customer_journey` nu onder Marketing. De opruimcookie `wesselvdijssel_cj_clear_journey` blijft functioneel.
+  - Het privacy statement zegt dat de bekeken pagina's alleen met toestemming voor marketing worden bijgehouden.
+- **Getest:** zonder keuze en na "Weigeren" blijft localStorage leeg en krijgt het formulier geen verborgen veld. Na "Accepteren" start het bijhouden direct op dezelfde pagina. Geen JS-fouten.
+- **Gevolg:**
+  - Berichten van bezoekers zonder toestemming hebben geen klantreis. De plugin slaat een leeg veld gewoon over.
+  - Complianz bewaart zijn blokkeerlijst 30 minuten in de optie `cmplz_transients`. Na een wijziging aan de lijst duurt het dus even, of verwijder de sleutel `cmplz_blocked_scripts` daaruit.
