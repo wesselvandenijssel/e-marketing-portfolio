@@ -804,3 +804,35 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Datum:** 2026-10-08
 - **Beslissing:** het plan noemde voor Over mij een "MySpace-verhaal" van de oude live site. Dat klopt niet: Wessel heeft geen MySpace-pagina gehad. De zin is uit de hero van Over mij gehaald. De hero zegt nu: "Bij MB effect bouw ik elke dag aan websites en webshops voor bedrijven."
 - **Ook:** de portretfoto in de hero heeft op mobiel en tablet 20px ruimte aan de onderkant, zodat het blauwe vlak erachter niet meer tegen de titel staat.
+
+## D-067: Schema Pro uit, Complianz voor cookietoestemming
+
+- **Datum:** 2026-10-08
+- **Beslissing (op verzoek van Wessel):**
+  - Schema Pro is uitgeschakeld. Het deed hetzelfde als Yoast, en Yoast blijft de enige bron van structured data.
+  - Complianz GDPR/CCPA (gratis, 7.5.5) is geïnstalleerd en geactiveerd. Het regelt de cookietoestemming voordat er analytics en heatmaps komen.
+- **Gevolg:**
+  - De cookiebanner verschijnt pas als de wizard van Complianz is doorlopen.
+  - De deploy-workflow levert alleen het thema en de eigen plugins op. Complianz moet je dus op de productieserver los installeren. De instellingen gaan mee met de database-migratie.
+
+## D-068: Complianz-wizard ingevuld, Clarity via Tag Manager
+
+- **Datum:** 2026-10-08
+- **Beslissing (op verzoek van Wessel):**
+  - Statistieken lopen via Google Tag Manager. Complianz laadt de container en geeft de toestemming door.
+  - Wessel kiest Microsoft Clarity voor heatmaps (niet Crazy Egg). Clarity komt als tag in Tag Manager en vuurt alleen na toestemming voor statistieken.
+  - Geen marketing-, advertentie- of social media-cookies, geen reacties en geen diensten van derden met eigen toestemming.
+  - Adres in de documenten: alleen "Utrecht".
+  - Complianz maakt de pagina Cookiebeleid (`/cookiebeleid/`). Privacy statement en Disclaimer blijven de eigen pagina's van de site.
+  - Het Nederlandse taalpakket van Complianz is geïnstalleerd, zodat het cookiebeleid in het Nederlands staat.
+  - Wessel gebruikt de reCAPTCHA-add-on van Gravity Forms. Complianz blokkeert reCAPTCHA niet vóór toestemming, anders werkt het contactformulier pas na het accepteren van marketingcookies. reCAPTCHA staat als functionele dienst in het cookiebeleid.
+  - Clarity (`_clck`, `_clsk`, `CLID`, `MUID`) en reCAPTCHA (`_GRECAPTCHA`) zijn met de hand als dienst en cookie toegevoegd, met synchronisatie uit, zodat Complianz ze niet leegmaakt.
+  - De GTM-container (`GTM-W47LDK6G`) wordt alleen door Complianz geladen. De snippets in de thema-instellingen Scripts (head en body) zijn leeggemaakt. Die laadden de container nog een keer, zonder toestemming.
+  - In GTM vuren GA4 en Clarity op de Custom Event-trigger `cmplz_event_statistics`, niet op All Pages.
+  - De UTM-plugin (AFL UTM Tracker) wacht nu op toestemming via Complianz, categorie marketing. Daarom staat marketing aan in Complianz en toont de banner die categorie.
+  - Cookielijst in Complianz opgeschoond: de oude scanresten `ct_traffic_source_cookie`, `ct_user_journey_cookie` en `History.store` (van Schema Pro) zijn als verwijderd gemarkeerd. De echte items van de customer-journey-plugin (localStorage `wesselvdijssel_customer_journey`, cookie `wesselvdijssel_cj_clear_journey`), Google Analytics (`_ga`, `_ga_*`) en de UTM-cookies (`afl_wc_utm_*`) zijn toegevoegd.
+  - Het privacy statement noemt nu Google Analytics, Clarity, reCAPTCHA, de UTM-gegevens, de grondslag per verwerking, Google en Microsoft als verwerkers en een link naar het cookiebeleid.
+- **Gevolg:**
+  - Gebruik de Scripts-velden van het thema niet voor tracking. Alles wat cookies plaatst, gaat via GTM met een toestemmingstrigger.
+  - De UTM-cookies hebben de vlag `Secure`. Lokaal op `http://` weigert de browser ze. Op https werken ze wel.
+  - Het privacy statement heeft nog drie `[INVULLEN]`: bewaartermijn van formulierberichten, bewaartermijn in GA4 en de hostingpartij.
