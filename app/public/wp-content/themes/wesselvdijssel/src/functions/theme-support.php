@@ -8,7 +8,6 @@ add_action('init', function () {
 	register_nav_menus([
 		'primary' => esc_html__('Hoofdmenu', 'wesselvandenijssel'),
 		'primary_mobile' => esc_html__('Hoofdmenu mobiel', 'wesselvandenijssel'),
-		'sitemap' => esc_html__('Sitemap menu', 'wesselvandenijssel'),
 		'top' => esc_html__('Topbar menu', 'wesselvandenijssel'),
 	]);
 });
