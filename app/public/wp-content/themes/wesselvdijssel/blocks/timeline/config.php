@@ -95,6 +95,14 @@ return [
 					'type' => 'link',
 					'return_format' => 'array',
 				],
+				[
+					'key' => 'field_timeline_items_image',
+					'name' => 'image',
+					'label' => esc_html__('Afbeelding', 'wesselvandenijssel'),
+					'type' => 'image',
+					'return_format' => 'id',
+					'mime_types' => 'png,jpg,jpeg,webp',
+				],
 			],
 		],
 
