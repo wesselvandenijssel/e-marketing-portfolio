@@ -13,7 +13,7 @@ Overzicht van alle blokken in het thema: waarvoor ze dienen en waar ze vandaan k
 | `blog` | Blog | base-theme | Nieuwste of gekozen blogberichten |
 | `contact` | Contactformulier | base-theme | Gravity Forms-formulier |
 | `icon-boxes` | Icoonblokken | flexercise `icon-boxes` | Vaardigheden, tools, diensten; inhoudsopgave van Portfolio minor |
-| `timeline` | Tijdlijn | vink-schilderwerken `timeline`, omgezet naar block.json | Werkervaring, opleiding, bijdrage per datapunt |
+| `timeline` | Timeline | vink-schilderwerken `timeline`, omgezet naar block.json | Werkervaring, opleiding, bijdrage per datapunt |
 | `projects` | Projecten | bureau-tromp `cases` (opbouw) + damsteegtwaterwerken `projects` (categoriefilter) | Projectgrid met filter en paginering |
 | `statistics` | Statistieken | damsteegtwaterwerken `statistics` | Resultaten, nulmeting / 1-meting / eindmeting |
 | `quote-slider` | Quote slider | flexercise `quote-slider` | Testimonials, 360 graden feedback (alleen op beschermde pagina's) |

@@ -2,7 +2,7 @@
 defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 
 /**
- * Tijdlijn Block Template.
+ * Timeline Block Template.
  */
 
 $section = general_section($block, [
@@ -59,10 +59,10 @@ echo !is_admin() ? '[raw]' : '';
 				<li class="timeline__item<?= $image ? ' timeline__item--has-image' : ''; ?>">
 					<?php if ($image) : ?>
 						<figure class="timeline__media">
-							<?= wp_get_attachment_image($image, 'Content', false, [
+							<?= wp_get_attachment_image($image, 'full', false, [
 								'class' => 'timeline__image',
 								'loading' => 'lazy',
-								'sizes' => '(min-width: 980px) 40vw, 100vw',
+								'sizes' => '(min-width: 980px) 60vw, 100vw',
 							]); ?>
 						</figure>
 					<?php endif; ?>
