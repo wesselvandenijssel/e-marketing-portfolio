@@ -61,6 +61,6 @@ if ($is_range) {
 	<?php endif; ?>
 
 	<?php if (!empty($description)) : ?>
-		<p class="statistic__description"><?= nl2br(esc_html($description)); ?></p>
+		<p class="statistic__description"><?= nl2br(wp_kses($description, ['a' => ['href' => [], 'target' => [], 'rel' => []]])); ?></p>
 	<?php endif; ?>
 </li>

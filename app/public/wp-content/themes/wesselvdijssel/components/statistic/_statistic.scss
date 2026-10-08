@@ -25,6 +25,15 @@
 		margin: 0;
 	}
 
+	#{$self}__description a:not(.btn) {
+		color: $hue-accent-text;
+
+		&:hover,
+		&:focus {
+			color: $hue-dark-1;
+		}
+	}
+
 	&__number {
 		display: inline-flex;
 		align-items: baseline;
