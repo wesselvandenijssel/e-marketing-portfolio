@@ -2,7 +2,7 @@
 defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 
 /**
- * Timeline Block Template.
+ * Tijdlijn Block Template.
  */
 
 $section = general_section($block, [
