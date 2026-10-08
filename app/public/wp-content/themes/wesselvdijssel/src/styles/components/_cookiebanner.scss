@@ -5,6 +5,11 @@ body .cmplz-cookiebanner {
 		font-weight: $font-weight-bold;
 	}
 
+	.cmplz-close:focus-visible {
+		outline: 2px solid $focus-color;
+		outline-offset: 2px;
+	}
+
 	.cmplz-categories .cmplz-category .cmplz-category-header {
 		background-color: $hue-light-1;
 

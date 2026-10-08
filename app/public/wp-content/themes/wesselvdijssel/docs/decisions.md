@@ -863,3 +863,15 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Gevolg:**
   - Bedankt, Privacy statement en Disclaimer staan op noindex en dus niet in de sitemap. Ze staan wel in de footer.
   - Het menu "Sitemap" is verwijderd en de menulocatie `sitemap` is uit `src/functions/theme-support.php` gehaald.
+
+## D-071: Cookiebanner in de huisstijl
+
+- **Datum:** 2026-10-08
+- **Beslissing (op verzoek van Wessel):** de banner van Complianz volgt nu de huisstijl.
+- **Uitvoering:**
+  - In de bannerinstellingen van Complianz (database): wit vlak met rand `$hue-grey-2`, navy tekst, links `#0077a8`, Accepteren `#005a80` met witte tekst, Weigeren en Voorkeuren navy rand en tekst op wit, schuifjes `#005a80` (aan) en `#475569` (uit), hoeken 15px (vlak) en 5px (knoppen), tekst 16px. "Weiger" heet nu "Weigeren".
+  - De bannertekst is herschreven volgens de schrijfregels: geen cliché, overal "je" en alleen wat de site echt doet.
+  - `src/styles/components/_cookiebanner.scss` regelt wat Complianz niet kan instellen: hover en focus navy met witte tekst, focusrand 2px navy, gewicht 600 in plaats van 500, en "Altijd actief" in navy (de groene tekst van Complianz haalde 4,22:1). De `body`-prefix is nodig omdat de CSS van Complianz na het thema laadt.
+  - Complianz zet bij het openen de focus op het sluitkruisje. Dat blijft zo (toegankelijkheid), maar met de focusrand van de huisstijl.
+- **Getest:** axe vindt geen problemen in de banner en de voorkeuren. Geen JS-fouten op mobiel en desktop.
+- **Gevolg:** de kleuren staan in de database van Complianz, niet in `_variables.scss`. Verandert de huisstijl, pas dan ook de bannerinstellingen aan (Complianz > Cookiebanner).
