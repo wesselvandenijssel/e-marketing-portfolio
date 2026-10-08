@@ -17,3 +17,7 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 		});
 	});
 });
+
+document.querySelectorAll<HTMLSelectElement>("select[data-auto-submit]").forEach((select) =>
+	select.addEventListener("change", () => select.form?.submit()),
+);

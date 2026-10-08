@@ -1,11 +1,57 @@
 @use "abstracts" as *;
 
 .projects {
+	&__overview {
+		scroll-margin-top: 100px;
+
+		@include bp("normal") {
+			scroll-margin-top: 140px;
+		}
+	}
+
 	&__filter {
+		display: none;
+
+		@include bp("narrow") {
+			display: block;
+			margin-bottom: pxtoem(40);
+		}
+	}
+
+	&__filter-mobile {
+		display: flex;
+		gap: 10px;
 		margin-bottom: pxtoem(25);
 
 		@include bp("narrow") {
-			margin-bottom: pxtoem(40);
+			display: none;
+		}
+
+		.btn {
+			flex-shrink: 0;
+		}
+	}
+
+	&__filter-select {
+		position: relative;
+		flex-grow: 1;
+
+		&::after {
+			content: $fa-angle-down;
+			position: absolute;
+			top: 50%;
+			right: 20px;
+			font-family: $fa;
+			font-weight: 400;
+			color: $hue-dark-1;
+			transform: translateY(-50%);
+			pointer-events: none;
+		}
+
+		select {
+			height: 100%;
+			padding-right: 50px;
+			border-radius: 5px;
 		}
 	}
 
