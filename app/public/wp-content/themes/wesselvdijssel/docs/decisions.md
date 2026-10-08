@@ -835,4 +835,4 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Gevolg:**
   - Gebruik de Scripts-velden van het thema niet voor tracking. Alles wat cookies plaatst, gaat via GTM met een toestemmingstrigger.
   - De UTM-cookies hebben de vlag `Secure`. Lokaal op `http://` weigert de browser ze. Op https werken ze wel.
-  - Het privacy statement heeft nog drie `[INVULLEN]`: bewaartermijn van formulierberichten, bewaartermijn in GA4 en de hostingpartij.
+  - Bewaartermijnen: formulierberichten 12 maanden (Gravity Forms verwijdert ze automatisch, instelling Personal Data van het contactformulier), GA4 2 maanden voor gebeurtenissen en 14 maanden voor gebruikers (met reset bij nieuwe activiteit). Hosting: Vimexx. Het opslaan van IP-adressen staat uit in het formulier.
