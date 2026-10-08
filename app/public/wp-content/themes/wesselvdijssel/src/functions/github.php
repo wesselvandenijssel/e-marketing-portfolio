@@ -64,3 +64,29 @@ function wesselvandenijssel_github_username(): string {
 
 	return '';
 }
+
+/**
+ * Groups contribution days into weeks that start on Monday, padding the first week with null.
+ *
+ * @param array<int, array{date: string, level: int, count: int}> $days Contribution days, oldest first
+ * @return array<int, array<int, array{date: string, level: int, count: int}|null>>
+ */
+function wesselvandenijssel_github_weeks(array $days): array {
+	if (empty($days)) return [];
+
+	$week = array_fill(0, (int) gmdate('N', strtotime($days[0]['date'] . ' UTC')) - 1, null);
+	$weeks = [];
+
+	foreach ($days as $day) {
+		$week[] = $day;
+
+		if (count($week) === 7) {
+			$weeks[] = $week;
+			$week = [];
+		}
+	}
+
+	if ($week) $weeks[] = $week;
+
+	return $weeks;
+}

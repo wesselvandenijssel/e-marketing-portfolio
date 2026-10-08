@@ -13,19 +13,7 @@ $section = general_section($block, [
 	'class' => ['section', 'github-activity'],
 ]);
 
-$weeks = [];
-$week = array_fill(0, (int) wp_date('w', strtotime($data['days'][0]['date'])), null);
-
-foreach ($data['days'] as $day) {
-	$week[] = $day;
-
-	if (count($week) === 7) {
-		$weeks[] = $week;
-		$week = [];
-	}
-}
-
-if ($week) $weeks[] = $week;
+$weeks = wesselvandenijssel_github_weeks($data['days']);
 
 $total = number_format_i18n($data['total']);
 $profile_url = 'https://github.com/' . rawurlencode($username);

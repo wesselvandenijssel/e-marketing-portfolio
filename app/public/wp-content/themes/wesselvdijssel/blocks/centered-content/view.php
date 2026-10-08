@@ -15,7 +15,7 @@ if (($variant ?? '') === 'intro') {
 	$section['class'][] = 'centered-content--intro';
 
 	$contributions = wesselvandenijssel_github_contributions(wesselvandenijssel_github_username());
-	$weeks = array_chunk(array_slice($contributions['days'] ?? [], -140), 7);
+	$weeks = array_slice(wesselvandenijssel_github_weeks($contributions['days'] ?? []), -20);
 }
 
 if (empty($content)) return;
@@ -45,7 +45,7 @@ echo !is_admin() ? '[raw]' : '';
 				<?php foreach ($weeks as $week) : ?>
 					<span class="centered-content__week">
 						<?php foreach ($week as $day) : ?>
-							<span class="centered-content__day centered-content__day--level-<?= esc_attr((string) (int) $day['level']); ?>"></span>
+							<span class="centered-content__day centered-content__day--<?= $day ? 'level-' . esc_attr((string) (int) $day['level']) : 'empty'; ?>"></span>
 						<?php endforeach; ?>
 					</span>
 				<?php endforeach; ?>
