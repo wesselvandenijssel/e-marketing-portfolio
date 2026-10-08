@@ -1,0 +1,59 @@
+@use "abstracts" as *;
+
+body .cmplz-cookiebanner {
+	.cmplz-title {
+		font-weight: $font-weight-bold;
+	}
+
+	.cmplz-categories .cmplz-category .cmplz-category-header {
+		background-color: $hue-light-1;
+
+		.cmplz-category-title {
+			font-weight: $font-weight-bold;
+		}
+
+		.cmplz-always-active {
+			color: $hue-dark-1;
+			font-size: pxtorem(14);
+			font-weight: $font-weight-regular;
+		}
+	}
+
+	.cmplz-buttons .cmplz-btn {
+		font-size: pxtorem(16);
+		font-weight: $font-weight-bold;
+		transition:
+			color 0.4s ease-in-out,
+			background-color 0.4s ease-in-out,
+			border-color 0.4s ease-in-out;
+
+		&.cmplz-accept,
+		&.cmplz-deny,
+		&.cmplz-view-preferences,
+		&.cmplz-save-preferences {
+			&:hover,
+			&:focus {
+				background-color: $hue-dark-1;
+				border-color: $hue-dark-1;
+				color: $hue-white;
+			}
+		}
+
+		&:focus-visible {
+			outline: 2px solid $focus-color;
+			outline-offset: 2px;
+		}
+	}
+
+	.cmplz-links .cmplz-link {
+		&:hover,
+		&:focus {
+			color: $hue-dark-1;
+		}
+
+		&:focus-visible {
+			outline: 2px solid $focus-color;
+			outline-offset: 2px;
+		}
+	}
+}
