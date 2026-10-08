@@ -143,41 +143,6 @@ add_action('acf/init', function () {
 				],
 			],
 			[
-				'key' => 'theme_settings_awards',
-				'name' => 'awards',
-				'label' => esc_html__('Awards', 'wesselvandenijssel'),
-				'type' => 'repeater',
-				'sub_fields' => [
-					[
-						'key' => 'theme_settings_awards_award',
-						'name' => 'award',
-						'type' => 'text',
-						'label' => esc_html__('Award', 'wesselvandenijssel'),
-					],
-				],
-				'wrapper' => [
-					'width' => '50',
-				],
-			],
-			[
-				'key' => 'theme_settings_founder',
-				'name' => 'founder',
-				'label' => esc_html__('Oprichter', 'wesselvandenijssel'),
-				'type' => 'user',
-				'wrapper' => [
-					'width' => '25',
-				],
-			],
-			[
-				'key' => 'theme_settings_founding_year',
-				'name' => 'founding_year',
-				'label' => esc_html__('Oprichtingsjaar', 'wesselvandenijssel'),
-				'type' => 'number',
-				'wrapper' => [
-					'width' => '25',
-				],
-			],
-			[
 				'key' => 'theme_settings_social_media',
 				'name' => 'social_media',
 				'label' => esc_html__('Social media', 'wesselvandenijssel'),
