@@ -789,3 +789,12 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - blog-grid: 2 kolommen op tablet en 3 vanaf 980px, een onvolledige laatste rij staat in het midden
   - blogkaarten: witte kaart met een rand in `$hue-grey-2`, afgeronde hoeken en een zachte schaduw. De afbeelding zoomt in bij hover, behalve bij "minder beweging". Titels breken alleen af als een woord niet past.
   - `content-none.php` heeft de modifier `post--empty`, met binnenruimte voor de melding "Niets gevonden"
+
+## D-065: Pagina-intro, loopvideo's en uitgebreid submenu
+
+- **Datum:** 2026-10-08
+- **Pagina-intro:** centered-content heeft een veld "Stijl" met de optie "Pagina-intro": een donkerblauwe band, links uitgelijnd, met een grotere titel. Rechts staan de GitHub-bijdragen van de laatste 20 weken als vierkantjes, met weken die op maandag beginnen. Gebruikt op Projecten en Blog. Het kruimelpad wordt wit boven een intro.
+- **Galerij:** per item een Wistia-loopvideo die stil meespeelt over de foto. Een klik opent de video groot in Fancybox. De Wistia-bediening en de branding zijn uit (`pointer-events: none`). Bij "minder beweging" blijft de foto staan. Op verzoek van Wessel zonder pauzeknop, wat afwijkt van WCAG 2.2.2.
+- **Tijdlijn:** per item een optionele afbeelding naast de kaart. Het blok heet in de editor "Timeline".
+- **Projectfilter:** op mobiel een select die meteen verzendt (`data-auto-submit`), zoals het blogfilter. Dat wijkt af van WCAG 3.2.2.
+- **Submenu:** een paneel over de volle breedte direct onder de menubalk. Het bevat een intro (titel en menu-omschrijving), links met een omschrijving en de uitgelichte afbeelding van de pagina. Het opent met hover of keyboard-focus en maakt de pagina donker. Nieuwe items: "Mijn cv" en "Eigen projecten". De omschrijvingen staan in het standaard veld "Beschrijving" van de menu-items.

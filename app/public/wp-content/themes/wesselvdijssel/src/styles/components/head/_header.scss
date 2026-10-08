@@ -221,6 +221,13 @@
 			}
 		}
 	}
+
+	/* stylelint-disable-next-line selector-class-pattern */
+	&:has(.menu-item--1.menu-item-has-children:hover, .menu-item--1.menu-item-has-children:focus-within) #{&}__background {
+		@include bp("narrow") {
+			display: block;
+		}
+	}
 }
 
 main {
