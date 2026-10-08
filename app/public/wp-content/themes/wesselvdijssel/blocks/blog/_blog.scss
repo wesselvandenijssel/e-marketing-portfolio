@@ -17,16 +17,25 @@
 			gap: 24px;
 
 			@include bp("narrow") {
-				grid-template-columns: repeat(6, 1fr);
+				grid-template-columns: repeat(4, 1fr);
 				gap: 20px;
 			}
 
 			@include bp("normal") {
+				grid-template-columns: repeat(6, 1fr);
 				gap: 40px;
 			}
 
 			> .post {
-				@include bp("narrow") {
+				@include bp-only("narrow", "normal") {
+					grid-column: span 2;
+
+					&:nth-child(2n + 1):last-child {
+						grid-column: 2 / span 2;
+					}
+				}
+
+				@include bp("normal") {
 					grid-column: span 2;
 
 					&:nth-child(3n + 1):nth-last-child(2) {

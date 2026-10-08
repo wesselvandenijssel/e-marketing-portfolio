@@ -784,3 +784,8 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - langere meta descriptions voor Blog, Sitemap en Contact
   - drie nieuwe blogberichten, over werk aan deze site: structured data (433), snelheid (434) en toegankelijkheid (435, nieuwe categorie Toegankelijkheid). De kantoorfoto's komen uit één reeks en leken te veel op elkaar. Daarom hebben 433 en 435 een eigen beeld in de huisstijl (een JSON-LD-codevenster en de contrastratio's van de merkkleuren, media 436 en 437), 434 de screenshot van de site en 388 de kantoorfoto
 - **Gecontroleerd:** axe (WCAG 2.2 AA) zonder meldingen op de nieuwe en aangepaste pagina's, geen JS-fouten, lightbox werkt op Over mij en Van Aalsburg.
+- **Aanvulling (zelfde dag):**
+  - vijfde blogbericht over de bevestigingsmail (439, nieuwe categorie WordPress), met een voorbeeldmail met verzonnen testgegevens als beeld (438)
+  - blog-grid: 2 kolommen op tablet en 3 vanaf 980px, een onvolledige laatste rij staat in het midden
+  - blogkaarten: witte kaart met een rand in `$hue-grey-2`, afgeronde hoeken en een zachte schaduw. De afbeelding zoomt in bij hover, behalve bij "minder beweging". Titels breken alleen af als een woord niet past.
+  - `content-none.php` heeft de modifier `post--empty`, met binnenruimte voor de melding "Niets gevonden"
