@@ -862,4 +862,4 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - De breadcrumb staat nu boven de sectie in `page-sitemap.php`, zodat hij niet meer over de titel valt.
 - **Gevolg:**
   - Bedankt, Privacy statement en Disclaimer staan op noindex en dus niet in de sitemap. Ze staan wel in de footer.
-  - Het menu "Sitemap" en de menulocatie `sitemap` worden niet meer gebruikt.
+  - Het menu "Sitemap" is verwijderd en de menulocatie `sitemap` is uit `src/functions/theme-support.php` gehaald.
