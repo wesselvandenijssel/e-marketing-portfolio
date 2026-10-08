@@ -4,6 +4,25 @@
 			transition: none;
 		}
 	}
+
+	&__slide.has-iframe {
+		--f-html-padding: 0;
+		--f-html-bg: transparent;
+
+		&:has(.f-iframe[src*="wistia"]) {
+			container-type: size;
+
+			.f-html {
+				width: min(100cqw, 100cqh * var(--video-ratio, 1.7778));
+				height: auto;
+				aspect-ratio: var(--video-ratio, 1.7778);
+			}
+		}
+
+		.f-iframe[src*="wistia"] {
+			pointer-events: none;
+		}
+	}
 }
 
 [data-fancybox="gallery"] {

@@ -92,3 +92,18 @@ if (loops.length && !reducedMotion) {
 		observer.observe(wrapper);
 	});
 }
+
+if (loops.length) {
+	const lightboxObserver = new MutationObserver(() =>
+		document.querySelectorAll<HTMLIFrameElement>('.f-iframe[src*="wistia"]').forEach((iframe) => {
+			const box = iframe.parentElement;
+			const trigger = Array.from(loops).find((loop) => loop.dataset.src === iframe.getAttribute("src"));
+
+			if (box && trigger?.dataset.ratio && !box.style.getPropertyValue("--video-ratio")) {
+				box.style.setProperty("--video-ratio", trigger.dataset.ratio);
+			}
+		}),
+	);
+
+	lightboxObserver.observe(document.body, { childList: true, subtree: true });
+}
