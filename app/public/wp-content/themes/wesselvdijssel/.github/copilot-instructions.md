@@ -395,7 +395,7 @@ $breakpoints: (
 
 #### Font Awesome Icons
 
-**Render icons with CSS pseudo-elements, NOT `<i class="fa-...">` elements.** This is the established theme pattern (see `single__author-social-link` in `src/styles/components/blog/_single.scss` and `.review-stars` in `_review-stars.scss`).
+**Render icons with CSS pseudo-elements, NOT `<i class="fa-...">` elements.** This is the established theme pattern (see `single__author-social-link` in `src/styles/components/blog/_single.scss`).
 
 -   Icon glyphs are centralized as unicode codepoints in `src/styles/partials/_variables.scss` (e.g. `$fa-arrow-right: "\f061";`). Add new icons there.
 -   Font families live in `_config.scss`: `$fa` (`"Font Awesome 6 Pro"`) for solid/regular/light, `$fab` (`"Font Awesome 6 Brands"`) for brand icons.
@@ -414,7 +414,7 @@ $breakpoints: (
 **Accessibility:** pseudo-element glyphs are ignored by screen readers, so:
 
 -   **Decorative** icons need nothing extra (no stray `<i aria-hidden>`).
--   **Meaningful/interactive** icons (icon-only link/button, ratings) MUST carry a text alternative on the element itself — `aria-label` on the link/button, or `role="img"` + `aria-label` on the wrapper (see `get_review_stars()` in `src/functions/randomness.php`). Never rely on the icon alone to convey meaning.
+-   **Meaningful/interactive** icons (icon-only link/button, social links) MUST carry a text alternative on the element itself — `aria-label` on the link/button, or `role="img"` + `aria-label` on the wrapper. Never rely on the icon alone to convey meaning.
 
 ### TypeScript/JavaScript Standards
 
