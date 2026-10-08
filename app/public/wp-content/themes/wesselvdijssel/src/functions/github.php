@@ -49,3 +49,18 @@ function wesselvandenijssel_github_contributions(string $username): ?array {
 
 	return $data['days'] ? $data : null;
 }
+
+/**
+ * Returns the GitHub username from the GitHub link in the person schema option.
+ *
+ * @return string The username, or an empty string when no GitHub link is set
+ */
+function wesselvandenijssel_github_username(): string {
+	$schema = get_option('wesselvandenijssel_person_schema', []);
+
+	foreach ((array) ($schema['sameAs'] ?? []) as $url) {
+		if (preg_match('#github\.com/([A-Za-z0-9-]+)#', (string) $url, $matches)) return $matches[1];
+	}
+
+	return '';
+}
