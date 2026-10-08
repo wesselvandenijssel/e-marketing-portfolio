@@ -6,7 +6,7 @@ $timeline-rail: 32px;
 $timeline-gutter: 40px;
 
 .timeline {
-	$timeline: &;
+	$self: &;
 
 	&__header {
 		margin-bottom: pxtoem(40);
@@ -56,7 +56,7 @@ $timeline-gutter: 40px;
 					right: -($timeline-gutter + $timeline-dot * 0.5);
 				}
 
-				#{timeline}__media {
+				#{$self}__media {
 					left: calc(100% + #{$timeline-gutter * 2});
 				}
 			}
@@ -68,7 +68,7 @@ $timeline-gutter: 40px;
 					left: -($timeline-gutter + $timeline-dot * 0.5);
 				}
 
-				#{$timeline}__media {
+				#{$self}__media {
 					right: calc(100% + #{$timeline-gutter * 2});
 				}
 			}
@@ -110,7 +110,7 @@ $timeline-gutter: 40px;
 			padding: pxtorem(24) pxtorem(30);
 		}
 
-		#{$timeline}__item--has-image & {
+		#{$self}__item--has-image & {
 			border-radius: 0 0 10px 10px;
 
 			@include bp("normal") {
