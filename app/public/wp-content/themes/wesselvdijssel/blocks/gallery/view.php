@@ -87,31 +87,40 @@ echo !is_admin() ? '[raw]' : '';
 
 		<ul <?php attr($grid_attr); ?>>
 			<?php foreach ($visible_items as $index => $item) :
-				$link_attr = $get_link_attr($item, $group);
-				$is_video = in_array('video-in-fancybox', $link_attr['class'], true);
+				$loop_id = wistia_media_id((string) ($item['loop_video'] ?? ''));
+				$link_attr = $loop_id ? [] : $get_link_attr($item, $group);
+				$is_video = in_array('video-in-fancybox', $link_attr['class'] ?? [], true);
 				$caption = $show_captions ? wp_get_attachment_caption((int) $item['image']) : '';
 				$show_more = $hidden_count > 0 && $index === count($visible_items) - 1;
 
 				$label = $is_video
 					? sprintf(__('Bekijk video %1$d van %2$d', 'wesselvandenijssel'), $index + 1, $total)
 					: sprintf(__('Vergroot afbeelding %1$d van %2$d', 'wesselvandenijssel'), $index + 1, $total);
+
+				$image = wp_get_attachment_image((int) $item['image'], 'Content', false, [
+					'class' => 'gallery__image',
+					'loading' => 'lazy',
+					'sizes' => ($layout === 'featured' && $index > 0) ? '(min-width: 740px) 33vw, 50vw' : $sizes,
+				]);
 			?>
 				<li class="gallery__item">
 					<figure class="gallery__figure">
-						<a <?php attr($link_attr); ?>>
-							<span class="screen-reader-text"><?= esc_html($label); ?></span>
+						<?php if ($loop_id) : ?>
+							<div class="gallery__link gallery__link--loop" data-wistia-loop="<?= esc_attr($loop_id); ?>">
+								<?= $image; ?>
+							</div>
+						<?php else : ?>
+							<a <?php attr($link_attr); ?>>
+								<span class="screen-reader-text"><?= esc_html($label); ?></span>
 
-							<?= wp_get_attachment_image((int) $item['image'], 'Content', false, [
-								'class' => 'gallery__image',
-								'loading' => 'lazy',
-								'sizes' => ($layout === 'featured' && $index > 0) ? '(min-width: 740px) 33vw, 50vw' : $sizes,
-							]); ?>
+								<?= $image; ?>
 
-							<?php if ($show_more) : ?>
-								<span class="gallery__more" aria-hidden="true">+<?= esc_html((string) $hidden_count); ?></span>
-								<span class="screen-reader-text"><?= esc_html(sprintf(_n('(nog %d afbeelding in de lightbox)', '(nog %d afbeeldingen in de lightbox)', $hidden_count, 'wesselvandenijssel'), $hidden_count)); ?></span>
-							<?php endif; ?>
-						</a>
+								<?php if ($show_more) : ?>
+									<span class="gallery__more" aria-hidden="true">+<?= esc_html((string) $hidden_count); ?></span>
+									<span class="screen-reader-text"><?= esc_html(sprintf(_n('(nog %d afbeelding in de lightbox)', '(nog %d afbeeldingen in de lightbox)', $hidden_count, 'wesselvandenijssel'), $hidden_count)); ?></span>
+								<?php endif; ?>
+							</a>
+						<?php endif; ?>
 
 						<?php if (!empty($caption)) : ?>
 							<figcaption class="gallery__caption"><?= esc_html(wp_strip_all_tags($caption)); ?></figcaption>

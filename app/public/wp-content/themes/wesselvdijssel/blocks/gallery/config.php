@@ -121,6 +121,13 @@ return [
 					'name' => 'video',
 					'type' => 'oembed',
 				],
+				[
+					'key' => 'field_gallery_items_loop_video',
+					'label' => esc_html__('Video', 'wesselvandenijssel'),
+					'name' => 'loop_video',
+					'type' => 'textarea',
+					'rows' => 2,
+				],
 			],
 		],
 

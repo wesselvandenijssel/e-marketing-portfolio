@@ -34,6 +34,30 @@ function modify_video_attributes($video) {
 }
 
 /**
+ * Extracts the Wistia media ID from an embed code, a Wistia URL or a bare media ID.
+ *
+ * @param string $value Embed code, URL or media ID
+ * @return string The media ID, or an empty string when none is found
+ */
+function wistia_media_id(string $value): string {
+	$value = trim($value);
+
+	if ($value === '') return '';
+
+	$patterns = [
+		'/media-id=["\']([a-z0-9]{10})["\']/i',
+		'/(?:medias|embed|iframe)\/([a-z0-9]{10})/i',
+		'/^([a-z0-9]{10})$/i',
+	];
+
+	foreach ($patterns as $pattern) {
+		if (preg_match($pattern, $value, $matches)) return strtolower($matches[1]);
+	}
+
+	return '';
+}
+
+/**
  * Process video URL and add fancybox attributes to wrapper
  *
  * This function extracts YouTube URL from iframe, applies video attributes modification,
