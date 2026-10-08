@@ -761,3 +761,26 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - de cronjob `fetch_google_reviews_event` is weggehaald. Die haalde elke dag de reviews van het bureau op.
   - **Op 2026-10-08 verwijderd, met akkoord van Wessel:** alle velden van `review_settings` zijn leeggemaakt (client ID, client secret, refresh token, API-URL, account- en locatie-ID, reviewlink), en `uploads/review_data.xml` is gewist. De databasebackups van vóór die datum in `app/sql/` bevatten de gegevens nog wel. Die staan niet in git (`/app/*` staat in `.gitignore`), maar deel ze niet.
 - **Gecontroleerd:** Home, Over mij, een project, het blogbericht, de auteurspagina en Contact hebben één geldige graph. Het blogbericht is een Article, de auteurspagina een ProfilePage. Het beschermde deel geeft geen schema uit, want het stuurt door naar de login.
+
+## D-063: Reviews en ongebruikte bedrijfsvelden verwijderd
+
+- **Datum:** 2026-10-08
+- **Beslissing (op verzoek van Wessel):** de hele reviewfunctie van het base-theme is weg:
+  - `src/functions/reviews/` (Google-koppeling, cronjob, XML-opslag)
+  - `get_review_stars()` en `_review-stars.scss`
+  - de optiepagina Reviews met de veldgroep `review_settings`
+  - de 20 lege optierijen `options_review_settings*` in de database (backup vooraf in `app/sql/`)
+- **Ook weg:** de velden Awards, Oprichter en Oprichtingsjaar in Basisgegevens. Alleen het verwijderde `json-ld.php` gebruikte ze, en ze waren nooit ingevuld.
+
+## D-064: Reply-mail, snelheid en SEO-aanvullingen
+
+- **Datum:** 2026-10-08
+- **Reply-mail:** `{form_fields}`, `{reply_heading}` en `{reply_footer}` in `src/functions/gravity-forms.php` geven nu een mail in de huisstijl: navy kop met naam en functie, antwoorden in een lichtblauw blok, handtekening met e-mail, LinkedIn en de site. Het consent-veld toont "Akkoord" in plaats van de ruwe deelvelden. Het SVG-logo is eruit, omdat Gmail en Outlook geen SVG tonen. De tekst van de melding staat in alinea's en noemt de reactietermijn van 2 werkdagen.
+- **Fancybox:** laadt niet meer op elke pagina. Galerij, content-image (met video) en project-details zetten het script zelf in de wachtrij als ze een lightbox renderen.
+- **Logo:** `get_svg_dimensions()` leest breedte en hoogte uit het SVG-bestand, zodat het logo geen layout shift geeft. `.logo` heeft `height: auto`.
+- **Paginering:** de vorige- en volgende-pijl hebben een verborgen tekst voor schermlezers (melding van axe).
+- **SEO:**
+  - standaard-deelafbeelding in Yoast (1200 × 630, media 432) voor pagina's zonder eigen afbeelding
+  - langere meta descriptions voor Blog, Sitemap en Contact
+  - drie nieuwe blogberichten, over werk aan deze site: structured data (433), snelheid (434) en toegankelijkheid (435, nieuwe categorie Toegankelijkheid). De kantoorfoto's komen uit één reeks en leken te veel op elkaar. Daarom hebben 433 en 435 een eigen beeld in de huisstijl (een JSON-LD-codevenster en de contrastratio's van de merkkleuren, media 436 en 437), 434 de screenshot van de site en 388 de kantoorfoto
+- **Gecontroleerd:** axe (WCAG 2.2 AA) zonder meldingen op de nieuwe en aangepaste pagina's, geen JS-fouten, lightbox werkt op Over mij en Van Aalsburg.

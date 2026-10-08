@@ -6,7 +6,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
  */
 ?>
 
-<div class="post">
+<div class="post post--empty">
 	<h2 class="post__title">
 		<?= esc_html__('Niets gevonden', 'wesselvandenijssel'); ?>
 	</h2>
