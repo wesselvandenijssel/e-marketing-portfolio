@@ -759,5 +759,5 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Reviews uitgezet:**
   - `review_settings` → `enabled` = false
   - de cronjob `fetch_google_reviews_event` is weggehaald. Die haalde elke dag de reviews van het bureau op.
-  - **Nog niet verwijderd** (wacht op akkoord van Wessel): de Google Business API-gegevens van het bureau in `review_settings` (client secret, refresh token, account- en locatie-ID), en `uploads/review_data.xml`.
+  - **Op 2026-10-08 verwijderd, met akkoord van Wessel:** alle velden van `review_settings` zijn leeggemaakt (client ID, client secret, refresh token, API-URL, account- en locatie-ID, reviewlink), en `uploads/review_data.xml` is gewist. De databasebackups van vóór die datum in `app/sql/` bevatten de gegevens nog wel. Die staan niet in git (`/app/*` staat in `.gitignore`), maar deel ze niet.
 - **Gecontroleerd:** Home, Over mij, een project, het blogbericht, de auteurspagina en Contact hebben één geldige graph. Het blogbericht is een Article, de auteurspagina een ProfilePage. Het beschermde deel geeft geen schema uit, want het stuurt door naar de login.
