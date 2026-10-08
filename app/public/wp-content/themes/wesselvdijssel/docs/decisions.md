@@ -849,3 +849,17 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Gevolg:**
   - Berichten van bezoekers zonder toestemming hebben geen klantreis. De plugin slaat een leeg veld gewoon over.
   - Complianz bewaart zijn blokkeerlijst 30 minuten in de optie `cmplz_transients`. Na een wijziging aan de lijst duurt het dus even, of verwijder de sleutel `cmplz_blocked_scripts` daaruit.
+
+## D-070: Sitemap-pagina automatisch uit Yoast-indexinstelling
+
+- **Datum:** 2026-10-08
+- **Beslissing (op verzoek van Wessel):** de Sitemap-pagina toonde alleen het handmatige menu "Sitemap", zonder blogberichten en projecten. Nu toont de pagina automatisch alles wat op index staat, gegroepeerd per contenttype.
+- **Uitvoering:**
+  - `src/functions/sitemap.php` haalt alle publieke contenttypes op (behalve media). Een nieuw custom post type verschijnt vanzelf, met de naam uit zijn eigen registratie.
+  - Per item telt de Yoast-instelling van dat item, anders de standaard van het contenttype. De site-brede optie "zoekmachines ontmoedigen" telt niet mee, zodat de lijst lokaal en op de testsite hetzelfde is als live.
+  - Nooit in de lijst: pagina's van Portfolio minor, pagina's met een wachtwoord en niet-gepubliceerde content.
+  - Volgorde: eerst pagina's (Home, dan het hoofdmenu, dan de rest op titel), dan Blog (nieuwste eerst), dan de overige typen op naam.
+  - De breadcrumb staat nu boven de sectie in `page-sitemap.php`, zodat hij niet meer over de titel valt.
+- **Gevolg:**
+  - Bedankt, Privacy statement en Disclaimer staan op noindex en dus niet in de sitemap. Ze staan wel in de footer.
+  - Het menu "Sitemap" en de menulocatie `sitemap` worden niet meer gebruikt.
