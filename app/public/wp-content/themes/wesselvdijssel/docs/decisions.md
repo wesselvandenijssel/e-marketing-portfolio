@@ -739,3 +739,25 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Gecontroleerd:**
   - op Home, Over mij, Ervaring, Projecten en Blog staat geen `<section>` meer zonder kop, en geen `role="list"`
   - de achtergrondkleuren blijven werken
+
+## D-062: JSON-LD opgeschoond en aangevuld
+
+- **Datum:** 2026-10-08
+- **Probleem:** `header.php` laadde `json-ld.php` van het base-theme en zette daarna de payload nog een keer neer. Elke pagina had zo twee identieke Organization-blokken, naast de graph van Yoast. Die blokken bevatten:
+  - 61 Google-reviews (5 sterren) van het bureau, uit `uploads/review_data.xml`
+  - een contactpunt "customer service" met een leeg telefoonnummer
+- **Beslissing:**
+  - **Oude output weg:** `json-ld.php` is verwijderd, en de include en de extra script-tag in `header.php` ook. Yoast is nu de enige bron, met één graph per pagina.
+  - **`src/functions/schema.php`:** een filter op `wpseo_schema_person` voegt de waarden uit de optie `wesselvandenijssel_person_schema` toe aan de Person-node. Die optie staat in de database, zodat de naam van de werkgever niet in de themacode staat. Daarin:
+    - functietitel, e-mail, woonplaats (Utrecht) en werkgever
+    - opleiding: affiliatie Hogeschool Utrecht, alumnus van het Grafisch Lyceum Utrecht
+    - 17 onderwerpen (`knowsAbout`) en de talen nl, en en de
+    - 8 certificaten met hun controlelinks (`hasCredential`)
+    - LinkedIn en GitHub in `sameAs`
+  - **Yoast:** de persoonsafbeelding is het portret (353) in plaats van de lege Gravatar.
+  - **Paginatypes:** Over mij is een AboutPage en Contact een ContactPage.
+- **Reviews uitgezet:**
+  - `review_settings` → `enabled` = false
+  - de cronjob `fetch_google_reviews_event` is weggehaald. Die haalde elke dag de reviews van het bureau op.
+  - **Nog niet verwijderd** (wacht op akkoord van Wessel): de Google Business API-gegevens van het bureau in `review_settings` (client secret, refresh token, account- en locatie-ID), en `uploads/review_data.xml`.
+- **Gecontroleerd:** Home, Over mij, een project, het blogbericht, de auteurspagina en Contact hebben één geldige graph. Het blogbericht is een Article, de auteurspagina een ProfilePage. Het beschermde deel geeft geen schema uit, want het stuurt door naar de login.

@@ -20,10 +20,6 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?php wp_title('|', true, 'right'); ?></title>
 	<link rel="profile" href="http://gmpg.org/xfn/11">
-	<?php include('json-ld.php'); ?>
-	<script type="application/ld+json">
-		<?= json_encode($payload); ?>
-	</script>
 	<?php wp_head(); ?>
 </head>
 
