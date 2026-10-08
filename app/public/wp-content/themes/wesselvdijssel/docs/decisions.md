@@ -798,3 +798,9 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Tijdlijn:** per item een optionele afbeelding naast de kaart. Het blok heet in de editor "Timeline".
 - **Projectfilter:** op mobiel een select die meteen verzendt (`data-auto-submit`), zoals het blogfilter. Dat wijkt af van WCAG 3.2.2.
 - **Submenu:** een paneel over de volle breedte direct onder de menubalk. Het bevat een intro (titel en menu-omschrijving), links met een omschrijving en de uitgelichte afbeelding van de pagina. Het opent met hover of keyboard-focus en maakt de pagina donker. Nieuwe items: "Mijn cv" en "Eigen projecten". De omschrijvingen staan in het standaard veld "Beschrijving" van de menu-items.
+
+## D-066: MySpace-verhaal geschrapt
+
+- **Datum:** 2026-10-08
+- **Beslissing:** het plan noemde voor Over mij een "MySpace-verhaal" van de oude live site. Dat klopt niet: Wessel heeft geen MySpace-pagina gehad. De zin is uit de hero van Over mij gehaald. De hero zegt nu: "Bij MB effect bouw ik elke dag aan websites en webshops voor bedrijven."
+- **Ook:** de portretfoto in de hero heeft op mobiel en tablet 20px ruimte aan de onderkant, zodat het blauwe vlak erachter niet meer tegen de titel staat.

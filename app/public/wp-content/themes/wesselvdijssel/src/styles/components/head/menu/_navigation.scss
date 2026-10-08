@@ -121,6 +121,7 @@
 					&:focus-within {
 						> .sub-menu {
 							@include bp("narrow") {
+								z-index: 2;
 								visibility: visible;
 								opacity: 1;
 								transform: none;
