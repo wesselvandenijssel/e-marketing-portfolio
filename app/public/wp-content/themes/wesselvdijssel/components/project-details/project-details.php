@@ -73,7 +73,8 @@ $has_facts = $client || $period || $website || $tool_list;
 		</section>
 	<?php endforeach; ?>
 
-	<?php if (!empty($images)) : ?>
+	<?php if (!empty($images)) :
+		wp_enqueue_script('wesselvandenijssel-fancybox'); ?>
 		<section class="project-details__section">
 			<h2 class="project-details__heading h3"><?= esc_html__('Beelden', 'wesselvandenijssel'); ?></h2>
 			<ul class="project-details__images">

@@ -3,8 +3,8 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 
 if (!function_exists('wpex_pagination')) {
 	function wpex_pagination() {
-		$prev_arrow = '';
-		$next_arrow = '';
+		$prev_arrow = '<span class="screen-reader-text">' . esc_html__('Vorige pagina', 'wesselvandenijssel') . '</span>';
+		$next_arrow = '<span class="screen-reader-text">' . esc_html__('Volgende pagina', 'wesselvandenijssel') . '</span>';
 
 		global $wp_query;
 		$total = $wp_query->max_num_pages;
@@ -68,8 +68,8 @@ if (!function_exists('wpex_pagination_outside_query')) {
 			'total' => $total,
 			'mid_size' => 1,
 			'type' => 'list',
-			'prev_text' => '',
-			'next_text' => '',
+			'prev_text' => '<span class="screen-reader-text">' . esc_html__('Vorige pagina', 'wesselvandenijssel') . '</span>',
+			'next_text' => '<span class="screen-reader-text">' . esc_html__('Volgende pagina', 'wesselvandenijssel') . '</span>',
 		]);
 		echo '</div>';
 	}

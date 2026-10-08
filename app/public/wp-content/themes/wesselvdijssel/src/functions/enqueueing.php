@@ -25,7 +25,6 @@ function wesselvandenijssel_scripts_and_styles() {
 		wp_enqueue_style('wesselvandenijssel-stylesheet');
 		wp_enqueue_style('wesselvandenijssel-font-awesome');
 		wp_enqueue_script('wesselvandenijssel-js');
-		wp_enqueue_script('wesselvandenijssel-fancybox');
 
 		wp_deregister_style('gform_basic');
 		wp_deregister_style('gform_theme_components');

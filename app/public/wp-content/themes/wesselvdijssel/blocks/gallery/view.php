@@ -54,6 +54,7 @@ $get_link_attr = static function (array $item, string $group): array {
 	$link_attr['class'][] = 'gallery__link';
 	$link_attr['href'] = (string) wp_get_attachment_image_url($image_id, 'full');
 	$link_attr['data-fancybox'] = $group;
+	wp_enqueue_script('wesselvandenijssel-fancybox');
 	$link_attr['data-thumb-src'] = (string) wp_get_attachment_image_url($image_id, 'Avatar');
 
 	if (!empty($caption)) {
