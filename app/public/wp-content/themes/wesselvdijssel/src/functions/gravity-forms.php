@@ -219,6 +219,15 @@ function replace_form_fields_merge_tag($text, $form, $entry, $url_encode, $esc_h
 			continue;
 		}
 
+		if ($field['type'] === 'consent') {
+			if (rgar($entry, $field_id . '.1')) {
+				$form_fields .= '<tr><td align="left" style="' . $td_style_bold . '">' . esc_html($field['label']) . '</td></tr>';
+				$form_fields .= '<tr><td align="left" style="' . $td_style . '">' . esc_html__('Akkoord', 'wesselvandenijssel') . '</td></tr>';
+			}
+
+			continue;
+		}
+
 		$field_value = rgar($entry, $field_id);
 
 		if (is_array($field_value)) {
@@ -258,7 +267,7 @@ function replace_form_fields_merge_tag($text, $form, $entry, $url_encode, $esc_h
 			foreach ($field['inputs'] as $input) {
 				$input_value = rgar($entry, $input['id']);
 				if (!empty($input_value)) {
-					$input_values[] = esc_html($input_value);
+					$input_values[] = $input_value;
 				}
 			}
 			if (!empty($input_values)) {
