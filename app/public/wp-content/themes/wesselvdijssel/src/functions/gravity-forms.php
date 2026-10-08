@@ -299,18 +299,18 @@ function replace_form_fields_merge_tag($text, $form, $entry, $url_encode, $esc_h
 	$contact_links = [];
 
 	if (!empty($contact_details['email'])) {
-		$contact_links[] = '<a href="mailto:' . esc_attr($contact_details['email']) . '" style="color:' . $link . ';text-decoration:underline;">' . esc_html($contact_details['email']) . '</a>';
+		$contact_links[] = '<a href="mailto:' . esc_attr($contact_details['email']) . '" style="color:' . $link . ';text-decoration:underline;white-space:nowrap;">' . esc_html($contact_details['email']) . '</a>';
 	}
 
 	if (!empty($contact_details['phone']) && !empty($contact_details['phone_link']['url'])) {
-		$contact_links[] = '<a href="' . esc_url($contact_details['phone_link']['url']) . '" style="color:' . $link . ';text-decoration:underline;">' . esc_html($contact_details['phone']) . '</a>';
+		$contact_links[] = '<a href="' . esc_url($contact_details['phone_link']['url']) . '" style="color:' . $link . ';text-decoration:underline;white-space:nowrap;">' . esc_html($contact_details['phone']) . '</a>';
 	}
 
 	if (!empty($social_media['linkedin']['url'])) {
-		$contact_links[] = '<a href="' . esc_url($social_media['linkedin']['url']) . '" style="color:' . $link . ';text-decoration:underline;">LinkedIn</a>';
+		$contact_links[] = '<a href="' . esc_url($social_media['linkedin']['url']) . '" style="color:' . $link . ';text-decoration:underline;white-space:nowrap;">LinkedIn</a>';
 	}
 
-	$contact_links[] = '<a href="' . esc_url($home_url) . '" style="color:' . $link . ';text-decoration:underline;">' . esc_html($site_host) . '</a>';
+	$contact_links[] = '<a href="' . esc_url($home_url) . '" style="color:' . $link . ';text-decoration:underline;white-space:nowrap;">' . esc_html($site_host) . '</a>';
 
 	$reply_heading_html = '<!doctype html>
 <html lang="nl" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -367,7 +367,7 @@ function replace_form_fields_merge_tag($text, $form, $entry, $url_encode, $esc_h
 				</table>
 				<!--[if mso]></td></tr></table><![endif]-->
 				<p style="margin:16px 0 0;' . $font . ';font-size:13px;line-height:1.5;color:' . $grey . ';text-align:center;">
-					' . sprintf(esc_html__('Je krijgt deze mail omdat je het contactformulier op %s hebt ingevuld.', 'wesselvandenijssel'), esc_html($site_host)) . '
+					' . sprintf(esc_html__('Je krijgt deze mail omdat je het contactformulier op %s hebt ingevuld.', 'wesselvandenijssel'), '<span style="white-space:nowrap;">' . esc_html($site_host) . '</span>') . '
 				</p>
 			</td>
 		</tr>
