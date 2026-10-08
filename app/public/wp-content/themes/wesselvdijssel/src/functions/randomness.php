@@ -157,42 +157,6 @@ add_filter('upload_mimes', 'cc_mime_types');
 
 
 /**
- * Get the review stars based on a score
- *
- * @param float $score The score on a scale from 1 to 10
- * @return string HTML string with review star markup, empty string if score is invalid
- */
-function get_review_stars($score): string {
-	$score = floatval($score);
-
-	if ($score < 0 || $score > 10) return '';
-
-	$half_units = (int) round($score);
-	$full_stars = intdiv($half_units, 2);
-	$has_half = ($half_units % 2) === 1;
-	$empty_stars = 5 - $full_stars - ($has_half ? 1 : 0);
-
-	$stars = '';
-
-	for ($i = 0; $i < $full_stars; $i++) {
-		$stars .= '<span class="review-stars__star review-stars__star--full"></span>';
-	}
-	if ($has_half) {
-		$stars .= '<span class="review-stars__star review-stars__star--half"></span>';
-	}
-	for ($i = 0; $i < $empty_stars; $i++) {
-		$stars .= '<span class="review-stars__star review-stars__star--empty"></span>';
-	}
-
-	$rating = $half_units / 2;
-	$rating_label = str_replace('.', ',', (string) $rating);
-	$label = esc_html(sprintf(__('Beoordeling: %s van de 5 sterren', 'wesselvandenijssel'), $rating_label));
-
-	return '<span class="review-stars" role="img" aria-label="' . esc_attr($label) . '">' . $stars . '</span>';
-}
-
-
-/**
  * Shortcode to display current year
  *
  * Usage: [get_year]
