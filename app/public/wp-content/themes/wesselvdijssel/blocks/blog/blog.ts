@@ -1,5 +1,5 @@
 import Swiper from "swiper";
-import { Navigation } from "swiper/modules";
+import { A11y, Scrollbar } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
 
@@ -19,12 +19,12 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 new Swiper(".blog__grid.swiper", {
-	modules: [Navigation],
+	modules: [A11y, Scrollbar],
 	slidesPerView: "auto",
 	spaceBetween: 10,
-	navigation: {
-		nextEl: ".blog__swiper-button--next",
-		prevEl: ".blog__swiper-button--prev",
+	scrollbar: {
+		el: ".blog__swiper-scrollbar",
+		draggable: true,
 	},
 
 	breakpoints: {

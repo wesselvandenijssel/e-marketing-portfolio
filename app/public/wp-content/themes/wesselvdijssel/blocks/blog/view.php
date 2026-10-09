@@ -185,14 +185,7 @@ echo !is_admin() ? '[raw]' : '';
 				<?php if (!$is_overview) : ?>
 				</div>
 
-				<div class="blog__swiper-buttons swiper-buttons">
-					<div
-						class="blog__swiper-button blog__swiper-button--prev swiper-button-prev">
-					</div>
-					<div
-						class="blog__swiper-button blog__swiper-button--next swiper-button-next">
-					</div>
-				</div>
+				<div class="blog__swiper-scrollbar swiper-scrollbar"></div>
 			<?php endif; ?>
 		</div>
 		<?php wp_reset_postdata(); ?>

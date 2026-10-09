@@ -71,4 +71,23 @@
 			display: none;
 		}
 	}
+
+	.swiper-scrollbar {
+		height: 6px;
+		margin-top: pxtoem(30);
+		border-radius: 100vw;
+		background-color: rgba($hue-dark-1, 0.15);
+		touch-action: none;
+
+		.swiper-scrollbar-drag {
+			height: 100%;
+			border-radius: 100vw;
+			background-color: $btn-primary;
+			cursor: grab;
+		}
+
+		&.swiper-scrollbar-lock {
+			display: none;
+		}
+	}
 }

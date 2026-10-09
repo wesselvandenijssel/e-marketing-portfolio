@@ -886,3 +886,19 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 
 - **Datum:** 2026-10-09
 - **Beslissing (op verzoek van Wessel):** de homepage deelde de uitgelichte afbeelding, een staande portretfoto van 1600×2400. Sociale netwerken snijden die bij naar 1,91:1. De homepage gebruikt nu de deelafbeelding van 1200×630 (media 432, ook de standaard in Yoast) voor Open Graph en X.
+
+## D-074: SEO-verbeteringen
+
+- **Datum:** 2026-10-09
+- **Beslissing (op verzoek van Wessel):** zes verbeteringen uit een SEO-controle van alle indexeerbare pagina's.
+- **Uitvoering:**
+  1. **Titels:** SEO-titels van Home, Blog, vier blogberichten en Schoolmaaltijden ingekort tot maximaal 60 tekens, met de focuszin vooraan. De keyphrase van Blog is nu "blog over webdevelopment", zodat die in de titel staat.
+  2. **Beschrijvingen:** de metabeschrijvingen van Van Aalsburg en AW Cases verlengd, op basis van de tekst op die pagina's.
+  3. **Cookiebeleid:** een H1 toegevoegd en op noindex gezet, net als Privacy statement en Disclaimer.
+  4. **Archieven:** `archive.php` gaf categorie-archieven een lege H1. Het toont nu de naam en de beschrijving van de categorie. De drie blogcategorieën hebben een beschrijving, en Yoast gebruikt die als metabeschrijving. De auteur- en datumarchieven staan uit (doorverwijzing naar Home). De projectcategorieën staan op noindex, omdat ze het filter op Projecten herhalen.
+  5. **Interne links:** de auteurlinks in blogberichten gaan naar Over mij (pagina 218) in plaats van naar het auteurarchief. Home heeft een blokje "Laatste artikelen" met een knop naar Blog. Het blogblok heeft daarvoor een knoppenveld gekregen, net als het projectenblok.
+  6. **Structured data:** projectpagina's hebben een `CreativeWork` met Wessel als maker, gekoppeld aan de WebPage en de uitgelichte afbeelding (`src/functions/schema.php`).
+- **Ook:**
+  - De slider van het blogblok heeft een sleepbare scrollbalk in plaats van pijlen, naar het voorbeeld van een eerder project. De A11y-module van Swiper schuift een kaart in beeld als je er met de toetsenbord naartoe tabt. Past alles in beeld, dan verdwijnt de balk.
+  - In de gedeelde Swiper-stijl verbergt het thema nu het eigen pijl-icoon van Swiper (dat gaf een dubbele pijl) en de pijlen als er niets te schuiven valt.
+  - 404: drie knoptypes (primair, secundair, tekstlink).
