@@ -107,4 +107,12 @@
 			}
 		}
 	}
+
+	.buttons {
+		margin-top: pxtoem(30);
+
+		@include bp("narrow") {
+			margin-top: pxtoem(50);
+		}
+	}
 }

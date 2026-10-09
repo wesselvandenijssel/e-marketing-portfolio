@@ -198,6 +198,11 @@ echo !is_admin() ? '[raw]' : '';
 		<?php wp_reset_postdata(); ?>
 
 		<?php if ($is_overview) wpex_pagination_outside_query($total, $block['id']); ?>
+
+		<?php if (!empty($buttons_group) && is_array($buttons_group)) {
+			$button_group = new BlockButtons($buttons_group);
+			echo $button_group->get_buttons();
+		} ?>
 	</div>
 </section>
 <?= !is_admin() ? '[/raw]' : ''; ?>

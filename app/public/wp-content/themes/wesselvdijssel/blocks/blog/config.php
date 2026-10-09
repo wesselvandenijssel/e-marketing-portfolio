@@ -91,5 +91,14 @@ return [
 				],
 			],
 		],
+
+		'buttons' => [
+			'label' => esc_html__('Button(s)', 'wesselvandenijssel'),
+			'type' => 'clone',
+			'clone' => [
+				'clone_buttons_buttons_group',
+			],
+			'display' => 'seamless',
+		],
 	],
 ];
