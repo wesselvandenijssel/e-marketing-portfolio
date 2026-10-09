@@ -31,12 +31,12 @@ function wesselvandenijssel_remove_xmlrpc_links(): void {
 add_action('init', 'wesselvandenijssel_remove_xmlrpc_links');
 
 /**
- * Blocks every XML-RPC request, including system.multicall, which the xmlrpc_enabled filter does not cover.
- *
- * @param array $methods The available XML-RPC methods
- * @return array
+ * Refuses every XML-RPC request, including the system methods that the xmlrpc_enabled filter does not cover.
  */
-function wesselvandenijssel_disable_xmlrpc_methods(array $methods): array {
-	return [];
+function wesselvandenijssel_block_xmlrpc(): void {
+	if (defined('XMLRPC_REQUEST') && XMLRPC_REQUEST) {
+		status_header(403);
+		exit;
+	}
 }
-add_filter('xmlrpc_methods', 'wesselvandenijssel_disable_xmlrpc_methods', 99);
+add_action('init', 'wesselvandenijssel_block_xmlrpc', 1);

@@ -21,3 +21,16 @@ function wesselvandenijssel_block_customer_journey(array $tags): array {
 	return $tags;
 }
 add_filter('cmplz_known_script_tags', 'wesselvandenijssel_block_customer_journey');
+
+/**
+ * Removes defer and async from scripts that Complianz blocked as type="text/plain".
+ *
+ * @param string $html The page HTML after the Complianz cookie blocker
+ * @return string
+ */
+function wesselvandenijssel_clean_blocked_scripts(string $html): string {
+	return preg_replace_callback('/<script\b[^>]*\btype="text\/plain"[^>]*>/i', function (array $match): string {
+		return preg_replace('/\s(?:defer|async|data-wp-strategy="[^"]*")(?=[\s>])/i', '', $match[0]);
+	}, $html);
+}
+add_filter('cmplz_cookie_blocker_output', 'wesselvandenijssel_clean_blocked_scripts');
