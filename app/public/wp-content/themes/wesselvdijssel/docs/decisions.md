@@ -923,7 +923,7 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - RideLoop: de tool draait op OpenStreetMap, niet meer op Google Maps en Google Places.
   - Portfolio: Playwright maakt screenshots, het is geen testsuite.
 - **Beelden:** 27 screenshots van de live sites (desktop en mobiel), met Nederlandse alt-teksten, in het veld Beelden van 12 projecten. Cookiebanners zijn met CSS verborgen, er is niets geaccepteerd. Schoolmaaltijden heeft geen extra beeld: het logo laadt daar niet op de live site.
-- **Open:** de periode van RideLoop. De site zegt "Mei – juni 2026" (D-051), git zegt 19 maart – 14 april 2026.
+- **RideLoop:** de periode blijft "Mei – juni 2026". Wessel bevestigde dat opnieuw, ook al loopt de git-historie van 19 maart tot 14 april 2026.
 
 ## D-077: Geïndexeerd op het subdomein tot januari, daarna naar het hoofddomein
 
@@ -940,3 +940,15 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   3. 301 van oude URL's van de huidige site naar de dichtstbijzijnde nieuwe pagina.
   4. De nieuwe sitemap indienen en Home, Over mij en Contact controleren met URL-inspectie.
   5. Complianz, de GA4-datastream, Clarity en GTM controleren op het nieuwe domein.
+
+## D-078: Laatste punten vóór livegang
+
+- **Datum:** 2026-10-09
+- **Gebruik van AI:** de drie `[INVULLEN]` zijn ingevuld met feiten uit dit project. Claude schreef concepten op basis van Wessels informatie. Wessel controleerde elke tekst en verbeterde fouten (het MySpace-verhaal, een stage die hij niet liep). Wat hij zelf deed: positionering, huisstijl, keuze van projecten en eigen foto's en video's, alle feiten, bijsturen van het ontwerp, en de keuze voor Google Analytics, Clarity en Complianz met de tags in GTM. Wessel gebruikte alleen Claude.
+- **Beveiliging** (`src/functions/security.php`):
+  - `/wp-json/wp/v2/users` is weg voor bezoekers die niet ingelogd zijn. De slug was gelijk aan de loginnaam.
+  - XML-RPC is helemaal uit: elk verzoek krijgt 403, ook `system.multicall`.
+  - `?author=1` stuurt door naar Home (Yoast, D-074) zonder de gebruikersnaam te tonen.
+- **Favicon:** een navy vierkant met een witte W in Public Sans en een blauw streepje, als site-icoon (media 496), in de formaten 32, 64, 180, 192 en 270. Vierkant zonder ronde hoeken, omdat iOS en Android de hoeken zelf afronden.
+- **HTML-validatie:** Complianz zet geblokkeerde scripts op `type="text/plain"`, maar liet `defer` staan. Een filter op `cmplz_cookie_blocker_output` haalt `defer`, `async` en `data-wp-strategy` van zulke scripts af. De homepage valideert nu zonder fouten.
+- **Bewust niet opgelost:** de validatiefouten in de adminbalk (`role=menu` met `role=group`). Die markup komt uit WordPress zelf en verschijnt alleen voor ingelogde gebruikers. Bezoekers zien hem nooit. Valideer daarom altijd uitgelogd.

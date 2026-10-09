@@ -20,6 +20,12 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?php wp_title('|', true, 'right'); ?></title>
 	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="icon" type="image/png" href="<?= assets('favicon-96x96.png'); ?>" sizes="96x96" />
+	<link rel="icon" type="image/svg+xml" href="<?= assets('favicon.svg'); ?>" />
+	<link rel="shortcut icon" href="<?= assets('favicon.ico'); ?>" />
+	<link rel="apple-touch-icon" sizes="180x180" href="<?= assets('apple-touch-icon.png'); ?>" />
+	<meta name="apple-mobile-web-app-title" content="Wessel" />
+	<link rel="manifest" href="<?= assets('site.webmanifest'); ?>" />
 	<?php wp_head(); ?>
 </head>
 
