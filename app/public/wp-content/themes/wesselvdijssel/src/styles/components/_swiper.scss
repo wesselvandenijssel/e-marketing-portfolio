@@ -62,5 +62,13 @@
 			opacity: 0.5;
 			pointer-events: none;
 		}
+
+		.swiper-navigation-icon {
+			display: none;
+		}
+
+		&:has(.swiper-button-lock) {
+			display: none;
+		}
 	}
 }

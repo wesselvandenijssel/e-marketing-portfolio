@@ -50,13 +50,17 @@
 		}
 
 		&--swiper {
-			overflow: visible;
+			overflow: visible !important;
 
 			@include bp("narrow") {
 				clip-path: polygon(0 0, 0 100%, 100vw 100%, 100vw 0);
 			}
 
 			.post {
+				display: flex;
+				flex-direction: column;
+				height: initial;
+
 				@include bp("mobile") {
 					max-width: calc(100vw - 60px);
 				}

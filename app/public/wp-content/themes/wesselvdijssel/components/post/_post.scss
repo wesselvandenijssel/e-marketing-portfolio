@@ -60,7 +60,11 @@
 			content: "";
 			position: absolute;
 			inset: 0;
-			background-image: linear-gradient(to top, rgba($hue-dark-1, 0.45), rgba($hue-dark-1, 0) 50%);
+			background-image: linear-gradient(
+				to top,
+				rgba($hue-dark-1, 0.45),
+				rgba($hue-dark-1, 0) 50%
+			);
 			pointer-events: none;
 		}
 	}

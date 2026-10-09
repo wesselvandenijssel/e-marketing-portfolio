@@ -1,7 +1,15 @@
+@use "abstracts" as *;
+
 .error-404 {
 	text-align: center;
 
 	.buttons {
 		justify-content: center;
+	}
+
+	.content-layout > .buttons {
+		@include bp("narrow") {
+			gap: 20px;
+		}
 	}
 }
