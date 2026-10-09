@@ -90,7 +90,7 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
    - Portfolio minor: 12 pagina's met samen zo'n 150 plekken. Dit is het bewijs voor de beoordeling.
    - Gebruik van AI: 3 plekken (verplichte pagina)
    - Over mij: concepttekst merk IK nalezen (D-047)
-   - Projecten: het resultaat van SCX Solar en van The Souks
+   - RideLoop: klopt de periode "Mei – juni 2026"? Git zegt 19 maart – 14 april 2026 (D-076)
 2. **Tracking:** controleer in Clarity of er opnames binnenkomen nu GTM is gepubliceerd (D-068).
 3. **Server (D-027):** op emarketing.wesselvandenijssel.nl staat nu lumie. Nodig voor live:
    - database-migratie (met search-replace van de domeinnaam), themaactivatie, `blog_public` = 1

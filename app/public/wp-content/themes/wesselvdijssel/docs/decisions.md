@@ -908,3 +908,35 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Datum:** 2026-10-09
 - **Beslissing (op verzoek van Wessel):** in de donkere CTA-banner zag de secundaire knop ("Download mijn cv") eruit als een tweede primaire knop: wit met navy tekst. Een secundaire knop op navy is nu transparant met een witte rand en witte tekst. Bij hover en focus wordt hij wit met navy tekst, het omgekeerde van de primaire knop op navy.
 - **Uitvoering:** nieuwe placeholder `%btn--secondary-on-dark` in `src/styles/_placeholders.scss`, naast `%btn--on-dark`. De CTA-banner en de intro van Centered content gebruiken hem allebei. Contrast: wit op navy 15,45:1.
+
+## D-076: Projectteksten uit git-historie en screenshots per project
+
+- **Datum:** 2026-10-09
+- **Beslissing (op verzoek van Wessel):** de projectpagina's waren dun (100 tot 190 woorden) en de Rol was bij bureauprojecten één zin. Per project is in de git-historie van Local Sites, de GitHub-repo's en het webarchief nagezocht wat Wessel zelf bouwde. Alleen controleerbare feiten staan in de tekst.
+- **Ingevuld:** SCX Solar (oude site van een ander bureau op losse plugins, nieuwe site sinds september 2023, 211 van 217 commits), The Souks (herbouw in dezelfde stijl op een nieuw basisthema, velden in de code, geen AJAX, live december 2023) en Flexercise (aanpak, periode mei – juni 2026, direct contact met de eigenaar).
+- **Gecorrigeerd, want git ondersteunt het niet:**
+  - Van Aalsburg: de configurator is gebouwd door een collega. Wessel breidde hem uit.
+  - Précon: de expertisepagina's zijn door een collega gebouwd.
+  - Hofstede Raanhuis: collega's bouwden de site in 2022 – 2023. Wessel werkt er sinds maart 2024 aan.
+  - Rentwereld: de blokken van de oude site zijn vervangen. De offerteaanvraag op de nieuwe site ontbrak.
+  - The Souks: geen bewijs van een stresstest met Flood.io. De "verzendoptie voor cadeaubonnen" verborg alleen de verzendinformatie.
+  - RideLoop: de tool draait op OpenStreetMap, niet meer op Google Maps en Google Places.
+  - Portfolio: Playwright maakt screenshots, het is geen testsuite.
+- **Beelden:** 27 screenshots van de live sites (desktop en mobiel), met Nederlandse alt-teksten, in het veld Beelden van 12 projecten. Cookiebanners zijn met CSS verborgen, er is niets geaccepteerd. Schoolmaaltijden heeft geen extra beeld: het logo laadt daar niet op de live site.
+- **Open:** de periode van RideLoop. De site zegt "Mei – juni 2026" (D-051), git zegt 19 maart – 14 april 2026.
+
+## D-077: Geïndexeerd op het subdomein tot januari, daarna naar het hoofddomein
+
+- **Datum:** 2026-10-09
+- **Beslissing (van Wessel):** de site komt op emarketing.wesselvandenijssel.nl en wordt daar geïndexeerd tot januari. Daarna vervangt hij de huidige site op wesselvandenijssel.nl.
+- **Tot januari:**
+  - Op de server `blog_public` = 1. Lokaal blijft het 0.
+  - Geen handmatige canonicals. Yoast geeft elke pagina een canonical naar zichzelf. Geen canonicals tussen de twee domeinen, want de pagina's komen niet één op één overeen.
+  - Search Console als domeineigenschap voor wesselvandenijssel.nl (DNS-verificatie bij Vimexx). Die dekt het subdomein en later het hoofddomein. Sitemap: `https://emarketing.wesselvandenijssel.nl/sitemap_index.xml`.
+  - Portfolio minor blijft noindex, los van `blog_public` (code in `src/inc/protected-section.php`).
+- **Bij de overstap in januari:**
+  1. `wp search-replace` van het subdomein naar het hoofddomein, eerst met `--dry-run`.
+  2. 301 van elke URL op het subdomein naar hetzelfde pad op het hoofddomein.
+  3. 301 van oude URL's van de huidige site naar de dichtstbijzijnde nieuwe pagina.
+  4. De nieuwe sitemap indienen en Home, Over mij en Contact controleren met URL-inspectie.
+  5. Complianz, de GA4-datastream, Clarity en GTM controleren op het nieuwe domein.
