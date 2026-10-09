@@ -90,3 +90,12 @@ function wesselvandenijssel_preload_fonts(): void {
 		printf('<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n", esc_url(get_stylesheet_directory_uri() . '/src/fonts/' . $font . '.woff2'));
 	}
 }
+
+/**
+ * Sends requests for /favicon.ico to the theme favicon instead of the WordPress logo.
+ */
+add_action('do_favicon', 'wesselvandenijssel_favicon_redirect', 1);
+function wesselvandenijssel_favicon_redirect(): void {
+	wp_safe_redirect(assets('favicon.ico'), 301);
+	exit;
+}
