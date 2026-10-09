@@ -23,6 +23,10 @@ new Swiper(".blog__grid.swiper", {
 	slidesPerView: "auto",
 	spaceBetween: 10,
 	freeMode: true,
+	a11y: {
+		slideRole: null,
+		slideLabelMessage: null,
+	},
 	mousewheel: {
 		forceToAxis: true,
 	},

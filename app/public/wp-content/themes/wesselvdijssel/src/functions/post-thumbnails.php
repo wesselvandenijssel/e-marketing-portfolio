@@ -40,3 +40,16 @@ function wesselvandenijssel_remove_sizes_without_srcset(array $attr): array {
 
 	return $attr;
 }
+
+/**
+ * Writes every generated image size of a JPEG upload as WebP. The original file stays a JPEG.
+ *
+ * @param array $formats Output formats per source MIME type
+ * @return array
+ */
+function wesselvandenijssel_webp_subsizes(array $formats): array {
+	$formats['image/jpeg'] = 'image/webp';
+
+	return $formats;
+}
+add_filter('image_editor_output_format', 'wesselvandenijssel_webp_subsizes');

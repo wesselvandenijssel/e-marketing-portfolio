@@ -961,3 +961,19 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Getest:** met een simulatie in WP-CLI, omdat de add-on lokaal geen sleutels heeft. Zonder formulier geen reCAPTCHA, na het renderen van het contactformulier wel.
 - **Gevolg:** de score van reCAPTCHA is iets minder nauwkeurig, omdat hij alleen het gedrag op de contactpagina ziet. De honeypot blijft aan. Komt er meer spam binnen, draai dit dan terug.
 - **Testen na deploy:** de homepage laadt niets van `google.com/recaptcha`, de contactpagina wel, en een testinzending komt binnen.
+
+## D-081: Blogslider zonder role="group" op de links
+
+- **Datum:** 2026-10-09
+- **Aanleiding:** Lighthouse (Agentic Browsing) meldde "ARIA role should be appropriate for the element". De A11y-module van Swiper (D-074) gaf elke slide `role="group"` en `aria-label="1 / 3"`. In het blogblok is de slide zelf de link (`<a class="post">`), dus de linkrol verdween en een schermlezer las "1 / 3" in plaats van de titel.
+- **Oplossing:** in `blocks/blog/blog.ts` staan `a11y.slideRole` en `a11y.slideLabelMessage` op `null`. De focusafhandeling van de module blijft, zodat een kaart in beeld schuift als je ernaar tabt.
+- **Getest:** de slides zijn weer gewone links met de artikeltitel in hun naam. axe vindt geen problemen.
+
+## D-082: Hero-portret vooraf laden en WebP voor alle jpg-formaten
+
+- **Datum:** 2026-10-09
+- **Aanleiding:** PageSpeed Insights (mobiel) gaf 1,1 s "Resource load delay" op de LCP-afbeelding, en de projectfoto's waren jpg.
+- **Preload:** `src/functions/enqueueing.php` zet een `<link rel="preload" as="image">` met dezelfde `imagesrcset` en `imagesizes` als het portret in de `<head>`, alleen als de pagina met een hero-portret begint (Home en Over mij). Het formaat en `sizes` staan in één functie, `wesselvandenijssel_hero_portrait_image()`, die ook `blocks/hero/view.php` gebruikt. Zo kunnen ze niet uit elkaar lopen en downloadt de browser de foto maar één keer.
+- **WebP:** `src/functions/post-thumbnails.php` zet via `image_editor_output_format` alle gegenereerde formaten van jpg-uploads om naar WebP. Het origineel blijft jpg. Dit werkt met GD; de bestaande omzetting bij uploaden in `focalpoint.php` werkt alleen met Imagick en deed lokaal dus niets.
+- **Lokaal uitgevoerd:** de 68 jpg-afbeeldingen opnieuw gegenereerd met `--skip-delete`, zodat de oude jpg-formaten blijven bestaan voor eventuele oude links. Voorbeeld: de Rentwereld-kaart ging van 70 naar 57 KiB. Alle 142 afbeeldingen op de openbare pagina's laden nu als WebP, geen enkele kapot.
+- **Op de server nog doen:** na de deploy de miniaturen daar ook opnieuw genereren. De server heeft eigen uploads en een eigen database. Via SSH: `wp media regenerate --skip-delete --yes`. Of met de plugin Regenerate Thumbnails, met "Delete thumbnail files for old unregistered sizes" uit.
