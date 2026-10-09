@@ -72,12 +72,13 @@ echo !is_admin() ? '[raw]' : '';
 			</div>
 
 			<?php if (!empty($image)) : ?>
+				<?php $portrait = wesselvandenijssel_hero_portrait_image($cutout); ?>
 				<div class="hero__portrait<?= $cutout ? ' hero__portrait--cutout' : ''; ?>">
-					<?= wp_get_attachment_image($image, $cutout ? 'full' : 'Portrait', false, [
+					<?= wp_get_attachment_image($image, $portrait['size'], false, [
 						'class' => 'hero__portrait-image',
 						'fetchpriority' => 'high',
 						'loading' => 'eager',
-						'sizes' => $cutout ? '(min-width: 980px) 400px, 260px' : '(min-width: 980px) 460px, 260px',
+						'sizes' => $portrait['sizes'],
 					]); ?>
 				</div>
 			<?php endif; ?>

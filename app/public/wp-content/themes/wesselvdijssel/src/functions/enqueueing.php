@@ -99,3 +99,43 @@ function wesselvandenijssel_favicon_redirect(): void {
 	wp_safe_redirect(assets('favicon.ico'), 301);
 	exit;
 }
+
+/**
+ * Returns the image size and sizes attribute of the portrait in the hero block, shared by the block and its preload.
+ *
+ * @param bool $cutout Whether the portrait is a cutout (transparent background)
+ * @return array{size: string, sizes: string}
+ */
+function wesselvandenijssel_hero_portrait_image(bool $cutout): array {
+	return [
+		'size' => $cutout ? 'full' : 'Portrait',
+		'sizes' => $cutout ? '(min-width: 980px) 400px, 260px' : '(min-width: 980px) 460px, 260px',
+	];
+}
+
+/**
+ * Preloads the hero portrait when the page starts with a portrait hero, so the LCP image starts downloading before the parser reaches it.
+ */
+add_action('wp_head', 'wesselvandenijssel_preload_hero_portrait', 2);
+function wesselvandenijssel_preload_hero_portrait(): void {
+	if (!is_singular()) return;
+
+	$blocks = parse_blocks((string) get_post_field('post_content', get_queried_object_id()));
+	$first = $blocks[0] ?? [];
+	$data = $first['attrs']['data'] ?? [];
+
+	if (($first['blockName'] ?? '') !== 'acf/hero' || ($data['group_hero_fields_variant'] ?? '') !== 'portrait' || empty($data['group_hero_fields_image'])) return;
+
+	$image_id = (int) $data['group_hero_fields_image'];
+	$portrait = wesselvandenijssel_hero_portrait_image(!empty($data['group_hero_fields_cutout']));
+	$src = wp_get_attachment_image_url($image_id, $portrait['size']);
+
+	if (!$src) return;
+
+	printf(
+		'<link rel="preload" as="image" href="%s" imagesrcset="%s" imagesizes="%s" fetchpriority="high">' . "\n",
+		esc_url($src),
+		esc_attr((string) wp_get_attachment_image_srcset($image_id, $portrait['size'])),
+		esc_attr($portrait['sizes'])
+	);
+}
