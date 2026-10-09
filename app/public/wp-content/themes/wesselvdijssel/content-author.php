@@ -96,15 +96,15 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 	if ($query->have_posts()) :
 	?>
 
-		<section class="section blog pad--top-medium pad--bottom-medium">
+		<section class="section blog has-background has-lichtblauw-background-color pad--top-medium pad--bottom-medium">
 			<div class="columns-12 center">
 
 				<div class="titles">
-					<h1 class="main-title default">
+					<h2 class="main-title default">
 						<?= !empty(get_the_author_meta('user_firstname'))
 							? sprintf(esc_html__('Blogs van %s', 'wesselvandenijssel'), esc_html(get_the_author_meta('user_firstname')))
 							: esc_html__('Blogs', 'wesselvandenijssel'); ?>
-					</h1>
+					</h2>
 				</div>
 
 				<div class="blog__grid">

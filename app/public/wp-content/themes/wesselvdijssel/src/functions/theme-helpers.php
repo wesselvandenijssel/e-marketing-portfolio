@@ -389,6 +389,8 @@ function get_logo(array $args = []): string {
 	$image_alt = get_post_meta($logo_id, '_wp_attachment_image_alt', true);
 	$logo_attr['alt'] = empty($image_alt) ? get_bloginfo('name') : $image_alt;
 
+	$logo_attr = array_merge($logo_attr, get_svg_dimensions($logo_id));
+
 	$logo_link_attr['href'][] = esc_url(home_url('/'));
 	$logo_link_attr['rel'][] = 'home';
 	$logo_link_attr['aria-label'][] = get_bloginfo('name');
@@ -403,6 +405,39 @@ function get_logo(array $args = []): string {
 
 	// Add all variables together and return the html string
 	return sprintf($html, $logo_link_attr_str, $image);
+}
+
+/**
+ * Reads the width and height of an SVG attachment, because WordPress stores no dimensions for SVG files.
+ *
+ * @param int $attachment_id The SVG attachment ID
+ * @return array{width?: string, height?: string}
+ */
+function get_svg_dimensions(int $attachment_id): array {
+	if (get_post_mime_type($attachment_id) !== 'image/svg+xml') return [];
+
+	$path = get_attached_file($attachment_id);
+
+	if (!$path || !is_readable($path)) return [];
+
+	$svg = (string) file_get_contents($path, false, null, 0, 2048);
+
+	if (!preg_match('/<svg\b[^>]*>/i', $svg, $tag)) return [];
+
+	preg_match('/\bwidth="([\d.]+)(?:px)?"/i', $tag[0], $width);
+	preg_match('/\bheight="([\d.]+)(?:px)?"/i', $tag[0], $height);
+
+	if (empty($width[1]) || empty($height[1])) {
+		if (!preg_match('/\bviewBox="[\d.\-]+[\s,]+[\d.\-]+[\s,]+([\d.]+)[\s,]+([\d.]+)"/i', $tag[0], $view_box)) return [];
+
+		$width = [1 => $view_box[1]];
+		$height = [1 => $view_box[2]];
+	}
+
+	return [
+		'width' => (string) round((float) $width[1]),
+		'height' => (string) round((float) $height[1]),
+	];
 }
 
 /**

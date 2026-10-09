@@ -9,6 +9,11 @@ class Walker_Primary_Menu extends Walker {
 	];
 
 	/**
+	 * @var WP_Post|null The top-level item whose submenu is being rendered
+	 */
+	private $panel_parent = null;
+
+	/**
 	 * Starts the list before the elements are added.
 	 *
 	 * @since 3.0.0
@@ -32,6 +37,10 @@ class Walker_Primary_Menu extends Walker {
 		// Default class.
 		$classes = ['sub-menu'];
 
+		if ($depth === 0) {
+			$classes[] = 'sub-menu--panel';
+		}
+
 		/**
 		 * Filters the CSS class(es) applied to a menu list element.
 		 *
@@ -44,7 +53,48 @@ class Walker_Primary_Menu extends Walker {
 		$class_names = implode(' ', apply_filters('nav_menu_submenu_css_class', $classes, $args, $depth));
 		$class_names = $class_names ? ' class="' . esc_attr($class_names) . '"' : '';
 
-		$output .= "{$n}{$indent}<div class='submenu-toggle'></div><ul$class_names>{$n}<li class='back-to-previous'><span>" . esc_html__('Terug', 'wesselvandenijssel') . "</span></li>";
+		$output .= "{$n}{$indent}<button type='button' class='submenu-toggle' aria-expanded='false' aria-label='" . esc_attr__('Submenu openen', 'wesselvandenijssel') . "'></button><ul$class_names>{$n}<li class='back-to-previous'><span>" . esc_html__('Terug', 'wesselvandenijssel') . "</span></li>";
+
+		if ($depth === 0 && $this->panel_parent) {
+			$output .= $this->get_panel_intro($this->panel_parent);
+		}
+	}
+
+	/**
+	 * Returns the intro of a submenu panel: the parent title and its menu description.
+	 *
+	 * @param WP_Post $parent The top-level menu item
+	 * @return string
+	 */
+	private function get_panel_intro($parent): string {
+		$description = trim((string) $parent->description);
+
+		$intro = '<li class="sub-menu__intro" aria-hidden="true"><p class="sub-menu__title">' . esc_html($parent->title) . '</p>';
+
+		if ($description !== '') {
+			$intro .= '<p class="sub-menu__text">' . esc_html($description) . '</p>';
+		}
+
+		return $intro . '</li>';
+	}
+
+	/**
+	 * Returns the image card of a submenu panel, using the featured image of the page the parent links to.
+	 *
+	 * @param WP_Post $parent The top-level menu item
+	 * @return string
+	 */
+	private function get_panel_card($parent): string {
+		$image_id = $parent->type === 'post_type' ? (int) get_post_thumbnail_id((int) $parent->object_id) : 0;
+
+		if (!$image_id) return '';
+
+		return '<li class="sub-menu__card" aria-hidden="true">' . wp_get_attachment_image($image_id, 'Content', false, [
+			'class' => 'sub-menu__image',
+			'alt' => '',
+			'loading' => 'lazy',
+			'sizes' => '360px',
+		]) . '</li>';
 	}
 
 	/**
@@ -67,6 +117,11 @@ class Walker_Primary_Menu extends Walker {
 			$n = "\n";
 		}
 		$indent = str_repeat($t, $depth);
+
+		if ($depth === 0 && $this->panel_parent) {
+			$output .= $this->get_panel_card($this->panel_parent);
+		}
+
 		$output .= "$indent</ul>{$n}";
 	}
 
@@ -93,6 +148,10 @@ class Walker_Primary_Menu extends Walker {
 			$n = "\n";
 		}
 		$indent = ($depth) ? str_repeat($t, $depth) : '';
+
+		if ($depth === 0) {
+			$this->panel_parent = $item;
+		}
 
 		$classes = empty($item->classes) ? [] : (array) $item->classes;
 		$classes[] = 'menu-item-' . $item->ID;
@@ -196,6 +255,10 @@ class Walker_Primary_Menu extends Walker {
 		 * @param int      $depth Depth of menu item. Used for padding.
 		 */
 		$title = apply_filters('nav_menu_item_title', $title, $item, $args, $depth);
+
+		if ($depth > 0 && trim((string) $item->description) !== '') {
+			$title = '<span class="menu-item__label">' . $title . '</span><span class="menu-item__description">' . esc_html(trim((string) $item->description)) . '</span>';
+		}
 
 		if (!empty($atts['href'])) {
 			$item_output = $args->before;

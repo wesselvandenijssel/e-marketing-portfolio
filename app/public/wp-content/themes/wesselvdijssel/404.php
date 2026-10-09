@@ -42,18 +42,18 @@ get_header(); ?>
 							$home_button->set_link(home_url('/'), esc_attr__('Naar de homepagina', 'wesselvandenijssel'), '');
 							echo $home_button->get_button();
 
-							if ($projects_page instanceof WP_Post) {
-								$projects_button = new BlockButton(esc_html__('Bekijk mijn projecten', 'wesselvandenijssel'));
-								$projects_button->set_type('btn btn--secondary');
-								$projects_button->set_link(get_permalink($projects_page), esc_attr__('Bekijk mijn projecten', 'wesselvandenijssel'), '');
-								echo $projects_button->get_button();
-							}
-
 							if ($contact_page instanceof WP_Post) {
 								$contact_button = new BlockButton(esc_html__('Neem contact op', 'wesselvandenijssel'));
 								$contact_button->set_type('btn btn--secondary');
 								$contact_button->set_link(get_permalink($contact_page), esc_attr__('Neem contact op', 'wesselvandenijssel'), '');
 								echo $contact_button->get_button();
+							}
+
+							if ($projects_page instanceof WP_Post) {
+								$projects_button = new BlockButton(esc_html__('Bekijk mijn projecten', 'wesselvandenijssel'));
+								$projects_button->set_type('btn btn--read-more');
+								$projects_button->set_link(get_permalink($projects_page), esc_attr__('Bekijk mijn projecten', 'wesselvandenijssel'), '');
+								echo $projects_button->get_button();
 							}
 							?>
 						</div>

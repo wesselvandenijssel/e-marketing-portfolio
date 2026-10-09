@@ -341,3 +341,614 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - header, footer en popups worden overgeslagen
   - Swiper-slides animeren niet los, omdat slides buiten beeld nooit in beeld komen
 - **Gevolg:** `main.js` wordt ongeveer 20 KB groter.
+
+## D-038: HTML-validatie, kopniveaus en sizes
+
+- **Datum:** 2026-09-29
+- **Beslissing:** fouten uit de W3C-validator op Home opgelost:
+  - **`sizes` zonder `srcset`:** een filter op `wp_get_attachment_image_attributes` in `post-thumbnails.php` haalt `sizes` weg als een afbeelding geen `srcset` heeft. Dat geldt voor alle afbeeldingen, niet alleen de projectkaart.
+  - **Sub- en suptitel:** `BlockTitle` maakt er een `<p>` van in plaats van een `<h3>`. Het zijn geen koppen, maar een regel onder of boven de titel.
+  - **Kopniveaus:**
+    - de titels van de footerkolommen zijn `<h2>` met de klasse `h4`
+    - de zoekresultaten zijn `<h2>` met de klasse `h3`
+    - "Over de auteur" is `<h2>` met de klasse `h4`
+    - de tweede h1 op de auteurspagina is nu een h2
+    - de blogkaart krijgt `heading_level`, net als de projectkaart
+  - `.h3` en `.h4` hebben nu zelf `line-height: 1.3`, zodat een `<h2 class="h4">` er hetzelfde uitziet als een `<h4>`.
+- **Gevolg:** geen overgeslagen kopniveaus en geen `sizes` zonder `srcset` meer op de 15 geteste URL's. Het uiterlijk is gelijk gebleven (zelfde grootte, regelhoogte en marge).
+
+## D-039: Donkerblauwe knoppen met witte tekst, en iconen
+
+- **Datum:** 2026-10-07
+- **Beslissing:** Wessel vond navy tekst op `#00a3e0` slecht leesbaar. Navy haalt op die kleur maximaal 5,38:1, en wit maar 2,87:1. Daarom is `$hue-accent-dark: #005a80` toegevoegd, en `$btn-primary` wijst daar nu naar. De keuze van Wessel was donkerblauw met wit, niet navy met wit.
+  - **Witte tekst op `#005a80` (7,57:1, AAA):**
+    - primaire knoppen
+    - de knop "Portfolio (login)" en de verzendknop van het formulier
+    - het actieve filter en het huidige paginanummer
+    - de sliderpijlen, de GF-stap, de uploadknop en de telefoonknop op mobiel
+  - **Hover en focus:** navy met witte tekst (15,45:1).
+  - **Op navy** (de donkere CTA-kaart en de socials in de footer): wit met navy. Bij hover worden ze transparant, met een witte rand. Anders verdween de knop bij hover tegen de navy achtergrond.
+  - **Iconen:** primaire en secundaire knoppen en de verzendknop krijgen een pijl naar rechts op `::after`. Die schuift 4px op bij hover, behalve bij `prefers-reduced-motion`. Kiest de redacteur zelf een icoon (`<i>` in de knop), dan valt de pijl weg. "Portfolio (login)" krijgt het icoon `user`.
+  - `#00a3e0` blijft voor vlakken, decoratie en de notificatiebalk.
+- **Gevolg:** de kleurregels en contrasttabellen in `CLAUDE.md` zijn bijgewerkt. Het menu past met het extra icoon nog op één regel, ook op 740px.
+
+## D-040: Submenu's in het hoofdmenu
+
+- **Datum:** 2026-10-07
+- **Beslissing:** Wessel koos voor twee submenu's:
+  - Over mij ▸ Ervaring, Gebruik van AI
+  - Projecten ▸ Websites, Webshops: eigen links naar `/projecten/?categorie=website` en `?categorie=webshop`, die het projectfilter direct op de juiste categorie zetten
+
+  Bovenin blijven Home, Over mij, Projecten, Blog, Contact en de knop "Portfolio (login)" staan. Ervaring hoort nu onder Over mij en staat niet meer los.
+- **Techniek:**
+  - **Desktop en tablet (vanaf 740px):** het menu opent bij hover en bij `:focus-within`. Met de Tab-toets kom je zo bij alle subitems. Een onzichtbare strook tussen link en dropdown voorkomt dat het menu dichtklapt als je de muis beweegt. Het pijltje draait als het menu open is.
+  - **Base-theme:** daar opende een submenu alleen bij een klik op een `<span>`. De ouderitems zijn hier links, dus dat werkte niet.
+  - **Mobiel:** de toggle in `walker-menu.php` is een `<button>` met `aria-expanded` en het label "Submenu openen". Dat was een `<div>` die je niet met het toetsenbord kon bereiken. `menu-toggle.ts` houdt `aria-expanded` bij.
+  - Het ouderitem is onderstreept als je op een subpagina bent (`current-menu-parent`).
+- **Backup:** `wp db export` gaf eerst een leeg bestand, omdat mysqldump de socket van Local niet vond. De menuwijziging was toen al gedaan. Daarna is de backup gemaakt met `--socket`: `app/sql/2026-10-07-na-submenu.sql`. Gebruik die optie voortaan.
+
+## D-041: Eigen foto's op de site
+
+- **Datum:** 2026-10-07
+- **Beslissing:** uit de map Portfolio van Wessel zijn 15 foto's gekozen en geplaatst (media 353–367):
+  - **Home:**
+    - de hero heeft een nieuwe portretfoto, die vervangt de oude van 400 × 400 px
+    - de CTA-kaart heeft een kantoorfoto
+  - **Over mij:**
+    - de hero heeft een buitenfoto
+    - "Mijn passie" en "Mijn persoonlijke kant" zijn nu content-image-blokken met een foto. De tekst is ongewijzigd.
+    - het nieuwe galerijblok "Buiten het werk" heeft 9 foto's: karting, Formule 1, noorderlicht, bergen, bos en kust
+  - **Ervaring:** het introblok is een content-image-blok met een kantoorfoto
+  - **Uitgelichte afbeelding:** Home, Over mij en Ervaring hebben er een, voor Open Graph via Yoast
+- **Privacy:**
+  - **Metadata:** alle foto's zijn opnieuw opgeslagen zonder EXIF. Daarmee zijn ook de GPS-locaties van de vakantiefoto's weg.
+  - **Formaat:** de foto's zijn verkleind tot maximaal 2400px.
+  - **Bestandsnamen:** beschrijvend. De oude namen bevatten de naam van het stagebedrijf.
+  - **Niet gebruikt:** foto's waarop het kenteken van de auto leesbaar is, foto's met het gezicht van iemand anders, en publieksfoto's met herkenbare gezichten.
+  - **Alt-teksten:** in het Nederlands, en ze beschrijven alleen wat te zien is. Bij de kart en de sneeuwscooter staat niet dat Wessel de bestuurder is, want dat is op de foto niet te zien.
+- **Video's:** ook de losse Live Photo-video's staan nu in `Portfolio/Videos`: `portret/` (4) en `vakanties/` (1). Het hero-blok met variant "Achtergrond" en type "Video" neemt een embedcode letterlijk over, dus een Wistia-embed past er direct in.
+- **CTA-animatie:** de clip-path van D-037 sneed de titel af. De inset is nu begrensd op de padding van de kaart min 8px.
+
+## D-042: Uitgesneden portret in de hero, hobbytekst uit Polarsteps
+
+- **Datum:** 2026-10-07
+- **Beslissing:**
+  - **Hero:** het hero-blok heeft de nieuwe optie "Uitgesneden foto" (`cutout`), voor de variant "Portret naast tekst". Als die aan staat:
+    - wordt de foto op ware grootte getoond (`full`) en niet bijgesneden tot 4:5
+    - is er geen afgeronde kader
+    - staat het blauwe vlak alleen achter het onderste deel, zodat het hoofd erboven uitsteekt. Het vlak beweegt niet mee met de parallax, anders zweeft de rechte onderrand van de foto in het blauw.
+    - is de foto op desktop maximaal 400px breed
+  - **Home:** gebruikt de uitgesneden foto (media 372, webp met transparantie, 204 KB). De uitgelichte afbeelding voor Open Graph blijft de gewone portretfoto (353), want een transparante foto werkt niet als deelafbeelding.
+- **Uitsnijden:** gedaan met Apple Vision (de functie "onderwerp optillen" van macOS). Een stoelleuning werd als onderdeel van Wessel gezien. Die is met de hand weggehaald. Ook is de foto vlak onder de armen afgesneden.
+- **Hobbytekst bij "Mijn persoonlijke kant":** op basis van de Polarsteps-export. Daarin zitten vier reizen. Alleen de Dolomieten en Hongarije GP zijn van het account van Wessel. Tenerife staat op het account van Isabel en Tromsø op dat van Wesley. Daarom staan in de tekst alleen dingen die Wessel zelf deed, en geen namen van reisgenoten:
+  - waar hij in de reisverslagen bij naam genoemd wordt: aan het stuur op Tenerife, de drone in de Dolomieten, de drie dagen op het circuit in Hongarije
+  - waar zijn eigen foto's het laten zien: het noorderlicht en de sneeuwscooter in Tromsø
+- **Alt-teksten:** de kart (359) en de sneeuwscooter (361) noemen nu Wessel, na bevestiging van Wessel.
+
+## D-043: Uitgesneden foto in de CTA op Home
+
+- **Datum:** 2026-10-07
+- **Beslissing:** het CTA-blok is gemaakt voor een uitgesneden persoon die op de onderrand van de kaart staat (`align-self: flex-end`, maximaal 235px hoog). De rechthoekige kantoorfoto (357) zweefde daardoor in het midden.
+  - **Nieuwe foto:** op verzoek van Wessel een foto uit de kantoorserie van maart, waarop hij in de camera kijkt (379, webp, 87 KB).
+  - **Uitsnijden:** de maskers voor het onderwerp en voor alleen de persoon zijn gecombineerd. Zo vallen bureau, laptop en monitor weg.
+  - **Afsnijden:** de foto is op borsthoogte afgesneden, boven de handen. Een deel van de onderarm zat namelijk achter de laptop.
+- **Eerdere probeersels, afgewezen door Wessel:** de foto met de duim omhoog (375) en de witte hoodie (377).
+- **CSS:** de afbeelding in de CTA heeft vanaf 980px 24px ruimte erboven, zodat het haar niet tegen de bovenrand van de kaart komt.
+- **Niet meer gebruikt:** media 357, 375 en 377 staan nog in de mediabibliotheek. Ze zijn niet verwijderd.
+
+## D-044: Achtergrondblok voor ritme op de pagina's
+
+- **Datum:** 2026-10-07
+- **Beslissing:** het blok "Achtergrond" (`acf/background`) wordt vaker gebruikt, zodat de lichtgrijze pagina's afwisseling krijgen. Lichtblauw is voor secties met witte kaarten. Per pagina staat er hoogstens één navy sectie, als blikvanger.
+  - **Home:** "Uitgelichte projecten" op lichtblauw
+  - **Over mij:** "Waarom ik goed ben als online marketing consultant" op navy, de galerij "Buiten het werk" op lichtblauw
+  - **Ervaring:** "Opleiding" op lichtblauw, "Tools" op navy
+  - **Projecten:** het projectoverzicht op lichtblauw
+- **CSS:** bij `has-navy-background-color` zijn tekst, links en de focusrand automatisch wit, en wordt de primaire knop wit met navy. Zo hoeft de redacteur geen tekstkleur te kiezen. Gewone links (`#0077a8`) zouden op navy maar 3,09:1 halen.
+- **Gevolg:** de CTA-kaarten, de footer en de hero blijven zoals ze waren. Op Contact en Blog staat geen achtergrondblok: Contact heeft één blok, en Blog heeft nog geen berichten.
+
+## D-045: Project Schoolmaaltijden, eerste blogbericht, media opgeruimd
+
+- **Datum:** 2026-10-07
+- **Project Schoolmaaltijden (387):**
+  - Wessel werkte eraan bij de andere vestiging van Social Brothers.
+  - **Ingevuld uit openbare bronnen:**
+    - opdrachtgever: het Nederlandse Rode Kruis en het Jeugdeducatiefonds, in opdracht van OCW
+    - de opdracht
+    - tools: WordPress en WPML, te zien in de broncode van de site
+    - de talen van de site: Nederlands, Engels, Arabisch en Turks
+  - **Resultaat, met bron:**
+    - Hart van Nederland meldde op 29 maart 2023 dat scholen zich via schoolmaaltijden.nl konden aanmelden
+    - Omroep Brabant meldde op 26 mei 2023 dat er 1.302 scholen meededen
+  - **Nog `[INVULLEN]`:** periode, rol en aanpak. Die staan nergens openbaar.
+  - **Afbeelding:** een screenshot van de homepage (385), op 1600 × 1000 px zoals bij de andere projecten.
+- **Blogbericht "SEO verbeteren begint in de code" (388):**
+  - De voorbeelden komen uit de changelog van het standaardthema die Wessel meestuurde. De bureaunaam staat er niet in. De tekst spreekt van "het bureau waar ik werk".
+  - Over de minor staat er alleen in wat vaststaat: de start in september 2026 en de interesse in SEO.
+  - Nieuwe categorie: SEO. Uitgelichte afbeelding: de kantoorfoto 357, die dus niet is verwijderd.
+  - Yoast-velden zijn ingevuld.
+- **Single-template:**
+  - **CSS:** gewone WordPress-koppen, alinea's en lijsten in `.single__content` krijgen marges en de pijl-bullets van `content-layout`. Zo kan Wessel berichten schrijven met gewone blokken.
+  - **Auteursvak:**
+    - de bio "Korte bio" en "Dit is de biografie" is vervangen door de intro uit de footer
+    - de `#`-links naar Facebook en Instagram zijn leeggemaakt
+    - de verwijzing naar het verwijderde logo (58) is weg
+    - LinkedIn staat er nu als gewone user meta. De ACF-verwijzing wees naar een link-veld uit de thema-opties, dat een array verwacht.
+- **Contact:** de reactietermijn is "binnen twee werkdagen". Op de Blog-pagina is de `[INVULLEN]` voor het eerste bericht weggehaald.
+- **Media verwijderd:**
+  - 208: het oude portret van 400 × 400 px
+  - 375: de foto met de duim omhoog
+  - 377: de hoodie
+  - Vooraf is gecontroleerd dat ze nergens gebruikt werden: niet in content, metadata, opties, termmeta of usermeta.
+- **Hobbytekst:** bevestigd door Wessel.
+
+## D-046: Body-class "blog" verwijderd
+
+- **Datum:** 2026-10-07
+- **Probleem:** op `/blog/` kon je niet scrollen. WordPress geeft `<body>` op de berichtenpagina de class `blog`. Het blog-blok gebruikt dezelfde naam als BEM-blok (`.blog { overflow: hidden; }`), dus de hele pagina kreeg `overflow: hidden`. Ook de andere `.blog`-regels raakten de hele pagina. Daardoor stonden bijvoorbeeld de titels in de footer gecentreerd.
+- **Oplossing:** een filter op `body_class` in `src/functions/cleanup.php` haalt de class `blog` weg. Geen enkele stylesheet of script gebruikt die body-class.
+- **Gevolg:** `/blog/` scrollt weer op desktop en mobiel, en de footertitels staan weer links.
+
+## D-047: LinkedIn-export en Voice Card verwerkt
+
+- **Datum:** 2026-10-07
+- **Bronnen:** de LinkedIn-export van Wessel (Profile.csv, Profile.pdf) en de Voice Card van 19 juli 2026. De geboortedatum, de postcode en de profielstatistieken zijn niet gebruikt.
+- **Openbaar (LinkedIn):**
+  - **Ervaring, Werk:**
+    - het bureau staat nu vanaf juni 2023
+    - nieuw: Social Brothers (stage, augustus 2022 – april 2023, met een link naar Schoolmaaltijden), race marshal bij The Official F1 Racing Centre (juni 2022 – heden), Het BUREAU (junior back-end developer, 2021–2022) en Fiverr (grafisch ontwerper, 2020–2022)
+    - weggelaten: de archiefbijbanen uit 2019–2021, en "Manager sociale media, Instagram", omdat onduidelijk is voor welk account
+  - **Ervaring, Opleiding:**
+    - HBO-ICT van september 2023 tot augustus 2027 (verwacht)
+    - de omschrijving van de minor komt uit de LinkedIn-samenvatting (tracking, GA4, GTM, conversie-optimalisatie)
+    - nieuw: Grafisch Lyceum Utrecht (Webdeveloper, 2020–2023) en vmbo-tl bij O.R.S. Lek en Linge (2016–2020)
+  - **Ervaring, nieuw blok "Meer certificaten en talen":** twee Google-certificaten en vier talen.
+  - **Over mij:**
+    - een concepttekst voor het merk IK op basis van de LinkedIn-samenvatting
+    - wat Wessel in de minor leert
+    - in de hobbytekst: race marshal sinds 2022
+  - **Schoolmaaltijden:** periode 2022–2023. De rol is: tijdens de stage bij Social Brothers.
+- **Beschermd (Voice Card):**
+  - **Voice Card en reflectie (323):** uitleg, samenvatting, sterke punten, valkuilen, in balans en onder druk, leerstijl, ontwikkelpunten, een samenvatting van de competentiematrix (29 competenties) en de drie tips.
+  - **De pdf staat niet in de mediabibliotheek.** Bestanden in `uploads/` zijn openbaar via hun URL, ook als de pagina beschermd is.
+  - **Motivatie (324):** de opleiding en de koppeling met het werk, uit LinkedIn.
+  - **Aanvullende kennis (330):** de certificaten.
+  - Niets uit de Voice Card staat op openbare pagina's.
+- **Open punten:**
+  - **Tegenstrijdigheid:** LinkedIn zegt "bij het bureau sinds juni 2023" en noemt geen aparte stage. De site heeft ook "Stage webdevelopment" bij het bureau (september 2023 – mei 2024). Die regel is blijven staan.
+  - **Blijft `[INVULLEN]`:** de reflectie, de dialogen, waarom Wessel de Voice Card maakte, en de einddatum en onderwijsinstelling van de minor.
+- **Fout gevonden en opgelost:** het nieuwe blok was een kopie van "Mijn cv", inclusief het ACF-blok-ID. ACF laadt velden per blok-ID, dus beide blokken toonden dezelfde inhoud. Het blok heeft nu een eigen ID. Een scan van alle pagina's vond geen andere dubbele blok-ID's.
+
+## D-048: Yoast-teksten in het Nederlands
+
+- **Datum:** 2026-10-07
+- **Beslissing:** de Engelse standaardteksten in `wpseo_titles` zijn vertaald:
+  - **Kruimelpad:**
+    - "Archives for" is "Archief van"
+    - "You searched for" is "Je zocht naar"
+    - "Error 404: Page not found" is "Pagina niet gevonden"
+  - **Paginatitels:**
+    - auteur: "Berichten van …"
+    - zoeken: "Je zocht naar …"
+    - 404: "Pagina niet gevonden"
+    - categorie: "Berichten over …"
+    - tags en andere archieven: "Archief: …"
+  - De socialtitels van de archieven zijn ook vertaald.
+- **Aanleiding:** Wessel zag "Archives for" in het kruimelpad van de auteurspagina.
+
+## D-049: Correcties van Wessel: geen stage bij het bureau, Flexercise, minor, Schoolmaaltijden
+
+- **Datum:** 2026-10-07
+- **Correctie:** Wessel liep geen stage bij het bureau. Verwijderd of herschreven:
+  - **Ervaring:** de regel "Stage webdevelopment" bij het bureau (september 2023 – mei 2024) is weg
+  - **SCX Solar:** de rol, de samenvatting en de Yoast-beschrijving noemen geen stage meer. De rol is nu "Als front-end developer bij [het bureau]…".
+  - **Rentwereld:** "sinds mijn stage in 2023" is nu "sinds 2023", en "Tijdens mijn stage een hero-blok…" is nu "Een hero-blok…"
+  - Een zoekactie over alle content vond daarna alleen nog de stage bij Social Brothers. Die klopt.
+- **Nieuw op Ervaring, Werk:**
+  - Flexercise Treatments, bijbaan: beheer van de sociale content en grafische taken
+  - De periode (oktober 2023 – augustus 2026) komt van de LinkedIn-regel "Manager sociale media". Die is dus aan Flexercise gekoppeld.
+- **Minor E-marketing:** Hogeschool Utrecht, september 2026 – januari 2027.
+- **Schoolmaaltijden:**
+  - rol: front-end developer tijdens de stage bij Social Brothers
+  - aanpak: het project vanaf scratch opgezet, en het ontwerp uit Figma nagebouwd
+  - tools: aangevuld met Figma
+- **Beschermd:**
+  - **Voice Card (323):** waarom Wessel de Voice Card aanschafte. Bij de start van de minor stelde hij er zijn groepje mee samen, op basis van de leeruitkomsten, zodat er voor elk sterk punt iemand in het team zit.
+  - **Bijdrage aan het team (328):** dezelfde informatie als inleiding. Wessels rol in het team blijft `[INVULLEN]`.
+  - **Motivatie (324):** de kop "Relatie met mijn stage en werk" is nu "Relatie met mijn werk".
+
+## D-050: Eigen projecten, Flexercise-testsite, logboek en oude cv's
+
+- **Datum:** 2026-10-07
+- **Bronnen:** het logboek (logboek.wesselvandenijssel.nl), SalaryPerSecond, RideLoop, de Flexercise-testsite en drie oude cv's van Wessel.
+- **Nieuwe projecten:**
+  - **SalaryPerSecond (409)** en **RideLoop (410):** nieuwe projectcategorie "Eigen project". De inhoud komt van de sites zelf:
+    - SalaryPerSecond: Tailwind CSS, versie 2.0 sinds augustus 2025
+    - RideLoop: een eigen WordPress-thema, Google Maps, Google Places en OpenStreetMap
+  - **Flexercise Treatments (411):** een testversie van de nieuwe site, met een eigen WordPress-thema. Valt onder de categorie "Website".
+  - **Sortering:** de nieuwe projecten hebben een datum net vóór de klantcases, zodat die bovenaan blijven. Home toont vaste projecten en verandert dus niet.
+- **Ervaring:**
+  - **Omschrijvingen:**
+    - Social Brothers: HTML, SCSS, JS/TS, Twig, Svelte. Wessel was front-end developer van Schoolmaaltijden.
+    - Het BUREAU: PHP en Laravel, voor echte externe klanten
+    - Fiverr: freelance ontwerpwerk
+    - het bureau: ook Shopify-webshops, volgens het logboek
+    - Flexercise: de testsite, met een link naar het project
+  - **HBO-ICT:** een link naar het logboek.
+  - **Skills:** aangevuld met Laravel, Twig en Svelte.
+  - **Tools:** aangevuld met Figma en Adobe Creative Cloud.
+- **Beschermd, Aanvullende kennis (330):** het logboek en de eigen projecten als manieren van leren.
+- **Oude cv's niet gebruikt als download:** ze bevatten een huisadres en een telefoonnummer, en ze zijn verouderd.
+  - De profieltekst noemt een eigen F1-simulator. Die staat nog niet op de site, omdat niet duidelijk is of dat nog klopt.
+  - RideLoop en de videomap "motorrijden" wijzen op motorrijden als hobby, maar dat is niet bevestigd.
+
+## D-051: Antwoorden van Wessel verwerkt
+
+- **Datum:** 2026-10-07
+- **Bevestigd door Wessel:**
+  - Hij heeft een eigen F1-simulator en rijdt motor. Beide staan nu in de hobbytekst op Over mij, met een link naar RideLoop.
+  - De LinkedIn-regel "Manager sociale media, Instagram" gaat over zijn baan bij Flexercise Treatments. De periode uit D-049 klopt dus.
+- **RideLoop:** periode mei – juni 2026.
+- **Flexercise:** het werk bestond vooral uit social media-content voor Instagram, LinkedIn, TikTok en Facebook. Dat staat nu op Ervaring en bij het project.
+
+## D-052: Stagedossier Social Brothers verwerkt
+
+- **Datum:** 2026-10-07
+- **Bron:** het stagedossier van Wessel (mbo Webdeveloper, Grafisch Lyceum Utrecht): stageverslag 1 en 2 en het eindverslag. De beoordelingen, de urenverantwoording en de feedbackformulieren zijn niet gebruikt. Namen van collega's en begeleiders staan niet op de site. De tijdelijke uitgepakte kopie is verwijderd.
+- **Ervaring:** de Social Brothers-regel heet nu "Stage junior WordPress-developer". De omschrijving noemt:
+  - **werk:** Gutenberg-blokken met ACF, WooCommerce, WPML, Gravity Forms en Yoast
+  - **livegangen:** Schoolmaaltijden (als front-end developer) en onder meer Aafje, Mezaldi en SNB
+  - **eindopdracht:** een WordPress-handboek van 42 pagina's voor klanten, dat daarna standaard bij de oplevering van een website ging
+  - **presentatie:** de HoloLens 2-presentatie op de Tech Doe dag
+- **Schoolmaaltijden:** de rol noemt dezelfde functietitel.
+- **Geen projectpagina's voor het handboek en Mezaldi.** handboek.wesselvandenijssel.nl is offline, en mezaldi.com stuurt door naar een ander domein. De huidige inhoud is dus niet te controleren.
+
+## D-053: Nieuw cv als pdf, met downloadknop
+
+- **Datum:** 2026-10-07
+- **Beslissing:** een nieuw cv van één A4, op basis van de inhoud van de site. Het volgt de huisstijl: Public Sans, navy en blauw.
+  - **Op verzoek van Wessel:** met telefoonnummer en foto. De foto is een vierkante uitsnede van het nieuwe portret.
+  - **Contact:** alleen woonplaats Utrecht, zonder adres en zonder geboortedatum.
+  - **Pdf met echte tekst,** gemaakt in Chromium (Playwright), zodat recruitersystemen hem kunnen lezen.
+- **Op de site:** media 417, `/wp-content/uploads/2026/10/cv-wessel-van-den-ijssel.pdf`. Ervaring heeft bij "Mijn cv" een korte tekst en de primaire knop "Download mijn cv", die in een nieuw tabblad opent.
+- **Bron om later bij te werken:** `~/Desktop/Portfolio/CV/` met `cv.html`, `foto.jpg` en de pdf. De bron staat bewust niet in het thema of de repo, omdat het telefoonnummer erin staat.
+- **Mezaldi:** in de tekst over Social Brothers staat nu "Mezaldi (nu Mezaldy)". Wessel bevestigde de nieuwe naam.
+
+## D-054: Cv bijgewerkt: simracen, geen Portugees
+
+- **Datum:** 2026-10-07
+- **Beslissing:**
+  - **Hobby:** in het cv staat nu "Formule 1, simracen in mijn eigen simulator en karting". Dat koos Wessel.
+  - **Talen:** Portugees is weg uit het cv en uit de talenlijst op Ervaring. Wessel spreekt geen Portugees; de taal kwam uit zijn LinkedIn-export.
+- **Opmaak:** de hobbyregel loopt nu over twee regels. Zodat het cv op één pagina past, is de ruimte in de zijbalk iets kleiner (3,4 mm) en de foto iets kleiner (32 mm).
+- **Bestand:** de pdf op de site (media 417) is vervangen. De URL blijft hetzelfde.
+
+## D-055: Certificaten met controlelinks
+
+- **Datum:** 2026-10-07
+- **Bron:** het certificatenoverzicht op LinkedIn dat Wessel plakte. Dat overzicht was afgekapt na "Cursus online marketing".
+- **Ervaring, "Meer certificaten en talen":** elke naam linkt nu naar de controlepagina, en opent in een nieuw tabblad:
+  - Google Ads Measurement en Google Ads Search (Skillshop, 2026)
+  - Claude Code in Action (Anthropic, 2026)
+  - vier Soofos-cursussen (2025)
+  - "Basisprincipes van online marketing (Google)" heeft nog geen link
+- **Gecontroleerd:**
+  - Skillshop en Skilljar geven 200
+  - Soofos geeft een Cloudflare-controle aan scripts (403). Een gewone browser komt daar wel langs.
+- **Beschermd, Aanvullende kennis (330):** aangevuld met Google Ads Search en Claude Code in Action.
+- **Cv:**
+  - Google Ads Search en Claude Code in Action staan erbij, met klikbare links
+  - de hobby's staan nu onderaan de rechterkolom, zodat de zijbalk op één pagina past
+  - de pdf op de site is vervangen, de URL blijft hetzelfde
+
+## D-056: Rustigere en speelsere footer
+
+- **Datum:** 2026-10-07
+- **Aanleiding:** Wessel vond de footer te vol. Hij mocht ook speelser.
+- **Rustiger:**
+  - Footermenu's tonen alleen hoofditems (`depth => 1` in `footer-column.php`). Navigatie heeft nu 5 links in plaats van 10.
+  - Kolomtitels zijn kleine, blauwe labels in hoofdletters (`#00a3e0` op navy, 5,38:1). De introkolom houdt een grote naam.
+  - Op mobiel staan Navigatie en Informatie naast elkaar, met Contact eronder.
+  - De copyright staat nu in het navy vlak, met een dunne scheidingslijn erboven.
+- **Speelser:**
+  - een lichtblauwe cirkel met een ring, rechtsboven, die langzaam zweeft
+  - "wesselvandenijssel" als groot outline-woordmerk onderaan, half afgesneden
+  - een ronde knop "Terug naar boven" (`#page`), die bij hover omhoog schuift
+  - menulinks krijgen bij hover een pijltje, en het e-mailadres een blauwe onderstreping die beweegt
+  - Bij `prefers-reduced-motion` staan de zweefanimatie en de bewegingen uit.
+  - De cirkel en het woordmerk zijn `aria-hidden`.
+- **Fout voorkomen:** het bestaande anker-script (`randomness.ts`) doet `querySelector(href)`. Daarom wijst de knop naar `#page` en niet naar `#`; dat gaf een JS-fout.
+- **Hoofdmenu:** het item "Home" staat er niet meer in. Dat was niet door deze wijziging; het item zelf ontbreekt in menu 3. De footer volgt het menu.
+
+## D-057: Mobiele check en verbeteringen
+
+- **Datum:** 2026-10-07
+- **Check:** 30 openbare URL's op 320, 375 en 414 px, als mobiel apparaat met touch. Gecontroleerd op:
+  - overloop en elementen buiten beeld
+  - tekst kleiner dan 12px en invoervelden kleiner dan 16px
+  - tikdoelen kleiner dan 24px
+  - kapotte afbeeldingen, JS-fouten en het aantal h1's
+  - Het mobiele menu is getest: openen, submenu, een link volgen en sluiten.
+- **Opgelost:**
+  - **SalaryPerSecond op 320px:** het feitenblok liep 3px over. Het grid is nu `minmax(0, 1fr)` en lange links breken af.
+  - **"Menu"-label onder de hamburger:** van 11 naar 12px, in navy.
+  - **`btn--read-more`** ("Terug naar projecten", "Lees verder"): 4px padding boven en onder, zodat het tikdoel minstens 24px hoog is.
+  - **Sociale iconen** op de auteurspagina en in het auteursvak: minimaal 32 × 32px.
+  - **Toestemmingsvinkje** in het formulier: 20 × 20px, met een navy accentkleur.
+- **Op verzoek van Wessel:**
+  - **Hero:** de portretfoto is op mobiel 170px breed (was 260) en op tablet 220px, met minder ruimte tussen foto en tekst. De Home-hero is op 390px nu 672px hoog (was ongeveer 830).
+  - **Contactformulier:** de kaart is lichtblauw (`$hue-accent-light`) in plaats van wit. De velden blijven wit.
+  - **Auteursfoto** in het auteursvak:
+    - hij werd naast de bio samengedrukt tot ongeveer 16px. Nu `flex-shrink: 0` en 80px.
+    - het formaat is "Avatar" (128px) in plaats van "Author thumb", zodat hij scherp is op retina
+- **Niet aangepast (uitzondering in WCAG 2.5.8):** links in lopende tekst, en footer- en menulinks met genoeg ruimte ertussen.
+
+## D-058: Homepage gericht op wie Wessel wil leren kennen
+
+- **Datum:** 2026-10-07
+- **Aanleiding:** de homepage praatte vooral vanuit Wessel. Hij wil dat bezoekers zich aangesproken voelen, vooral bedrijven die via LinkedIn op de site komen.
+  - Bijsturing 1: Wessel bouwt meestal geen websites voor bezoekers van zijn site.
+  - Bijsturing 2: hij werkt met plezier bij het bureau en is niet op zoek naar een andere baan.
+  - De toon is daarom neutraal: laten zien wat hij kan, en uitnodigen om kennis te maken of te sparren. Geen verkooppraat en geen sollicitatie.
+- **Opbouw van Home:**
+  - **Hero:** de ondertitel is "Front-end developer voor WordPress en Shopify". De tekst zegt wat hij bouwt en eindigt met "Op deze site zie je wat ik bouw, hoe ik werk en wat ik leer." De knoppen zijn "Bekijk mijn projecten" en "Download mijn cv".
+  - **"Wat ik meebreng":** WordPress en Shopify, snelheid en SEO, tracking en marketing, en werken in een team (Git, pull requests, code reviews, CI/CD).
+  - **"Resultaten bij Rentwereld":** een nieuw statistiekenblok op navy: 22% lagere kosten per lead, 4,4% conversie, en binnen 1 jaar alle belangrijke zoektermen op pagina 1. Bron: de case van het bureau.
+  - **Uitgelichte projecten:** Rentwereld, Schoolmaaltijden en Van Aalsburg. Précon is vervangen door Schoolmaaltijden.
+  - **"Ervaring in het kort":** het bureau, Social Brothers, HBO-ICT met de minor, en certificaten. Met de knop "Bekijk mijn ervaring".
+  - **CTA:** "Benieuwd naar mijn werk of wil je sparren? Stuur me een bericht.", met "Neem contact op" en "Download mijn cv".
+  - **Yoast:** een nieuwe titel en beschrijving.
+- **Andere pagina's in dezelfde toon:**
+  - Over mij (CTA): "Wil je kennismaken of sparren over front-end en marketing?"
+  - Projecten (CTA): "Vragen over een project? Stuur me een bericht."
+  - Contact (intro): "een project" is weggehaald
+  - Blogbericht (slotzin): "Wil je sparren over SEO en techniek?"
+
+## D-059: Case "Deze portfolio-website" (GitHub-repository)
+
+- **Datum:** 2026-10-07
+- **Beslissing:** project 425 beschrijft deze site zelf, met een link naar de openbare repository `wesselvandenijssel/e-marketing-portfolio`. De categorie is Eigen project, de periode september – oktober 2026.
+  - **Inhoud:**
+    - het thema, de huisstijl volgens WCAG
+    - het beschermde deel met een eigen rol, en zonder lekken
+    - de Motion-animaties, de deploy met GitHub Actions en de tests met Playwright
+  - **AI-gebruik:** de rol vermeldt Claude Code als AI-assistent, met een link naar Gebruik van AI.
+  - **Afbeelding:** een screenshot van de nieuwe homepage.
+  - De site staat nog niet live. Daarom linkt het websiteveld naar GitHub.
+
+## D-060: Blok "GitHub-activiteit"
+
+- **Datum:** 2026-10-07
+- **Beslissing:** een nieuw ACF-blok `github-activity` met een titel en een GitHub-gebruikersnaam.
+  - **Data:** `src/functions/github.php` haalt de openbare kalender op (`github.com/users/<naam>/contributions`, zonder token). Per dag worden datum, niveau en aantal uitgelezen.
+  - **Cache:** 12 uur in een transient. Als het ophalen mislukt, 1 uur. Lukt het ophalen niet, dan verbergt het blok zich.
+  - **Weergave:**
+    - het totaal van het afgelopen jaar, met de kalender als heatmap in de merkkleuren
+    - een legenda en de knop "Bekijk mijn GitHub"
+    - tooltips in het Nederlands, zoals "32 bijdragen op 7 oktober 2026"
+  - **Toegankelijk:** de kalender is `role="img"` met een aria-label met het totaal.
+  - **Formaat:** de vakjes zijn 11, 13 of 18px, afhankelijk van de breedte, en passen vanaf 980px zonder scrollen. Op mobiel scrolt de kalender horizontaal, en `github-activity.ts` scrolt naar de nieuwste week.
+- **Plaats:** op Ervaring, na Tools. Op 7 oktober 2026 waren het 4.560 bijdragen in het afgelopen jaar.
+
+## D-061: HTML-validatie: achtergrondblok en list-rollen
+
+- **Datum:** 2026-10-07
+- **Meldingen van de W3C-validator:**
+  - **"Section lacks heading":** het achtergrondblok wikkelde zijn inhoud in een eigen `<section>` zonder kop. Het is een wrapper, dus nu een `<div>`. De blokken erin zijn zelf nog wel een `<section>` met een kop. Geen enkele stylesheet of script gebruikt `section.background`.
+  - **"The list role is unnecessary":** `role="list"` stond op `<ul>` en `<ol>` die al een native lijst zijn. Weggehaald bij statistics, timeline, gallery en project-details (tools en afbeeldingen).
+- **Gecontroleerd:**
+  - op Home, Over mij, Ervaring, Projecten en Blog staat geen `<section>` meer zonder kop, en geen `role="list"`
+  - de achtergrondkleuren blijven werken
+
+## D-062: JSON-LD opgeschoond en aangevuld
+
+- **Datum:** 2026-10-08
+- **Probleem:** `header.php` laadde `json-ld.php` van het base-theme en zette daarna de payload nog een keer neer. Elke pagina had zo twee identieke Organization-blokken, naast de graph van Yoast. Die blokken bevatten:
+  - 61 Google-reviews (5 sterren) van het bureau, uit `uploads/review_data.xml`
+  - een contactpunt "customer service" met een leeg telefoonnummer
+- **Beslissing:**
+  - **Oude output weg:** `json-ld.php` is verwijderd, en de include en de extra script-tag in `header.php` ook. Yoast is nu de enige bron, met één graph per pagina.
+  - **`src/functions/schema.php`:** een filter op `wpseo_schema_person` voegt de waarden uit de optie `wesselvandenijssel_person_schema` toe aan de Person-node. Die optie staat in de database, zodat de naam van de werkgever niet in de themacode staat. Daarin:
+    - functietitel, e-mail, woonplaats (Utrecht) en werkgever
+    - opleiding: affiliatie Hogeschool Utrecht, alumnus van het Grafisch Lyceum Utrecht
+    - 17 onderwerpen (`knowsAbout`) en de talen nl, en en de
+    - 8 certificaten met hun controlelinks (`hasCredential`)
+    - LinkedIn en GitHub in `sameAs`
+  - **Yoast:** de persoonsafbeelding is het portret (353) in plaats van de lege Gravatar.
+  - **Paginatypes:** Over mij is een AboutPage en Contact een ContactPage.
+- **Reviews uitgezet:**
+  - `review_settings` → `enabled` = false
+  - de cronjob `fetch_google_reviews_event` is weggehaald. Die haalde elke dag de reviews van het bureau op.
+  - **Op 2026-10-08 verwijderd, met akkoord van Wessel:** alle velden van `review_settings` zijn leeggemaakt (client ID, client secret, refresh token, API-URL, account- en locatie-ID, reviewlink), en `uploads/review_data.xml` is gewist. De databasebackups van vóór die datum in `app/sql/` bevatten de gegevens nog wel. Die staan niet in git (`/app/*` staat in `.gitignore`), maar deel ze niet.
+- **Gecontroleerd:** Home, Over mij, een project, het blogbericht, de auteurspagina en Contact hebben één geldige graph. Het blogbericht is een Article, de auteurspagina een ProfilePage. Het beschermde deel geeft geen schema uit, want het stuurt door naar de login.
+
+## D-063: Reviews en ongebruikte bedrijfsvelden verwijderd
+
+- **Datum:** 2026-10-08
+- **Beslissing (op verzoek van Wessel):** de hele reviewfunctie van het base-theme is weg:
+  - `src/functions/reviews/` (Google-koppeling, cronjob, XML-opslag)
+  - `get_review_stars()` en `_review-stars.scss`
+  - de optiepagina Reviews met de veldgroep `review_settings`
+  - de 20 lege optierijen `options_review_settings*` in de database (backup vooraf in `app/sql/`)
+- **Ook weg:** de velden Awards, Oprichter en Oprichtingsjaar in Basisgegevens. Alleen het verwijderde `json-ld.php` gebruikte ze, en ze waren nooit ingevuld.
+
+## D-064: Reply-mail, snelheid en SEO-aanvullingen
+
+- **Datum:** 2026-10-08
+- **Reply-mail:** `{form_fields}`, `{reply_heading}` en `{reply_footer}` in `src/functions/gravity-forms.php` geven nu een mail in de huisstijl: navy kop met naam en functie, antwoorden in een lichtblauw blok, handtekening met e-mail, LinkedIn en de site. Het consent-veld toont "Akkoord" in plaats van de ruwe deelvelden. Het SVG-logo is eruit, omdat Gmail en Outlook geen SVG tonen. De tekst van de melding staat in alinea's en noemt de reactietermijn van 2 werkdagen.
+- **Fancybox:** laadt niet meer op elke pagina. Galerij, content-image (met video) en project-details zetten het script zelf in de wachtrij als ze een lightbox renderen.
+- **Logo:** `get_svg_dimensions()` leest breedte en hoogte uit het SVG-bestand, zodat het logo geen layout shift geeft. `.logo` heeft `height: auto`.
+- **Paginering:** de vorige- en volgende-pijl hebben een verborgen tekst voor schermlezers (melding van axe).
+- **SEO:**
+  - standaard-deelafbeelding in Yoast (1200 × 630, media 432) voor pagina's zonder eigen afbeelding
+  - langere meta descriptions voor Blog, Sitemap en Contact
+  - drie nieuwe blogberichten, over werk aan deze site: structured data (433), snelheid (434) en toegankelijkheid (435, nieuwe categorie Toegankelijkheid). De kantoorfoto's komen uit één reeks en leken te veel op elkaar. Daarom hebben 433 en 435 een eigen beeld in de huisstijl (een JSON-LD-codevenster en de contrastratio's van de merkkleuren, media 436 en 437), 434 de screenshot van de site en 388 de kantoorfoto
+- **Gecontroleerd:** axe (WCAG 2.2 AA) zonder meldingen op de nieuwe en aangepaste pagina's, geen JS-fouten, lightbox werkt op Over mij en Van Aalsburg.
+- **Aanvulling (zelfde dag):**
+  - vijfde blogbericht over de bevestigingsmail (439, nieuwe categorie WordPress), met een voorbeeldmail met verzonnen testgegevens als beeld (438)
+  - blog-grid: 2 kolommen op tablet en 3 vanaf 980px, een onvolledige laatste rij staat in het midden
+  - blogkaarten: witte kaart met een rand in `$hue-grey-2`, afgeronde hoeken en een zachte schaduw. De afbeelding zoomt in bij hover, behalve bij "minder beweging". Titels breken alleen af als een woord niet past.
+  - `content-none.php` heeft de modifier `post--empty`, met binnenruimte voor de melding "Niets gevonden"
+
+## D-065: Pagina-intro, loopvideo's en uitgebreid submenu
+
+- **Datum:** 2026-10-08
+- **Pagina-intro:** centered-content heeft een veld "Stijl" met de optie "Pagina-intro": een donkerblauwe band, links uitgelijnd, met een grotere titel. Rechts staan de GitHub-bijdragen van de laatste 20 weken als vierkantjes, met weken die op maandag beginnen. Gebruikt op Projecten en Blog. Het kruimelpad wordt wit boven een intro.
+- **Galerij:** per item een Wistia-loopvideo die stil meespeelt over de foto. Een klik opent de video groot in Fancybox. De Wistia-bediening en de branding zijn uit (`pointer-events: none`). Bij "minder beweging" blijft de foto staan. Op verzoek van Wessel zonder pauzeknop, wat afwijkt van WCAG 2.2.2.
+- **Tijdlijn:** per item een optionele afbeelding naast de kaart. Het blok heet in de editor "Timeline".
+- **Projectfilter:** op mobiel een select die meteen verzendt (`data-auto-submit`), zoals het blogfilter. Dat wijkt af van WCAG 3.2.2.
+- **Submenu:** een paneel over de volle breedte direct onder de menubalk. Het bevat een intro (titel en menu-omschrijving), links met een omschrijving en de uitgelichte afbeelding van de pagina. Het opent met hover of keyboard-focus en maakt de pagina donker. Nieuwe items: "Mijn cv" en "Eigen projecten". De omschrijvingen staan in het standaard veld "Beschrijving" van de menu-items.
+
+## D-066: MySpace-verhaal geschrapt
+
+- **Datum:** 2026-10-08
+- **Beslissing:** het plan noemde voor Over mij een "MySpace-verhaal" van de oude live site. Dat klopt niet: Wessel heeft geen MySpace-pagina gehad. De zin is uit de hero van Over mij gehaald. De hero noemt nu het dagelijkse werk aan websites en webshops bij het stagebedrijf.
+- **Ook:** de portretfoto in de hero heeft op mobiel en tablet 20px ruimte aan de onderkant, zodat het blauwe vlak erachter niet meer tegen de titel staat.
+
+## D-067: Schema Pro uit, Complianz voor cookietoestemming
+
+- **Datum:** 2026-10-08
+- **Beslissing (op verzoek van Wessel):**
+  - Schema Pro is uitgeschakeld. Het deed hetzelfde als Yoast, en Yoast blijft de enige bron van structured data.
+  - Complianz GDPR/CCPA (gratis, 7.5.5) is geïnstalleerd en geactiveerd. Het regelt de cookietoestemming voordat er analytics en heatmaps komen.
+- **Gevolg:**
+  - De cookiebanner verschijnt pas als de wizard van Complianz is doorlopen.
+  - De deploy-workflow levert alleen het thema en de eigen plugins op. Complianz moet je dus op de productieserver los installeren. De instellingen gaan mee met de database-migratie.
+
+## D-068: Complianz-wizard ingevuld, Clarity via Tag Manager
+
+- **Datum:** 2026-10-08
+- **Beslissing (op verzoek van Wessel):**
+  - Statistieken lopen via Google Tag Manager. Complianz laadt de container en geeft de toestemming door.
+  - Wessel kiest Microsoft Clarity voor heatmaps (niet Crazy Egg). Clarity komt als tag in Tag Manager en vuurt alleen na toestemming voor statistieken.
+  - Geen marketing-, advertentie- of social media-cookies, geen reacties en geen diensten van derden met eigen toestemming.
+  - Adres in de documenten: alleen "Utrecht".
+  - Complianz maakt de pagina Cookiebeleid (`/cookiebeleid/`). Privacy statement en Disclaimer blijven de eigen pagina's van de site.
+  - Het Nederlandse taalpakket van Complianz is geïnstalleerd, zodat het cookiebeleid in het Nederlands staat.
+  - Wessel gebruikt de reCAPTCHA-add-on van Gravity Forms. Complianz blokkeert reCAPTCHA niet vóór toestemming, anders werkt het contactformulier pas na het accepteren van marketingcookies. reCAPTCHA staat als functionele dienst in het cookiebeleid.
+  - Clarity (`_clck`, `_clsk`, `CLID`, `MUID`) en reCAPTCHA (`_GRECAPTCHA`) zijn met de hand als dienst en cookie toegevoegd, met synchronisatie uit, zodat Complianz ze niet leegmaakt.
+  - De GTM-container (`GTM-W47LDK6G`) wordt alleen door Complianz geladen. De snippets in de thema-instellingen Scripts (head en body) zijn leeggemaakt. Die laadden de container nog een keer, zonder toestemming.
+  - In GTM vuren GA4 en Clarity op de Custom Event-trigger `cmplz_event_statistics`, niet op All Pages.
+  - De UTM-plugin (AFL UTM Tracker) wacht nu op toestemming via Complianz, categorie marketing. Daarom staat marketing aan in Complianz en toont de banner die categorie.
+  - Cookielijst in Complianz opgeschoond: de oude scanresten `ct_traffic_source_cookie`, `ct_user_journey_cookie` en `History.store` (van Schema Pro) zijn als verwijderd gemarkeerd. De echte items van de customer-journey-plugin (localStorage `wesselvdijssel_customer_journey`, cookie `wesselvdijssel_cj_clear_journey`), Google Analytics (`_ga`, `_ga_*`) en de UTM-cookies (`afl_wc_utm_*`) zijn toegevoegd.
+  - Het privacy statement noemt nu Google Analytics, Clarity, reCAPTCHA, de UTM-gegevens, de grondslag per verwerking, Google en Microsoft als verwerkers en een link naar het cookiebeleid.
+- **Gevolg:**
+  - Gebruik de Scripts-velden van het thema niet voor tracking. Alles wat cookies plaatst, gaat via GTM met een toestemmingstrigger.
+  - De UTM-cookies hebben de vlag `Secure`. Lokaal op `http://` weigert de browser ze. Op https werken ze wel.
+  - Bewaartermijnen: formulierberichten 12 maanden (Gravity Forms verwijdert ze automatisch, instelling Personal Data van het contactformulier), GA4 2 maanden voor gebeurtenissen en 14 maanden voor gebruikers (met reset bij nieuwe activiteit). Hosting: Vimexx. Het opslaan van IP-adressen staat uit in het formulier.
+
+## D-069: Klantreis pas na toestemming voor marketing
+
+- **Datum:** 2026-10-08
+- **Beslissing (op verzoek van Wessel):** de customer-journey-plugin schreef elke paginaweergave naar localStorage, ook zonder toestemming en na "Weigeren". De Telecommunicatiewet (art. 11.7a) geldt ook voor localStorage. De uitzondering voor analytische cookies past niet, omdat de klantreis aan een naam en e-mailadres wordt gekoppeld. Het script laadt nu pas na toestemming voor marketing, dezelfde categorie als de UTM-plugin.
+- **Uitvoering:**
+  - `src/functions/complianz.php` voegt het script toe aan de blokkeerlijst van Complianz (`cmplz_known_script_tags`). De plugin zelf is niet aangepast.
+  - In Complianz staat `wesselvdijssel_customer_journey` nu onder Marketing. De opruimcookie `wesselvdijssel_cj_clear_journey` blijft functioneel.
+  - Het privacy statement zegt dat de bekeken pagina's alleen met toestemming voor marketing worden bijgehouden.
+- **Getest:** zonder keuze en na "Weigeren" blijft localStorage leeg en krijgt het formulier geen verborgen veld. Na "Accepteren" start het bijhouden direct op dezelfde pagina. Geen JS-fouten.
+- **Gevolg:**
+  - Berichten van bezoekers zonder toestemming hebben geen klantreis. De plugin slaat een leeg veld gewoon over.
+  - Complianz bewaart zijn blokkeerlijst 30 minuten in de optie `cmplz_transients`. Na een wijziging aan de lijst duurt het dus even, of verwijder de sleutel `cmplz_blocked_scripts` daaruit.
+
+## D-070: Sitemap-pagina automatisch uit Yoast-indexinstelling
+
+- **Datum:** 2026-10-08
+- **Beslissing (op verzoek van Wessel):** de Sitemap-pagina toonde alleen het handmatige menu "Sitemap", zonder blogberichten en projecten. Nu toont de pagina automatisch alles wat op index staat, gegroepeerd per contenttype.
+- **Uitvoering:**
+  - `src/functions/sitemap.php` haalt alle publieke contenttypes op (behalve media). Een nieuw custom post type verschijnt vanzelf, met de naam uit zijn eigen registratie.
+  - Per item telt de Yoast-instelling van dat item, anders de standaard van het contenttype. De site-brede optie "zoekmachines ontmoedigen" telt niet mee, zodat de lijst lokaal en op de testsite hetzelfde is als live.
+  - Nooit in de lijst: pagina's van Portfolio minor, pagina's met een wachtwoord en niet-gepubliceerde content.
+  - Volgorde: eerst pagina's (Home, dan het hoofdmenu, dan de rest op titel), dan Blog (nieuwste eerst), dan de overige typen op naam.
+  - De breadcrumb staat nu boven de sectie in `page-sitemap.php`, zodat hij niet meer over de titel valt.
+- **Gevolg:**
+  - Bedankt, Privacy statement en Disclaimer staan op noindex en dus niet in de sitemap. Ze staan wel in de footer.
+  - Het menu "Sitemap" is verwijderd en de menulocatie `sitemap` is uit `src/functions/theme-support.php` gehaald.
+
+## D-071: Cookiebanner in de huisstijl
+
+- **Datum:** 2026-10-08
+- **Beslissing (op verzoek van Wessel):** de banner van Complianz volgt nu de huisstijl.
+- **Uitvoering:**
+  - In de bannerinstellingen van Complianz (database): wit vlak met rand `$hue-grey-2`, navy tekst, links `#0077a8`, Accepteren `#005a80` met witte tekst, Weigeren en Voorkeuren navy rand en tekst op wit, schuifjes `#005a80` (aan) en `#475569` (uit), hoeken 15px (vlak) en 5px (knoppen), tekst 16px. "Weiger" heet nu "Weigeren".
+  - De bannertekst is herschreven volgens de schrijfregels: geen cliché, overal "je" en alleen wat de site echt doet.
+  - `src/styles/components/_cookiebanner.scss` regelt wat Complianz niet kan instellen: hover en focus navy met witte tekst, focusrand 2px navy, gewicht 600 in plaats van 500, en "Altijd actief" in navy (de groene tekst van Complianz haalde 4,22:1). De `body`-prefix is nodig omdat de CSS van Complianz na het thema laadt.
+  - Complianz zet bij het openen de focus op het sluitkruisje. Dat blijft zo (toegankelijkheid), maar met de focusrand van de huisstijl.
+- **Getest:** axe vindt geen problemen in de banner en de voorkeuren. Geen JS-fouten op mobiel en desktop.
+- **Gevolg:** de kleuren staan in de database van Complianz, niet in `_variables.scss`. Verandert de huisstijl, pas dan ook de bannerinstellingen aan (Complianz > Cookiebanner).
+
+## D-072: Preconnect alleen naar Google Tag Manager
+
+- **Datum:** 2026-10-09
+- **Beslissing (op verzoek van Wessel):** in Utilities > Preconnect hints staat alleen `https://www.googletagmanager.com`. Dat domein laadt op elke pagina.
+- **Bewust niet:** Google Analytics en Clarity laden pas na toestemming. Een preconnect zou die partijen al vóór toestemming je IP-adres geven. Wistia laadt alleen op Over mij en pas bij de galerij, dus een preconnect op elke pagina is zonde. Lettertypen en Font Awesome staan op de eigen server.
+
+## D-073: Deelafbeelding voor de homepage
+
+- **Datum:** 2026-10-09
+- **Beslissing (op verzoek van Wessel):** de homepage deelde de uitgelichte afbeelding, een staande portretfoto van 1600×2400. Sociale netwerken snijden die bij naar 1,91:1. De homepage gebruikt nu de deelafbeelding van 1200×630 (media 432, ook de standaard in Yoast) voor Open Graph en X.
+
+## D-074: SEO-verbeteringen
+
+- **Datum:** 2026-10-09
+- **Beslissing (op verzoek van Wessel):** zes verbeteringen uit een SEO-controle van alle indexeerbare pagina's.
+- **Uitvoering:**
+  1. **Titels:** SEO-titels van Home, Blog, vier blogberichten en Schoolmaaltijden ingekort tot maximaal 60 tekens, met de focuszin vooraan. De keyphrase van Blog is nu "blog over webdevelopment", zodat die in de titel staat.
+  2. **Beschrijvingen:** de metabeschrijvingen van Van Aalsburg en AW Cases verlengd, op basis van de tekst op die pagina's.
+  3. **Cookiebeleid:** een H1 toegevoegd en op noindex gezet, net als Privacy statement en Disclaimer.
+  4. **Archieven:** `archive.php` gaf categorie-archieven een lege H1. Het toont nu de naam en de beschrijving van de categorie. De drie blogcategorieën hebben een beschrijving, en Yoast gebruikt die als metabeschrijving. De auteur- en datumarchieven staan uit (doorverwijzing naar Home). De projectcategorieën staan op noindex, omdat ze het filter op Projecten herhalen.
+  5. **Interne links:** de auteurlinks in blogberichten gaan naar Over mij (pagina 218) in plaats van naar het auteurarchief. Home heeft een blokje "Laatste artikelen" met een knop naar Blog. Het blogblok heeft daarvoor een knoppenveld gekregen, net als het projectenblok.
+  6. **Structured data:** projectpagina's hebben een `CreativeWork` met Wessel als maker, gekoppeld aan de WebPage en de uitgelichte afbeelding (`src/functions/schema.php`).
+- **Ook:**
+  - De slider van het blogblok heeft een sleepbare scrollbalk in plaats van pijlen, naar het voorbeeld van een eerder project. De A11y-module van Swiper schuift een kaart in beeld als je er met de toetsenbord naartoe tabt. Past alles in beeld, dan verdwijnt de balk. Met de touchpad schuif je de slider horizontaal (Swiper Mousewheel met `forceToAxis` en `freeMode`). Verticaal scrollen blijft de pagina scrollen.
+  - In de gedeelde Swiper-stijl verbergt het thema nu het eigen pijl-icoon van Swiper (dat gaf een dubbele pijl) en de pijlen als er niets te schuiven valt.
+  - 404: drie knoptypes (primair, secundair, tekstlink).
+
+## D-075: Secundaire knop op navy
+
+- **Datum:** 2026-10-09
+- **Beslissing (op verzoek van Wessel):** in de donkere CTA-banner zag de secundaire knop ("Download mijn cv") eruit als een tweede primaire knop: wit met navy tekst. Een secundaire knop op navy is nu transparant met een witte rand en witte tekst. Bij hover en focus wordt hij wit met navy tekst, het omgekeerde van de primaire knop op navy.
+- **Uitvoering:** nieuwe placeholder `%btn--secondary-on-dark` in `src/styles/_placeholders.scss`, naast `%btn--on-dark`. De CTA-banner en de intro van Centered content gebruiken hem allebei. Contrast: wit op navy 15,45:1.
+
+## D-076: Projectteksten uit git-historie en screenshots per project
+
+- **Datum:** 2026-10-09
+- **Beslissing (op verzoek van Wessel):** de projectpagina's waren dun (100 tot 190 woorden) en de Rol was bij bureauprojecten één zin. Per project is in de git-historie van Local Sites, de GitHub-repo's en het webarchief nagezocht wat Wessel zelf bouwde. Alleen controleerbare feiten staan in de tekst.
+- **Ingevuld:** SCX Solar (oude site van een ander bureau op losse plugins, nieuwe site sinds september 2023, 211 van 217 commits), The Souks (herbouw in dezelfde stijl op een nieuw basisthema, velden in de code, geen AJAX, live december 2023) en Flexercise (aanpak, periode mei – juni 2026, direct contact met de eigenaar).
+- **Gecorrigeerd, want git ondersteunt het niet:**
+  - Van Aalsburg: de configurator is gebouwd door een collega. Wessel breidde hem uit.
+  - Précon: de expertisepagina's zijn door een collega gebouwd.
+  - Hofstede Raanhuis: collega's bouwden de site in 2022 – 2023. Wessel werkt er sinds maart 2024 aan.
+  - Rentwereld: de blokken van de oude site zijn vervangen. De offerteaanvraag op de nieuwe site ontbrak.
+  - The Souks: geen bewijs van een stresstest met Flood.io. De "verzendoptie voor cadeaubonnen" verborg alleen de verzendinformatie.
+  - RideLoop: de tool draait op OpenStreetMap, niet meer op Google Maps en Google Places.
+  - Portfolio: Playwright maakt screenshots, het is geen testsuite.
+- **Beelden:** 27 screenshots van de live sites (desktop en mobiel), met Nederlandse alt-teksten, in het veld Beelden van 12 projecten. Cookiebanners zijn met CSS verborgen, er is niets geaccepteerd. Schoolmaaltijden heeft geen extra beeld: het logo laadt daar niet op de live site.
+- **RideLoop:** de periode blijft "Mei – juni 2026". Wessel bevestigde dat opnieuw, ook al loopt de git-historie van 19 maart tot 14 april 2026.
+
+## D-077: Geïndexeerd op het subdomein tot januari, daarna naar het hoofddomein
+
+- **Datum:** 2026-10-09
+- **Beslissing (van Wessel):** de site komt op emarketing.wesselvandenijssel.nl en wordt daar geïndexeerd tot januari. Daarna vervangt hij de huidige site op wesselvandenijssel.nl.
+- **Tot januari:**
+  - Op de server `blog_public` = 1. Lokaal blijft het 0.
+  - Geen handmatige canonicals. Yoast geeft elke pagina een canonical naar zichzelf. Geen canonicals tussen de twee domeinen, want de pagina's komen niet één op één overeen.
+  - Search Console als domeineigenschap voor wesselvandenijssel.nl (DNS-verificatie bij Vimexx). Die dekt het subdomein en later het hoofddomein. Sitemap: `https://emarketing.wesselvandenijssel.nl/sitemap_index.xml`.
+  - Portfolio minor blijft noindex, los van `blog_public` (code in `src/inc/protected-section.php`).
+- **Bij de overstap in januari:**
+  1. `wp search-replace` van het subdomein naar het hoofddomein, eerst met `--dry-run`.
+  2. 301 van elke URL op het subdomein naar hetzelfde pad op het hoofddomein.
+  3. 301 van oude URL's van de huidige site naar de dichtstbijzijnde nieuwe pagina.
+  4. De nieuwe sitemap indienen en Home, Over mij en Contact controleren met URL-inspectie.
+  5. Complianz, de GA4-datastream, Clarity en GTM controleren op het nieuwe domein.
+
+## D-078: Laatste punten vóór livegang
+
+- **Datum:** 2026-10-09
+- **Gebruik van AI:** de drie `[INVULLEN]` zijn ingevuld met feiten uit dit project. Claude schreef concepten op basis van Wessels informatie. Wessel controleerde elke tekst en verbeterde fouten (het MySpace-verhaal, een stage die hij niet liep). Wat hij zelf deed: positionering, huisstijl, keuze van projecten en eigen foto's en video's, alle feiten, bijsturen van het ontwerp, en de keuze voor Google Analytics, Clarity en Complianz met de tags in GTM. Wessel gebruikte alleen Claude.
+- **Beveiliging** (`src/functions/security.php`):
+  - `/wp-json/wp/v2/users` is weg voor bezoekers die niet ingelogd zijn. De slug was gelijk aan de loginnaam.
+  - XML-RPC is helemaal uit: elk verzoek krijgt 403, ook `system.multicall`.
+  - `?author=1` stuurt door naar Home (Yoast, D-074) zonder de gebruikersnaam te tonen.
+- **Favicon:** een navy vierkant met een witte W in Public Sans en een blauw streepje. Net als in de andere projecten staan de bestanden in `assets/` (`favicon.svg`, `favicon.ico` met 16, 32 en 48 px, `favicon-96x96.png`, `apple-touch-icon.png`, `web-app-manifest-192x192.png` en `-512x512.png`, `site.webmanifest`) en staan de links in `header.php`. De W in de SVG is een pad uit het fontbestand, dus de SVG heeft geen lettertype nodig. Het WordPress-site-icoon staat uit (`site_icon` = 0). `/favicon.ico` stuurt door naar het themabestand in plaats van naar het WordPress-logo (`src/functions/enqueueing.php`). Media 496 (het eerdere site-icoon) wordt niet meer gebruikt.
+- **HTML-validatie:** Complianz zet geblokkeerde scripts op `type="text/plain"`, maar liet `defer` staan. Een filter op `cmplz_cookie_blocker_output` haalt `defer`, `async` en `data-wp-strategy` van zulke scripts af. De homepage valideert nu zonder fouten.
+- **Bewust niet opgelost:** de validatiefouten in de adminbalk (`role=menu` met `role=group`). Die markup komt uit WordPress zelf en verschijnt alleen voor ingelogde gebruikers. Bezoekers zien hem nooit. Valideer daarom altijd uitgelogd.

@@ -15,6 +15,7 @@ $image = $image ?? '';
 $video = $video ?? '';
 $content = $content ?? [];
 $block_title = $block_title ?? [];
+$cutout = !empty($cutout);
 
 $variant = !empty($variant) ? $variant : 'background';
 $section['class'][] = 'hero--' . $variant;
@@ -71,8 +72,13 @@ echo !is_admin() ? '[raw]' : '';
 			</div>
 
 			<?php if (!empty($image)) : ?>
-				<div class="hero__portrait">
-					<?= wp_get_attachment_image($image, 'Portrait', false, ['class' => 'hero__portrait-image', 'fetchpriority' => 'high', 'loading' => 'eager']); ?>
+				<div class="hero__portrait<?= $cutout ? ' hero__portrait--cutout' : ''; ?>">
+					<?= wp_get_attachment_image($image, $cutout ? 'full' : 'Portrait', false, [
+						'class' => 'hero__portrait-image',
+						'fetchpriority' => 'high',
+						'loading' => 'eager',
+						'sizes' => $cutout ? '(min-width: 980px) 400px, 260px' : '(min-width: 980px) 460px, 260px',
+					]); ?>
 				</div>
 			<?php endif; ?>
 		</div>

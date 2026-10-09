@@ -64,3 +64,14 @@ function wesselvandenijssel_remove_recent_comments_style() {
 		remove_action('wp_head', [$wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style']);
 	}
 }
+
+add_filter('body_class', 'wesselvandenijssel_remove_blog_body_class');
+
+/**
+ * Removes the "blog" body class WordPress adds to the posts page, because it collides with the blog block's .blog styles.
+ *
+ * @param array $classes The body classes
+ */
+function wesselvandenijssel_remove_blog_body_class(array $classes): array {
+	return array_values(array_diff($classes, ['blog']));
+}

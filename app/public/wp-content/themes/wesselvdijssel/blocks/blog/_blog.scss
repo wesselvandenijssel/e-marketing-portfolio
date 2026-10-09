@@ -14,26 +14,53 @@
 	&__grid {
 		&:not(.swiper) {
 			display: grid;
-			gap: 10px;
+			gap: 24px;
 
 			@include bp("narrow") {
-				grid-template-columns: repeat(3, 1fr);
+				grid-template-columns: repeat(4, 1fr);
 				gap: 20px;
 			}
 
 			@include bp("normal") {
+				grid-template-columns: repeat(6, 1fr);
 				gap: 40px;
+			}
+
+			> .post {
+				@include bp-only("narrow", "normal") {
+					grid-column: span 2;
+
+					&:nth-child(2n + 1):last-child {
+						grid-column: 2 / span 2;
+					}
+				}
+
+				@include bp("normal") {
+					grid-column: span 2;
+
+					&:nth-child(3n + 1):nth-last-child(2) {
+						grid-column: 2 / span 2;
+					}
+
+					&:nth-child(3n + 1):last-child {
+						grid-column: 3 / span 2;
+					}
+				}
 			}
 		}
 
 		&--swiper {
-			overflow: visible;
+			overflow: visible !important;
 
 			@include bp("narrow") {
 				clip-path: polygon(0 0, 0 100%, 100vw 100%, 100vw 0);
 			}
 
 			.post {
+				display: flex;
+				flex-direction: column;
+				height: initial;
+
 				@include bp("mobile") {
 					max-width: calc(100vw - 60px);
 				}
@@ -82,6 +109,14 @@
 				border: 1px solid $hue-dark-1;
 				border-radius: 10px;
 			}
+		}
+	}
+
+	.buttons {
+		margin-top: pxtoem(30);
+
+		@include bp("narrow") {
+			margin-top: pxtoem(50);
 		}
 	}
 }

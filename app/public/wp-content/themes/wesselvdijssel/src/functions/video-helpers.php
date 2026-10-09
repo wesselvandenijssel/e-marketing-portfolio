@@ -34,6 +34,53 @@ function modify_video_attributes($video) {
 }
 
 /**
+ * Extracts the Wistia media ID from an embed code, a Wistia URL or a bare media ID.
+ *
+ * @param string $value Embed code, URL or media ID
+ * @return string The media ID, or an empty string when none is found
+ */
+function wistia_media_id(string $value): string {
+	$value = trim($value);
+
+	if ($value === '') return '';
+
+	$patterns = [
+		'/media-id=["\']([a-z0-9]{10})["\']/i',
+		'/(?:medias|embed|iframe)\/([a-z0-9]{10})/i',
+		'/^([a-z0-9]{10})$/i',
+	];
+
+	foreach ($patterns as $pattern) {
+		if (preg_match($pattern, $value, $matches)) return strtolower($matches[1]);
+	}
+
+	return '';
+}
+
+/**
+ * Returns the width/height ratio of a Wistia video from its oEmbed data, cached for a week.
+ *
+ * @param string $media_id The Wistia media ID
+ * @return float The aspect ratio, 16:9 when Wistia does not answer
+ */
+function wistia_video_ratio(string $media_id): float {
+	$cache_key = 'wesselvandenijssel_wistia_ratio_' . $media_id;
+	$cached = get_transient($cache_key);
+
+	if ($cached !== false) return (float) $cached;
+
+	$response = wp_remote_get('https://fast.wistia.com/oembed?url=' . rawurlencode('https://home.wistia.com/medias/' . $media_id), ['timeout' => 5]);
+	$data = json_decode((string) wp_remote_retrieve_body($response), true);
+	$width = (float) ($data['width'] ?? 0);
+	$height = (float) ($data['height'] ?? 0);
+	$ratio = $width > 0 && $height > 0 ? round($width / $height, 4) : 0;
+
+	set_transient($cache_key, $ratio ?: 16 / 9, $ratio ? WEEK_IN_SECONDS : DAY_IN_SECONDS);
+
+	return $ratio ?: 16 / 9;
+}
+
+/**
  * Process video URL and add fancybox attributes to wrapper
  *
  * This function extracts YouTube URL from iframe, applies video attributes modification,

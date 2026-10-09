@@ -31,7 +31,6 @@ $group = sprintf('%s-gallery', $block['id'] ?? 'gallery');
 $grid_attr = [];
 $grid_attr['class'][] = 'gallery__grid';
 $grid_attr['class'][] = 'gallery__grid--' . $layout;
-$grid_attr['role'] = 'list';
 
 if ($layout === 'grid') {
 	$grid_attr['class'][] = 'gallery__grid--cols-' . $columns;
@@ -55,13 +54,22 @@ $get_link_attr = static function (array $item, string $group): array {
 	$link_attr['class'][] = 'gallery__link';
 	$link_attr['href'] = (string) wp_get_attachment_image_url($image_id, 'full');
 	$link_attr['data-fancybox'] = $group;
+	wp_enqueue_script('wesselvandenijssel-fancybox');
 	$link_attr['data-thumb-src'] = (string) wp_get_attachment_image_url($image_id, 'Avatar');
 
 	if (!empty($caption)) {
 		$link_attr['data-caption'] = wp_strip_all_tags($caption);
 	}
 
-	if (!empty($item['video'])) {
+	$loop_id = wistia_media_id((string) ($item['loop_video'] ?? ''));
+
+	if ($loop_id) {
+		$link_attr['class'][] = 'gallery__link--loop';
+		$link_attr['href'] = $link_attr['data-src'] = 'https://fast.wistia.net/embed/iframe/' . $loop_id . '?autoPlay=true';
+		$link_attr['data-type'] = 'iframe';
+		$link_attr['data-ratio'] = (string) wistia_video_ratio($loop_id);
+		$link_attr['data-wistia-loop'] = $loop_id;
+	} elseif (!empty($item['video'])) {
 		$link_attr = video_in_fancybox($item['video'], $link_attr);
 
 		if (!empty($link_attr['data-src'])) {
@@ -88,24 +96,26 @@ echo !is_admin() ? '[raw]' : '';
 		<ul <?php attr($grid_attr); ?>>
 			<?php foreach ($visible_items as $index => $item) :
 				$link_attr = $get_link_attr($item, $group);
-				$is_video = in_array('video-in-fancybox', $link_attr['class'], true);
+				$is_video = isset($link_attr['data-type']);
 				$caption = $show_captions ? wp_get_attachment_caption((int) $item['image']) : '';
 				$show_more = $hidden_count > 0 && $index === count($visible_items) - 1;
 
 				$label = $is_video
 					? sprintf(__('Bekijk video %1$d van %2$d', 'wesselvandenijssel'), $index + 1, $total)
 					: sprintf(__('Vergroot afbeelding %1$d van %2$d', 'wesselvandenijssel'), $index + 1, $total);
+
+				$image = wp_get_attachment_image((int) $item['image'], 'Content', false, [
+					'class' => 'gallery__image',
+					'loading' => 'lazy',
+					'sizes' => ($layout === 'featured' && $index > 0) ? '(min-width: 740px) 33vw, 50vw' : $sizes,
+				]);
 			?>
 				<li class="gallery__item">
 					<figure class="gallery__figure">
 						<a <?php attr($link_attr); ?>>
 							<span class="screen-reader-text"><?= esc_html($label); ?></span>
 
-							<?= wp_get_attachment_image((int) $item['image'], 'Content', false, [
-								'class' => 'gallery__image',
-								'loading' => 'lazy',
-								'sizes' => ($layout === 'featured' && $index > 0) ? '(min-width: 740px) 33vw, 50vw' : $sizes,
-							]); ?>
+							<?= $image; ?>
 
 							<?php if ($show_more) : ?>
 								<span class="gallery__more" aria-hidden="true">+<?= esc_html((string) $hidden_count); ?></span>

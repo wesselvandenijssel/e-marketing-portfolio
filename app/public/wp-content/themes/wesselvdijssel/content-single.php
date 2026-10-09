@@ -8,6 +8,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 // Extract author data to avoid repeated function calls
 $author_id = get_the_author_meta('ID');
 $author_name = get_the_author();
+$author_url = get_post_status(218) === 'publish' ? get_permalink(218) : get_author_posts_url($author_id);
 $post_url = get_permalink();
 ?>
 
@@ -27,7 +28,7 @@ $post_url = get_permalink();
 					<div class="single__meta">
 						<div class="single__date"><?= wp_kses_post(sprintf(__('Datum: <span>%s</span>', 'wesselvandenijssel'), get_the_date('d M Y'))); ?></div>
 						<span class="single__separator"></span>
-						<a class="single__author" href="<?= esc_url(get_author_posts_url($author_id)); ?>"><?= wp_kses_post(sprintf(__('Door: <span>%s</span>', 'wesselvandenijssel'), esc_html($author_name))); ?></a>
+						<a class="single__author" href="<?= esc_url($author_url); ?>"><?= wp_kses_post(sprintf(__('Door: <span>%s</span>', 'wesselvandenijssel'), esc_html($author_name))); ?></a>
 						<span class="single__separator"></span>
 						<div class="single__reading-time"><?= wp_kses_post(sprintf(__('Leestijd: <span>%s</span>', 'wesselvandenijssel'), reading_time(get_the_ID()))); ?></div>
 					</div>
@@ -78,8 +79,8 @@ $post_url = get_permalink();
 		<section class="section single__author-info pad--top-small pad--bottom-medium">
 			<div class="columns-12 center">
 				<div class="single__author-info-wrapper">
-					<h4 class="single__author-info-title"><?= esc_html__('Over de auteur', 'wesselvandenijssel'); ?></h4>
-					<a class="single__author-info-wrapper-inner" href="<?= esc_url(get_author_posts_url($author_id)); ?>">
+					<h2 class="single__author-info-title h4"><?= esc_html__('Over de auteur', 'wesselvandenijssel'); ?></h2>
+					<a class="single__author-info-wrapper-inner" href="<?= esc_url($author_url); ?>">
 						<?php
 						$author_image = get_field('image', 'user_' . $author_id);
 
@@ -96,7 +97,7 @@ $post_url = get_permalink();
 					<hr>
 
 					<div class="single__author-connect">
-						<a class="single__author-link" href="<?= esc_url(get_author_posts_url($author_id)); ?>"><?= esc_html__('Meer over', 'wesselvandenijssel') . ' ' . esc_html($author_name); ?></a>
+						<a class="single__author-link" href="<?= esc_url($author_url); ?>"><?= esc_html__('Meer over', 'wesselvandenijssel') . ' ' . esc_html($author_name); ?></a>
 
 						<div class="single__author-socials">
 							<?php

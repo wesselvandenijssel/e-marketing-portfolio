@@ -79,6 +79,18 @@ if ($is_overview) {
 $query = new WP_Query($args);
 
 $total = $query->max_num_pages;
+
+$post_heading_level = 2;
+
+if (!empty($block_title['main_title'])) {
+	$title_type = $block_title['type'] ?? 'default';
+	$title_level = in_array($title_type, ['h1', 'h2', 'h3'], true)
+		? (int) substr($title_type, 1)
+		: calculate_title_element($block);
+
+	$post_heading_level = min($title_level + 1, 6);
+}
+
 echo !is_admin() ? '[raw]' : '';
 ?>
 
@@ -164,6 +176,7 @@ echo !is_admin() ? '[raw]' : '';
 							'author' => get_the_author(),
 							'date' => get_the_date('d M Y'),
 							'swiper' => !$is_overview,
+							'heading_level' => $post_heading_level,
 						]);
 					endwhile;
 				else : ?>
@@ -172,19 +185,17 @@ echo !is_admin() ? '[raw]' : '';
 				<?php if (!$is_overview) : ?>
 				</div>
 
-				<div class="blog__swiper-buttons swiper-buttons">
-					<div
-						class="blog__swiper-button blog__swiper-button--prev swiper-button-prev">
-					</div>
-					<div
-						class="blog__swiper-button blog__swiper-button--next swiper-button-next">
-					</div>
-				</div>
+				<div class="blog__swiper-scrollbar swiper-scrollbar"></div>
 			<?php endif; ?>
 		</div>
 		<?php wp_reset_postdata(); ?>
 
 		<?php if ($is_overview) wpex_pagination_outside_query($total, $block['id']); ?>
+
+		<?php if (!empty($buttons_group) && is_array($buttons_group)) {
+			$button_group = new BlockButtons($buttons_group);
+			echo $button_group->get_buttons();
+		} ?>
 	</div>
 </section>
 <?= !is_admin() ? '[/raw]' : ''; ?>

@@ -220,12 +220,14 @@ function initGroups(): void {
  */
 function initCtaClip(): void {
 	document.querySelectorAll<HTMLElement>(".cta-banner__card").forEach((card) => {
-		const radius = window.getComputedStyle(card).borderRadius;
+		const style = window.getComputedStyle(card);
+		const radius = style.borderRadius;
+		const maxInset = Math.max(0, parseFloat(style.paddingLeft) - 8);
 
 		scroll(
 			(progress: number) => {
-				const inset = (6 * (1 - progress)).toFixed(2);
-				card.style.clipPath = `inset(0% ${inset}% round ${radius})`;
+				const inset = (maxInset * (1 - progress)).toFixed(1);
+				card.style.clipPath = `inset(0px ${inset}px round ${radius})`;
 			},
 			{ target: card, offset: ["start end", "start 0.6"] },
 		);

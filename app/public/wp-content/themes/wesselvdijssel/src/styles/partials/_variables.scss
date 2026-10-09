@@ -3,6 +3,7 @@
 $hue-dark-1: #00244d;
 $hue-accent-1: #00a3e0;
 $hue-accent-text: #0077a8;
+$hue-accent-dark: #005a80;
 $hue-accent-light: #e5f6fc;
 
 $hue-light-1: #f8fafc;
@@ -15,7 +16,7 @@ $focus-color: $hue-dark-1;
 
 $text-color: $hue-dark-1;
 $link-color: $hue-accent-text;
-$btn-primary: $hue-accent-1;
+$btn-primary: $hue-accent-dark;
 $light-gray: $hue-light-1;
 $gray: $hue-grey-2;
 
@@ -82,6 +83,7 @@ $fa-angle-double-down: "\f103";
 
 $fa-arrow-up: "\f062";
 $fa-arrow-right: "\f061";
+$fa-user: "\f007";
 $fa-arrow-left: "\f060";
 $fa-arrow-down: "\f063";
 $fa-arrow-long-up: "\f176";

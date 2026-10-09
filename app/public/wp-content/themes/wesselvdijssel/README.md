@@ -88,7 +88,6 @@ The theme is dependant on the following plugins:
 - **get_flex_content()** - Generate flexible content field configuration for ACF blocks.
 - **general_section()** - Streamlined handling of general block settings (spacings, anchor links).
 - **get_logo()** - Fetch the site logo from theme options with customizable attributes.
-- **get_review_stars()** - Generate accessible review-star from a 1–10 score.
 - **notification()** - Render the global site notification bar from theme options, with from/until scheduling.
 
 ### Title & Heading Functions

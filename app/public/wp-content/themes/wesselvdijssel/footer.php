@@ -34,6 +34,7 @@ if (!empty($has_non_empty_subkey) || !empty($footer['sub_footer'])) : ?>
 
 		<?php if (!empty($has_non_empty_subkey)) : ?>
 			<div class="footer__main-wrapper">
+				<div class="footer__shape" aria-hidden="true"></div>
 				<div class="footer__main">
 					<?php foreach ($footer['footer_column'] as $column_key => $column) : ?>
 						<?php if (empty($column)) continue; ?>
@@ -53,13 +54,15 @@ if (!empty($has_non_empty_subkey) || !empty($footer['sub_footer'])) : ?>
 			</div>
 		<?php endif; ?>
 
-		<?php if (!empty($footer['sub_footer'])) : ?>
-			<div class="footer__bottom">
-				<div class="footer__bottom-wrapper">
-					<?= wp_kses_post($footer['sub_footer'] ?? ''); ?>
-				</div>
+		<div class="footer__bottom">
+			<div class="footer__bottom-wrapper">
+				<?= wp_kses_post($footer['sub_footer'] ?? ''); ?>
 			</div>
-		<?php endif; ?>
+
+			<a class="footer__top-link" href="#page" aria-label="<?= esc_attr__('Terug naar boven', 'wesselvandenijssel'); ?>"></a>
+		</div>
+
+		<div class="footer__wordmark" aria-hidden="true">wesselvandenijssel</div>
 
 	</footer>
 <?php endif; ?>

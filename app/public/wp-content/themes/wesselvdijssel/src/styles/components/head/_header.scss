@@ -148,6 +148,7 @@
 	&__logo {
 		.logo {
 			display: block;
+			height: auto;
 			object-fit: contain;
 
 			@include bp("mobile") {
@@ -184,8 +185,8 @@
 			font-weight: 700;
 
 			@include bp("mobile") {
-				background-color: $hue-accent-1;
-				color: $hue-dark-1;
+				background-color: $btn-primary;
+				color: $hue-white;
 				width: 35px;
 				aspect-ratio: 1/1;
 				border-radius: 100%;
@@ -214,10 +215,34 @@
 		height: 100vh;
 		background-color: rgba(#000, 50%);
 
+		@include bp("narrow") {
+			display: block;
+			visibility: hidden;
+			opacity: 0;
+			transition:
+				opacity 0.2s ease 0.15s,
+				visibility 0s linear 0.35s;
+		}
+
 		&--active {
 			@include bp("narrow") {
-				display: block;
+				visibility: visible;
+				opacity: 1;
+				transition:
+					opacity 0.2s ease,
+					visibility 0s;
 			}
+		}
+	}
+
+	/* stylelint-disable-next-line selector-class-pattern */
+	&:has(.menu-item--1.menu-item-has-children:hover, .menu-item--1.menu-item-has-children:focus-within) #{&}__background {
+		@include bp("narrow") {
+			visibility: visible;
+			opacity: 1;
+			transition:
+				opacity 0.2s ease,
+				visibility 0s;
 		}
 	}
 }

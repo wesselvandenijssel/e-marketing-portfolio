@@ -41,6 +41,7 @@ echo !is_admin() ? '[raw]' : '';
 
 			if (!empty($video)) {
 				$wrapper_attrs['data-fancybox'] = $block['id'] . '-gallery';
+				wp_enqueue_script('wesselvandenijssel-fancybox');
 				$wrapper_attrs = video_in_fancybox($video, $wrapper_attrs);
 			}
 			?>

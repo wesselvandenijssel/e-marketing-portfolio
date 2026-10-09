@@ -92,8 +92,8 @@ fieldset {
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			background-color: $hue-accent-1;
-			color: $hue-dark-1;
+			background-color: $btn-primary;
+			color: $hue-white;
 			border: 1px solid;
 
 			@include bp("narrow") {
@@ -287,7 +287,7 @@ fieldset {
 
 				span.upload {
 					background-color: $btn-primary;
-					color: $hue-dark-1;
+					color: $hue-white;
 					position: absolute;
 					top: 0;
 					right: 0;
@@ -437,9 +437,16 @@ fieldset {
 	.gform_button,
 	.gform_next_button {
 		@extend %btn--primary;
+		@extend %btn-icon;
 	}
 
 	.gform_previous_button {
 		@extend .btn--secondary !optional;
 	}
+}
+
+.gfield--type-consent input[type="checkbox"] {
+	width: 20px;
+	height: 20px;
+	accent-color: $hue-dark-1;
 }

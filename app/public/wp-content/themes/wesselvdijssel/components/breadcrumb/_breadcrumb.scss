@@ -25,6 +25,19 @@
 	+ .hero {
 		order: -1;
 	}
+
+	/* stylelint-disable-next-line selector-class-pattern */
+	&:has(+ .centered-content--intro) .breadcrumbs {
+		color: $hue-white;
+
+		a {
+			color: $hue-white;
+
+			&:focus-visible {
+				outline-color: $hue-white;
+			}
+		}
+	}
 }
 
 .home {

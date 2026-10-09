@@ -1,10 +1,126 @@
 @use "abstracts" as *;
+@use "placeholders" as *;
 
 .centered-content {
+	$self: &;
+
 	&__wrapper {
 		> .titles,
 		.content-layout > * {
 			@include centered-content;
+		}
+	}
+
+	&--intro {
+		position: relative;
+		overflow: hidden;
+		background-color: $hue-dark-1;
+		color: $hue-white;
+
+		.columns-12 {
+			@include bp("large") {
+				display: flex;
+				align-items: center;
+				gap: 60px;
+			}
+		}
+
+		#{$self}__wrapper {
+			flex: 0 1 760px;
+
+			> .titles,
+			.content-layout > * {
+				max-width: 760px;
+				margin-left: 0;
+			}
+		}
+
+		.main-title {
+			font-size: pxtorem(36);
+			line-height: 1.1;
+
+			@include bp("narrow") {
+				font-size: pxtorem(48);
+			}
+
+			@include bp("normal") {
+				font-size: pxtorem(64);
+			}
+		}
+
+		.content-layout {
+			font-size: pxtorem(18);
+
+			@include bp("narrow") {
+				font-size: pxtorem(20);
+			}
+		}
+
+		a:not(.btn) {
+			color: $hue-white;
+		}
+
+		a:focus-visible,
+		.btn:focus-visible {
+			outline-color: $hue-white;
+		}
+
+		.btn {
+			&--primary {
+				@extend %btn--on-dark;
+			}
+
+			&--secondary {
+				@extend %btn--secondary-on-dark;
+			}
+		}
+	}
+
+	&__pattern {
+		display: none;
+
+		@include bp("large") {
+			display: flex;
+			flex: 1 1 0;
+			justify-content: flex-end;
+			gap: 6px;
+			min-width: 0;
+			overflow: hidden;
+			mask-image: linear-gradient(to right, transparent, #000 50%);
+		}
+	}
+
+	&__week {
+		display: flex;
+		flex-direction: column;
+		flex-shrink: 0;
+		gap: 6px;
+	}
+
+	&__day {
+		width: 18px;
+		height: 18px;
+		border-radius: 4px;
+		background-color: rgba($hue-white, 0.06);
+
+		&--empty {
+			background-color: transparent;
+		}
+
+		&--level-1 {
+			background-color: rgba($hue-accent-1, 0.3);
+		}
+
+		&--level-2 {
+			background-color: rgba($hue-accent-1, 0.55);
+		}
+
+		&--level-3 {
+			background-color: rgba($hue-accent-1, 0.8);
+		}
+
+		&--level-4 {
+			background-color: $hue-accent-1;
 		}
 	}
 }

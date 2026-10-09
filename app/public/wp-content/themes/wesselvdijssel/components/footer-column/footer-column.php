@@ -18,7 +18,7 @@ switch ($column_value['acf_fc_layout']):
 			$column_value['title'],
 		);
 
-		$block_title->setType('h4');
+		$block_title->setType('h2');
 
 		if (!empty($column_value['title_type'])) {
 
@@ -108,6 +108,7 @@ switch ($column_value['acf_fc_layout']):
 					'menu' => $column_value['menu'],
 					'container_class' => 'footer__menu',
 					'fallback_cb' => false,
+					'depth' => 1,
 					'walker' => (!empty($column_value['foldable']) ? new Walker_Fold_Menu : ''),
 					'visible_amount' => $column_value['visible_amount'] ?? 4,
 				]

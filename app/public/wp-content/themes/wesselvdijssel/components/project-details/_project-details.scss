@@ -7,7 +7,7 @@
 
 	&__facts {
 		display: grid;
-		grid-template-columns: 1fr;
+		grid-template-columns: minmax(0, 1fr);
 		gap: pxtorem(16) pxtorem(30);
 		margin: 0;
 		padding: pxtorem(24);
@@ -36,6 +36,7 @@
 		a {
 			color: $hue-dark-1;
 			text-decoration: underline;
+			overflow-wrap: anywhere;
 
 			&:hover,
 			&:focus {

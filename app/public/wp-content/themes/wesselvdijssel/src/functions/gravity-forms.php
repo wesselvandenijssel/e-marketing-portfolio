@@ -192,9 +192,19 @@ function custom_merge_tags($merge_tags, $form_id, $fields, $element_id) {
 }
 
 add_filter('gform_replace_merge_tags', 'replace_form_fields_merge_tag', 10, 7);
+/**
+ * Replaces {form_fields}, {reply_heading} and {reply_footer} with the branded reply mail markup.
+ *
+ * @param string $text The notification text
+ * @param array|false $form The current form
+ * @param array|false $entry The current entry
+ * @param bool $url_encode Whether to URL encode the values
+ * @param bool $esc_html Whether to escape the values
+ * @param bool $nl2br Whether to convert new lines
+ * @param string $format The output format
+ * @return string
+ */
 function replace_form_fields_merge_tag($text, $form, $entry, $url_encode, $esc_html, $nl2br, $format) {
-	// Check if the merge tag {form_fields} is present in the text
-	// and extract the exclude parameter if it exists (e.g., {form_fields exclude="1,2,3"}).
 	preg_match('/\{form_fields(?:\s+exclude="([^"]*)")?\}/', $text, $matches);
 	$merge_tag = $matches[0] ?? '{form_fields}';
 	$excluded_ids = [];
@@ -207,15 +217,23 @@ function replace_form_fields_merge_tag($text, $form, $entry, $url_encode, $esc_h
 		return $text;
 	}
 
-	// Define styles for the table and table cells
-	$td_style = 'padding:10px 25px;word-break:break-word;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000';
-	$td_style_bold = $td_style . ';font-weight:bold';
+	$font = "font-family:'Helvetica Neue',Helvetica,Arial,sans-serif";
+	$navy = '#00244d';
+	$link = '#0077a8';
+	$grey = '#475569';
 
-	$form_fields = '';
+	$rows = [];
+
 	foreach ($form['fields'] as $field) {
 		$field_id = $field['id'];
 
-		if (in_array($field_id, $excluded_ids)) {
+		if (in_array($field_id, $excluded_ids)) continue;
+
+		if ($field['type'] === 'consent') {
+			if (rgar($entry, $field_id . '.1')) {
+				$rows[] = [$field['label'], esc_html__('Akkoord', 'wesselvandenijssel')];
+			}
+
 			continue;
 		}
 
@@ -225,225 +243,136 @@ function replace_form_fields_merge_tag($text, $form, $entry, $url_encode, $esc_h
 			$field_value = implode(', ', $field_value);
 		}
 
-		if (empty($field_value) && empty($field['choices']) && empty($field['inputs'])) continue;
-
-		$form_fields .= '<tr><td align="left" style="' . $td_style_bold . '">' . esc_html($field['label']) . '</td></tr>';
-
-		// Regular field value handling
 		if (!empty($field_value)) {
-			// Handle for file uploads
 			if ($field['type'] === 'fileupload') {
-				$field_value = '<a href="' . esc_url($field_value) . '" target="_blank">' . esc_html(basename($field_value)) . '</a>';
+				$value_html = '<a href="' . esc_url($field_value) . '" target="_blank" style="color:' . $link . ';">' . esc_html(basename($field_value)) . '</a>';
 			} else {
-				$field_value = esc_html($field_value);
+				$value_html = nl2br(esc_html($field_value));
 			}
-			$form_fields .= '<tr><td align="left" style="' . $td_style . '">' . $field_value . '</td></tr>';
-		}
-		// Special handling for checkboxes, multi-choice, and selected choices
-		elseif (($field['type'] === 'checkbox' || $field['type'] === 'multi_choice') && !empty($field['choices'])) {
-			$checked = $field->get_value_export($entry);
-			$field_values = explode(', ', $checked);
 
-			if (!empty($field_values)) {
-				$form_fields .= '<tr><td align="left" style="' . $td_style . '">' . esc_html(implode(', ', $field_values)) . '</td></tr>';
+			$rows[] = [$field['label'], $value_html];
+		} elseif (($field['type'] === 'checkbox' || $field['type'] === 'multi_choice') && !empty($field['choices'])) {
+			$checked = $field->get_value_export($entry);
+
+			if ($checked !== '') {
+				$rows[] = [$field['label'], esc_html($checked)];
 			}
-		}
-		// Special handling for radio buttons
-		elseif (!empty($field['choices']) && !empty($field['choices']['isSelected'])) {
-			$form_fields .= '<tr><td align="left" style="' . $td_style . '">' . esc_html($field['choices']['text']) . '</td></tr>';
-		}
-		// Special handling for inputs (like name and address fields)
-		elseif (!empty($field['inputs'])) {
+		} elseif (!empty($field['inputs'])) {
 			$input_values = [];
+
 			foreach ($field['inputs'] as $input) {
 				$input_value = rgar($entry, $input['id']);
+
 				if (!empty($input_value)) {
-					$input_values[] = esc_html($input_value);
+					$input_values[] = $input_value;
 				}
 			}
+
 			if (!empty($input_values)) {
-				$form_fields .= '<tr><td align="left" style="' . $td_style . '">' . esc_html(implode(', ', $input_values)) . '</td></tr>';
+				$rows[] = [$field['label'], esc_html(implode(', ', $input_values))];
 			}
 		}
 	}
 
-	// Add support for {reply_heading} and {reply_footer}
-	$logo = get_field('logo', 'options') ?? '';
-	$company_name = get_bloginfo('name');
-	$contact_details_cf = get_field('contact_details', 'options') ?? [];
+	$form_fields = '';
 
-	$reply_heading_html = '
-	<!doctype html>
-		<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+	if (!empty($rows)) {
+		$form_fields = '<table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="background-color:#e5f6fc;border-radius:12px;margin:8px 0 28px;">';
 
-		<head>
-		<title>Bevestiging van je bericht</title>
-		<!--[if !mso]><!-->
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<!--<![endif]-->
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<style type="text/css">
-			#outlook a {
-			padding: 0;
-			}
-
-			body {
-			margin: 0;
-			padding: 0;
-			-webkit-text-size-adjust: 100%;
-			-ms-text-size-adjust: 100%;
-			}
-
-			table,
-			td {
-			border-collapse: collapse;
-			mso-table-lspace: 0pt;
-			mso-table-rspace: 0pt;
-			}
-
-			img {
-			border: 0;
-			height: auto;
-			line-height: 100%;
-			outline: none;
-			text-decoration: none;
-			-ms-interpolation-mode: bicubic;
-			}
-
-			p {
-			display: block;
-			margin: 13px 0;
-			}
-		</style>
-		<!--[if mso]>
-				<noscript>
-				<xml>
-				<o:OfficeDocumentSettings>
-				<o:AllowPNG/>
-				<o:PixelsPerInch>96</o:PixelsPerInch>
-				</o:OfficeDocumentSettings>
-				</xml>
-				</noscript>
-				<![endif]-->
-		<!--[if lte mso 11]>
-				<style type="text/css">
-				.mj-outlook-group-fix { width:100% !important; }
-				</style>
-				<![endif]-->
-		<!--[if !mso]><!-->
-		<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet" type="text/css">
-		<style type="text/css">
-			@import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
-		</style>
-		<!--<![endif]-->
-		<style type="text/css">
-			@media only screen and (min-width:480px) {
-			.mj-column-per-100 {
-				width: 100% !important;
-				max-width: 100%;
-			}
-			}
-		</style>
-		<style media="screen and (min-width:480px)">
-			.moz-text-html .mj-column-per-100 {
-			width: 100% !important;
-			max-width: 100%;
-			}
-		</style>
-		<style type="text/css">
-			@media only screen and (max-width:480px) {
-			table.mj-full-width-mobile {
-				width: 100% !important;
-			}
-
-			td.mj-full-width-mobile {
-				width: auto !important;
-			}
-			}
-		</style>
-		</head>
-
-		<body style="word-spacing:normal;">
-			<!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-			<table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;margin:0px auto;max-width:600px;">
-				<tbody>
-				<tr>
-					<td style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;">
-					<!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-						<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
-						<tbody>
-							<tr>
-							<td align="left" style="padding:10px 25px;word-break:break-word;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
-							';
-
-	$reply_footer_html = '';
-
-	if (!empty($contact_details_cf['phone']) && !empty($contact_details_cf['phone_link'])) {
-
-		$reply_footer_html = '
-							<tr>
-								<td align="left" style="padding:10px 25px;padding-top:20px;word-break:break-word;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1;text-align:left;color:#000000">
-									Wil je liever direct contact? Bel me via <b><a href="' . esc_url($contact_details_cf['phone_link']['url']) . '" title="' . esc_attr($contact_details_cf['phone_link']['title']) . '">' . esc_html($contact_details_cf['phone']) . '</a></b>.
-								</td>
-							</tr>';
-	}
-
-	$reply_footer_html .= '
-							<tr>
-							<td align="left" style="padding:10px 25px;padding-top:10px;word-break:break-word;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;line-height:1;text-align:left;color:#000000">
-							Met vriendelijke groet,<br/>';
-
-	if (!empty($company_name)) {
-		$reply_footer_html .= esc_html($company_name);
-	}
-
-
-	$reply_footer_html .= '</td>
-							</tr>';
-
-	if (!empty($logo)) {
-
-		$logo_path = get_attached_file($logo);
-
-		if (file_exists($logo_path)) {
-			$logo_mime = mime_content_type($logo_path);
-			$logo_base64 = '';
-
-			if ($logo_mime === 'image/svg+xml') {
-				$logo_data = file_get_contents($logo_path);
-				$logo_base64 = 'data:' . $logo_mime . ';base64,' . base64_encode($logo_data);
-			} else {
-				$logo_base64 = wp_get_attachment_url($logo);
-			}
+		foreach ($rows as $index => $row) {
+			$padding_top = $index === 0 ? '20px' : '14px';
+			$form_fields .= '<tr><td style="padding:' . $padding_top . ' 24px 0;' . $font . ';font-size:13px;line-height:1.4;font-weight:600;color:' . $grey . ';">' . esc_html($row[0]) . '</td></tr>';
+			$form_fields .= '<tr><td style="padding:2px 24px 0;' . $font . ';font-size:16px;line-height:1.6;color:' . $navy . ';word-break:break-word;">' . $row[1] . '</td></tr>';
 		}
 
-		$reply_footer_html .= '
-							<tr>
-							<td align="center" style="font-size:0px;padding:10px 25px;padding-top:10px;word-break:break-word;">
-								<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
-								<tbody>
-									<tr>
-									<td style="width:100px;">
-										<img alt="Logo" height="auto" src="' . $logo_base64 . '" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="100" />
-									</td>
-									</tr>';
+		$form_fields .= '<tr><td style="height:20px;line-height:20px;font-size:0;">&nbsp;</td></tr></table>';
 	}
-	$reply_footer_html .= '
-								</tbody>
-								</table>
-							</td>
-							</tr>
-						</tbody>
-						</table>
-					<!--[if mso | IE]></td></tr></table><![endif]-->
-					</td>
-				</tr>
-				</tbody>
-			</table>
-			<!--[if mso | IE]></td></tr></table><![endif]-->
-		</body>
 
+	$site_name = get_bloginfo('name');
+	$home_url = home_url('/');
+	$site_host = wp_parse_url($home_url, PHP_URL_HOST);
+	$person_schema = get_option('wesselvandenijssel_person_schema', []);
+	$job_title = is_array($person_schema) ? ($person_schema['jobTitle'] ?? '') : '';
+	$contact_details = get_field('contact_details', 'options') ?: [];
+	$social_media = get_field('social_media', 'options') ?: [];
+
+	$contact_links = [];
+
+	if (!empty($contact_details['email'])) {
+		$contact_links[] = '<a href="mailto:' . esc_attr($contact_details['email']) . '" style="color:' . $link . ';text-decoration:underline;white-space:nowrap;">' . esc_html($contact_details['email']) . '</a>';
+	}
+
+	if (!empty($contact_details['phone']) && !empty($contact_details['phone_link']['url'])) {
+		$contact_links[] = '<a href="' . esc_url($contact_details['phone_link']['url']) . '" style="color:' . $link . ';text-decoration:underline;white-space:nowrap;">' . esc_html($contact_details['phone']) . '</a>';
+	}
+
+	if (!empty($social_media['linkedin']['url'])) {
+		$contact_links[] = '<a href="' . esc_url($social_media['linkedin']['url']) . '" style="color:' . $link . ';text-decoration:underline;white-space:nowrap;">LinkedIn</a>';
+	}
+
+	$contact_links[] = '<a href="' . esc_url($home_url) . '" style="color:' . $link . ';text-decoration:underline;white-space:nowrap;">' . esc_html($site_host) . '</a>';
+
+	$reply_heading_html = '<!doctype html>
+<html lang="nl" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="color-scheme" content="light">
+	<meta name="supported-color-schemes" content="light">
+	<title>' . esc_html__('Bevestiging van je bericht', 'wesselvandenijssel') . '</title>
+	<!--[if mso]><noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript><![endif]-->
+	<style type="text/css">
+		body { margin: 0; padding: 0; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+		table, td { border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+		a { color: ' . $link . '; }
+		@media only screen and (max-width: 480px) {
+			.mail-pad { padding-left: 20px !important; padding-right: 20px !important; }
+			.mail-outer { padding: 16px 8px !important; }
+		}
+	</style>
+</head>
+<body style="margin:0;padding:0;background-color:#f8fafc;">
+	<table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="background-color:#f8fafc;">
+		<tr>
+			<td class="mail-outer" align="center" style="padding:32px 16px;">
+				<!--[if mso]><table role="presentation" width="600" border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+				<table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="max-width:600px;background-color:#ffffff;border-radius:16px;overflow:hidden;">
+					<tr>
+						<td class="mail-pad" style="background-color:' . $navy . ';padding:28px 32px;' . $font . ';">
+							<a href="' . esc_url($home_url) . '" style="' . $font . ';font-size:20px;line-height:1.3;font-weight:600;color:#ffffff;text-decoration:none;">' . esc_html($site_name) . '</a>'
+		. ($job_title ? '<div style="' . $font . ';font-size:14px;line-height:1.5;color:#e5f6fc;padding-top:4px;">' . esc_html($job_title) . '</div>' : '') . '
+						</td>
+					</tr>
+					<tr>
+						<td style="height:4px;line-height:4px;font-size:0;background-color:#00a3e0;">&nbsp;</td>
+					</tr>
+					<tr>
+						<td class="mail-pad" style="padding:32px 32px 8px;' . $font . ';font-size:16px;line-height:1.6;color:' . $navy . ';">
+';
+
+	$reply_footer_html = '
+						</td>
+					</tr>
+					<tr>
+						<td class="mail-pad" style="padding:0 32px 28px;' . $font . ';font-size:16px;line-height:1.6;color:' . $navy . ';">
+							' . esc_html__('Met vriendelijke groet,', 'wesselvandenijssel') . '<br>
+							<strong style="font-weight:600;">' . esc_html($site_name) . '</strong>
+						</td>
+					</tr>
+					<tr>
+						<td class="mail-pad" style="padding:20px 32px 24px;border-top:1px solid #e2e8f0;' . $font . ';font-size:14px;line-height:1.8;color:' . $grey . ';">
+							' . implode(' &nbsp;&middot;&nbsp; ', $contact_links) . '
+						</td>
+					</tr>
+				</table>
+				<!--[if mso]></td></tr></table><![endif]-->
+				<p style="margin:16px 0 0;' . $font . ';font-size:13px;line-height:1.5;color:' . $grey . ';text-align:center;">
+					' . sprintf(esc_html__('Je krijgt deze mail omdat je het contactformulier op %s hebt ingevuld.', 'wesselvandenijssel'), '<span style="white-space:nowrap;">' . esc_html($site_host) . '</span>') . '
+				</p>
+			</td>
+		</tr>
+	</table>
+</body>
 </html>';
 
 	$text = str_replace('{reply_heading}', $reply_heading_html, $text);

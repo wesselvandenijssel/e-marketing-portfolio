@@ -1,42 +1,124 @@
 @use "abstracts" as *;
 @use "placeholders" as *;
 
-.footer {
-	&__main-wrapper {
-		background-color: $hue-dark-1;
-		color: $hue-white;
+@keyframes footer-float {
+	from {
+		transform: translate(0, 0) rotate(0deg);
+	}
 
-		a:focus-visible {
-			outline-color: $hue-white;
+	to {
+		transform: translate(-24px, 28px) rotate(8deg);
+	}
+}
+
+.footer {
+	position: relative;
+	overflow: hidden;
+	background-color: $hue-dark-1;
+	color: $hue-white;
+
+	a:focus-visible {
+		outline-color: $hue-white;
+	}
+
+	&__main-wrapper {
+		position: relative;
+	}
+
+	&__shape {
+		position: absolute;
+		top: -140px;
+		right: -140px;
+		width: 340px;
+		aspect-ratio: 1;
+		border-radius: 50%;
+		background-color: rgba($hue-accent-1, 12%);
+		pointer-events: none;
+
+		@include bp("narrow") {
+			top: -220px;
+			right: -160px;
+			width: 520px;
+		}
+
+		@media (prefers-reduced-motion: no-preference) {
+			animation: footer-float 14s ease-in-out infinite alternate;
+		}
+
+		&::after {
+			content: "";
+			position: absolute;
+			inset: 70px;
+			border: 2px solid rgba($hue-accent-1, 45%);
+			border-radius: 50%;
 		}
 	}
 
 	&__main {
+		position: relative;
 		margin: 0 auto;
 		display: grid;
-		padding: 40px 10px;
-		gap: 1.5em;
+		grid-template-columns: 1fr 1fr;
+		gap: 32px 20px;
+		padding: 56px 10px 40px;
 
 		@include bp("narrow") {
-			padding: 50px 0;
 			display: flex;
 			justify-content: space-between;
+			gap: 40px;
+			padding: 80px 0 56px;
 		}
 
 		@extend %header-footer-wrapper;
 
 		ul {
-			margin: 0 0 1.5em;
+			margin: 0;
 			list-style: none;
+		}
 
-			&:last-child {
-				margin-bottom: 0;
+		li:not(:last-child) {
+			margin-bottom: 0.55em;
+		}
+
+		.titles {
+			margin-bottom: 14px;
+		}
+
+		.main-title {
+			font-size: pxtorem(13);
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+			color: $hue-accent-1;
+		}
+	}
+
+	&__column {
+		&:first-child {
+			grid-column: 1 / -1;
+
+			@include bp("narrow") {
+				max-width: 340px;
+			}
+
+			.main-title {
+				font-size: pxtorem(22);
+				letter-spacing: 0;
+				text-transform: none;
+				color: $hue-white;
+			}
+		}
+
+		&:nth-child(3) {
+			@include bp("mobile") {
+				grid-column: 1 / -1;
+				order: 4;
 			}
 		}
 	}
 
 	&__text {
-		max-width: 320px;
+		max-width: 340px;
+		color: rgba($hue-white, 85%);
 
 		a {
 			color: inherit;
@@ -45,6 +127,43 @@
 	}
 
 	&__menu {
+		a {
+			position: relative;
+			color: $hue-white;
+			text-decoration: none;
+
+			@media (prefers-reduced-motion: no-preference) {
+				&::after {
+					transform: translateX(-6px);
+				}
+			}
+
+			&::after {
+				content: $fa-arrow-right;
+				position: absolute;
+				top: 50%;
+				left: calc(100% + 8px);
+				margin-top: -0.5em;
+				line-height: 1;
+				font-family: $fa;
+				font-weight: 400;
+				font-size: 0.8em;
+				opacity: 0;
+				transition: opacity 0.25s ease, transform 0.25s ease;
+			}
+
+			&:hover,
+			&:focus-visible {
+				text-decoration: underline;
+				text-underline-offset: 4px;
+
+				&::after {
+					opacity: 1;
+					transform: translateX(0);
+				}
+			}
+		}
+
 		.folded {
 			display: none;
 		}
@@ -73,6 +192,7 @@
 		display: inline-block;
 		position: relative;
 		padding-left: 30px;
+		color: $hue-white;
 
 		&::before {
 			font-family: $fa;
@@ -86,12 +206,46 @@
 			content: $fa-phone;
 		}
 
-		&--email::before {
-			content: $fa-email;
+		&--email {
+			font-weight: $font-weight-bold;
+			text-decoration: underline;
+			text-decoration-color: $hue-accent-1;
+			text-decoration-thickness: 2px;
+			text-underline-offset: 6px;
+			transition: text-underline-offset 0.25s ease;
+
+			&::before {
+				content: $fa-email;
+				color: $hue-accent-1;
+			}
+
+			&:hover,
+			&:focus-visible {
+				text-underline-offset: 3px;
+			}
 		}
 
 		&--address::before {
 			content: $fa-address;
+		}
+	}
+
+	&__wordmark {
+		position: relative;
+		margin: 8px auto -0.2em;
+		font-size: 11.2vw;
+		font-weight: $font-weight-bold;
+		line-height: 0.85;
+		letter-spacing: -0.04em;
+		text-align: center;
+		white-space: nowrap;
+		color: transparent;
+		-webkit-text-stroke: 1px rgba($hue-white, 22%);
+		pointer-events: none;
+		user-select: none;
+
+		@include bp("xl") {
+			font-size: pxtorem(150);
 		}
 	}
 }

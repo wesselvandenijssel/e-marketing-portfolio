@@ -34,6 +34,7 @@ const closeSubMenu = () => {
 
 	// Removes all the classes used for styling the submenu as active
 	toggleClass(".header__background", "header__background--active", false);
+	$all(".submenu-toggle").forEach((el) => el.setAttribute("aria-expanded", "false"));
 	toggleClass(".submenu-toggle--active", "submenu-toggle--active", false);
 	toggleClass(".sub-menu", "sub-menu--active", false);
 	toggleClass(".menu-item-has-children > span", "active", false);
@@ -118,6 +119,7 @@ $all(".submenu-toggle").forEach((toggle) =>
 
 			openSubMenu(submenu);
 			toggle.classList.add("submenu-toggle--active");
+			toggle.setAttribute("aria-expanded", "true");
 		}
 	})
 );

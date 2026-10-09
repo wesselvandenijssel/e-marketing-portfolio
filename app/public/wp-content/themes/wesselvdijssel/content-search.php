@@ -8,9 +8,9 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 
 <a href="<?= esc_url(get_permalink()); ?>" title="<?= esc_attr(get_the_title()); ?>" class="search-result">
 	<div class="search-result__content">
-		<h3 class="search-result__title">
+		<h2 class="search-result__title h3">
 			<?= esc_html(get_the_title()); ?>
-		</h3>
+		</h2>
 
 		<div class="buttons search-result__buttons">
 			<span class="btn btn--read-more">

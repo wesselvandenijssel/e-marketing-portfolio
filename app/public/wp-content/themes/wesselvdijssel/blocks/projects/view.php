@@ -167,6 +167,23 @@ echo !is_admin() ? '[raw]' : '';
 						<?php endforeach; ?>
 					</ul>
 				</nav>
+
+				<form class="projects__filter-mobile" method="get" action="<?= esc_url($page_url) . esc_attr($anchor); ?>">
+					<label class="screen-reader-text" for="<?= esc_attr($block_id . '-filter'); ?>"><?= esc_html__('Filter projecten op categorie', 'wesselvandenijssel'); ?></label>
+
+					<span class="projects__filter-select">
+						<select id="<?= esc_attr($block_id . '-filter'); ?>" name="categorie" data-auto-submit>
+							<option value=""<?= empty($active_term) ? ' selected' : ''; ?>><?= esc_html__('Alle projecten', 'wesselvandenijssel'); ?></option>
+							<?php foreach ($filter_terms as $filter_term) : ?>
+								<option value="<?= esc_attr($filter_term->slug); ?>"<?= !empty($active_term) && $active_term->term_id === $filter_term->term_id ? ' selected' : ''; ?>><?= esc_html($filter_term->name); ?></option>
+							<?php endforeach; ?>
+						</select>
+					</span>
+
+					<noscript>
+						<button type="submit" class="btn btn--primary"><?= esc_html__('Toon', 'wesselvandenijssel'); ?></button>
+					</noscript>
+				</form>
 			<?php endif; ?>
 
 			<?php if ($query->have_posts()) : ?>

@@ -47,15 +47,26 @@ echo !is_admin() ? '[raw]' : '';
 			</div>
 		<?php endif; ?>
 
-		<ol class="timeline__list" role="list">
+		<ol class="timeline__list">
 			<?php foreach ($items as $item) :
 				$period = $item['period'] ?? '';
 				$organisation = $item['organisation'] ?? '';
 				$location = $item['location'] ?? '';
 				$description = $item['description'] ?? '';
 				$link = $item['link'] ?? [];
+				$image = (int) ($item['image'] ?? 0);
 			?>
-				<li class="timeline__item">
+				<li class="timeline__item<?= $image ? ' timeline__item--has-image' : ''; ?>">
+					<?php if ($image) : ?>
+						<figure class="timeline__media">
+							<?= wp_get_attachment_image($image, 'full', false, [
+								'class' => 'timeline__image',
+								'loading' => 'lazy',
+								'sizes' => '(min-width: 980px) 60vw, 100vw',
+							]); ?>
+						</figure>
+					<?php endif; ?>
+
 					<div class="timeline__card">
 						<<?= $item_heading; ?> class="timeline__title h4"><?= esc_html($item['title']); ?></<?= $item_heading; ?>>
 

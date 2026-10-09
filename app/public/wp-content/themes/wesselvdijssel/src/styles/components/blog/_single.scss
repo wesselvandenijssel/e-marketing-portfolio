@@ -44,6 +44,39 @@
 		> figure {
 			max-width: $image-max-width;
 		}
+
+		> .wp-block-heading {
+			margin-top: 1.5em;
+			margin-bottom: 0.5em;
+		}
+
+		> p,
+		> .wp-block-list {
+			margin-bottom: 1.5em;
+		}
+
+		> .wp-block-list li {
+			position: relative;
+			padding-left: 20px;
+
+			@include bp("narrow") {
+				padding-left: 30px;
+			}
+
+			&:not(:last-child) {
+				margin-bottom: 0.75em;
+			}
+
+			&::before {
+				content: $fa-arrow-right;
+				font-family: $fa;
+				font-weight: 400;
+				position: absolute;
+				top: 0;
+				left: 0;
+				color: $hue-accent-1;
+			}
+		}
 	}
 
 	.centered-content {
@@ -176,11 +209,15 @@
 	}
 
 	&__author-info-image {
+		flex-shrink: 0;
 		border-radius: 100vw;
-		width: 58px;
-		height: 58px;
+		width: 60px;
 		object-fit: cover;
 		aspect-ratio: 1/1;
+
+		@include bp("narrow") {
+			width: 80px;
+		}
 	}
 
 	&__author-info-content {
@@ -221,6 +258,9 @@
 		transition: 0.4s ease color;
 		display: flex;
 		align-items: center;
+		justify-content: center;
+		min-width: 32px;
+		min-height: 32px;
 
 		&:hover {
 			color: $hue-accent-text;

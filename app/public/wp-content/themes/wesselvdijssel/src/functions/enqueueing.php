@@ -25,7 +25,6 @@ function wesselvandenijssel_scripts_and_styles() {
 		wp_enqueue_style('wesselvandenijssel-stylesheet');
 		wp_enqueue_style('wesselvandenijssel-font-awesome');
 		wp_enqueue_script('wesselvandenijssel-js');
-		wp_enqueue_script('wesselvandenijssel-fancybox');
 
 		wp_deregister_style('gform_basic');
 		wp_deregister_style('gform_theme_components');
@@ -90,4 +89,13 @@ function wesselvandenijssel_preload_fonts(): void {
 	foreach (['PublicSans-Regular', 'PublicSans-SemiBold'] as $font) {
 		printf('<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n", esc_url(get_stylesheet_directory_uri() . '/src/fonts/' . $font . '.woff2'));
 	}
+}
+
+/**
+ * Sends requests for /favicon.ico to the theme favicon instead of the WordPress logo.
+ */
+add_action('do_favicon', 'wesselvandenijssel_favicon_redirect', 1);
+function wesselvandenijssel_favicon_redirect(): void {
+	wp_safe_redirect(assets('favicon.ico'), 301);
+	exit;
 }

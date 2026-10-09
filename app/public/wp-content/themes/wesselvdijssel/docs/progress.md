@@ -86,16 +86,17 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 
 ## Open punten voor Wessel
 
-1. **`[INVULLEN]` op de site** (ook alle pagina's van Portfolio minor):
-   - Over mij: je merk IK, wat je leert in de minor, hobby's
-   - Ervaring: het startjaar van HBO-ICT, de school en einddatum van de minor, en de omschrijving van de minor
-   - Contact: de reactietermijn
-   - Privacy statement: de bewaartermijn en de hostingpartij
-   - Gebruik van AI: controleren en aanvullen
-   - Projecten: het resultaat van SCX Solar en van The Souks
-2. **Cv:** op Ervaring is nog geen downloadknop. `Professioneel CV A4.pdf` in je Downloads is een lege template.
-3. **Foto:** er is een betere portretfoto nodig. De huidige is 400 × 400 px, uit je oude site.
-4. **Server (D-027):** op emarketing.wesselvandenijssel.nl staat nu lumie. Ook ontbreken daar de database-migratie, de themaactivatie en `blog_public` = 1.
-5. **Watcher:** herstart je webpack-watcher, zodat hij het nieuwe `animations.ts` oppakt (D-037).
-6. **Commits (D-029):** er wordt niets gecommit tot je daarom vraagt. Stap 0 tot en met 4 staan nog als wijzigingen klaar.
-7. **Beoordelaar:** geef de docenten de URL `/portfolio-minor/`, de login `beoordelaar` en het wachtwoord. Op de productieserver maak je het account opnieuw aan, met een nieuw wachtwoord.
+1. **`[INVULLEN]` op de site:**
+   - Portfolio minor: 12 pagina's met samen zo'n 150 plekken. Dit is het bewijs voor de beoordeling.
+   - Over mij: concepttekst merk IK nalezen (D-047)
+2. **Tracking:** controleer in Clarity of er opnames binnenkomen nu GTM is gepubliceerd (D-068).
+3. **Server (D-027):** op emarketing.wesselvandenijssel.nl staat nu lumie. Nodig voor live:
+   - database-migratie (met search-replace van de domeinnaam), themaactivatie, `blog_public` = 1
+   - https, want de UTM-cookies hebben de vlag `Secure` (D-068)
+   - plugins los installeren: Complianz met Nederlands taalpakket, de reCAPTCHA-add-on van Gravity Forms met sleutels, AFL UTM Tracker
+   - daarna de sleutel `cmplz_blocked_scripts` uit de optie `cmplz_transients` halen (D-069)
+   - `WP_DEBUG` uit, en mail via SMTP zodat formuliermails aankomen
+4. **Na livegang testen:** contactformulier met mail en doorverwijzing naar `/bedankt`, cookiebanner (weigeren en accepteren), Portfolio minor als uitgelogde bezoeker.
+5. **Beoordelaar:** geef de docenten de URL `/portfolio-minor/`, de login `beoordelaar` en het wachtwoord. Op de productieserver maak je het account opnieuw aan, met een nieuw wachtwoord.
+6. **Cv:** klaar (D-053). Pas `~/Desktop/Portfolio/CV/cv.html` aan en vraag om een nieuwe pdf als er iets verandert.
+7. **Foto:** opgelost (D-041). Voor een hero met video: stuur de Wistia-embedcode.
