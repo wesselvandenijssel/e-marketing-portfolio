@@ -961,3 +961,10 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Getest:** met een simulatie in WP-CLI, omdat de add-on lokaal geen sleutels heeft. Zonder formulier geen reCAPTCHA, na het renderen van het contactformulier wel.
 - **Gevolg:** de score van reCAPTCHA is iets minder nauwkeurig, omdat hij alleen het gedrag op de contactpagina ziet. De honeypot blijft aan. Komt er meer spam binnen, draai dit dan terug.
 - **Testen na deploy:** de homepage laadt niets van `google.com/recaptcha`, de contactpagina wel, en een testinzending komt binnen.
+
+## D-081: Blogslider zonder role="group" op de links
+
+- **Datum:** 2026-10-09
+- **Aanleiding:** Lighthouse (Agentic Browsing) meldde "ARIA role should be appropriate for the element". De A11y-module van Swiper (D-074) gaf elke slide `role="group"` en `aria-label="1 / 3"`. In het blogblok is de slide zelf de link (`<a class="post">`), dus de linkrol verdween en een schermlezer las "1 / 3" in plaats van de titel.
+- **Oplossing:** in `blocks/blog/blog.ts` staan `a11y.slideRole` en `a11y.slideLabelMessage` op `null`. De focusafhandeling van de module blijft, zodat een kaart in beeld schuift als je ernaar tabt.
+- **Getest:** de slides zijn weer gewone links met de artikeltitel in hun naam. axe vindt geen problemen.
