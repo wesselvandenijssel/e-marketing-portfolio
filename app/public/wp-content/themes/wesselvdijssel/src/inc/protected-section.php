@@ -85,7 +85,7 @@ function wesselvandenijssel_portfolio_access(): void {
 			if ($root instanceof WP_Post && $root->post_status === 'private') {
 				// Use the requested pretty path: get_permalink() gives ?page_id=… for visitors who cannot read the page
 				nocache_headers();
-				wp_safe_redirect(wp_login_url(home_url('/' . $path . '/')));
+				header('Location: ' . esc_url_raw(wp_login_url(home_url('/' . $path . '/'))), true, 302);
 				exit;
 			}
 		}
