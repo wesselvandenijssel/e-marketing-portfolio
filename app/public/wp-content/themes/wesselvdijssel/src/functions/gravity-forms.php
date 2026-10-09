@@ -380,3 +380,27 @@ function replace_form_fields_merge_tag($text, $form, $entry, $url_encode, $esc_h
 
 	return str_replace($merge_tag, $form_fields, $text);
 }
+
+/**
+ * Tracks whether a Gravity Form was rendered on the current page, and loads the reCAPTCHA scripts only then.
+ */
+add_action('gform_enqueue_scripts', 'wesselvandenijssel_enqueue_recaptcha');
+function wesselvandenijssel_enqueue_recaptcha(): void {
+	$GLOBALS['wesselvandenijssel_has_form'] = true;
+
+	if (wp_script_is('gforms_recaptcha_recaptcha', 'registered')) {
+		wp_enqueue_script('gforms_recaptcha_recaptcha');
+		wp_enqueue_script('gforms_recaptcha_frontend');
+	}
+}
+
+/**
+ * Removes the reCAPTCHA scripts that the add-on enqueued for every page, unless a form already asked for them.
+ */
+add_action('wp_enqueue_scripts', 'wesselvandenijssel_dequeue_recaptcha', 20);
+function wesselvandenijssel_dequeue_recaptcha(): void {
+	if (!empty($GLOBALS['wesselvandenijssel_has_form'])) return;
+
+	wp_dequeue_script('gforms_recaptcha_recaptcha');
+	wp_dequeue_script('gforms_recaptcha_frontend');
+}

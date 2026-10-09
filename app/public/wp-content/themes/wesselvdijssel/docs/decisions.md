@@ -952,3 +952,12 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Favicon:** een navy vierkant met een witte W in Public Sans en een blauw streepje. Net als in de andere projecten staan de bestanden in `assets/` (`favicon.svg`, `favicon.ico` met 16, 32 en 48 px, `favicon-96x96.png`, `apple-touch-icon.png`, `web-app-manifest-192x192.png` en `-512x512.png`, `site.webmanifest`) en staan de links in `header.php`. De W in de SVG is een pad uit het fontbestand, dus de SVG heeft geen lettertype nodig. Het WordPress-site-icoon staat uit (`site_icon` = 0). `/favicon.ico` stuurt door naar het themabestand in plaats van naar het WordPress-logo (`src/functions/enqueueing.php`). Media 496 (het eerdere site-icoon) wordt niet meer gebruikt.
 - **HTML-validatie:** Complianz zet geblokkeerde scripts op `type="text/plain"`, maar liet `defer` staan. Een filter op `cmplz_cookie_blocker_output` haalt `defer`, `async` en `data-wp-strategy` van zulke scripts af. De homepage valideert nu zonder fouten.
 - **Bewust niet opgelost:** de validatiefouten in de adminbalk (`role=menu` met `role=group`). Die markup komt uit WordPress zelf en verschijnt alleen voor ingelogde gebruikers. Bezoekers zien hem nooit. Valideer daarom altijd uitgelogd.
+
+## D-080: reCAPTCHA alleen op pagina's met een formulier
+
+- **Datum:** 2026-10-09
+- **Aanleiding:** PageSpeed Insights liet zien dat de reCAPTCHA-add-on van Gravity Forms zijn scripts op elke pagina laadt. De add-on heeft daar geen instelling of filter voor: hij doet het bewust, omdat reCAPTCHA v3 een betere score geeft als het gedrag op meerdere pagina's ziet. Zo maakt elke bezoeker al contact met Google voordat hij een cookiekeuze maakt.
+- **Oplossing** (`src/functions/gravity-forms.php`): het thema haalt de scripts `gforms_recaptcha_recaptcha` en `gforms_recaptcha_frontend` weg op `wp_enqueue_scripts` (prioriteit 20). Zodra Gravity Forms een formulier rendert (`gform_enqueue_scripts`), zet het thema ze terug. Ze laden dan in de footer.
+- **Getest:** met een simulatie in WP-CLI, omdat de add-on lokaal geen sleutels heeft. Zonder formulier geen reCAPTCHA, na het renderen van het contactformulier wel.
+- **Gevolg:** de score van reCAPTCHA is iets minder nauwkeurig, omdat hij alleen het gedrag op de contactpagina ziet. De honeypot blijft aan. Komt er meer spam binnen, draai dit dan terug.
+- **Testen na deploy:** de homepage laadt niets van `google.com/recaptcha`, de contactpagina wel, en een testinzending komt binnen.
