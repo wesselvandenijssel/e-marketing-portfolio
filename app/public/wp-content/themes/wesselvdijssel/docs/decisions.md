@@ -899,6 +899,12 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   5. **Interne links:** de auteurlinks in blogberichten gaan naar Over mij (pagina 218) in plaats van naar het auteurarchief. Home heeft een blokje "Laatste artikelen" met een knop naar Blog. Het blogblok heeft daarvoor een knoppenveld gekregen, net als het projectenblok.
   6. **Structured data:** projectpagina's hebben een `CreativeWork` met Wessel als maker, gekoppeld aan de WebPage en de uitgelichte afbeelding (`src/functions/schema.php`).
 - **Ook:**
-  - De slider van het blogblok heeft een sleepbare scrollbalk in plaats van pijlen, naar het voorbeeld van een eerder project. De A11y-module van Swiper schuift een kaart in beeld als je er met de toetsenbord naartoe tabt. Past alles in beeld, dan verdwijnt de balk.
+  - De slider van het blogblok heeft een sleepbare scrollbalk in plaats van pijlen, naar het voorbeeld van een eerder project. De A11y-module van Swiper schuift een kaart in beeld als je er met de toetsenbord naartoe tabt. Past alles in beeld, dan verdwijnt de balk. Met de touchpad schuif je de slider horizontaal (Swiper Mousewheel met `forceToAxis` en `freeMode`). Verticaal scrollen blijft de pagina scrollen.
   - In de gedeelde Swiper-stijl verbergt het thema nu het eigen pijl-icoon van Swiper (dat gaf een dubbele pijl) en de pijlen als er niets te schuiven valt.
   - 404: drie knoptypes (primair, secundair, tekstlink).
+
+## D-075: Secundaire knop op navy
+
+- **Datum:** 2026-10-09
+- **Beslissing (op verzoek van Wessel):** in de donkere CTA-banner zag de secundaire knop ("Download mijn cv") eruit als een tweede primaire knop: wit met navy tekst. Een secundaire knop op navy is nu transparant met een witte rand en witte tekst. Bij hover en focus wordt hij wit met navy tekst, het omgekeerde van de primaire knop op navy.
+- **Uitvoering:** nieuwe placeholder `%btn--secondary-on-dark` in `src/styles/_placeholders.scss`, naast `%btn--on-dark`. De CTA-banner en de intro van Centered content gebruiken hem allebei. Contrast: wit op navy 15,45:1.

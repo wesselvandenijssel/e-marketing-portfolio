@@ -1,5 +1,5 @@
 import Swiper from "swiper";
-import { A11y, Scrollbar } from "swiper/modules";
+import { A11y, FreeMode, Mousewheel, Scrollbar } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
 
@@ -19,9 +19,13 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 new Swiper(".blog__grid.swiper", {
-	modules: [A11y, Scrollbar],
+	modules: [A11y, FreeMode, Mousewheel, Scrollbar],
 	slidesPerView: "auto",
 	spaceBetween: 10,
+	freeMode: true,
+	mousewheel: {
+		forceToAxis: true,
+	},
 	scrollbar: {
 		el: ".blog__swiper-scrollbar",
 		draggable: true,

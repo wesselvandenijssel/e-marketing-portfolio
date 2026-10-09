@@ -71,15 +71,7 @@
 			}
 
 			&--secondary {
-				background-color: transparent;
-				border-color: $hue-white;
-				color: $hue-white;
-
-				&:hover,
-				&:focus {
-					background-color: $hue-white;
-					color: $hue-dark-1;
-				}
+				@extend %btn--secondary-on-dark;
 			}
 		}
 	}

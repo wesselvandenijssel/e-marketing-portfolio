@@ -89,6 +89,19 @@
 	}
 }
 
+%btn--secondary-on-dark {
+	background-color: transparent;
+	border-color: $hue-white;
+	color: $hue-white;
+
+	&:hover,
+	&:focus {
+		background-color: $hue-white;
+		border-color: $hue-white;
+		color: $hue-dark-1;
+	}
+}
+
 %header-footer-wrapper {
 	@include bp("narrow") {
 		width: 700px;

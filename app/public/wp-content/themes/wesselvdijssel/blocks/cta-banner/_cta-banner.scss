@@ -50,6 +50,10 @@
 				&--primary {
 					@extend %btn--on-dark;
 				}
+
+				&--secondary {
+					@extend %btn--secondary-on-dark;
+				}
 			}
 		}
 	}
@@ -85,6 +89,7 @@
 		@include bp("normal") {
 			flex-shrink: 0;
 			padding-block: 60px;
+			flex-direction: column;
 		}
 	}
 }
