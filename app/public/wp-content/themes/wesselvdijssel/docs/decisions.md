@@ -875,3 +875,14 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - Complianz zet bij het openen de focus op het sluitkruisje. Dat blijft zo (toegankelijkheid), maar met de focusrand van de huisstijl.
 - **Getest:** axe vindt geen problemen in de banner en de voorkeuren. Geen JS-fouten op mobiel en desktop.
 - **Gevolg:** de kleuren staan in de database van Complianz, niet in `_variables.scss`. Verandert de huisstijl, pas dan ook de bannerinstellingen aan (Complianz > Cookiebanner).
+
+## D-072: Preconnect alleen naar Google Tag Manager
+
+- **Datum:** 2026-10-09
+- **Beslissing (op verzoek van Wessel):** in Utilities > Preconnect hints staat alleen `https://www.googletagmanager.com`. Dat domein laadt op elke pagina.
+- **Bewust niet:** Google Analytics en Clarity laden pas na toestemming. Een preconnect zou die partijen al vóór toestemming je IP-adres geven. Wistia laadt alleen op Over mij en pas bij de galerij, dus een preconnect op elke pagina is zonde. Lettertypen en Font Awesome staan op de eigen server.
+
+## D-073: Deelafbeelding voor de homepage
+
+- **Datum:** 2026-10-09
+- **Beslissing (op verzoek van Wessel):** de homepage deelde de uitgelichte afbeelding, een staande portretfoto van 1600×2400. Sociale netwerken snijden die bij naar 1,91:1. De homepage gebruikt nu de deelafbeelding van 1200×630 (media 432, ook de standaard in Yoast) voor Open Graph en X.
