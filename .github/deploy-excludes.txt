@@ -37,5 +37,8 @@ node_modules/
 playwright/
 .playwright-mcp/
 
+# Playwright tests (agent-readiness), only run locally or from CI
+/src/scripts/files/screenshots/tests/
+
 # macOS cruft
 .DS_Store
