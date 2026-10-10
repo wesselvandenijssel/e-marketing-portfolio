@@ -80,6 +80,8 @@ $get_link_attr = static function (array $item, string $group): array {
 	return $link_attr;
 };
 
+$has_loops = !empty(array_filter($visible_items, static fn(array $item): bool => wistia_media_id((string) ($item['loop_video'] ?? '')) !== ''));
+
 echo !is_admin() ? '[raw]' : '';
 ?>
 
@@ -92,6 +94,10 @@ echo !is_admin() ? '[raw]' : '';
 				'block' => $block,
 			]);
 		} ?>
+
+		<?php if ($has_loops) : ?>
+			<button type="button" class="gallery__motion-toggle" hidden><?= esc_html__("Video's pauzeren", 'wesselvandenijssel'); ?></button>
+		<?php endif; ?>
 
 		<ul <?php attr($grid_attr); ?>>
 			<?php foreach ($visible_items as $index => $item) :

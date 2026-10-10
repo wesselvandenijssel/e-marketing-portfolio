@@ -1039,3 +1039,13 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - Markdown-antwoorden zetten `DONOTCACHEPAGE`, zodat WP Rocket ze nooit opslaat als pagina. Dat deed hij ook nu niet, omdat hij alleen HTML opslaat, maar zo is het zeker.
 - **Na de deploy op de server:** de `.htaccess` van WP Rocket opnieuw laten schrijven (`flush_rocket_htaccess()`) en de cache legen. Daarna de agent-test tegen de live site draaien.
 - **Restrisico:** WP Rocket heeft ook een PHP-cache (`advanced-cache.php`) zonder filter voor de Accept-header. Die wordt alleen gebruikt als de `.htaccess`-regels niet gelden.
+
+## D-088: Pauzeknop voor de loopvideo's (WCAG 2.2.2)
+
+- **Datum:** 2026-10-10
+- **Beslissing (op verzoek van Wessel):** de loopvideo's in de galerij krijgen een manier om te pauzeren. Dat lost de afwijking van WCAG 2.2.2 (Pause, Stop, Hide) uit D-065 op. Eerder wilde Wessel geen pauzeknop op de video's zelf. Daarom is het **één knop per galerij**, boven de tegels: "Video's pauzeren" / "Video's afspelen", met een pauze- of afspeelicoon.
+- **Werking** (`blocks/gallery/`):
+  - De knop staat alleen in de HTML als de galerij een loopvideo heeft, en verschijnt pas als de video's echt automatisch afspelen. Met "verminderde beweging" spelen ze niet af en blijft de knop verborgen.
+  - Pauzeren stopt alle loopvideo's. Afspelen start de video's die in beeld zijn. De keuze wordt onthouden in localStorage (`wesselvandenijssel-loops-paused`), zodat ze op een volgende pagina gepauzeerd blijven.
+  - De knop staat vóór de tegels, zodat je hem met het toetsenbord bereikt voordat je bij de bewegende video's komt. Klikvlak 44 px, focusrand in de huisstijl.
+- **Vervangt** de afwijking van WCAG 2.2.2 in D-065.
