@@ -69,6 +69,8 @@ add_action('template_redirect', 'wesselvandenijssel_markdown_negotiation', 99);
 function wesselvandenijssel_markdown_negotiation(): void {
 	if (!wesselvandenijssel_wants_markdown() || is_feed() || is_robots() || is_trackback()) return;
 
+	if (!defined('DONOTCACHEPAGE')) define('DONOTCACHEPAGE', true);
+
 	header('Content-Type: text/markdown; charset=utf-8');
 
 	if (is_404()) {
@@ -342,3 +344,19 @@ function wesselvandenijssel_llms_txt(): string {
 
 	return implode("\n", array_filter($sections, fn($line) => $line !== null)) . "\n";
 }
+
+/**
+ * Stops WP Rocket's .htaccess rules from serving a cached HTML file to clients that ask for Markdown,
+ * so those requests reach WordPress and get the Markdown version.
+ *
+ * @param string $rules The mod_rewrite rules WP Rocket writes to .htaccess
+ * @return string
+ */
+function wesselvandenijssel_rocket_skip_markdown(string $rules): string {
+	return str_replace(
+		'RewriteCond %{REQUEST_METHOD} GET' . PHP_EOL,
+		'RewriteCond %{REQUEST_METHOD} GET' . PHP_EOL . 'RewriteCond %{HTTP_ACCEPT} !text/markdown [NC]' . PHP_EOL,
+		$rules
+	);
+}
+add_filter('rocket_htaccess_mod_rewrite', 'wesselvandenijssel_rocket_skip_markdown');

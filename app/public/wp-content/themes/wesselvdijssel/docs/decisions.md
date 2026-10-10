@@ -1029,3 +1029,13 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Footer rustiger** (op verzoek van Wessel): het grote omlijnde woordmerk en de zwevende cirkels zijn weg, markup en SCSS. De naam stond op de homepage vijf keer (HIG `branding.md`: herhaal het logo niet) en de cirkels waren decoratie zonder betekenis. Het GitHub-patroon blijft het kenmerk van de pagina-intro's en komt niet in de footer: "one signature element, everything around it quiet". Vervangt het woordmerk en de cirkels uit D-056.
 - **Niet doorgevoerd, keuze voor Wessel:**
   - Donkere modus. De HIG verwacht licht en donker. Voor de site bestaat alleen een lichte huisstijl.
+
+## D-087: WP Rocket mag geen HTML serveren aan wie om Markdown vraagt
+
+- **Datum:** 2026-10-10
+- **Aanleiding:** de agent-test tegen de live site faalde op de homepage. WP Rocket is weer actief op de server en zijn `.htaccess`-regels serveren een opgeslagen HTML-bestand direct vanaf schijf, nog voordat WordPress draait. Clients die gzip accepteren (vrijwel alle agents) kregen daardoor HTML terwijl ze om Markdown vroegen.
+- **Oplossing** (`src/functions/agent-readiness.php`):
+  - via het filter `rocket_htaccess_mod_rewrite` komt `RewriteCond %{HTTP_ACCEPT} !text/markdown [NC]` in het cacheblok van WP Rocket
+  - Markdown-antwoorden zetten `DONOTCACHEPAGE`, zodat WP Rocket ze nooit opslaat als pagina. Dat deed hij ook nu niet, omdat hij alleen HTML opslaat, maar zo is het zeker.
+- **Na de deploy op de server:** de `.htaccess` van WP Rocket opnieuw laten schrijven (`flush_rocket_htaccess()`) en de cache legen. Daarna de agent-test tegen de live site draaien.
+- **Restrisico:** WP Rocket heeft ook een PHP-cache (`advanced-cache.php`) zonder filter voor de Accept-header. Die wordt alleen gebruikt als de `.htaccess`-regels niet gelden.
