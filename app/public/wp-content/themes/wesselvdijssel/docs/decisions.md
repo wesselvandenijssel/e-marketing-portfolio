@@ -977,3 +977,17 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **WebP:** `src/functions/post-thumbnails.php` zet via `image_editor_output_format` alle gegenereerde formaten van jpg-uploads om naar WebP. Het origineel blijft jpg. Dit werkt met GD; de bestaande omzetting bij uploaden in `focalpoint.php` werkt alleen met Imagick en deed lokaal dus niets.
 - **Lokaal uitgevoerd:** de 68 jpg-afbeeldingen opnieuw gegenereerd met `--skip-delete`, zodat de oude jpg-formaten blijven bestaan voor eventuele oude links. Voorbeeld: de Rentwereld-kaart ging van 70 naar 57 KiB. Alle 142 afbeeldingen op de openbare pagina's laden nu als WebP, geen enkele kapot.
 - **Op de server nog doen:** na de deploy de miniaturen daar ook opnieuw genereren. De server heeft eigen uploads en een eigen database. Via SSH: `wp media regenerate --skip-delete --yes`. Of met de plugin Regenerate Thumbnails, met "Delete thumbnail files for old unregistered sizes" uit.
+
+## D-083: Vindbaar op "front-end developer Utrecht"
+
+- **Datum:** 2026-10-10
+- **Beslissing (van Wessel):** Wessel komt uit Utrecht en wil gevonden worden op "front-end developer Utrecht".
+- **Uitgevoerd op de server en lokaal** (met een backup op beide):
+  - Home: focuszin "front-end developer Utrecht", SEO-titel "Front-end developer Utrecht | Wessel van den IJssel", metabeschrijving met Utrecht, ondertitel in de hero "Front-end developer uit Utrecht, voor WordPress en Shopify".
+  - Over mij: "front-end developer uit Utrecht" in de intro en de metabeschrijving.
+  - Contact: "Ik woon in Utrecht."
+  - Tagline: "Front-end developer uit Utrecht".
+  - De Person-schema had al `addressLocality: Utrecht`, `addressCountry: NL`.
+- **Werkwijze:** de live database is nu de bron voor content. Contentwijzigingen gaan via SSH en WP-CLI op de server, met dezelfde wijziging lokaal zodat beide gelijk blijven. De server bereik je met de sleutel `~/.ssh/e-marketing_deploy` op poort 7685. De site staat in `domains/wesselvandenijssel.nl/public_html/emarketing`.
+- **Ook opgelost:** `src/functions/user-roles.php` las `$current_user->roles[0]`. Zonder ingelogde gebruiker (WP-CLI) gaf dat een PHP-waarschuwing. Nu `in_array()`.
+- **Let op:** hetzelfde bestand maakt `subadmin` de standaardrol voor nieuwe gebruikers, met alle rechten van een beheerder. Registratie staat uit (`users_can_register` = 0), dus nu geen risico. Zet registratie nooit aan zonder dit eerst aan te passen.
