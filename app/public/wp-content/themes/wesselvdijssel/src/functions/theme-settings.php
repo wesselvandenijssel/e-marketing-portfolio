@@ -602,4 +602,73 @@ add_action('acf/init', function () {
 			],
 		],
 	]);
+
+	acf_add_options_page([
+		'page_title' => esc_html__('Projecten', 'wesselvandenijssel'),
+		'menu_title' => esc_html__('Projecten', 'wesselvandenijssel'),
+		'menu_slug' => 'projects',
+		'post_id' => 'projects',
+		'parent_slug' => 'theme-settings',
+	]);
+
+	acf_add_local_field_group([
+		'key' => 'theme_settings_projects',
+		'title' => esc_html__('Contactbanner onder projecten', 'wesselvandenijssel'),
+		'fields' => [
+			[
+				'key' => 'theme_settings_projects_project_cta',
+				'label' => esc_html__('Contactbanner tonen', 'wesselvandenijssel'),
+				'name' => 'project_cta',
+				'type' => 'true_false',
+				'ui' => true,
+			],
+			[
+				'key' => 'theme_settings_projects_project_cta_title',
+				'label' => esc_html__('Titel', 'wesselvandenijssel'),
+				'name' => 'project_cta_title',
+				'type' => 'clone',
+				'clone' => [
+					'clone_titles_block_title',
+				],
+				'display' => 'seamless',
+				'conditional_logic' => [
+					[
+						[
+							'field' => 'theme_settings_projects_project_cta',
+							'operator' => '==',
+							'value' => '1',
+						],
+					],
+				],
+			],
+			[
+				'key' => 'theme_settings_projects_project_cta_buttons',
+				'label' => esc_html__('Button(s)', 'wesselvandenijssel'),
+				'name' => 'project_cta_buttons',
+				'type' => 'clone',
+				'clone' => [
+					'clone_buttons_buttons_group',
+				],
+				'display' => 'seamless',
+				'conditional_logic' => [
+					[
+						[
+							'field' => 'theme_settings_projects_project_cta',
+							'operator' => '==',
+							'value' => '1',
+						],
+					],
+				],
+			],
+		],
+		'location' => [
+			[
+				[
+					'param' => 'options_page',
+					'operator' => '==',
+					'value' => 'projects',
+				],
+			],
+		],
+	]);
 });

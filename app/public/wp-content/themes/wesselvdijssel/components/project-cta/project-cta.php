@@ -1,10 +1,10 @@
 <?php
 defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 
-if (empty(get_field('project_cta', 'utilities'))) return;
+if (empty(get_field('project_cta', 'projects'))) return;
 
-$block_title = get_field('block_title', 'utilities') ?: [];
-$buttons_group = get_field('buttons_group', 'utilities') ?: [];
+$block_title = get_field('block_title', 'projects') ?: [];
+$buttons_group = get_field('buttons_group', 'projects') ?: [];
 
 if (empty($block_title['main_title']) && empty($buttons_group)) return;
 

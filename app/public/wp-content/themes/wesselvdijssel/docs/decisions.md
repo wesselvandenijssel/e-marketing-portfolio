@@ -1049,3 +1049,15 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - Pauzeren stopt alle loopvideo's. Afspelen start de video's die in beeld zijn. De keuze wordt onthouden in localStorage (`wesselvandenijssel-loops-paused`), zodat ze op een volgende pagina gepauzeerd blijven.
   - De knop staat vóór de tegels, zodat je hem met het toetsenbord bereikt voordat je bij de bewegende video's komt. Klikvlak 44 px, focusrand in de huisstijl.
 - **Vervangt** de afwijking van WCAG 2.2.2 in D-065.
+
+## D-089: Meetplan, cv met UTM-link en CTA-experiment op projectpagina's
+
+- **Datum:** 2026-10-10
+- **Doel van de site:** de minor en een baan. Wessel koos deze meetdoelen:
+  - hoofddoel: `generate_lead` (contactformulier)
+  - nevendoelen: `cv_download` en `email_click`
+  - ondersteunend: betrokken sessies en `blog_scroll` op 75%
+- **Cv:** de portfoliolink in `~/Desktop/Portfolio/CV/cv.html` gaat naar `https://emarketing.wesselvandenijssel.nl/?utm_source=cv&utm_medium=pdf&utm_campaign=cv-2026`. De zichtbare tekst is "emarketing.wesselvandenijssel.nl", omdat wesselvandenijssel.nl tot januari nog de oude site toont. De pdf is lokaal en op de server vervangen (zelfde URL, media 417). De oude pdf staat als back-up in `~/tmp/` op de server. **In januari:** de zichtbare tekst terugzetten naar wesselvandenijssel.nl en de pdf opnieuw maken.
+- **UTM-afspraken en kant-en-klare links:** `docs/utm-links.md`.
+- **CTA-experiment:** `components/project-cta/` toont onder elke projectpagina een donkere banner ("Benieuwd hoe ik dit aanpakte? Stuur me een bericht.") met "Neem contact op" en "Download mijn cv". Schakelbaar via Thema-instellingen > Projecten > "Contactbanner tonen", standaard **uit**. Titel en knoppen vul je daar zelf in, met dezelfde velden als het blok CTA-banner. Ze zijn gevuld met "Benieuwd hoe ik dit aanpakte? Stuur me een bericht.", "Neem contact op" en "Download mijn cv". Hypothese: met een duidelijke vervolgstap aan het eind van een project gaan meer bezoekers van een project naar Contact of downloaden ze het cv.
+- **Werkwijze:** 3 tot 4 weken nulmeting met de banner uit. Daarna de banner aanzetten, de datum als annotatie in GA4 zetten, en weer 3 tot 4 weken meten. Vergelijk in de trechter Project > Contact > `generate_lead` en het aantal `cv_download`. Kliks op de banner meet je met de GTM-tag uit `docs/utm-links.md`.
