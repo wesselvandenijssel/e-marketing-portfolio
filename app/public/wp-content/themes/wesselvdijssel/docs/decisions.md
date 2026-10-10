@@ -991,3 +991,11 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Werkwijze:** de live database is nu de bron voor content. Contentwijzigingen gaan via SSH en WP-CLI op de server, met dezelfde wijziging lokaal zodat beide gelijk blijven. De server bereik je met de sleutel `~/.ssh/e-marketing_deploy` op poort 7685. De site staat in `domains/wesselvandenijssel.nl/public_html/emarketing`.
 - **Ook opgelost:** `src/functions/user-roles.php` las `$current_user->roles[0]`. Zonder ingelogde gebruiker (WP-CLI) gaf dat een PHP-waarschuwing. Nu `in_array()`.
 - **Let op:** hetzelfde bestand maakt `subadmin` de standaardrol voor nieuwe gebruikers, met alle rechten van een beheerder. Registratie staat uit (`users_can_register` = 0), dus nu geen risico. Zet registratie nooit aan zonder dit eerst aan te passen.
+
+## D-084: Footermenu's hersteld, adres "Utrecht, Nederland" in de footer
+
+- **Datum:** 2026-10-10
+- **Footermenu's:** op de server stond de menukeuze van footerkolom 2 en 4 per ongeluk op `none`. Teruggezet naar het Hoofdmenu (kolom 2) en het menu Footer (kolom 4). De menu's zelf waren niet weg.
+- **Adres:** Wessel wil zijn woonplaats in de footer. De footer toonde een adres alleen met een kaartlink. `components/footer-column/footer-column.php` toont het adres nu zonder link als platte tekst: straat, postcode en plaats, gevolgd door "Nederland". Met alleen de plaats wordt dat "Utrecht, Nederland". Met een kaartlink blijft de oude weergave.
+- **Data:** op de server stond "Nederland" in het straatveld. Dat veld is leeg gemaakt, want het thema voegt het land toe. Lokaal en op de server: plaats "Utrecht", kolom 3 toont e-mail en adres.
+- **Live na de volgende deploy:** tot dan toont de server nog geen adres, omdat de oude code een kaartlink verwacht.
