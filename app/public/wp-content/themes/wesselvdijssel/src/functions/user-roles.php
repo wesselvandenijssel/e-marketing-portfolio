@@ -20,7 +20,7 @@ add_action('editable_roles', 'hide_adminstrator_editable_roles');
 function hide_adminstrator_editable_roles($roles) {
 	if (!empty($roles['administrator'])) {
 		$current_user = wp_get_current_user();
-		if ($current_user->roles[0] != 'administrator')
+		if (!in_array('administrator', (array) $current_user->roles, true))
 			unset($roles['administrator']);
 	}
 	return $roles;

@@ -75,8 +75,23 @@ switch ($column_value['acf_fc_layout']):
 							break;
 
 						case 'address':
-							if (empty($contact_details_cf['address_data']['link']))
-								continue 2;
+							$address = $contact_details_cf['address_data'] ?? [];
+
+							if (empty($address['link'])) :
+								$address_parts = array_filter([
+									$address['street'] ?? '',
+									trim(($address['zip'] ?? '') . ' ' . ($address['city'] ?? '')),
+								]);
+
+								if (empty($address_parts))
+									continue 2;
+
+								$address_parts[] = __('Nederland', 'wesselvandenijssel');
+						?>
+								<span class="footer__cd-item footer__cd-item--address"><?= esc_html(implode(', ', $address_parts)); ?></span><br>
+						<?php
+								break;
+							endif;
 						?>
 							<a href="<?= esc_url($contact_details_cf['address_data']['link']['url'] ?? ''); ?>"
 								title="<?= esc_attr($contact_details_cf['address_data']['link']['title'] ?? ''); ?>"
