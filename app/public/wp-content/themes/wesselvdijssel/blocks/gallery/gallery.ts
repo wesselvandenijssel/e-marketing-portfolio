@@ -63,33 +63,102 @@ function createPlayer(wrapper: HTMLElement): WistiaPlayer {
 	return player;
 }
 
-if (loops.length && !reducedMotion) {
-	loops.forEach((wrapper) => {
-		let player: WistiaPlayer | null = null;
+const PAUSED_KEY = "wesselvandenijssel-loops-paused";
+const toggles = document.querySelectorAll<HTMLButtonElement>(".gallery__motion-toggle");
+const tiles: Array<{ wrapper: HTMLElement; player: WistiaPlayer | null; inView: boolean }> = [];
 
-		const observer = new IntersectionObserver(
+/**
+ * Reads whether the visitor paused the loop videos on an earlier page
+ *
+ * @returns True when the videos should stay paused
+ */
+function readPaused(): boolean {
+	try {
+		return localStorage.getItem(PAUSED_KEY) === "1";
+	} catch {
+		return false;
+	}
+}
+
+/**
+ * Remembers the paused state for the next page, when storage is available
+ *
+ * @param value - Whether the loop videos are paused
+ */
+function savePaused(value: boolean): void {
+	try {
+		localStorage.setItem(PAUSED_KEY, value ? "1" : "0");
+	} catch {
+		return;
+	}
+}
+
+let paused = readPaused();
+
+/**
+ * Starts the loop video of a tile, creating the player the first time
+ *
+ * @param tile - The gallery tile and its player
+ */
+function startTile(tile: { wrapper: HTMLElement; player: WistiaPlayer | null }): void {
+	if (tile.player) {
+		tile.player.play();
+		return;
+	}
+
+	loadPlayerScript()
+		.then(() => {
+			if (!tile.player) tile.player = createPlayer(tile.wrapper);
+		})
+		.catch(() => undefined);
+}
+
+/**
+ * Updates the toggle buttons to match the paused state
+ */
+function renderToggles(): void {
+	toggles.forEach((toggle) => {
+		toggle.textContent = paused ? "Video's afspelen" : "Video's pauzeren";
+		toggle.classList.toggle("gallery__motion-toggle--paused", paused);
+	});
+}
+
+/**
+ * Pauses or resumes every loop video and remembers the choice for the next page
+ */
+function togglePaused(): void {
+	paused = !paused;
+	savePaused(paused);
+
+	tiles.forEach((tile) => {
+		if (paused) tile.player?.pause();
+		else if (tile.inView) startTile(tile);
+	});
+
+	renderToggles();
+}
+
+if (loops.length && !reducedMotion) {
+	toggles.forEach((toggle) => {
+		toggle.hidden = false;
+		toggle.addEventListener("click", togglePaused);
+	});
+	renderToggles();
+
+	loops.forEach((wrapper) => {
+		const tile = { wrapper, player: null as WistiaPlayer | null, inView: false };
+		tiles.push(tile);
+
+		new IntersectionObserver(
 			(entries) =>
 				entries.forEach((entry) => {
-					if (!entry.isIntersecting) {
-						player?.pause();
-						return;
-					}
+					tile.inView = entry.isIntersecting;
 
-					if (player) {
-						player.play();
-						return;
-					}
-
-					loadPlayerScript()
-						.then(() => {
-							player = createPlayer(wrapper);
-						})
-						.catch(() => observer.disconnect());
+					if (!entry.isIntersecting) tile.player?.pause();
+					else if (!paused) startTile(tile);
 				}),
 			{ rootMargin: "200px 0px" },
-		);
-
-		observer.observe(wrapper);
+		).observe(wrapper);
 	});
 }
 

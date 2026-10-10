@@ -109,8 +109,8 @@
 				&.menu-item-has-children {
 					@include bp("narrow") {
 						display: flex;
-						align-items: baseline;
-						column-gap: 6px;
+						align-items: center;
+						column-gap: 0;
 					}
 
 					> span {
@@ -144,6 +144,9 @@
 				> span {
 					@include bp("narrow") {
 						font-weight: 400;
+						display: inline-block;
+						padding-block: 4px;
+						margin-block: -4px;
 					}
 				}
 

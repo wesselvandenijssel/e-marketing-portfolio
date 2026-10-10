@@ -1013,5 +1013,39 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **contactPoint:** `src/functions/schema.php` voegt een `ContactPoint` (e-mail, contactpagina, talen nl/en) toe aan de Person. Het adres (Utrecht, NL) stond er al.
 - **Beschermd deel:** de Markdown-omzetting draait op `template_redirect` met prioriteit 99, na de doorverwijzing van Portfolio minor (prioriteit 1). Een Markdown-aanvraag voor `/portfolio-minor/` krijgt dus ook een 302 naar de login.
 - **Tests:** `src/scripts/files/screenshots/tests/agent-readiness.spec.ts` (Playwright, alleen HTTP), 7 tests. Draaien met `npx playwright test src/scripts/files/screenshots/tests/agent-readiness.spec.ts --project=chromium`. Tegen de live site: `AGENT_BASE_URL=https://emarketing.wesselvandenijssel.nl`.
-- **Niet op te lossen in de site:** ClaudeBot en GPTBot krijgen een 403 "Request forbidden by administrative rules" van de firewall van de hosting (Imunify360/ModSecurity bij Vimexx), niet van WordPress of Defender. Alleen Vimexx kan dat aanpassen.
+- **Niet op te lossen in de site:** ClaudeBot en GPTBot krijgen een 403 "Request forbidden by administrative rules" van de firewall van de hosting (Imunify360/ModSecurity bij Vimexx), niet van WordPress of Defender. Alleen Vimexx kan dat aanpassen. Vimexx weigerde dat (2026-10-10): de blokkade blijft omdat deze bots de servers te veel belasten met scrapen. Gevolg: alleen de training-crawlers komen er niet door. Googlebot, Bing, ChatGPT-User, Claude-User en Google-Extended wel. Het kan alleen anders met een andere hosting.
 - **Les:** test nooit met een nep-Googlebot. Defender herkent dat als "Fake bot" en blokkeert het IP-adres van de hele site (gebeurd op 2026-10-10, opgeheven met `wp defender firewall unblock ip lockout --ips=…`).
+
+## D-086: Ontwerpreview volgens de Apple Design Skill (HIG)
+
+- **Datum:** 2026-10-10
+- **Beslissing (op verzoek van Wessel):** de lokale site is gereviewd met de skill `dickwu/apple-design-skill` (Apple Human Interface Guidelines), en de verbeteringen zijn doorgevoerd binnen de huisstijl. Voor een website gelden volgens de skill alleen de principes en de basis (toegankelijkheid, kleur, typografie, layout, tekst), niet Apples app-conventies.
+- **Gemeten** op 8 pagina's, mobiel (390 px) en desktop (1440 px): klikvlakken, lettergroottes, contrast (axe) en herschikking bij 320 px en 200% tekst.
+- **Doorgevoerd** (alleen thema-SCSS, geen content):
+  - Klikvlakken naar Apples maten (mobiel standaard 44 px, desktop minimaal 28 px): footermenu's, e-mail en adres in de footer, logo-link op mobiel, submenuknop (desktop was 16 × 30 px), navigatielinks op desktop, breadcrumb (was 16 px hoog), sociale iconen, paginering, auteurlinks en de knop "Lees verder"/"Terug naar". De zichtbare positie blijft gelijk waar dat kan (negatieve marge of extra opvulling).
+  - Ondertitel op mobiel van 14 naar 18 px. De belangrijkste regel van de hero ("Front-end developer uit Utrecht…") was te klein. De typografietabel in `CLAUDE.md` is bijgewerkt.
+  - Lange woorden breken af op mobiel (`hyphens: auto` op koppen en statistieken, `overflow-wrap`), zodat 200% tekst op 320 px minder uitsteekt.
+- **Knoplabels** (later, op verzoek van Wessel, via SSH op de server en lokaal): "Alle projecten" is "Bekijk alle projecten" en "Alle artikelen" is "Lees alle artikelen" op de homepage (HIG `writing.md`: knoppen met een werkwoord).
+- **Footer rustiger** (op verzoek van Wessel): het grote omlijnde woordmerk en de zwevende cirkels zijn weg, markup en SCSS. De naam stond op de homepage vijf keer (HIG `branding.md`: herhaal het logo niet) en de cirkels waren decoratie zonder betekenis. Het GitHub-patroon blijft het kenmerk van de pagina-intro's en komt niet in de footer: "one signature element, everything around it quiet". Vervangt het woordmerk en de cirkels uit D-056.
+- **Niet doorgevoerd, keuze voor Wessel:**
+  - Donkere modus. De HIG verwacht licht en donker. Voor de site bestaat alleen een lichte huisstijl.
+
+## D-087: WP Rocket mag geen HTML serveren aan wie om Markdown vraagt
+
+- **Datum:** 2026-10-10
+- **Aanleiding:** de agent-test tegen de live site faalde op de homepage. WP Rocket is weer actief op de server en zijn `.htaccess`-regels serveren een opgeslagen HTML-bestand direct vanaf schijf, nog voordat WordPress draait. Clients die gzip accepteren (vrijwel alle agents) kregen daardoor HTML terwijl ze om Markdown vroegen.
+- **Oplossing** (`src/functions/agent-readiness.php`):
+  - via het filter `rocket_htaccess_mod_rewrite` komt `RewriteCond %{HTTP_ACCEPT} !text/markdown [NC]` in het cacheblok van WP Rocket
+  - Markdown-antwoorden zetten `DONOTCACHEPAGE`, zodat WP Rocket ze nooit opslaat als pagina. Dat deed hij ook nu niet, omdat hij alleen HTML opslaat, maar zo is het zeker.
+- **Na de deploy op de server:** de `.htaccess` van WP Rocket opnieuw laten schrijven (`flush_rocket_htaccess()`) en de cache legen. Daarna de agent-test tegen de live site draaien.
+- **Restrisico:** WP Rocket heeft ook een PHP-cache (`advanced-cache.php`) zonder filter voor de Accept-header. Die wordt alleen gebruikt als de `.htaccess`-regels niet gelden.
+
+## D-088: Pauzeknop voor de loopvideo's (WCAG 2.2.2)
+
+- **Datum:** 2026-10-10
+- **Beslissing (op verzoek van Wessel):** de loopvideo's in de galerij krijgen een manier om te pauzeren. Dat lost de afwijking van WCAG 2.2.2 (Pause, Stop, Hide) uit D-065 op. Eerder wilde Wessel geen pauzeknop op de video's zelf. Daarom is het **één knop per galerij**, boven de tegels: "Video's pauzeren" / "Video's afspelen", met een pauze- of afspeelicoon.
+- **Werking** (`blocks/gallery/`):
+  - De knop staat alleen in de HTML als de galerij een loopvideo heeft, en verschijnt pas als de video's echt automatisch afspelen. Met "verminderde beweging" spelen ze niet af en blijft de knop verborgen.
+  - Pauzeren stopt alle loopvideo's. Afspelen start de video's die in beeld zijn. De keuze wordt onthouden in localStorage (`wesselvandenijssel-loops-paused`), zodat ze op een volgende pagina gepauzeerd blijven.
+  - De knop staat vóór de tegels, zodat je hem met het toetsenbord bereikt voordat je bij de bewegende video's komt. Klikvlak 44 px, focusrand in de huisstijl.
+- **Vervangt** de afwijking van WCAG 2.2.2 in D-065.

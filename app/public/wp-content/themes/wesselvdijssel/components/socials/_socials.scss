@@ -7,6 +7,10 @@
 	font-size: pxtorem(22);
 
 	&__item {
+		@include bp("mobile") {
+			padding: 2px;
+		}
+
 		&:hover,
 		&:focus {
 			text-decoration: none;

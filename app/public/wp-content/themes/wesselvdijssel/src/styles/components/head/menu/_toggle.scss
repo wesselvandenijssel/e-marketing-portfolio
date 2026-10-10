@@ -136,13 +136,17 @@
 		position: relative;
 		font-size: pxtorem(24);
 		font-weight: 600;
-		width: 35px;
+		width: 44px;
 		aspect-ratio: 1/1;
 		text-align: center;
 	}
 
 	@include bp("narrow") {
-		display: inline-block;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 28px;
+		min-height: 28px;
 	}
 
 	&::before,
