@@ -9,6 +9,18 @@ add_filter('wpseo_schema_person', 'wesselvandenijssel_schema_person', 11);
  * @param array $data The Person node
  */
 function wesselvandenijssel_schema_person(array $data): array {
+	$contact = get_field('contact_details', 'options') ?: [];
+
+	if (!empty($contact['email']) && get_post_status(12) === 'publish') {
+		$data['contactPoint'] = [
+			'@type' => 'ContactPoint',
+			'contactType' => 'contact',
+			'email' => $contact['email'],
+			'url' => get_permalink(12),
+			'availableLanguage' => ['nl', 'en'],
+		];
+	}
+
 	$extra = get_option('wesselvandenijssel_person_schema', []);
 
 	if (!is_array($extra) || empty($extra)) return $data;

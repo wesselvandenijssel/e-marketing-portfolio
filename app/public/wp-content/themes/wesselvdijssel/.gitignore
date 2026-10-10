@@ -12,4 +12,7 @@ vendor
 
 .playwright-mcp
 
+/playwright/test-results/
+/playwright/reports/
+
 .npmrc

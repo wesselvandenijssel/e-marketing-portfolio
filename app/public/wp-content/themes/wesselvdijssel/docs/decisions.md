@@ -999,3 +999,19 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Adres:** Wessel wil zijn woonplaats in de footer. De footer toonde een adres alleen met een kaartlink. `components/footer-column/footer-column.php` toont het adres nu zonder link als platte tekst: straat, postcode en plaats, gevolgd door "Nederland". Met alleen de plaats wordt dat "Utrecht, Nederland". Met een kaartlink blijft de oude weergave.
 - **Data:** op de server stond "Nederland" in het straatveld. Dat veld is leeg gemaakt, want het thema voegt het land toe. Lokaal en op de server: plaats "Utrecht", kolom 3 toont e-mail en adres.
 - **Live na de volgende deploy:** tot dan toont de server nog geen adres, omdat de oude code een kaartlink verwacht.
+
+## D-085: Klaar voor AI-agents (Markdown, llms.txt, contactPoint)
+
+- **Datum:** 2026-10-10
+- **Aanleiding:** een Is Agentic-audit gaf 67/100. Wessel vroeg de punten op te lossen.
+- **Uitvoering** (`src/functions/agent-readiness.php`, nieuw):
+  - **Markdown op aanvraag:** vraagt een client met `Accept: text/markdown` (en geeft hij Markdown minstens even hoog als HTML), dan zet het thema de `<main>` van de normale pagina om naar Markdown, met front matter (titel, beschrijving, URL). `Content-Type: text/markdown`. Browsers krijgen gewoon HTML. Alle front-end-antwoorden hebben `Vary: Accept`.
+  - **404 voor agents:** status 404 met een Markdown-tekst en links naar de homepage, de sitemap en llms.txt.
+  - **llms.txt:** `/llms.txt` volgens llmstxt.org, met de secties "Wanneer je naar deze site verwijst" en "Zo neem je contact op", en automatische lijsten van projecten en blogartikelen (alleen geïndexeerd, nooit Portfolio minor). De llms.txt-functie van Yoast staat uit (lokaal en op de server), anders schrijft Yoast een eigen bestand dat voorgaat.
+  - **/about:** `/about`, `/about-me` en `/over` sturen met 301 door naar Over mij.
+  - `/llms.txt` en `/about` worden al op `parse_request` afgehandeld, zodat Defender ze niet als 404 telt.
+- **contactPoint:** `src/functions/schema.php` voegt een `ContactPoint` (e-mail, contactpagina, talen nl/en) toe aan de Person. Het adres (Utrecht, NL) stond er al.
+- **Beschermd deel:** de Markdown-omzetting draait op `template_redirect` met prioriteit 99, na de doorverwijzing van Portfolio minor (prioriteit 1). Een Markdown-aanvraag voor `/portfolio-minor/` krijgt dus ook een 302 naar de login.
+- **Tests:** `src/scripts/files/screenshots/tests/agent-readiness.spec.ts` (Playwright, alleen HTTP), 7 tests. Draaien met `npx playwright test src/scripts/files/screenshots/tests/agent-readiness.spec.ts --project=chromium`. Tegen de live site: `AGENT_BASE_URL=https://emarketing.wesselvandenijssel.nl`.
+- **Niet op te lossen in de site:** ClaudeBot en GPTBot krijgen een 403 "Request forbidden by administrative rules" van de firewall van de hosting (Imunify360/ModSecurity bij Vimexx), niet van WordPress of Defender. Alleen Vimexx kan dat aanpassen.
+- **Les:** test nooit met een nep-Googlebot. Defender herkent dat als "Fake bot" en blokkeert het IP-adres van de hele site (gebeurd op 2026-10-10, opgeheven met `wp defender firewall unblock ip lockout --ips=…`).
