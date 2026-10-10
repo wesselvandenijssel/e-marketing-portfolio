@@ -1,16 +1,6 @@
 @use "abstracts" as *;
 @use "placeholders" as *;
 
-@keyframes footer-float {
-	from {
-		transform: translate(0, 0) rotate(0deg);
-	}
-
-	to {
-		transform: translate(-24px, 28px) rotate(8deg);
-	}
-}
-
 .footer {
 	position: relative;
 	overflow: hidden;
@@ -23,35 +13,6 @@
 
 	&__main-wrapper {
 		position: relative;
-	}
-
-	&__shape {
-		position: absolute;
-		top: -140px;
-		right: -140px;
-		width: 340px;
-		aspect-ratio: 1;
-		border-radius: 50%;
-		background-color: rgba($hue-accent-1, 12%);
-		pointer-events: none;
-
-		@include bp("narrow") {
-			top: -220px;
-			right: -160px;
-			width: 520px;
-		}
-
-		@media (prefers-reduced-motion: no-preference) {
-			animation: footer-float 14s ease-in-out infinite alternate;
-		}
-
-		&::after {
-			content: "";
-			position: absolute;
-			inset: 70px;
-			border: 2px solid rgba($hue-accent-1, 45%);
-			border-radius: 50%;
-		}
 	}
 
 	&__main {
@@ -249,25 +210,6 @@
 
 		&--address::before {
 			content: $fa-address;
-		}
-	}
-
-	&__wordmark {
-		position: relative;
-		margin: 8px auto -0.2em;
-		font-size: 11.2vw;
-		font-weight: $font-weight-bold;
-		line-height: 0.85;
-		letter-spacing: -0.04em;
-		text-align: center;
-		white-space: nowrap;
-		color: transparent;
-		-webkit-text-stroke: 1px rgba($hue-white, 22%);
-		pointer-events: none;
-		user-select: none;
-
-		@include bp("xl") {
-			font-size: pxtorem(150);
 		}
 	}
 }

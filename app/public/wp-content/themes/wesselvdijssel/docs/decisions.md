@@ -1025,7 +1025,7 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - Klikvlakken naar Apples maten (mobiel standaard 44 px, desktop minimaal 28 px): footermenu's, e-mail en adres in de footer, logo-link op mobiel, submenuknop (desktop was 16 × 30 px), navigatielinks op desktop, breadcrumb (was 16 px hoog), sociale iconen, paginering, auteurlinks en de knop "Lees verder"/"Terug naar". De zichtbare positie blijft gelijk waar dat kan (negatieve marge of extra opvulling).
   - Ondertitel op mobiel van 14 naar 18 px. De belangrijkste regel van de hero ("Front-end developer uit Utrecht…") was te klein. De typografietabel in `CLAUDE.md` is bijgewerkt.
   - Lange woorden breken af op mobiel (`hyphens: auto` op koppen en statistieken, `overflow-wrap`), zodat 200% tekst op 320 px minder uitsteekt.
+- **Knoplabels** (later, op verzoek van Wessel, via SSH op de server en lokaal): "Alle projecten" is "Bekijk alle projecten" en "Alle artikelen" is "Lees alle artikelen" op de homepage (HIG `writing.md`: knoppen met een werkwoord).
+- **Footer rustiger** (op verzoek van Wessel): het grote omlijnde woordmerk en de zwevende cirkels zijn weg, markup en SCSS. De naam stond op de homepage vijf keer (HIG `branding.md`: herhaal het logo niet) en de cirkels waren decoratie zonder betekenis. Het GitHub-patroon blijft het kenmerk van de pagina-intro's en komt niet in de footer: "one signature element, everything around it quiet". Vervangt het woordmerk en de cirkels uit D-056.
 - **Niet doorgevoerd, keuze voor Wessel:**
-  - Knoplabels zonder werkwoord ("Alle projecten", "Alle artikelen"). Dat is content in de live database.
-  - De naam staat op de homepage vijf keer (logo, hero, footer, groot woordmerk, copyright). HIG `branding.md` raadt herhaling van het logo af. Het grote woordmerk en de cirkels in de footer zijn een eerdere keuze (D-056).
   - Donkere modus. De HIG verwacht licht en donker. Voor de site bestaat alleen een lichte huisstijl.
