@@ -45,8 +45,14 @@
 		font-size: pxtorem(16);
 		color: $text-color;
 		border: none;
+		align-items: center;
+		min-height: 44px;
 
 		@extend %btn;
+
+		@include bp("narrow") {
+			min-height: 28px;
+		}
 
 		@include bp("mobile") {
 			column-gap: pxtoem(5);

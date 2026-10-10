@@ -146,6 +146,14 @@
 	}
 
 	&__logo {
+		.logo-link {
+			@include bp("mobile") {
+				display: flex;
+				align-items: center;
+				min-height: 44px;
+			}
+		}
+
 		.logo {
 			display: block;
 			height: auto;

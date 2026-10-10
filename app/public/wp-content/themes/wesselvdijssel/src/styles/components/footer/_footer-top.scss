@@ -127,10 +127,24 @@
 	}
 
 	&__menu {
+		li:not(:last-child) {
+			margin-bottom: 0;
+
+			@include bp("narrow") {
+				margin-bottom: 2px;
+			}
+		}
+
 		a {
 			position: relative;
+			display: inline-block;
+			padding-block: 12px;
 			color: $hue-white;
 			text-decoration: none;
+
+			@include bp("narrow") {
+				padding-block: 4px;
+			}
 
 			@media (prefers-reduced-motion: no-preference) {
 				&::after {
@@ -194,12 +208,20 @@
 		padding-left: 30px;
 		color: $hue-white;
 
+		@include bp("mobile") {
+			padding-block: 9px;
+		}
+
 		&::before {
 			font-family: $fa;
 			font-weight: 700;
 			position: absolute;
 			top: 0;
 			left: 0;
+
+			@include bp("mobile") {
+				top: 9px;
+			}
 		}
 
 		&--phone::before {

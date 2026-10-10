@@ -1015,3 +1015,17 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Tests:** `src/scripts/files/screenshots/tests/agent-readiness.spec.ts` (Playwright, alleen HTTP), 7 tests. Draaien met `npx playwright test src/scripts/files/screenshots/tests/agent-readiness.spec.ts --project=chromium`. Tegen de live site: `AGENT_BASE_URL=https://emarketing.wesselvandenijssel.nl`.
 - **Niet op te lossen in de site:** ClaudeBot en GPTBot krijgen een 403 "Request forbidden by administrative rules" van de firewall van de hosting (Imunify360/ModSecurity bij Vimexx), niet van WordPress of Defender. Alleen Vimexx kan dat aanpassen. Vimexx weigerde dat (2026-10-10): de blokkade blijft omdat deze bots de servers te veel belasten met scrapen. Gevolg: alleen de training-crawlers komen er niet door. Googlebot, Bing, ChatGPT-User, Claude-User en Google-Extended wel. Het kan alleen anders met een andere hosting.
 - **Les:** test nooit met een nep-Googlebot. Defender herkent dat als "Fake bot" en blokkeert het IP-adres van de hele site (gebeurd op 2026-10-10, opgeheven met `wp defender firewall unblock ip lockout --ips=…`).
+
+## D-086: Ontwerpreview volgens de Apple Design Skill (HIG)
+
+- **Datum:** 2026-10-10
+- **Beslissing (op verzoek van Wessel):** de lokale site is gereviewd met de skill `dickwu/apple-design-skill` (Apple Human Interface Guidelines), en de verbeteringen zijn doorgevoerd binnen de huisstijl. Voor een website gelden volgens de skill alleen de principes en de basis (toegankelijkheid, kleur, typografie, layout, tekst), niet Apples app-conventies.
+- **Gemeten** op 8 pagina's, mobiel (390 px) en desktop (1440 px): klikvlakken, lettergroottes, contrast (axe) en herschikking bij 320 px en 200% tekst.
+- **Doorgevoerd** (alleen thema-SCSS, geen content):
+  - Klikvlakken naar Apples maten (mobiel standaard 44 px, desktop minimaal 28 px): footermenu's, e-mail en adres in de footer, logo-link op mobiel, submenuknop (desktop was 16 × 30 px), navigatielinks op desktop, breadcrumb (was 16 px hoog), sociale iconen, paginering, auteurlinks en de knop "Lees verder"/"Terug naar". De zichtbare positie blijft gelijk waar dat kan (negatieve marge of extra opvulling).
+  - Ondertitel op mobiel van 14 naar 18 px. De belangrijkste regel van de hero ("Front-end developer uit Utrecht…") was te klein. De typografietabel in `CLAUDE.md` is bijgewerkt.
+  - Lange woorden breken af op mobiel (`hyphens: auto` op koppen en statistieken, `overflow-wrap`), zodat 200% tekst op 320 px minder uitsteekt.
+- **Niet doorgevoerd, keuze voor Wessel:**
+  - Knoplabels zonder werkwoord ("Alle projecten", "Alle artikelen"). Dat is content in de live database.
+  - De naam staat op de homepage vijf keer (logo, hero, footer, groot woordmerk, copyright). HIG `branding.md` raadt herhaling van het logo af. Het grote woordmerk en de cirkels in de footer zijn een eerdere keuze (D-056).
+  - Donkere modus. De HIG verwacht licht en donker. Voor de site bestaat alleen een lichte huisstijl.
