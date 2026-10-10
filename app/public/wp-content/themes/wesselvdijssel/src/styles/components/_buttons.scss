@@ -41,7 +41,7 @@
 
 	&--read-more {
 		background-color: transparent;
-		padding: 4px 0;
+		padding: 4px 1.4em 4px 0;
 		font-size: pxtorem(16);
 		color: $text-color;
 		border: none;
@@ -54,14 +54,15 @@
 			min-height: 28px;
 		}
 
-		@include bp("mobile") {
-			column-gap: pxtoem(5);
-		}
-
 		&::after {
 			content: $fa-arrow-up-right;
+			position: absolute;
+			top: 50%;
+			right: 0;
 			font-family: $fa;
 			font-weight: 700;
+			line-height: 1;
+			transform: translateY(-50%);
 		}
 
 		&:hover,

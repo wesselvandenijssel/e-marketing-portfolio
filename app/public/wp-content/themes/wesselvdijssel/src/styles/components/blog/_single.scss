@@ -119,10 +119,17 @@
 
 	&__return {
 		.btn {
+			padding: 4px 0 4px 1.4em;
+
 			&::before {
 				content: $fa-arrow-up-left;
+				position: absolute;
+				top: 50%;
+				left: 0;
 				font-family: $fa;
 				font-weight: 700;
+				line-height: 1;
+				transform: translateY(-50%);
 			}
 
 			&::after {
