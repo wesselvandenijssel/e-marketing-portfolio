@@ -75,6 +75,8 @@ get_header(); ?>
 				<?php the_content(); ?>
 			</div>
 
+			<?php if (!$is_locked) component('project-cta'); ?>
+
 			<section class="section centered-content pad--bottom-medium">
 				<div class="columns-12 center">
 					<div class="centered-content__wrapper">

@@ -293,11 +293,13 @@ function wesselvandenijssel_llms_txt(): string {
 
 	$contact = get_field('contact_details', 'options') ?: [];
 	$email = $contact['email'] ?? '';
+	$person = get_option('wesselvandenijssel_person_schema', []);
+	$employer = is_array($person) ? (string) ($person['worksFor']['name'] ?? '') : '';
 
 	$sections = [
 		'# Wessel van den IJssel',
 		'',
-		'> Front-end developer uit Utrecht, Nederland. Wessel bouwt WordPress- en Shopify-websites en -webshops bij MB effect, met aandacht voor snelheid, toegankelijkheid (WCAG 2.2 AA), technische SEO en tracking met GA4 en Google Tag Manager. Hij volgt de minor E-marketing aan de Hogeschool Utrecht.',
+		sprintf('> Front-end developer uit Utrecht, Nederland. Wessel bouwt WordPress- en Shopify-websites en -webshops%s, met aandacht voor snelheid, toegankelijkheid (WCAG 2.2 AA), technische SEO en tracking met GA4 en Google Tag Manager. Hij volgt de minor E-marketing aan de Hogeschool Utrecht.', $employer !== '' ? ' bij ' . $employer : ''),
 		'',
 		'Deze website is het portfolio van Wessel. Alle teksten zijn in het Nederlands. Elke pagina is ook als Markdown beschikbaar: vraag dezelfde URL op met de header `Accept: text/markdown`.',
 		'',
