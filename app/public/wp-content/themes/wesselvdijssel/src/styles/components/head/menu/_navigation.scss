@@ -144,6 +144,12 @@
 				> span {
 					@include bp("narrow") {
 						font-weight: 400;
+					}
+				}
+
+				&:not(.menu-button) > a,
+				> span {
+					@include bp("narrow") {
 						display: inline-block;
 						padding-block: 4px;
 						margin-block: -4px;
