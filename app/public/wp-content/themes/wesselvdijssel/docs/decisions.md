@@ -1061,3 +1061,11 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **UTM-afspraken en kant-en-klare links:** `docs/utm-links.md`.
 - **CTA-experiment:** `components/project-cta/` toont onder elke projectpagina een donkere banner ("Benieuwd hoe ik dit aanpakte? Stuur me een bericht.") met "Neem contact op" en "Download mijn cv". Schakelbaar via Thema-instellingen > Projecten > "Contactbanner tonen", standaard **uit**. Titel en knoppen vul je daar zelf in, met dezelfde velden als het blok CTA-banner. Ze zijn gevuld met "Benieuwd hoe ik dit aanpakte? Stuur me een bericht.", "Neem contact op" en "Download mijn cv". Hypothese: met een duidelijke vervolgstap aan het eind van een project gaan meer bezoekers van een project naar Contact of downloaden ze het cv.
 - **Werkwijze:** 3 tot 4 weken nulmeting met de banner uit. Daarna de banner aanzetten, de datum als annotatie in GA4 zetten, en weer 3 tot 4 weken meten. Vergelijk in de trechter Project > Contact > `generate_lead` en het aantal `cv_download`. Kliks op de banner meet je met de GTM-tag uit `docs/utm-links.md`.
+
+## D-090: Themabundel niet uitstellen in WP Rocket
+
+- **Datum:** 2026-10-26
+- **Aanleiding:** op de live site laadden de scroll-animaties pas bij de eerste aanraking of scroll. "Delay JavaScript execution" van WP Rocket hield `dist/main.js` tegen tot interactie. Dan pas zette het script de beginstand (onzichtbaar) op koppen, tekst en kaarten die al in beeld stonden, en faden ze opnieuw in. Op mobiel en desktop zag dat er schokkerig uit.
+- **Beslissing:** `wesselvdijssel/dist/main.js` staat in het filter `rocket_delay_js_exclusions` (`src/functions/enqueueing.php`). Het patroon past ook op de geminificeerde kopie in `wp-content/cache/min/`. Het script blijft `defer`.
+- **Gevolg:** de animaties starten weer bij het laden. Iets meer JavaScript bij de eerste paint, maar de bundel is klein en deferred.
+- **Na de deploy op de server:** de WP Rocket-cache legen, inclusief Remove Unused CSS.
