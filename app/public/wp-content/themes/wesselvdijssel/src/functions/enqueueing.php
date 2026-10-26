@@ -33,7 +33,9 @@ function wesselvandenijssel_scripts_and_styles() {
 }
 
 /**
- * Keep jQuery and Gravity Forms scripts out of WP Rocket's "Delay JavaScript Execution".
+ * Keep jQuery, Gravity Forms and the theme bundle out of WP Rocket's "Delay JavaScript Execution".
+ * The theme bundle sets the hidden start state of the scroll animations; delayed until the first
+ * touch or scroll, it hides content that is already on screen and fades it in again.
  *
  * @param string[] $excluded Patterns (regex, matched against the full script tag) excluded from delay.
  * @return string[]
@@ -48,6 +50,7 @@ add_filter('rocket_delay_js_exclusions', function (array $excluded): array {
 	$excluded[] = 'wp-hooks';
 	$excluded[] = 'wp-i18n';
 	$excluded[] = 'wp-dom-ready';
+	$excluded[] = 'wesselvdijssel/dist/main.js';
 
 	return $excluded;
 });
