@@ -1092,4 +1092,4 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - de bezoeker mag direct op de mail antwoorden (reply-to is al info@)
   - "Dit heb je ingevuld:" is "Dit stuurde je me:"
 - **Nog lokaal doen:** dezelfde wijziging in de lokale database. Local draaide niet.
-- **Open:** de afsluiting "Met vriendelijke groet, Wessel van den IJssel" komt uit `src/functions/gravity-forms.php` en is nog formeel. Dat vraagt een deploy.
+- **Afsluiting** (`src/functions/gravity-forms.php`): "Groetjes, Wessel" in plaats van "Met vriendelijke groet, Wessel van den IJssel". De voornaam komt uit de sitenaam.
