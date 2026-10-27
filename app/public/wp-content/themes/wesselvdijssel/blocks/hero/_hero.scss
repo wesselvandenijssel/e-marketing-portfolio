@@ -187,7 +187,6 @@
 				}
 
 				#{$hero}__portrait-image {
-					aspect-ratio: auto;
 					object-fit: contain;
 					border-radius: 0;
 				}
@@ -199,9 +198,12 @@
 			display: block;
 			width: 100%;
 			height: auto;
-			aspect-ratio: 4 / 5;
 			object-fit: cover;
 			border-radius: 24px;
+		}
+
+		#{$hero}__portrait:not(#{$hero}__portrait--cutout) #{$hero}__portrait-image {
+			aspect-ratio: 4 / 5;
 		}
 	}
 }

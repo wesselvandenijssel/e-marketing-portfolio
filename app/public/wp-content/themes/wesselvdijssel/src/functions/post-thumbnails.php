@@ -18,6 +18,8 @@ function hook_thumbnail_methods(): void {
 		add_image_size('Blog detail', 610, 500, true);
 		add_image_size('Hero 900', 1920, 900, true);
 		add_image_size('Hero mobile', 740, 250, true);
+		add_image_size('Project hero medium', 1100, 620, true);
+		add_image_size('Project hero small', 720, 405, true);
 		add_image_size('Post', 400, 270, true);
 		add_image_size('Project card', 720, 480, true);
 		add_image_size('Portrait', 640, 800, true);
