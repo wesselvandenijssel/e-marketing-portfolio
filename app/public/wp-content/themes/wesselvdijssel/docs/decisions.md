@@ -1081,3 +1081,15 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - Over mij is ook een `ProfilePage` met de Person als `about` en `mainEntity`
   - de eigen site-URL gaat uit `sameAs` van de Person
 - **Niet aangepast:** `/projecten/` mist geen project. Het overzicht toont 12 per pagina, het 13e staat op `?pagina=2`. Het llms.txt-bestand van Yoast zet je uit in de Yoast-instellingen op de live site, het thema heeft al een eigen `/llms.txt`.
+
+## D-092: Persoonlijkere reply-mail van het contactformulier
+
+- **Datum:** 2026-10-27
+- **Beslissing (van Wessel):** de bevestigingsmail aan de bezoeker klinkt als een persoon, niet als een standaardmelding.
+- **Uitgevoerd op de server** (form 1, melding "Reply-mail"), met een backup van de GF-tabellen in `~/tmp/gf-forms-before-reply-mail-2026-10-27.sql` op de server:
+  - onderwerp: "Hoi {Naam:1}, je bericht is binnen" (was "Bedankt voor je bericht, {Naam:1}")
+  - aanhef "Hoi {Naam:1}," en "Dit is Wessel. Wat leuk dat je me een bericht stuurt!"
+  - de bezoeker mag direct op de mail antwoorden (reply-to is al info@)
+  - "Dit heb je ingevuld:" is "Dit stuurde je me:"
+- **Nog lokaal doen:** dezelfde wijziging in de lokale database. Local draaide niet.
+- **Open:** de afsluiting "Met vriendelijke groet, Wessel van den IJssel" komt uit `src/functions/gravity-forms.php` en is nog formeel. Dat vraagt een deploy.

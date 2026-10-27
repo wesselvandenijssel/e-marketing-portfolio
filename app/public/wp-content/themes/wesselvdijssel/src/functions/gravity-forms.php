@@ -355,8 +355,8 @@ function replace_form_fields_merge_tag($text, $form, $entry, $url_encode, $esc_h
 					</tr>
 					<tr>
 						<td class="mail-pad" style="padding:0 32px 28px;' . $font . ';font-size:16px;line-height:1.6;color:' . $navy . ';">
-							' . esc_html__('Met vriendelijke groet,', 'wesselvandenijssel') . '<br>
-							<strong style="font-weight:600;">' . esc_html($site_name) . '</strong>
+							' . esc_html__('Groetjes,', 'wesselvandenijssel') . '<br>
+							<strong style="font-weight:600;">' . esc_html(strtok($site_name, ' ')) . '</strong>
 						</td>
 					</tr>
 					<tr>
