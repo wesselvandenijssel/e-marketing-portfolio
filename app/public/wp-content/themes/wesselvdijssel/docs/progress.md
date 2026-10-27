@@ -15,6 +15,7 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 | 6 | Menu en footer (extra opdracht) | Klaar (D-033) | 2026-09-29 | geen (D-029) | [stap 6](reports/2026-09-29-stap-6-menu-footer.md) |
 | 7 | Eindcontrole | Klaar (D-036) | 2026-09-29 | geen (D-029) | [stap 8](reports/2026-09-29-stap-8-controle.md) |
 | – | Scrollanimaties (extra opdracht) | Klaar (D-037) | 2026-09-29 | geen (D-029) | [animaties](reports/2026-09-29-animaties.md) |
+| – | SEO-audit: themafixes | Klaar (D-091), live nog deployen | 2026-10-27 | geen (D-029) | [seo-audit](reports/2026-10-27-seo-audit-themafixes.md) |
 
 ## Stap 0: backup, thema activeren, branding opschonen
 
@@ -100,3 +101,4 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 5. **Beoordelaar:** geef de docenten de URL `/portfolio-minor/`, de login `beoordelaar` en het wachtwoord. Op de productieserver maak je het account opnieuw aan, met een nieuw wachtwoord.
 6. **Cv:** klaar (D-053). Pas `~/Desktop/Portfolio/CV/cv.html` aan en vraag om een nieuwe pdf als er iets verandert.
 7. **Foto:** opgelost (D-041). Voor een hero met video: stuur de Wistia-embedcode.
+8. **SEO-audit (D-091):** na de deploy de projectfoto's opnieuw genereren, caches legen en llms.txt van Yoast uitzetten. Zie het rapport.

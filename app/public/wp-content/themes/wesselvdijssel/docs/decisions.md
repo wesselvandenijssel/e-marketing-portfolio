@@ -1069,3 +1069,15 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Beslissing:** `wesselvdijssel/dist/main.js` staat in het filter `rocket_delay_js_exclusions` (`src/functions/enqueueing.php`). Het patroon past ook op de geminificeerde kopie in `wp-content/cache/min/`. Het script blijft `defer`.
 - **Gevolg:** de animaties starten weer bij het laden. Iets meer JavaScript bij de eerste paint, maar de bundel is klein en deferred.
 - **Na de deploy op de server:** de WP Rocket-cache legen, inclusief Remove Unused CSS.
+
+## D-091: Themafixes uit de SEO-audit van 26 oktober
+
+- **Datum:** 2026-10-27
+- **Aanleiding:** SEO-audit van emarketing.wesselvandenijssel.nl (score 79/100). Dit zijn de punten die in het thema zitten. Content, Yoast-titels en de oude domeinnaam lopen apart.
+- **Projectfoto (LCP):** `single-project.php` laadt de hoofdfoto met `loading="eager"`, zodat WP Rocket hem niet lazy-loadt, en met `sizes`. Nieuwe beeldformaten `Project hero medium` (1100×620) en `Project hero small` (720×405) geven een `srcset` naast de 1600×900-versie. Bestaande foto's moeten opnieuw gegenereerd worden.
+- **CLS op de homepage:** de oorzaak was niet de tekstanimatie van de h1. De uitgeknipte portretfoto kreeg `aspect-ratio: auto`, waardoor de verhouding uit de `width`/`height`-attributen wegviel. Tot de foto binnen was, was hij 0 px hoog en sprong de hero van 459 naar 781 px. De verhouding 4:5 geldt nu alleen voor de niet-uitgeknipte foto (`blocks/hero/_hero.scss`). Gemeten met een vertraagde foto: CLS 0,154 naar 0,000.
+- **Schema (`src/functions/schema.php`), via Yoast-filters, geen tweede JSON-LD-blok:**
+  - blogberichten zijn `BlogPosting` en hebben altijd `dateModified`
+  - Over mij is ook een `ProfilePage` met de Person als `about` en `mainEntity`
+  - de eigen site-URL gaat uit `sameAs` van de Person
+- **Niet aangepast:** `/projecten/` mist geen project. Het overzicht toont 12 per pagina, het 13e staat op `?pagina=2`. Het llms.txt-bestand van Yoast zet je uit in de Yoast-instellingen op de live site, het thema heeft al een eigen `/llms.txt`.
