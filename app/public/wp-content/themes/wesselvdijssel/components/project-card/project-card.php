@@ -7,6 +7,7 @@ $image = $image ?? 0;
 $categories = $categories ?? [];
 $excerpt = $excerpt ?? '';
 $heading_level = isset($heading_level) ? max(2, min(6, absint($heading_level))) : 3;
+$eager = !empty($eager);
 
 if (empty($title) || empty($url)) return;
 
@@ -18,7 +19,8 @@ $heading = 'h' . $heading_level;
 		<div class="project-card__media">
 			<?= wp_get_attachment_image($image, 'Project card', false, [
 				'class' => 'project-card__image',
-				'loading' => 'lazy',
+				'loading' => $eager ? 'eager' : 'lazy',
+				'fetchpriority' => $eager ? 'high' : 'auto',
 				'sizes' => '(min-width: 980px) 33vw, (min-width: 740px) 50vw, 100vw',
 			]); ?>
 		</div>

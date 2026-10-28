@@ -1161,7 +1161,7 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - op de server is `advanced-cache.php` alvast met de hand aangepast (backup in `~/tmp/`). De uitvoer van het filter is hetzelfde, dus als WP Rocket het bestand opnieuw schrijft, blijft de check staan.
   - getest: Home, Over mij, Projecten en een blogbericht geven Markdown, een onbekende pagina geeft een Markdown-404, en browsers krijgen nog steeds de gecachte HTML
 
-## D-094: Mobiel menu werkt met het toetsenbord
+## D-098: Mobiel menu werkt met het toetsenbord
 
 - **Datum:** 2026-10-28
 - **Aanleiding:** visuele audit van de live site. De menuknop was een `<div role="button">`: Enter en Spatie deden niets, Escape sloot het menu niet, en de skip-link kwam pas na de menuknop.
@@ -1171,7 +1171,7 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - De skip-link "Naar de inhoud" staat direct na `<body>` en is zichtbaar bij focus (`src/styles/components/_general.scss`).
   - `_toggle.scss`: knopstijl van de browser gereset, focusrand in de huisstijl, het woord "Menu" van 12 naar 14 px.
 
-## D-098: Is Agentic-scan (28/100)
+## D-099: Is Agentic-scan (28/100)
 
 - **Datum:** 2026-10-28
 - **Aanleiding:** de scan van isagentic.dev gaf 28/100. Bijna elke fout had als bewijs "Homepage blocked by WAF": Cloudflare gaf de scanner, die vanaf een datacenter draait, een challenge. Vanaf een gewone verbinding krijgen ChatGPT-User, OAI-SearchBot, Claude-User, PerplexityBot en curl wel Markdown met 200, en de 403 voor SemrushBot komt ook van Cloudflare (niet van Defender).

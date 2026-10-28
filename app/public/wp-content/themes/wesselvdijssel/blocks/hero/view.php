@@ -88,8 +88,8 @@ echo !is_admin() ? '[raw]' : '';
 			<?php
 			switch ($type):
 				case 'image':
-					echo wp_get_attachment_image($image, $thumbnail, false, ['class' => 'hero__media hero__media--image hero__media--desktop', 'fetchpriority' => 'high']);
-					echo wp_get_attachment_image($image, 'Hero mobile', false, ['class' => 'hero__media hero__media--image hero__media--mobile', 'fetchpriority' => 'high']);
+					echo wp_get_attachment_image($image, $thumbnail, false, ['class' => 'hero__media hero__media--image hero__media--desktop', 'fetchpriority' => 'high', 'loading' => 'eager']);
+					echo wp_get_attachment_image($image, 'Hero mobile', false, ['class' => 'hero__media hero__media--image hero__media--mobile', 'fetchpriority' => 'high', 'loading' => 'eager']);
 					break;
 
 				case 'video': ?>
