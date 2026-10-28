@@ -33,7 +33,7 @@ if (!empty($swiper)) {
 		<div <?php attr($post_attr); ?>>
 		<?php endif; ?>
 		<div class="post__image-wrapper">
-			<?= wp_get_attachment_image($image, 'Post', false, ['class' => 'post__image', 'loading' => 'lazy']); ?>
+			<?= wp_get_attachment_image($image, 'Post', false, ['class' => 'post__image', 'loading' => 'lazy', 'sizes' => '(min-width: 980px) 400px, (min-width: 740px) 50vw, 100vw']); ?>
 
 			<?php if (!empty($categories)) : ?>
 				<p class="post__label">

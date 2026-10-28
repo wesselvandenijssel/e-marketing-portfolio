@@ -1228,3 +1228,15 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - na de deploy: klopt de zin dat er geen preconnect of dns-prefetch naar GA en Clarity is (D-100)
   - daarna een link toevoegen bij Portfolio website ("vijf artikelen")
 - **Cv:** `~/Desktop/Portfolio/CV/cv.html` met "vanaf nul", de nieuwe positionering en een klikbare link naar `emarketing.wesselvandenijssel.nl/projecten` (met UTM). De pdf is opnieuw gemaakt in Chromium (1 pagina) en vervangt media 417 op de server. De oude versie staat in `~/tmp/` op de server en als `.bak` in de map CV.
+
+## D-102: Trackingartikel gepubliceerd, lijsten en footertitels
+
+- **Datum:** 2026-10-28
+- **Trackingartikel gepubliceerd** (post 510, `/online-marketing/tracking-met-cookietoestemming/`), met akkoord van Wessel. "Wat het oplevert" gebruikt de GA4-export van 30 september tot 27 oktober. Wessel testte de tags in GTM; het ontbrekende key event zit dus aan de kant van GA4. Portfolio website linkt nu naar vijf artikelen.
+- **Genummerde lijsten in berichten** (`blog/_single.scss`): `.wp-block-list li` kreeg een pijl. Dat gold ook voor `<ol>`, die daarnaast zijn eigen browsernummers toonde. Een `<ol>` toont nu een eigen teller in de accentkleur, vet, op de plek van de pijl.
+- **Links in lijsten in berichten** zijn nu blauw en onderstreept, net als in `content-layout`. Eerst waren ze navy zonder onderstreping en niet als link te herkennen.
+- **Ruimte onder een bericht:** `.single__content` heeft nu dezelfde marge onder als boven (30/50 px). De laatste lijst raakte de lijn van de footer.
+- **Footertitels:** van `$hue-accent-1` (5,38:1, 13 px) naar `color.mix($hue-accent-1, $hue-white, 50%)` (9,04:1, 14 px). Eerste gebruik van `@use "sass:color"` in het thema.
+- **Lokaal:** WP Rocket gaf een oude geminificeerde `main.css` uit `wp-content/cache/min/`. Na een CSS-wijziging lokaal de cache van WP Rocket legen (`rocket_clean_minify()`).
+- **Uitgelichte afbeelding:** het blogblok toont alleen berichten met een uitgelichte afbeelding (`_thumbnail_id EXISTS` in `blocks/blog/view.php`). Daarom stond het trackingartikel niet op Blog. Nieuwe illustratie in de stijl van de andere artikelen (1600×1000, gemaakt als HTML en gerenderd in Chromium): cookiebanner, dan het event `cmplz_event_statistics`, dan GA4 en Clarity in Tag Manager. Media 512, met een Nederlandse alt-tekst. Het bericht is opnieuw opgeslagen, zodat Yoast de afbeelding als og:image gebruikt.
+- **Let op bij een nieuw artikel:** zonder uitgelichte afbeelding verschijnt het niet op Blog.
