@@ -21,6 +21,7 @@ function hook_thumbnail_methods(): void {
 		add_image_size('Project hero medium', 1100, 620, true);
 		add_image_size('Project hero small', 720, 405, true);
 		add_image_size('Post', 400, 270, true);
+		add_image_size('Post large', 800, 540, true);
 		add_image_size('Project card', 720, 480, true);
 		add_image_size('Portrait', 640, 800, true);
 		add_image_size('Content', 880, 880, false);

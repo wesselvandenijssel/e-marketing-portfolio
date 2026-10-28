@@ -33,10 +33,10 @@
 	}
 
 	&__content {
-		margin-top: pxtoem(30);
+		margin-block: pxtoem(30);
 
 		@include bp("narrow") {
-			margin-top: pxtoem(50);
+			margin-block: pxtoem(50);
 		}
 
 		> :first-child {
@@ -85,6 +85,32 @@
 				top: 0;
 				left: 0;
 				color: $hue-accent-1;
+			}
+		}
+
+		> .wp-block-list a:not(.btn) {
+			color: $link-color;
+			text-decoration: underline;
+
+			&:hover,
+			&:focus {
+				color: $hue-dark-1;
+			}
+		}
+
+		> ol.wp-block-list {
+			padding-left: 0;
+			list-style: none;
+			counter-reset: list-step;
+
+			li {
+				counter-increment: list-step;
+
+				&::before {
+					content: counter(list-step) ".";
+					font-family: inherit;
+					font-weight: $font-weight-bold;
+				}
 			}
 		}
 	}

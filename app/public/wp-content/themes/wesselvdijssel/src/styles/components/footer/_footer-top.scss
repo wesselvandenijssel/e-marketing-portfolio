@@ -1,3 +1,4 @@
+@use "sass:color";
 @use "abstracts" as *;
 @use "placeholders" as *;
 
@@ -46,10 +47,10 @@
 		}
 
 		.main-title {
-			font-size: pxtorem(13);
+			font-size: pxtorem(14);
 			letter-spacing: 0.1em;
 			text-transform: uppercase;
-			color: $hue-accent-1;
+			color: color.mix($hue-accent-1, $hue-white, 50%);
 		}
 	}
 
