@@ -24,7 +24,7 @@ The project is created with:
 - **Webpack:** 5.106.2 with modern build pipeline
 - **ESLint:** 9.39.4 with flat configuration
 - **Sass:** Modern scss compiler
-- **Playwright:** 1.60.0 for automated screenshot generation
+- **Playwright:** 1.60.0 for the agent-readiness test (`tests/`)
 
 ## Installation
 

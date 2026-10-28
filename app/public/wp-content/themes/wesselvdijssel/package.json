@@ -6,8 +6,7 @@
 	"scripts": {
 		"build": "cross-env NODE_ENV=production webpack --config webpack.config.ts",
 		"dev": "cross-env NODE_ENV=dev webpack --config webpack.config.ts",
-		"dev-watch": "cross-env NODE_ENV=dev-watch webpack --config webpack.config.ts",
-		"screenshots": "ts-node src/scripts/files/screenshots/main.ts"
+		"dev-watch": "cross-env NODE_ENV=dev-watch webpack --config webpack.config.ts"
 	},
 	"author": "Wessel van den IJssel",
 	"license": "ISC",

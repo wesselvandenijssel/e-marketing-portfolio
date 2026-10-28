@@ -10,7 +10,6 @@ require_once('src/classes/walker-menu.php');
 require_once('src/classes/walker-menu-fold.php');
 
 // Required functions
-require_once(get_template_directory() . '/src/functions/screenshots-api.php');
 require_once(get_template_directory() . '/src/functions/theme-helpers.php');
 require_once(get_template_directory() . '/src/functions/theme-support.php');
 require_once(get_template_directory() . '/src/functions/video-helpers.php');
