@@ -62,6 +62,21 @@ function breadcrumb_add_title_attribute($link_output, $link) {
 	return $link_output;
 }
 
+/**
+ * Adds the Projecten page between Home and a project, in the breadcrumb and in Yoast's BreadcrumbList schema.
+ *
+ * @param array $links The breadcrumb links
+ * @return array
+ */
+add_filter('wpseo_breadcrumb_links', 'wesselvandenijssel_project_breadcrumb');
+function wesselvandenijssel_project_breadcrumb(array $links): array {
+	if (!is_singular('project') || get_post_status(220) !== 'publish') return $links;
+
+	array_splice($links, 1, 0, [['url' => get_permalink(220), 'text' => get_the_title(220), 'id' => 220]]);
+
+	return $links;
+}
+
 function acf_load_menu_choices($field) {
 	// reset choices
 	$field['choices'] = [];

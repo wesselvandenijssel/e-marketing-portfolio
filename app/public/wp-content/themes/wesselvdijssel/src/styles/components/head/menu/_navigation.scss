@@ -151,8 +151,14 @@
 				> span {
 					@include bp("narrow") {
 						display: inline-block;
-						padding-block: 4px;
-						margin-block: -4px;
+						padding-block: 15px;
+						margin-block: -15px;
+					}
+				}
+
+				&.menu-item-has-children > a {
+					@include bp("narrow") {
+						padding-right: 8px;
 					}
 				}
 
