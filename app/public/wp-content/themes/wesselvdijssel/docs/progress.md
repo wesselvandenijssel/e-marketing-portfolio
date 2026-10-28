@@ -124,4 +124,4 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
    - Cloudflare: de cache van `/wp-content/uploads/2026/10/cv-wessel-van-den-ijssel.pdf` legen. De server heeft het nieuwe cv al.
    - na de deploy: bij Portfolio website het veld Website leegmaken, want de GitHub-link staat nu bij Broncode
    - na de deploy: de documentcache van Complianz opnieuw legen (`cmplz_transients`), zodat het filter op het cookiebeleid direct werkt
-   - nog in te vullen: Flexercise ("gevuld met scripts"), Rentwereld (jouw deel bij de cijfers), voor wie je de Conversion API inrichtte (Over mij), een quote van een collega of klant met naam en functie, en je beschikbaarheid
+   - trackingartikel (concept, post 510): `[INVULLEN]` bij "Wat het oplevert" vullen, de events in GTM controleren, publiceren en dan linken vanaf Portfolio website (D-101)

@@ -1216,4 +1216,15 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - **Positionering:** "Front-end developer en online marketeer uit Utrecht" in de hero-ondertitel, de tagline, de footertekst, de auteurbox, het cv en `llms.txt`. De SEO-titel van de homepage blijft "Front-end developer Utrecht". De functietitel bij het stagebedrijf (Ervaring, Person-schema) blijft "Front-end developer", want dat is de echte functie. De footertekst eindigt nu op "zorg dat je kunt meten wat ze opleveren", zodat "online marketing" niet dubbel staat.
   - **Hero op home:** drie knoppen: "Neem contact op" (primair), "Bekijk mijn projecten" en "Download mijn cv" (secundair).
   - **Privacypagina:** heet overal "Privacyverklaring" (paginatitel, dus ook footer en cookiebanner). De URL `/contact/privacy-statement/` blijft. De documentcache van Complianz (`cmplz_transients`) is geleegd.
+- **Antwoorden van Wessel:**
+  - **Flexercise:** "23 pagina's gevuld via een eigen script dat de content van de live site overnam". Onder Aanpak staat nu ook "De Meta Conversion API en Google Consent Mode V2 ingericht."
+  - **Over mij:** "Voor Flexercise Treatments richtte ik de Meta Conversion API en Google Consent Mode V2 in."
+  - **Rentwereld:** onder de cijfers van het team: "Mijn deel daarin: ik zette het ontwerp pixelperfect om in code en voerde SEO-optimalisaties door."
+  - **Beschikbaarheid:** Contact zegt "Ik werk met plezier bij MB effect en zoek nu geen nieuwe baan. Sparren over front-end of online marketing kan altijd." `llms.txt` stuurt agents niet meer door voor een vacature.
+  - **Quote op de homepage**, na het blok met wat ik doe (blok quote-slider): "Wessel is een persoon die altijd tot het uiterste gaat om het optimale eruit te halen." Isabel Zomerdijk, collega bij Racesquare. Alleen het dubbele werkwoord ("wilt gaat") is verbeterd. Wessel bevestigde dat "partner" zakenpartner betekent. De quote komt niet uit de 360-gradenfeedback van het beschermde deel.
+- **Nieuw artikel als concept** (post 510, categorie "Online marketing", nieuw): "Tracking met cookietoestemming: zo meet ik mijn portfolio", geschreven in een andere sessie. Aangepast: "Het doel van deze site is dat bezoekers contact met me opnemen" in plaats van "een baan na de minor". Yoast-velden staan erin. Vóór publicatie:
+  - `[INVULLEN]` bij "Wat het oplevert" vullen met echte cijfers uit GA4 of Clarity
+  - in GTM controleren of `cv_download`, `email_click` en `blog_scroll` echt als tag bestaan
+  - na de deploy: klopt de zin dat er geen preconnect of dns-prefetch naar GA en Clarity is (D-100)
+  - daarna een link toevoegen bij Portfolio website ("vijf artikelen")
 - **Cv:** `~/Desktop/Portfolio/CV/cv.html` met "vanaf nul", de nieuwe positionering en een klikbare link naar `emarketing.wesselvandenijssel.nl/projecten` (met UTM). De pdf is opnieuw gemaakt in Chromium (1 pagina) en vervangt media 417 op de server. De oude versie staat in `~/tmp/` op de server en als `.bak` in de map CV.
