@@ -41,19 +41,51 @@ const closeSubMenu = () => {
 };
 
 /**
+ * Opens or closes the entire mobile menu
+ *
+ * @param toggle The menu toggle button
+ * @param open Whether the menu should be open
+ */
+const setMenuOpen = (toggle: HTMLElement, open: boolean) => {
+	if (toggle.classList.contains("menu-toggle--active") === open) return;
+
+	toggle.classList.toggle("menu-toggle--active", open);
+	toggle.setAttribute("aria-expanded", String(open));
+	toggle.setAttribute(
+		"aria-label",
+		(open ? toggle.dataset.labelClose : toggle.dataset.labelOpen) ?? ""
+	);
+	document.body.classList.toggle("no-scroll", open);
+	$all(".main-navigation__content").forEach((el) =>
+		open ? el.slideDown(400) : el.slideUp(400)
+	);
+};
+
+/**
  * Menu toggle - Shows/hides the entire menu
  */
 $all(".menu-toggle").forEach((toggle) =>
-	toggle.addEventListener("click", () => {
-		toggle.setAttribute(
-			"aria-expanded",
-			String(!toggle.classList.contains("menu-toggle--active"))
-		);
-		toggle.classList.toggle("menu-toggle--active");
-		document.body.classList.toggle("no-scroll");
-		$all(".main-navigation__content").forEach((el) => el.slideToggle(400));
-	})
+	toggle.addEventListener("click", () =>
+		setMenuOpen(toggle, !toggle.classList.contains("menu-toggle--active"))
+	)
 );
+
+/**
+ * Escape closes the open submenu, or the mobile menu and returns focus to its toggle
+ */
+document.addEventListener("keydown", (event) => {
+	if (event.key !== "Escape") return;
+
+	const activeToggle = document.querySelector<HTMLElement>(".menu-toggle--active");
+
+	if (activeToggle) {
+		closeSubMenu();
+		setMenuOpen(activeToggle, false);
+		activeToggle.focus();
+	} else if (document.querySelector(".sub-menu--active, .submenu-toggle--active")) {
+		closeSubMenu();
+	}
+});
 
 /**
  * Menu background - Closes the submenu on click
