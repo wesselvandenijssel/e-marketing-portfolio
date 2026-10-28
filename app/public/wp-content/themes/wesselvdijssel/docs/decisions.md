@@ -1179,3 +1179,16 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Toegevoegd:** `/privacy`, `/privacy-policy` en `/privacyverklaring` sturen met een 301 door naar de privacypagina die in WordPress is ingesteld (`wp_page_for_privacy_policy`). Tests in `tests/agent-readiness.spec.ts`: `/privacy`, Markdown op een gecachte pagina, en geen cache van een maand op Markdown.
 - **Bewust niet gedaan:** OpenAPI-spec, JSON-foutmeldingen voor een API, rate-limit-headers, GraphQL, function calling, gratis tier en API-sleutels. De site heeft geen publieke API, en een spec voor de WordPress REST API zou het beschermde deel extra risico geven.
 - **Nog te doen door Wessel:** in Cloudflare de challenge voor bots versoepelen (zie D-093). Daarna de scan opnieuw draaien.
+
+## D-100: WP Rocket-hints uit, klikdoelen, breadcrumb en cookiebanner
+
+- **Datum:** 2026-10-28
+- **WP Rocket "critical images" uit** (`rocket_above_the_fold_optimization` in `enqueueing.php`). Die functie had oude `.jpg`-URL's van vóór D-082 opgeslagen (4 preloads met een 404), preloadde het hero-portret een tweede keer naast de preload van het thema, en gaf het logo op blogartikelen `fetchpriority="high"`. Het thema regelt de LCP-afbeeldingen al zelf. Alleen de data legen was niet genoeg, want dan blijft de dubbele preload. Ook op de server de opgeslagen hints geleegd (`rocket_performance_hints_clean_all`, als beheerder): alle vier de tabellen van 50 naar 0 rijen.
+- **Geen dns-prefetch voor tracking vóór toestemming:** `preconnect_external_domain_exclusions` sluit googletagmanager.com, google-analytics.com en clarity.ms uit.
+- **CSP:** WP Rocket voerde het uitgestelde inline script `rocket-browser-checker` uit als `data:`-script. De CSP blokkeerde dat. `rocket-browser-checker` en `rocket-preload-links` staan nu in `rocket_delay_js_exclusions`. `data:` is niet aan de CSP toegevoegd.
+- **LCP-afbeeldingen:** de eerste projectkaart in het overzicht laadt `eager` met `fetchpriority="high"` (`project-card`, argument `eager`). De hero-afbeeldingen van het type "Afbeelding" hebben `loading="eager"`, zodat WP Rocket ze niet lazy laadt nu de critical images uit staan.
+- **Klikdoelen in het menu (vanaf 740 px):** navlinks 15 px padding met een negatieve marge (23 naar 45 px hoog), submenuknop 44×44 met negatieve marges. Gemeten op 820 en 1280 px: tekst, pijlen en headerhoogte staan op exact dezelfde plek. De knop "Portfolio (login)" blijft 37 px: daar is de `<a>` zelf de pil.
+- **Breadcrumb:** op projectpagina's "Home / Projecten / project" (`wpseo_breadcrumb_links`, ook in de BreadcrumbList-schema). Op de homepage geen breadcrumb.
+- **Cookiebanner op mobiel:** van 432 px (51%) naar 273 px (32%), gemeten op 390×844. Accepteren en Weigeren naast elkaar en even groot, Bekijk voorkeuren eronder, het kruisje rechtsboven in de hoek. Op de server (backup van de tabel in `~/tmp/`): intro ingekort tot twee zinnen, categorieteksten in de je-vorm zonder "uw Internet Service Provider" en "verzenden van reclame".
+- **Over mij:** de Yoast-deelafbeelding is nu de afbeelding van 1200×630 (ID 432), net als de homepage, in plaats van de portretfoto van 1800×2400.
+- **Lint:** `_toggle.scss` had al een `order/order`-fout uit D-098 (een `@include` na een regel). Die is rechtgezet, anders faalt de build.

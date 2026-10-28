@@ -110,6 +110,15 @@ $post_url = get_permalink();
 								'phone' => esc_attr(!empty(get_the_author_meta('user_phone')) ? 'tel:' . get_the_author_meta('user_phone') : ''),
 							];
 
+							$social_labels = [
+								'twitter' => 'X',
+								'linkedin' => 'LinkedIn',
+								'facebook' => 'Facebook',
+								'instagram' => 'Instagram',
+								'mail' => __('E-mail', 'wesselvandenijssel'),
+								'phone' => __('Telefoon', 'wesselvandenijssel'),
+							];
+
 							foreach ($socials as $key => $url) :
 								if (empty($url)) continue; ?>
 
@@ -117,7 +126,7 @@ $post_url = get_permalink();
 									target="_blank"
 									rel="noopener noreferrer"
 									class="single__author-social-link single__author-social-link--<?= esc_attr($key); ?>">
-									<span class="screen-reader-text"><?= esc_html(ucfirst($key)); ?></span>
+									<span class="screen-reader-text"><?= esc_html($social_labels[$key] ?? ucfirst($key)); ?></span>
 								</a>
 
 							<?php endforeach; ?>

@@ -40,12 +40,21 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 									'phone' => !empty(get_field('phone', $author_user_id)) ? 'tel:' . preg_replace('/[^0-9+\s\-\(\)]/', '', get_field('phone', $author_user_id)) : '',
 								];
 
+								$social_labels = [
+									'twitter' => 'X',
+									'linkedin' => 'LinkedIn',
+									'facebook' => 'Facebook',
+									'instagram' => 'Instagram',
+									'mail' => __('E-mail', 'wesselvandenijssel'),
+									'phone' => __('Telefoon', 'wesselvandenijssel'),
+								];
+
 								foreach ($socials as $key => $url) :
 									if (empty($url)) continue;
 								?>
 									<a href="<?= esc_url($url); ?>" target="_blank" rel="noopener noreferrer" class="author__social-link author__social-link--<?= esc_attr($key); ?>">
 
-										<span class="screen-reader-text"><?= esc_html(ucfirst($key)); ?></span>
+										<span class="screen-reader-text"><?= esc_html($social_labels[$key] ?? ucfirst($key)); ?></span>
 									</a>
 
 								<?php endforeach; ?>
