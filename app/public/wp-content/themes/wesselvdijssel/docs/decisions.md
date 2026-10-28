@@ -1223,7 +1223,7 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - **Beschikbaarheid:** Contact zegt "Ik werk met plezier bij MB effect en zoek nu geen nieuwe baan. Sparren over front-end of online marketing kan altijd." `llms.txt` stuurt agents niet meer door voor een vacature.
   - **Quote op de homepage**, na het blok met wat ik doe (blok quote-slider): "Wessel is een persoon die altijd tot het uiterste gaat om het optimale eruit te halen." Isabel Zomerdijk, collega bij Racesquare. Alleen het dubbele werkwoord ("wilt gaat") is verbeterd. Wessel bevestigde dat "partner" zakenpartner betekent. De quote komt niet uit de 360-gradenfeedback van het beschermde deel.
 - **Nieuw artikel als concept** (post 510, categorie "Online marketing", nieuw): "Tracking met cookietoestemming: zo meet ik mijn portfolio", geschreven in een andere sessie. Aangepast: "Het doel van deze site is dat bezoekers contact met me opnemen" in plaats van "een baan na de minor". Yoast-velden staan erin. Vóór publicatie:
-  - `[INVULLEN]` bij "Wat het oplevert" vullen met echte cijfers uit GA4 of Clarity
+  - ~~`[INVULLEN]` bij "Wat het oplevert"~~ Ingevuld met de GA4-export van 30 september tot 27 oktober: 14 bezoekers met toestemming voor statistieken, 35 seconden betrokkenheid, alles direct verkeer. Ook twee lessen: eigen verkeer uitsluiten, en de bedankpagina had 2 weergaven maar geen key event, dus `generate_lead` controleren in GTM.
   - in GTM controleren of `cv_download`, `email_click` en `blog_scroll` echt als tag bestaan
   - na de deploy: klopt de zin dat er geen preconnect of dns-prefetch naar GA en Clarity is (D-100)
   - daarna een link toevoegen bij Portfolio website ("vijf artikelen")
