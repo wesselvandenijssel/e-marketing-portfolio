@@ -157,6 +157,19 @@ img {
 	position: absolute;
 }
 
+.skip-link {
+	&:focus {
+		clip: auto;
+		top: 8px;
+		left: 8px;
+		z-index: 1000;
+		padding: 12px 16px;
+		background-color: $hue-white;
+		color: $hue-dark-1;
+		font-weight: $font-weight-bold;
+	}
+}
+
 .video-in-fancybox {
 	cursor: pointer;
 	position: relative;

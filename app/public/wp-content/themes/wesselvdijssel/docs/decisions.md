@@ -1093,3 +1093,29 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - "Dit heb je ingevuld:" is "Dit stuurde je me:"
 - **Nog lokaal doen:** dezelfde wijziging in de lokale database. Local draaide niet.
 - **Afsluiting** (`src/functions/gravity-forms.php`): "Groetjes, Wessel" in plaats van "Met vriendelijke groet, Wessel van den IJssel". De voornaam komt uit de sitenaam.
+
+## D-093: Snelheidsartikel gericht op "laadsnelheid", na Search Console en Semrush
+
+- **Datum:** 2026-10-28
+- **Aanleiding:** Search Console (8 tot 26 oktober): het artikel over snelheid had 46 vertoningen op positie 58, vooral op dienstzoekopdrachten ("snel ladende website laten bouwen"). Informatieve zoekopdrachten stonden dichterbij: "laadsnelheid en seo" (47) en "laadsnelheid website verbeteren" (44,5).
+- **Beslissing:** het artikel richt zich nu op de informatieve zoekopdrachten. Geen aparte dienstpagina, want de site is een portfolio en geen aanbod van diensten.
+- **Uitgevoerd op de server** (post 434), met een backup van de tabellen posts en postmeta in `~/tmp/emarketing-posts-before-seo-2026-10-28.sql` op de server:
+  - titel/h1 "Laadsnelheid van je website verbeteren: laad alleen wat nodig is", slug ongewijzigd
+  - Yoast: focuszin "laadsnelheid website verbeteren", SEO-titel "Laadsnelheid website verbeteren: 5 stappen voor betere SEO", nieuwe metabeschrijving en samenvatting
+  - nieuwe secties "Laadsnelheid en SEO: wat meet Google?" (LCP, INP, CLS met drempels) en "Hoe meet je de laadsnelheid van je website?"
+  - de LCP-foto met `eager` en de CLS-meting van de portretfoto uit D-091 als voorbeeld
+  - interne link naar het project Portfolio website
+- **Ook:** de SEO-titel van post 433 is "Structured data voor SEO: zo herkent Google wie je bent". Semrush meldde dat titel en h1 gelijk waren.
+- **WP Rocket:** cache van beide berichten en de homepage geleegd.
+- **Nog lokaal doen:** dezelfde wijzigingen in de lokale database. Local draaide niet. De nieuwe inhoud staat op de server in `~/tmp/post-434-laadsnelheid.html`.
+- **Semrush:** de meeste fouten komen van Cloudflare, die SemrushBot overal een 403 geeft (ook robots.txt en sitemap). Googlebot heeft er geen last van. De oplossing zit in Cloudflare en niet in het thema (zie open punten).
+
+## D-094: Mobiel menu werkt met het toetsenbord
+
+- **Datum:** 2026-10-28
+- **Aanleiding:** visuele audit van de live site. De menuknop was een `<div role="button">`: Enter en Spatie deden niets, Escape sloot het menu niet, en de skip-link kwam pas na de menuknop.
+- **Uitvoering:**
+  - `header.php`: de menuknop is een echte `<button type="button">` met `aria-controls`. Het label wisselt tussen "Menu openen" en "Menu sluiten".
+  - `src/scripts/files/menu-toggle.ts`: openen en sluiten via één functie. Escape sluit het mobiele menu en zet de focus terug op de knop. Op desktop sluit Escape het open submenu.
+  - De skip-link "Naar de inhoud" staat direct na `<body>` en is zichtbaar bij focus (`src/styles/components/_general.scss`).
+  - `_toggle.scss`: knopstijl van de browser gereset, focusrand in de huisstijl, het woord "Menu" van 12 naar 14 px.

@@ -36,6 +36,8 @@ $contact_details = get_field('contact_details', 'options');
 <body <?php body_class(); ?> itemscope itemtype="http://schema.org/WebPage">
 	<?= get_field('body', 'scripts') ?? ''; ?>
 
+	<a class="skip-link screen-reader-text" href="#content"><?= esc_html__('Naar de inhoud', 'wesselvandenijssel'); ?></a>
+
 	<div id="page" class="hfeed site">
 		<?php do_action('before'); ?>
 
@@ -91,23 +93,22 @@ $contact_details = get_field('contact_details', 'options');
 					<?= get_logo(['class' => 'header__logo']); ?>
 
 					<nav id="site-navigation" class="main-navigation" itemscope itemtype="http://schema.org/SiteNavigationElement">
-						<div class="menu-toggle" role="button" tabindex="0" aria-label="<?= esc_attr__('Menu openen', 'wesselvandenijssel'); ?>" aria-expanded="false">
-							<div class="menu-toggle__lines">
-								<div class="menu-toggle__burger">
+						<button type="button" class="menu-toggle" aria-label="<?= esc_attr__('Menu openen', 'wesselvandenijssel'); ?>" aria-expanded="false" aria-controls="site-navigation-content" data-label-open="<?= esc_attr__('Menu openen', 'wesselvandenijssel'); ?>" data-label-close="<?= esc_attr__('Menu sluiten', 'wesselvandenijssel'); ?>">
+							<span class="menu-toggle__lines">
+								<span class="menu-toggle__burger">
 									<span class="menu-toggle__burger-line menu-toggle__burger-line--first"></span>
 									<span class="menu-toggle__burger-line menu-toggle__burger-line--second"></span>
 									<span class="menu-toggle__burger-line menu-toggle__burger-line--last"></span>
-								</div>
-								<div class="menu-toggle__close">
+								</span>
+								<span class="menu-toggle__close">
 									<span class="menu-toggle__close-line menu-toggle__close-line--first"></span>
 									<span class="menu-toggle__close-line menu-toggle__close-line--last"></span>
-								</div>
-							</div>
+								</span>
+							</span>
 							<span class="menu-toggle__text"><?= esc_html__('Menu', 'wesselvandenijssel'); ?></span>
-						</div>
-						<a class="skip-link screen-reader-text" href="#content"><?= esc_html__('Naar de inhoud', 'wesselvandenijssel'); ?></a>
+						</button>
 
-						<div class="main-navigation__content">
+						<div id="site-navigation-content" class="main-navigation__content">
 							<?php wp_nav_menu(
 								[
 									'theme_location' => 'primary',

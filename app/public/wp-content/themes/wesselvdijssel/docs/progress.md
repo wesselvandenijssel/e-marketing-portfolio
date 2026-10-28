@@ -102,3 +102,8 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 6. **Cv:** klaar (D-053). Pas `~/Desktop/Portfolio/CV/cv.html` aan en vraag om een nieuwe pdf als er iets verandert.
 7. **Foto:** opgelost (D-041). Voor een hero met video: stuur de Wistia-embedcode.
 8. **SEO-audit (D-091):** na de deploy de projectfoto's opnieuw genereren, caches legen en llms.txt van Yoast uitzetten. Zie het rapport.
+9. **Search Console en Semrush (D-093):**
+   - Cloudflare: verified bots toestaan (of een WAF-skipregel voor `SemrushBot`), Email Address Obfuscation uit, HSTS aan. Daarna de Semrush-audit opnieuw draaien.
+   - Search Console: voor `/seo/snellere-website-laad-alleen-wat-nodig-is/` een nieuwe indexering aanvragen.
+   - GA4: je eigen bezoeken als intern verkeer uitsluiten.
+   - Lokaal: post 434 en de SEO-titel van post 433 gelijkzetten met de server.
