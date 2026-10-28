@@ -107,3 +107,16 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
    - Search Console: voor `/seo/snellere-website-laad-alleen-wat-nodig-is/` een nieuwe indexering aanvragen.
    - GA4: je eigen bezoeken als intern verkeer uitsluiten.
    - Lokaal: post 434 en de SEO-titel van post 433 gelijkzetten met de server.
+10. **Beveiliging (D-094, D-095):**
+   - deployen (push naar `master`), want het lek met `?entry=` staat live tot de deploy
+   - na de deploy: het contactformulier testen (doorsturen naar Bedankt, `formSubmission` in de dataLayer zonder e-mail), `.screenshots-token` moet een 404 geven, en de optie `screenshots_api_key` verwijderen
+   - in GTM controleren of een tag of variabele `emailFields` of `entryIdEncrypted` gebruikt
+   - de vaste sleutel in `randomness.php` melden bij het stagebedrijf: 59 themes onder `~/Local Sites` gebruiken hem
+11. **Snelheid (D-096):**
+   - deployen: `single-project.php` en het formaat `Menu card` staan nog alleen in de code
+   - na elke deploy met CSS-wijzigingen: in WP Rocket "Remove Unused CSS" legen
+   - lokaal: `wp media regenerate --only-missing` voor de projectfoto's en de menufoto's
+   - over een uur Lighthouse opnieuw draaien, als WP Rocket de used CSS opnieuw heeft gemaakt
+12. **Server en agents (D-097):**
+   - lumiedrinkz.nl: `debug.log` is openbaar (609 KB, wordt nog geschreven). Zelfde fix nodig.
+   - na de deploy: controleren of `wp-content/advanced-cache.php` de Markdown-check nog bevat (`grep text/markdown`)

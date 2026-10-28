@@ -1110,6 +1110,57 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Nog lokaal doen:** dezelfde wijzigingen in de lokale database. Local draaide niet. De nieuwe inhoud staat op de server in `~/tmp/post-434-laadsnelheid.html`.
 - **Semrush:** de meeste fouten komen van Cloudflare, die SemrushBot overal een 403 geeft (ook robots.txt en sitemap). Googlebot heeft er geen last van. De oplossing zit in Cloudflare en niet in het thema (zie open punten).
 
+## D-094: Inzendingen niet meer op te vragen via `?entry=`
+
+- **Datum:** 2026-10-28
+- **Aanleiding:** `?entry=` werd ontsleuteld met een vaste sleutel en IV uit `randomness.php`, en die staan in de openbare repo. De nonce werd alleen gecontroleerd als hij was meegestuurd. Met de sleutel kon iedereen inzending 1, 2, 3 enzovoort opvragen: de footer zette het e-mailadres in de dataLayer (en zo in GTM en GA4), en het contactblok vulde het formulier met alle velden van die inzending (naam, e-mail, telefoon, bericht).
+- **Beslissing:**
+  - de bevestiging stuurt door met `?entry=<id>-<token>`. Het token is willekeurig (32 tekens) en staat in de entry-meta `confirmation_token`. De controle gebruikt `hash_equals`.
+  - `encrypt_decrypt()` is verwijderd. De gelekte sleutel wordt nergens meer gebruikt.
+  - de dataLayer-push `formSubmission` blijft, maar alleen met `formId` en `formName`, zonder e-mailadres of entry-ID
+  - het contactblok vult het formulier niet meer met een oude inzending
+  - de ongebruikte shortcode `[get_entry_value]` is weg
+- **Gevolg:** bevestigingslinks van voor deze wijziging werken niet meer. Dat is de bedoeling.
+- **Let op:** dezelfde sleutel staat in 59 `randomness.php`-bestanden onder `~/Local Sites`. Die sites hebben hetzelfde lek. Gemeld aan Wessel om door te geven aan het stagebedrijf. Andere projecten zijn niet aangepast (alleen-lezen).
+
+## D-095: Screenshotsysteem uit het thema
+
+- **Datum:** 2026-10-28
+- **Aanleiding:** `screenshots-api.php` schreef bij elke REST-aanvraag `.screenshots-token` in de themamap, en dat bestand was op de live site openbaar op te halen. Met het token kreeg je een lijst van gepubliceerde URL's.
+- **Beslissing (van Wessel):** het hele screenshotsysteem is weg: `screenshots-api.php`, de scripts in `src/scripts/files/screenshots/`, het npm-script `screenshots`, het pakket `playwright` en de workflows `playwright.yml`, `cleanup-screenshots.yml` en `approve-bot-workflow-runs.yml`.
+- **Behouden:** de agent-readiness-test staat nu in `tests/`, met `@playwright/test` en `playwright.config.ts`. `screenshot.png` is de themafoto van WordPress en blijft.
+- **Na de deploy op de server:** de stap "Remove development files" in `deploy.yml` verwijdert `.screenshots-token`, en er maakt hem niets meer opnieuw aan. Verwijder daarna de optie `screenshots_api_key`, op de server en lokaal.
+
+## D-096: Projectfoto, menuafbeeldingen en CLS na Lighthouse
+
+- **Datum:** 2026-10-28
+- **Projectfoto (LCP 4,1 s op mobiel):** de originelen zijn 1600×1000. `Hero 900` (1920×900) snijdt ze bij tot 1600×900, maar de 16:9-formaten uit D-091 waren op de server nooit aangemaakt. Er was dus geen `srcset` en elk scherm kreeg 1600 px.
+  - op de server: `wp media regenerate --only-missing` voor de 13 projectfoto's. Live staat nu een `srcset` met 720w, 1100w en 1600w.
+  - `single-project.php` vraagt `Project hero medium` op in plaats van `Hero 900`
+- **Menuafbeeldingen (ongeveer 280 KB per pagina):** de `srcset` van de staande foto had alleen 660w en 1800w. Een retinascherm heeft voor een kaart van 360 px 720 px nodig, en koos daarom 1800w.
+  - nieuw formaat `Menu card` (720 breed, niet bijgesneden). `walker-menu.php` gebruikt het.
+  - op de server alvast aangemaakt voor de 2 menufoto's (ID 354 en 356). De staande foto is nu 55 KB in plaats van 261 KB.
+- **CLS op de homepage (Lighthouse 0,269):** gemeten met Playwright, 4 tot 5 runs per variant. Op mobiel was de CLS 0,000. Op desktop was hij 0,154 in 3 van de 4 runs. De oorzaak was niet het lettertype of de woordsplitsing (die shifts waren 0,000) maar de hero, die van 459 naar 781 px sprong. WP Rocket gaf nog de oude "used CSS" van vóór D-091 mee, met `aspect-ratio: auto` op de uitgeknipte foto.
+  - op de server de used CSS geleegd (zelfde functie als de knop in WP Rocket) en de cache geleegd. Daarna: desktop 0,000 in 4 van de 4 runs.
+  - **Les:** na een deploy met CSS-wijzigingen altijd "Remove Unused CSS" legen, niet alleen de paginacache.
+
+## D-097: debug.log dicht en kleinere punten uit de audit
+
+- **Datum:** 2026-10-28
+- **debug.log:** `/wp-content/debug.log` was openbaar (208 MB, laatst geschreven op 9 oktober). Er stonden de hostinggebruiker, serverpaden en lumiedrinkz.nl in. Op de server, met een backup van `wp-config.php` en `.htaccess` in `~/tmp/`:
+  - `debug.log` verwijderd
+  - `define('WP_DEBUG_LOG', false);` onder `WP_DEBUG` in `wp-config.php` (met akkoord van Wessel)
+  - bovenaan `.htaccess`, buiten het blok van WP Rocket: `<FilesMatch "\.log$"> Require all denied`. Getest: `.log` geeft 403, de site en de cv-pdf geven 200.
+- **Niet aangepast:** lumiedrinkz.nl heeft ook een openbare `debug.log` (dit is een ander project).
+- **GitHub-activiteit:** het scrollvak heeft `tabindex="0"`, `role="region"` en een label, zodat je het met het toetsenbord kunt scrollen.
+- **Klikdoelen:** de links van de projectkaart en de tijdlijn hebben 4 px padding boven en onder, met een negatieve marge, dus de opmaak blijft gelijk. Ze zijn nu minstens 29 px hoog. De projectkaart was al helemaal klikbaar via `::after`.
+- **Markdown-cache:** Markdown en `/llms.txt` vielen onder `ExpiresDefault "access plus 1 month"` van WP Rocket. Het filter `rocket_htaccess_mod_expires` voegt `ExpiresByType text/markdown "access plus 0 seconds"` toe. Op de server staat de regel al met de hand in `.htaccess`, zodat het nu al werkt (`max-age=0`).
+- **`[get_entry_value]`:** al verwijderd in D-094.
+- **Markdown buiten de WP Rocket-cache (keuze van Wessel):** WP Rocket serveert de cache op deze server via `advanced-cache.php`, niet via `.htaccess`. De `RewriteCond` uit `wesselvandenijssel_rocket_skip_markdown` deed daardoor niets, en een gecachte pagina gaf HTML aan een agent die om Markdown vroeg.
+  - het filter `rocket_advanced_cache_file` zet direct na `define('WP_ROCKET_ADVANCED_CACHE', true)` een check: bevat de `Accept`-header `text/markdown`, dan stopt `advanced-cache.php` en laadt WordPress de pagina. De Markdown zelf wordt niet gecachet (`DONOTCACHEPAGE`).
+  - op de server is `advanced-cache.php` alvast met de hand aangepast (backup in `~/tmp/`). De uitvoer van het filter is hetzelfde, dus als WP Rocket het bestand opnieuw schrijft, blijft de check staan.
+  - getest: Home, Over mij, Projecten en een blogbericht geven Markdown, een onbekende pagina geeft een Markdown-404, en browsers krijgen nog steeds de gecachte HTML
+
 ## D-094: Mobiel menu werkt met het toetsenbord
 
 - **Datum:** 2026-10-28
