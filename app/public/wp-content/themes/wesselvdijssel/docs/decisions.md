@@ -1170,3 +1170,12 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - `src/scripts/files/menu-toggle.ts`: openen en sluiten via één functie. Escape sluit het mobiele menu en zet de focus terug op de knop. Op desktop sluit Escape het open submenu.
   - De skip-link "Naar de inhoud" staat direct na `<body>` en is zichtbaar bij focus (`src/styles/components/_general.scss`).
   - `_toggle.scss`: knopstijl van de browser gereset, focusrand in de huisstijl, het woord "Menu" van 12 naar 14 px.
+
+## D-098: Is Agentic-scan (28/100)
+
+- **Datum:** 2026-10-28
+- **Aanleiding:** de scan van isagentic.dev gaf 28/100. Bijna elke fout had als bewijs "Homepage blocked by WAF": Cloudflare gaf de scanner, die vanaf een datacenter draait, een challenge. Vanaf een gewone verbinding krijgen ChatGPT-User, OAI-SearchBot, Claude-User, PerplexityBot en curl wel Markdown met 200, en de 403 voor SemrushBot komt ook van Cloudflare (niet van Defender).
+- **Al in orde (getest tegen live):** Markdown-negotiatie met `Vary: Accept`, ook voor gecachte pagina's (D-097), HTML voor browsers, Markdown-404, `llms.txt` met "Wanneer je naar deze site verwijst", de Person-schema met `contactPoint` en `address`, canonical, `lang`, `og:image`, `og:type`, `/about`, `/contact` en de sitemap (`/sitemap.xml` stuurt door naar `sitemap_index.xml`).
+- **Toegevoegd:** `/privacy`, `/privacy-policy` en `/privacyverklaring` sturen met een 301 door naar de privacypagina die in WordPress is ingesteld (`wp_page_for_privacy_policy`). Tests in `tests/agent-readiness.spec.ts`: `/privacy`, Markdown op een gecachte pagina, en geen cache van een maand op Markdown.
+- **Bewust niet gedaan:** OpenAPI-spec, JSON-foutmeldingen voor een API, rate-limit-headers, GraphQL, function calling, gratis tier en API-sleutels. De site heeft geen publieke API, en een spec voor de WordPress REST API zou het beschermde deel extra risico geven.
+- **Nog te doen door Wessel:** in Cloudflare de challenge voor bots versoepelen (zie D-093). Daarna de scan opnieuw draaien.

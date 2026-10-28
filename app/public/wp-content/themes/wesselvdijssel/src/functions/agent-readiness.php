@@ -39,8 +39,8 @@ function wesselvandenijssel_vary_accept(): void {
 }
 
 /**
- * Answers /llms.txt and redirects common "about" paths to Over mij before WordPress resolves the query,
- * so these requests never count as a 404 for Defender's 404 detection.
+ * Answers /llms.txt and redirects common "about" and "privacy" paths to Over mij and the privacy statement
+ * before WordPress resolves the query, so these requests never count as a 404 for Defender's 404 detection.
  *
  * @param WP $wp The WordPress environment
  */
@@ -57,6 +57,13 @@ function wesselvandenijssel_agent_routes(WP $wp): void {
 
 	if (in_array($path, ['about', 'about-me', 'over'], true) && get_post_status(218) === 'publish') {
 		wp_safe_redirect(get_permalink(218), 301);
+		exit;
+	}
+
+	$privacy_id = (int) get_option('wp_page_for_privacy_policy');
+
+	if (in_array($path, ['privacy', 'privacy-policy', 'privacyverklaring'], true) && $privacy_id && get_post_status($privacy_id) === 'publish') {
+		wp_safe_redirect(get_permalink($privacy_id), 301);
 		exit;
 	}
 }
