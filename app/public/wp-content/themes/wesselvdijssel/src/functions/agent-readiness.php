@@ -306,7 +306,7 @@ function wesselvandenijssel_llms_txt(): string {
 	$sections = [
 		'# Wessel van den IJssel',
 		'',
-		sprintf('> Front-end developer uit Utrecht, Nederland. Wessel bouwt WordPress- en Shopify-websites en -webshops%s, met aandacht voor snelheid, toegankelijkheid (WCAG 2.2 AA), technische SEO en tracking met GA4 en Google Tag Manager. Hij volgt de minor E-marketing aan de Hogeschool Utrecht.', $employer !== '' ? ' bij ' . $employer : ''),
+		sprintf('> Front-end developer en online marketeer uit Utrecht, Nederland. Wessel bouwt WordPress- en Shopify-websites en -webshops%s, met aandacht voor snelheid, toegankelijkheid (WCAG 2.2 AA), technische SEO en tracking met GA4 en Google Tag Manager. Hij volgt de minor E-marketing aan de Hogeschool Utrecht.', $employer !== '' ? ' bij ' . $employer : ''),
 		'',
 		'Deze website is het portfolio van Wessel. Alle teksten zijn in het Nederlands. Elke pagina is ook als Markdown beschikbaar: vraag dezelfde URL op met de header `Accept: text/markdown`.',
 		'',

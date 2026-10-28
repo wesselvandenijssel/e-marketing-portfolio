@@ -123,4 +123,5 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 13. **Content (D-101):**
    - Cloudflare: de cache van `/wp-content/uploads/2026/10/cv-wessel-van-den-ijssel.pdf` legen. De server heeft het nieuwe cv al.
    - na de deploy: bij Portfolio website het veld Website leegmaken, want de GitHub-link staat nu bij Broncode
-   - nog te kiezen of in te vullen: positionering, knop "Neem contact op" in de hero, naam van de privacypagina, Flexercise ("gevuld met scripts"), Rentwereld (jouw deel bij de cijfers), voor wie je de Conversion API inrichtte, een quote van een collega of klant, en je beschikbaarheid
+   - na de deploy: de documentcache van Complianz opnieuw legen (`cmplz_transients`), zodat het filter op het cookiebeleid direct werkt
+   - nog in te vullen: Flexercise ("gevuld met scripts"), Rentwereld (jouw deel bij de cijfers), voor wie je de Conversion API inrichtte (Over mij), een quote van een collega of klant met naam en functie, en je beschikbaarheid

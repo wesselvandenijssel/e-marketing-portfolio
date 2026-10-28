@@ -1212,4 +1212,8 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - projectveld "Broncode" (`github`) in de ACF-velden en in `project-details`
   - `content-single.php`: de samenvatting staat als korte intro onder de h1, en "Bijgewerkt op" staat in de metaregel als het bericht na de publicatiedag is aangepast
   - auteurbox: labels voor schermlezers "LinkedIn", "X", "E-mail" en "Telefoon" in plaats van `ucfirst()`
-- **Cv:** `~/Desktop/Portfolio/CV/cv.html` met "vanaf nul" en een klikbare link naar `emarketing.wesselvandenijssel.nl/projecten` (met UTM). De pdf is opnieuw gemaakt in Chromium (1 pagina) en vervangt media 417 op de server. De oude versie staat in `~/tmp/` op de server en als `.bak` in de map CV.
+- **Keuzes van Wessel:**
+  - **Positionering:** "Front-end developer en online marketeer uit Utrecht" in de hero-ondertitel, de tagline, de footertekst, de auteurbox, het cv en `llms.txt`. De SEO-titel van de homepage blijft "Front-end developer Utrecht". De functietitel bij het stagebedrijf (Ervaring, Person-schema) blijft "Front-end developer", want dat is de echte functie. De footertekst eindigt nu op "zorg dat je kunt meten wat ze opleveren", zodat "online marketing" niet dubbel staat.
+  - **Hero op home:** drie knoppen: "Neem contact op" (primair), "Bekijk mijn projecten" en "Download mijn cv" (secundair).
+  - **Privacypagina:** heet overal "Privacyverklaring" (paginatitel, dus ook footer en cookiebanner). De URL `/contact/privacy-statement/` blijft. De documentcache van Complianz (`cmplz_transients`) is geleegd.
+- **Cv:** `~/Desktop/Portfolio/CV/cv.html` met "vanaf nul", de nieuwe positionering en een klikbare link naar `emarketing.wesselvandenijssel.nl/projecten` (met UTM). De pdf is opnieuw gemaakt in Chromium (1 pagina) en vervangt media 417 op de server. De oude versie staat in `~/tmp/` op de server en als `.bak` in de map CV.
