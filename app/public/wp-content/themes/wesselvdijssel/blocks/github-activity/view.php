@@ -34,7 +34,7 @@ echo !is_admin() ? '[raw]' : '';
 			<?= wp_kses_post(sprintf(__('%s bijdragen op GitHub in het afgelopen jaar', 'wesselvandenijssel'), '<strong>' . esc_html($total) . '</strong>')); ?>
 		</p>
 
-		<div class="github-activity__scroll">
+		<div class="github-activity__scroll" tabindex="0" role="region" aria-label="<?= esc_attr__('Kalender met GitHub-bijdragen, scroll horizontaal', 'wesselvandenijssel'); ?>">
 			<div class="github-activity__grid" role="img" aria-label="<?= esc_attr(sprintf(__('Kalender met %s bijdragen op GitHub in het afgelopen jaar', 'wesselvandenijssel'), $total)); ?>">
 				<?php foreach ($weeks as $days) : ?>
 					<div class="github-activity__week">
