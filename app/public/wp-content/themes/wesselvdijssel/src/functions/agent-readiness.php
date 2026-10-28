@@ -364,6 +364,21 @@ function wesselvandenijssel_rocket_skip_markdown(string $rules): string {
 add_filter('rocket_htaccess_mod_rewrite', 'wesselvandenijssel_rocket_skip_markdown');
 
 /**
+ * Lets requests that ask for Markdown skip WP Rocket's page cache, which only holds HTML.
+ * WP Rocket serves cached pages from advanced-cache.php before WordPress loads, so the check has to live in that file.
+ *
+ * @param string $content The contents of advanced-cache.php
+ * @return string
+ */
+function wesselvandenijssel_rocket_skip_markdown_cache(string $content): string {
+	$define = "define( 'WP_ROCKET_ADVANCED_CACHE', true );";
+	$bail = "if ( isset( \$_SERVER['HTTP_ACCEPT'] ) && false !== stripos( \$_SERVER['HTTP_ACCEPT'], 'text/markdown' ) ) {\n\treturn;\n}";
+
+	return str_replace($define, $define . "\n\n" . $bail, $content);
+}
+add_filter('rocket_advanced_cache_file', 'wesselvandenijssel_rocket_skip_markdown_cache');
+
+/**
  * Gives Markdown responses the same browser cache time as HTML. Without it they fall under
  * WP Rocket's ExpiresDefault of one month.
  *
