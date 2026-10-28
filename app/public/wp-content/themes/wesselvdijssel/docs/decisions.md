@@ -1192,3 +1192,24 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Cookiebanner op mobiel:** van 432 px (51%) naar 273 px (32%), gemeten op 390×844. Accepteren en Weigeren naast elkaar en even groot, Bekijk voorkeuren eronder, het kruisje rechtsboven in de hoek. Op de server (backup van de tabel in `~/tmp/`): intro ingekort tot twee zinnen, categorieteksten in de je-vorm zonder "uw Internet Service Provider" en "verzenden van reclame".
 - **Over mij:** de Yoast-deelafbeelding is nu de afbeelding van 1200×630 (ID 432), net als de homepage, in plaats van de portretfoto van 1800×2400.
 - **Lint:** `_toggle.scss` had al een `order/order`-fout uit D-098 (een `@include` na een regel). Die is rechtgezet, anders faalt de build.
+
+## D-101: Content, privacy en cookiebeleid na de audit
+
+- **Datum:** 2026-10-28
+- **Uitgevoerd op de server**, met backups in `~/tmp/` (`emarketing-before-content-*-2026-10-28.sql`, `emarketing-before-excerpts-2026-10-28.sql`):
+  - **Privacyverklaring:** nieuw kopje "Beveiliging en video's" over Cloudflare (IP-adres) en Wistia (video's op Over mij, laden zodra je naar de galerij scrolt). Ook toegevoegd bij waarom, grondslag (gerechtvaardigd belang) en met wie ik deel. Beide doen mee aan het EU-US Data Privacy Framework. Laatst bijgewerkt: 28 oktober 2026.
+  - **Cookiebanner, marketing:** "Om te onthouden via welke website of campagne je binnenkwam en welke pagina's je bekijkt. Die gegevens gaan alleen mee als je het contactformulier verstuurt."
+  - **Datumnotatie** van WordPress: `j F Y` (was `F j, Y`). Het cookiebeleid toont nu "8 oktober 2026".
+  - **Projecten:** de zes regels "Bron: case X op mbeffect.nl" linken naar de case op mbeffect.nl. Hofstede Raanhuis: "dealerzoeker" in plaats van "store locator" (tekst, alt-teksten en titels van 2 afbeeldingen), en "Wil je minder beweging, dan staat hij uit." Rentwereld: "Het offertemandje staat 30 dagen in een cookie". Schoolmaaltijden: "vanaf nul".
+  - **Portfolio website:** onder Resultaat links naar de vier artikelen over deze site.
+  - **Broncode:** het nieuwe projectveld `github` is gevuld voor RideLoop, SalaryPerSecond en Portfolio website.
+  - **Over mij:** koppen "Wat ik doe" en "Wat ik meebreng als online marketing consultant".
+  - **Blog:** "of die klopt", "heeft deze pagina dit nodig?", en per artikel een samenvatting van 2 à 3 zinnen die antwoord geeft.
+  - **Bedankt:** "Ik neem binnen twee werkdagen contact met je op."
+  - **Alt-teksten:** "Grand Prix van Oostenrijk", "een licht overshirt" (ook in de Yoast-instelling van het persoonslogo).
+- **Thema:**
+  - `complianz.php`: filter `cmplz_document_html` zet het cookiebeleid in de ik-vorm (45 treffers van wij/we/ons/onze en "je kan" weg), haalt de zin over een winkelwagen en de regel "nog niet gesynchroniseerd" weg, en vertaalt "Consent to service" naar "Toestemming voor". Zo blijft de cookielijst van Complianz automatisch bijwerken.
+  - projectveld "Broncode" (`github`) in de ACF-velden en in `project-details`
+  - `content-single.php`: de samenvatting staat als korte intro onder de h1, en "Bijgewerkt op" staat in de metaregel als het bericht na de publicatiedag is aangepast
+  - auteurbox: labels voor schermlezers "LinkedIn", "X", "E-mail" en "Telefoon" in plaats van `ucfirst()`
+- **Cv:** `~/Desktop/Portfolio/CV/cv.html` met "vanaf nul" en een klikbare link naar `emarketing.wesselvandenijssel.nl/projecten` (met UTM). De pdf is opnieuw gemaakt in Chromium (1 pagina) en vervangt media 417 op de server. De oude versie staat in `~/tmp/` op de server en als `.bak` in de map CV.

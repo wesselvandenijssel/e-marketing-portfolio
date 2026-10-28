@@ -120,3 +120,7 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
 12. **Server en agents (D-097):**
    - lumiedrinkz.nl: `debug.log` is openbaar (609 KB, wordt nog geschreven). Zelfde fix nodig.
    - na de deploy: controleren of `wp-content/advanced-cache.php` de Markdown-check nog bevat (`grep text/markdown`)
+13. **Content (D-101):**
+   - Cloudflare: de cache van `/wp-content/uploads/2026/10/cv-wessel-van-den-ijssel.pdf` legen. De server heeft het nieuwe cv al.
+   - na de deploy: bij Portfolio website het veld Website leegmaken, want de GitHub-link staat nu bij Broncode
+   - nog te kiezen of in te vullen: positionering, knop "Neem contact op" in de hero, naam van de privacypagina, Flexercise ("gevuld met scripts"), Rentwereld (jouw deel bij de cijfers), voor wie je de Conversion API inrichtte, een quote van een collega of klant, en je beschikbaarheid

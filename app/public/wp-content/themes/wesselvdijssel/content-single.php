@@ -25,9 +25,17 @@ $post_url = get_permalink();
 				</div>
 
 				<div class="content-layout">
+					<?php if (has_excerpt()) : ?>
+						<p class="single__lead"><?= esc_html(get_the_excerpt()); ?></p>
+					<?php endif; ?>
+
 					<div class="single__meta">
 						<div class="single__date"><?= wp_kses_post(sprintf(__('Datum: <span>%s</span>', 'wesselvandenijssel'), get_the_date('d M Y'))); ?></div>
 						<span class="single__separator"></span>
+						<?php if (get_the_modified_date('Y-m-d') > get_the_date('Y-m-d')) : ?>
+							<div class="single__date"><?= esc_html__('Bijgewerkt op:', 'wesselvandenijssel'); ?> <span><time datetime="<?= esc_attr(get_the_modified_date('c')); ?>"><?= esc_html(get_the_modified_date('d M Y')); ?></time></span></div>
+							<span class="single__separator"></span>
+						<?php endif; ?>
 						<a class="single__author" href="<?= esc_url($author_url); ?>"><?= wp_kses_post(sprintf(__('Door: <span>%s</span>', 'wesselvandenijssel'), esc_html($author_name))); ?></a>
 						<span class="single__separator"></span>
 						<div class="single__reading-time"><?= wp_kses_post(sprintf(__('Leestijd: <span>%s</span>', 'wesselvandenijssel'), reading_time(get_the_ID()))); ?></div>
