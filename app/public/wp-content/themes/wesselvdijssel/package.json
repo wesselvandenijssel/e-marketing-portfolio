@@ -6,8 +6,7 @@
 	"scripts": {
 		"build": "cross-env NODE_ENV=production webpack --config webpack.config.ts",
 		"dev": "cross-env NODE_ENV=dev webpack --config webpack.config.ts",
-		"dev-watch": "cross-env NODE_ENV=dev-watch webpack --config webpack.config.ts",
-		"screenshots": "ts-node src/scripts/files/screenshots/main.ts"
+		"dev-watch": "cross-env NODE_ENV=dev-watch webpack --config webpack.config.ts"
 	},
 	"author": "Wessel van den IJssel",
 	"license": "ISC",
@@ -20,7 +19,6 @@
 		"browser-sync-webpack-plugin": "^2.3.0",
 		"glob": "^10.3.10",
 		"motion": "^13.1.0",
-		"playwright": "^1.58.2",
 		"stylelint": "^16.2.1",
 		"stylelint-order": "^6.0.4",
 		"stylelint-scss": "^6.1.0",

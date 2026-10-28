@@ -1,13 +1,13 @@
 import { defineConfig, devices } from "@playwright/test";
 
 /**
- * Playwright Configuration for Screenshot Testing
+ * Playwright Configuration for the agent-readiness test
  *
  * This config is separate from the main TypeScript build process
  * to avoid dependency conflicts in CI environments.
  */
 export default defineConfig({
-	testDir: "./src/scripts/files/screenshots/tests",
+	testDir: "./tests",
 	/* Output directories */
 	outputDir: "./playwright/test-results",
 

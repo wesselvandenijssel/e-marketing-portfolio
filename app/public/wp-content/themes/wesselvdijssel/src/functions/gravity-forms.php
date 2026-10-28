@@ -2,29 +2,29 @@
 defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 
 /**
- * Safely get and validate encrypted entry ID from $_GET parameter
+ * Get the entry ID from the ?entry=<id>-<token> parameter on the confirmation page
  *
- * @return int|false Entry ID if valid, false otherwise
+ * @return int|false Entry ID if the token matches the one stored on the entry, false otherwise
  */
 function get_validated_entry_id() {
-	if (!isset($_GET['entry']) || empty($_GET['entry'])) {
+	if (empty($_GET['entry']) || !function_exists('gform_get_meta')) {
 		return false;
 	}
 
-	// Verify nonce if present (for forms with nonce protection)
-	if (isset($_GET['_wpnonce']) && !wp_verify_nonce($_GET['_wpnonce'], 'gf_entry_' . sanitize_text_field($_GET['entry']))) {
+	$parts = explode('-', sanitize_text_field(wp_unslash($_GET['entry'])), 2);
+
+	if (count($parts) !== 2 || !ctype_digit($parts[0])) {
 		return false;
 	}
 
-	$encrypted_entry = sanitize_text_field($_GET['entry']);
-	$entry_id = encrypt_decrypt('decrypt', $encrypted_entry);
+	$entry_id = (int) $parts[0];
+	$token = gform_get_meta($entry_id, 'confirmation_token');
 
-	// Validate that entry_id is numeric and exists
-	if (!is_numeric($entry_id)) {
+	if (empty($token) || !hash_equals($token, $parts[1])) {
 		return false;
 	}
 
-	return (int) $entry_id;
+	return $entry_id;
 }
 
 /* Gravity Forms anker */
@@ -82,36 +82,28 @@ add_filter('gettext', 'gform_spam_notification_translation', 20, 3);
 // Disable GF theme styling
 add_filter('gform_disable_css', '__return_true');
 
-// Shortcode to get a Gravity Forms field value from the entry parameter
-function get_entry_value($atts) {
-	$a = shortcode_atts([
-		'field_id' => 0,
-	], $atts);
-
-	$entry_id = get_validated_entry_id();
-
-	if (empty($entry_id) || !function_exists('gravity_form') || empty($a))
-		return;
-
-	$entry = GFAPI::get_entry($entry_id);
-
-	if (is_wp_error($entry)) {
-		return '';
-	}
-
-	return $entry[$a['field_id']] ?? '';
-}
-add_shortcode('get_entry_value', 'get_entry_value');
-
-add_filter('gform_confirmation', 'add_encrypted_entry_id_to_confirmation_url', 10, 4);
-function add_encrypted_entry_id_to_confirmation_url($confirmation, $form, $entry, $is_ajax) {
+/**
+ * Adds ?entry=<id>-<token> to a redirect confirmation, with a random token stored on the entry
+ *
+ * @param string|array $confirmation The confirmation message or redirect
+ * @param array $form The submitted form
+ * @param array $entry The created entry
+ * @param bool $is_ajax Whether the form was submitted via AJAX
+ * @return string|array The confirmation
+ */
+add_filter('gform_confirmation', 'add_entry_token_to_confirmation_url', 10, 4);
+function add_entry_token_to_confirmation_url($confirmation, $form, $entry, $is_ajax) {
 	if (is_array($confirmation) && isset($confirmation['redirect'])) {
-		$entry_id_encrypted = encrypt_decrypt('encrypt', $entry['id']);
-		$confirmation['redirect'] = add_query_arg('entry', $entry_id_encrypted, $confirmation['redirect']);
+		$token = wp_generate_password(32, false);
+		gform_update_meta($entry['id'], 'confirmation_token', $token);
+		$confirmation['redirect'] = add_query_arg('entry', $entry['id'] . '-' . $token, $confirmation['redirect']);
 	}
 	return $confirmation;
 }
 
+/**
+ * Pushes a formSubmission event without personal data to the dataLayer on the confirmation page
+ */
 add_action('wp_footer', 'enqueue_datalayer_script_on_redirect');
 function enqueue_datalayer_script_on_redirect() {
 	$entry_id = get_validated_entry_id();
@@ -125,35 +117,14 @@ function enqueue_datalayer_script_on_redirect() {
 		return;
 
 	$form = GFAPI::get_form($entry['form_id']);
-	$email_fields = [];
-
-	foreach ($form['fields'] as $field) {
-		if ($field->type !== 'email')
-			continue;
-
-		$field_id = $field->id;
-		$label = $field->label;
-		$value = rgar($entry, $field_id);
-
-		$email_fields[] = [
-			'id' => $field_id,
-			'label' => $label,
-			'value' => $value
-		];
-	}
-
-	if (empty($email_fields))
-		return;
 
 	$datalayer = [
 		'event' => 'formSubmission',
 		'formId' => $form['id'],
 		'formName' => $form['title'],
-		'entryIdEncrypted' => encrypt_decrypt('encrypt', $entry_id),
-		'emailFields' => $email_fields
 	];
 
-	$datalayer_json = json_encode($datalayer);
+	$datalayer_json = wp_json_encode($datalayer, JSON_HEX_TAG);
 	$storage_key = 'formSubmission_' . $entry_id;
 
 	echo "

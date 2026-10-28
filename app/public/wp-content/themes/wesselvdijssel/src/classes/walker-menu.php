@@ -89,7 +89,7 @@ class Walker_Primary_Menu extends Walker {
 
 		if (!$image_id) return '';
 
-		return '<li class="sub-menu__card" aria-hidden="true">' . wp_get_attachment_image($image_id, 'Content', false, [
+		return '<li class="sub-menu__card" aria-hidden="true">' . wp_get_attachment_image($image_id, 'Menu card', false, [
 			'class' => 'sub-menu__image',
 			'alt' => '',
 			'loading' => 'lazy',

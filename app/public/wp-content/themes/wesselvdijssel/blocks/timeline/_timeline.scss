@@ -179,7 +179,9 @@ $timeline-gutter: 40px;
 
 	&__link {
 		align-self: flex-start;
-		margin-top: pxtorem(12);
+		margin-top: pxtorem(8);
+		margin-bottom: -4px;
+		padding-block: 4px;
 		color: $hue-accent-text;
 		font-weight: $font-weight-bold;
 		text-decoration: underline;

@@ -8,8 +8,6 @@ vendor
 
 .env
 
-.screenshots-token
-
 .playwright-mcp
 
 /playwright/test-results/

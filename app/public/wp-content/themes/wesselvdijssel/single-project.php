@@ -49,7 +49,7 @@ get_header(); ?>
 
 								<?php if (!$is_locked && has_post_thumbnail()) : ?>
 									<div class="image">
-										<?= wp_get_attachment_image(get_post_thumbnail_id(), 'Hero 900', false, ['class' => 'single__image', 'fetchpriority' => 'high', 'loading' => 'eager', 'sizes' => '(min-width: 840px) 800px, 100vw']); ?>
+										<?= wp_get_attachment_image(get_post_thumbnail_id(), 'Project hero medium', false, ['class' => 'single__image', 'fetchpriority' => 'high', 'loading' => 'eager', 'sizes' => '(min-width: 840px) 800px, 100vw']); ?>
 									</div>
 								<?php endif; ?>
 							</div>

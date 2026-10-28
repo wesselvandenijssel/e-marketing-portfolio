@@ -24,6 +24,7 @@ function hook_thumbnail_methods(): void {
 		add_image_size('Project card', 720, 480, true);
 		add_image_size('Portrait', 640, 800, true);
 		add_image_size('Content', 880, 880, false);
+		add_image_size('Menu card', 720, 0, false);
 		add_image_size('Avatar', 128, 128, true);
 	}
 }
