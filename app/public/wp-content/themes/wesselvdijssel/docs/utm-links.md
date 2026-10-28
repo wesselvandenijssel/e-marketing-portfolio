@@ -46,9 +46,10 @@ https://emarketing.wesselvandenijssel.nl/?utm_source=email&utm_medium=signature&
 | --- | --- |
 | Een bevestigingsmail die past bij je website | `https://emarketing.wesselvandenijssel.nl/wordpress/bevestigingsmail-gravity-forms/?utm_source=linkedin&utm_medium=social&utm_campaign=blog-bevestigingsmail` |
 | Structured data: zo vertel je Google wie je bent | `https://emarketing.wesselvandenijssel.nl/seo/structured-data-vertel-google-wie-je-bent/?utm_source=linkedin&utm_medium=social&utm_campaign=blog-structured-data` |
-| Een snellere website: laad alleen wat een pagina nodig heeft | `https://emarketing.wesselvandenijssel.nl/seo/snellere-website-laad-alleen-wat-nodig-is/?utm_source=linkedin&utm_medium=social&utm_campaign=blog-snellere-website` |
+| Laadsnelheid van je website verbeteren: laad alleen wat nodig is | `https://emarketing.wesselvandenijssel.nl/seo/snellere-website-laad-alleen-wat-nodig-is/?utm_source=linkedin&utm_medium=social&utm_campaign=blog-snellere-website` |
 | Toegankelijk bouwen begint bij contrast | `https://emarketing.wesselvandenijssel.nl/toegankelijkheid/toegankelijk-bouwen-begint-bij-contrast/?utm_source=linkedin&utm_medium=social&utm_campaign=blog-toegankelijk-bouwen` |
 | SEO verbeteren begint in de code | `https://emarketing.wesselvandenijssel.nl/seo/seo-verbeteren-begint-in-de-code/?utm_source=linkedin&utm_medium=social&utm_campaign=blog-seo-in-de-code` |
+| Tracking met cookietoestemming: zo meet ik mijn portfolio (concept, post 510) | `https://emarketing.wesselvandenijssel.nl/online-marketing/tracking-met-cookietoestemming/?utm_source=linkedin&utm_medium=social&utm_campaign=blog-tracking` |
 
 Nieuw artikel: neem de URL van het artikel en zet erachter `?utm_source=linkedin&utm_medium=social&utm_campaign=blog-<kort-onderwerp>`.
 

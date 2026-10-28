@@ -20,13 +20,13 @@
 	color: inherit;
 	font: inherit;
 
+	@include bp("narrow") {
+		display: none;
+	}
+
 	&:focus-visible {
 		outline: 2px solid $focus-color;
 		outline-offset: 2px;
-	}
-
-	@include bp("narrow") {
-		display: none;
 	}
 
 	&__lines {
@@ -156,8 +156,9 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		min-width: 28px;
-		min-height: 28px;
+		min-width: 44px;
+		min-height: 44px;
+		margin: -8px -8px -8px -16px;
 	}
 
 	&::before,

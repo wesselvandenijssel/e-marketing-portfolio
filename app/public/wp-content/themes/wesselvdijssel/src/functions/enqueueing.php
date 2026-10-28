@@ -33,9 +33,10 @@ function wesselvandenijssel_scripts_and_styles() {
 }
 
 /**
- * Keep jQuery, Gravity Forms and the theme bundle out of WP Rocket's "Delay JavaScript Execution".
- * The theme bundle sets the hidden start state of the scroll animations; delayed until the first
- * touch or scroll, it hides content that is already on screen and fades it in again.
+ * Keep jQuery, Gravity Forms, the theme bundle and WP Rocket's own link preloading out of WP Rocket's
+ * "Delay JavaScript Execution". The theme bundle sets the hidden start state of the scroll animations;
+ * delayed until the first touch or scroll, it hides content that is already on screen and fades it in again.
+ * Delayed inline scripts run as data: URLs, which the Content-Security-Policy blocks.
  *
  * @param string[] $excluded Patterns (regex, matched against the full script tag) excluded from delay.
  * @return string[]
@@ -51,8 +52,27 @@ add_filter('rocket_delay_js_exclusions', function (array $excluded): array {
 	$excluded[] = 'wp-i18n';
 	$excluded[] = 'wp-dom-ready';
 	$excluded[] = 'wesselvdijssel/dist/main.js';
+	$excluded[] = 'rocket-browser-checker';
+	$excluded[] = 'rocket-preload-links';
 
 	return $excluded;
+});
+
+/**
+ * Turns off WP Rocket's "critical images" performance hints. The theme already loads its LCP images with
+ * fetchpriority and eager loading; WP Rocket stored outdated image URLs, preloaded the hero portrait a second
+ * time and gave the logo a high priority.
+ */
+add_filter('rocket_above_the_fold_optimization', '__return_false');
+
+/**
+ * Keeps WP Rocket from adding a dns-prefetch for tracking domains, which load only after cookie consent.
+ *
+ * @param string[] $exclusions Patterns of external domains WP Rocket should not preconnect to
+ * @return string[]
+ */
+add_filter('preconnect_external_domain_exclusions', function (array $exclusions): array {
+	return array_merge($exclusions, ['googletagmanager.com', 'google-analytics.com', 'clarity.ms']);
 });
 
 add_action('admin_enqueue_scripts', 'load_admin_style');

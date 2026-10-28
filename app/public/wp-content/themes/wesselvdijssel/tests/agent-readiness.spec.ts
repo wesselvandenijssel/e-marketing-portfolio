@@ -54,6 +54,33 @@ test.describe("agent readiness", () => {
 		expect(response.headers()["location"]).toMatch(/\/over-mij\/$/);
 	});
 
+	test("/privacy redirects permanently to the privacy statement", async ({ request }) => {
+		const response = await request.get(`${BASE_URL}/privacy`, { maxRedirects: 0 });
+
+		expect(response.status()).toBe(301);
+		expect(response.headers()["location"]).toMatch(/\/privacy-statement\/$/);
+	});
+
+	test("a page from the WP Rocket cache still answers Markdown", async ({ request }) => {
+		await request.get(`${BASE_URL}/over-mij/`, { headers: { Accept: "text/html" } });
+
+		const response = await request.get(`${BASE_URL}/over-mij/`, { headers: { Accept: "text/markdown" } });
+		const body = await response.text();
+
+		expect(response.status()).toBe(200);
+		expect(response.headers()["content-type"]).toContain("text/markdown");
+		expect(body).toMatch(/^---\ntitle: /);
+		expect(body).not.toContain("<html");
+	});
+
+	test("Markdown responses are not cached for a month", async ({ request }) => {
+		for (const path of ["/", "/llms.txt"]) {
+			const response = await request.get(`${BASE_URL}${path}`, { headers: { Accept: "text/markdown" } });
+
+			expect(response.headers()["cache-control"] ?? "").not.toContain("max-age=2592000");
+		}
+	});
+
 	test("the protected section stays protected for Markdown requests", async ({ request }) => {
 		const response = await request.get(`${BASE_URL}/portfolio-minor/`, { headers: { Accept: "text/markdown" }, maxRedirects: 0 });
 

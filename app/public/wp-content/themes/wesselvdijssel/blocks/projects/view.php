@@ -199,6 +199,7 @@ echo !is_admin() ? '[raw]' : '';
 								'categories' => (!empty($project_categories) && !is_wp_error($project_categories)) ? $project_categories : [],
 								'excerpt' => get_the_excerpt(),
 								'heading_level' => $card_heading_level,
+								'eager' => $is_overview && $query->current_post === 0,
 							]); ?>
 						</li>
 					<?php endwhile; ?>

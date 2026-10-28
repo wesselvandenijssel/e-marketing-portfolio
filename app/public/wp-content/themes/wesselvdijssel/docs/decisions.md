@@ -1161,7 +1161,7 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - op de server is `advanced-cache.php` alvast met de hand aangepast (backup in `~/tmp/`). De uitvoer van het filter is hetzelfde, dus als WP Rocket het bestand opnieuw schrijft, blijft de check staan.
   - getest: Home, Over mij, Projecten en een blogbericht geven Markdown, een onbekende pagina geeft een Markdown-404, en browsers krijgen nog steeds de gecachte HTML
 
-## D-094: Mobiel menu werkt met het toetsenbord
+## D-098: Mobiel menu werkt met het toetsenbord
 
 - **Datum:** 2026-10-28
 - **Aanleiding:** visuele audit van de live site. De menuknop was een `<div role="button">`: Enter en Spatie deden niets, Escape sloot het menu niet, en de skip-link kwam pas na de menuknop.
@@ -1170,3 +1170,61 @@ Format per beslissing: datum, beslissing, reden, gevolg.
   - `src/scripts/files/menu-toggle.ts`: openen en sluiten via één functie. Escape sluit het mobiele menu en zet de focus terug op de knop. Op desktop sluit Escape het open submenu.
   - De skip-link "Naar de inhoud" staat direct na `<body>` en is zichtbaar bij focus (`src/styles/components/_general.scss`).
   - `_toggle.scss`: knopstijl van de browser gereset, focusrand in de huisstijl, het woord "Menu" van 12 naar 14 px.
+
+## D-099: Is Agentic-scan (28/100)
+
+- **Datum:** 2026-10-28
+- **Aanleiding:** de scan van isagentic.dev gaf 28/100. Bijna elke fout had als bewijs "Homepage blocked by WAF": Cloudflare gaf de scanner, die vanaf een datacenter draait, een challenge. Vanaf een gewone verbinding krijgen ChatGPT-User, OAI-SearchBot, Claude-User, PerplexityBot en curl wel Markdown met 200, en de 403 voor SemrushBot komt ook van Cloudflare (niet van Defender).
+- **Al in orde (getest tegen live):** Markdown-negotiatie met `Vary: Accept`, ook voor gecachte pagina's (D-097), HTML voor browsers, Markdown-404, `llms.txt` met "Wanneer je naar deze site verwijst", de Person-schema met `contactPoint` en `address`, canonical, `lang`, `og:image`, `og:type`, `/about`, `/contact` en de sitemap (`/sitemap.xml` stuurt door naar `sitemap_index.xml`).
+- **Toegevoegd:** `/privacy`, `/privacy-policy` en `/privacyverklaring` sturen met een 301 door naar de privacypagina die in WordPress is ingesteld (`wp_page_for_privacy_policy`). Tests in `tests/agent-readiness.spec.ts`: `/privacy`, Markdown op een gecachte pagina, en geen cache van een maand op Markdown.
+- **Bewust niet gedaan:** OpenAPI-spec, JSON-foutmeldingen voor een API, rate-limit-headers, GraphQL, function calling, gratis tier en API-sleutels. De site heeft geen publieke API, en een spec voor de WordPress REST API zou het beschermde deel extra risico geven.
+- **Nog te doen door Wessel:** in Cloudflare de challenge voor bots versoepelen (zie D-093). Daarna de scan opnieuw draaien.
+
+## D-100: WP Rocket-hints uit, klikdoelen, breadcrumb en cookiebanner
+
+- **Datum:** 2026-10-28
+- **WP Rocket "critical images" uit** (`rocket_above_the_fold_optimization` in `enqueueing.php`). Die functie had oude `.jpg`-URL's van vóór D-082 opgeslagen (4 preloads met een 404), preloadde het hero-portret een tweede keer naast de preload van het thema, en gaf het logo op blogartikelen `fetchpriority="high"`. Het thema regelt de LCP-afbeeldingen al zelf. Alleen de data legen was niet genoeg, want dan blijft de dubbele preload. Ook op de server de opgeslagen hints geleegd (`rocket_performance_hints_clean_all`, als beheerder): alle vier de tabellen van 50 naar 0 rijen.
+- **Geen dns-prefetch voor tracking vóór toestemming:** `preconnect_external_domain_exclusions` sluit googletagmanager.com, google-analytics.com en clarity.ms uit.
+- **CSP:** WP Rocket voerde het uitgestelde inline script `rocket-browser-checker` uit als `data:`-script. De CSP blokkeerde dat. `rocket-browser-checker` en `rocket-preload-links` staan nu in `rocket_delay_js_exclusions`. `data:` is niet aan de CSP toegevoegd.
+- **LCP-afbeeldingen:** de eerste projectkaart in het overzicht laadt `eager` met `fetchpriority="high"` (`project-card`, argument `eager`). De hero-afbeeldingen van het type "Afbeelding" hebben `loading="eager"`, zodat WP Rocket ze niet lazy laadt nu de critical images uit staan.
+- **Klikdoelen in het menu (vanaf 740 px):** navlinks 15 px padding met een negatieve marge (23 naar 45 px hoog), submenuknop 44×44 met negatieve marges. Gemeten op 820 en 1280 px: tekst, pijlen en headerhoogte staan op exact dezelfde plek. De knop "Portfolio (login)" blijft 37 px: daar is de `<a>` zelf de pil.
+- **Breadcrumb:** op projectpagina's "Home / Projecten / project" (`wpseo_breadcrumb_links`, ook in de BreadcrumbList-schema). Op de homepage geen breadcrumb.
+- **Cookiebanner op mobiel:** van 432 px (51%) naar 273 px (32%), gemeten op 390×844. Accepteren en Weigeren naast elkaar en even groot, Bekijk voorkeuren eronder, het kruisje rechtsboven in de hoek. Op de server (backup van de tabel in `~/tmp/`): intro ingekort tot twee zinnen, categorieteksten in de je-vorm zonder "uw Internet Service Provider" en "verzenden van reclame".
+- **Over mij:** de Yoast-deelafbeelding is nu de afbeelding van 1200×630 (ID 432), net als de homepage, in plaats van de portretfoto van 1800×2400.
+- **Lint:** `_toggle.scss` had al een `order/order`-fout uit D-098 (een `@include` na een regel). Die is rechtgezet, anders faalt de build.
+
+## D-101: Content, privacy en cookiebeleid na de audit
+
+- **Datum:** 2026-10-28
+- **Uitgevoerd op de server**, met backups in `~/tmp/` (`emarketing-before-content-*-2026-10-28.sql`, `emarketing-before-excerpts-2026-10-28.sql`):
+  - **Privacyverklaring:** nieuw kopje "Beveiliging en video's" over Cloudflare (IP-adres) en Wistia (video's op Over mij, laden zodra je naar de galerij scrolt). Ook toegevoegd bij waarom, grondslag (gerechtvaardigd belang) en met wie ik deel. Beide doen mee aan het EU-US Data Privacy Framework. Laatst bijgewerkt: 28 oktober 2026.
+  - **Cookiebanner, marketing:** "Om te onthouden via welke website of campagne je binnenkwam en welke pagina's je bekijkt. Die gegevens gaan alleen mee als je het contactformulier verstuurt."
+  - **Datumnotatie** van WordPress: `j F Y` (was `F j, Y`). Het cookiebeleid toont nu "8 oktober 2026".
+  - **Projecten:** de zes regels "Bron: case X op mbeffect.nl" linken naar de case op mbeffect.nl. Hofstede Raanhuis: "dealerzoeker" in plaats van "store locator" (tekst, alt-teksten en titels van 2 afbeeldingen), en "Wil je minder beweging, dan staat hij uit." Rentwereld: "Het offertemandje staat 30 dagen in een cookie". Schoolmaaltijden: "vanaf nul".
+  - **Portfolio website:** onder Resultaat links naar de vier artikelen over deze site.
+  - **Broncode:** het nieuwe projectveld `github` is gevuld voor RideLoop, SalaryPerSecond en Portfolio website.
+  - **Over mij:** koppen "Wat ik doe" en "Wat ik meebreng als online marketing consultant".
+  - **Blog:** "of die klopt", "heeft deze pagina dit nodig?", en per artikel een samenvatting van 2 à 3 zinnen die antwoord geeft.
+  - **Bedankt:** "Ik neem binnen twee werkdagen contact met je op."
+  - **Alt-teksten:** "Grand Prix van Oostenrijk", "een licht overshirt" (ook in de Yoast-instelling van het persoonslogo).
+- **Thema:**
+  - `complianz.php`: filter `cmplz_document_html` zet het cookiebeleid in de ik-vorm (45 treffers van wij/we/ons/onze en "je kan" weg), haalt de zin over een winkelwagen en de regel "nog niet gesynchroniseerd" weg, en vertaalt "Consent to service" naar "Toestemming voor". Zo blijft de cookielijst van Complianz automatisch bijwerken.
+  - projectveld "Broncode" (`github`) in de ACF-velden en in `project-details`
+  - `content-single.php`: de samenvatting staat als korte intro onder de h1, en "Bijgewerkt op" staat in de metaregel als het bericht na de publicatiedag is aangepast
+  - auteurbox: labels voor schermlezers "LinkedIn", "X", "E-mail" en "Telefoon" in plaats van `ucfirst()`
+- **Keuzes van Wessel:**
+  - **Positionering:** "Front-end developer en online marketeer uit Utrecht" in de hero-ondertitel, de tagline, de footertekst, de auteurbox, het cv en `llms.txt`. De SEO-titel van de homepage blijft "Front-end developer Utrecht". De functietitel bij het stagebedrijf (Ervaring, Person-schema) blijft "Front-end developer", want dat is de echte functie. De footertekst eindigt nu op "zorg dat je kunt meten wat ze opleveren", zodat "online marketing" niet dubbel staat.
+  - **Hero op home:** drie knoppen: "Neem contact op" (primair), "Bekijk mijn projecten" en "Download mijn cv" (secundair).
+  - **Privacypagina:** heet overal "Privacyverklaring" (paginatitel, dus ook footer en cookiebanner). De URL `/contact/privacy-statement/` blijft. De documentcache van Complianz (`cmplz_transients`) is geleegd.
+- **Antwoorden van Wessel:**
+  - **Flexercise:** "23 pagina's gevuld via een eigen script dat de content van de live site overnam". Onder Aanpak staat nu ook "De Meta Conversion API en Google Consent Mode V2 ingericht."
+  - **Over mij:** "Voor Flexercise Treatments richtte ik de Meta Conversion API en Google Consent Mode V2 in."
+  - **Rentwereld:** onder de cijfers van het team: "Mijn deel daarin: ik zette het ontwerp pixelperfect om in code en voerde SEO-optimalisaties door."
+  - **Beschikbaarheid:** Contact zegt "Ik werk met plezier bij MB effect en zoek nu geen nieuwe baan. Sparren over front-end of online marketing kan altijd." `llms.txt` stuurt agents niet meer door voor een vacature.
+  - **Quote op de homepage**, na het blok met wat ik doe (blok quote-slider): "Wessel is een persoon die altijd tot het uiterste gaat om het optimale eruit te halen." Isabel Zomerdijk, collega bij Racesquare. Alleen het dubbele werkwoord ("wilt gaat") is verbeterd. Wessel bevestigde dat "partner" zakenpartner betekent. De quote komt niet uit de 360-gradenfeedback van het beschermde deel.
+- **Nieuw artikel als concept** (post 510, categorie "Online marketing", nieuw): "Tracking met cookietoestemming: zo meet ik mijn portfolio", geschreven in een andere sessie. Aangepast: "Het doel van deze site is dat bezoekers contact met me opnemen" in plaats van "een baan na de minor". Yoast-velden staan erin. Vóór publicatie:
+  - `[INVULLEN]` bij "Wat het oplevert" vullen met echte cijfers uit GA4 of Clarity
+  - in GTM controleren of `cv_download`, `email_click` en `blog_scroll` echt als tag bestaan
+  - na de deploy: klopt de zin dat er geen preconnect of dns-prefetch naar GA en Clarity is (D-100)
+  - daarna een link toevoegen bij Portfolio website ("vijf artikelen")
+- **Cv:** `~/Desktop/Portfolio/CV/cv.html` met "vanaf nul", de nieuwe positionering en een klikbare link naar `emarketing.wesselvandenijssel.nl/projecten` (met UTM). De pdf is opnieuw gemaakt in Chromium (1 pagina) en vervangt media 417 op de server. De oude versie staat in `~/tmp/` op de server en als `.bak` in de map CV.

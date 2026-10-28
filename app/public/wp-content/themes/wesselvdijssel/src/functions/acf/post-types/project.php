@@ -44,6 +44,13 @@ function wesselvandenijssel_project_fields(): void {
 				'wrapper' => ['width' => '50'],
 			],
 			[
+				'key' => 'project_details_github',
+				'name' => 'github',
+				'label' => esc_html__('Broncode', 'wesselvandenijssel'),
+				'type' => 'url',
+				'wrapper' => ['width' => '50'],
+			],
+			[
 				'key' => 'project_details_tools',
 				'name' => 'tools',
 				'label' => esc_html__('Tools en technieken', 'wesselvandenijssel'),

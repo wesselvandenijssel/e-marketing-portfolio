@@ -5,6 +5,35 @@ body .cmplz-cookiebanner {
 		font-weight: $font-weight-bold;
 	}
 
+	.cmplz-header {
+		@include bp("mobile") {
+			position: absolute;
+			top: 16px;
+			right: 16px;
+		}
+	}
+
+	.cmplz-message {
+		@include bp("mobile") {
+			padding-right: 28px;
+		}
+	}
+
+	.cmplz-buttons {
+		@include bp("mobile") {
+			display: grid !important;
+			grid-template-columns: 1fr 1fr;
+			gap: 8px;
+		}
+
+		.cmplz-view-preferences,
+		.cmplz-save-preferences {
+			@include bp("mobile") {
+				grid-column: 1 / -1;
+			}
+		}
+	}
+
 	.cmplz-close:focus-visible {
 		outline: 2px solid $focus-color;
 		outline-offset: 2px;
@@ -31,6 +60,11 @@ body .cmplz-cookiebanner {
 			color 0.4s ease-in-out,
 			background-color 0.4s ease-in-out,
 			border-color 0.4s ease-in-out;
+
+		@include bp("mobile") {
+			width: 100% !important;
+			margin: 0 !important;
+		}
 
 		&.cmplz-accept,
 		&.cmplz-deny,

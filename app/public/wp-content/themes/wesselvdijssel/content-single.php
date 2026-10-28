@@ -25,9 +25,17 @@ $post_url = get_permalink();
 				</div>
 
 				<div class="content-layout">
+					<?php if (has_excerpt()) : ?>
+						<p class="single__lead"><?= esc_html(get_the_excerpt()); ?></p>
+					<?php endif; ?>
+
 					<div class="single__meta">
 						<div class="single__date"><?= wp_kses_post(sprintf(__('Datum: <span>%s</span>', 'wesselvandenijssel'), get_the_date('d M Y'))); ?></div>
 						<span class="single__separator"></span>
+						<?php if (get_the_modified_date('Y-m-d') > get_the_date('Y-m-d')) : ?>
+							<div class="single__date"><?= esc_html__('Bijgewerkt op:', 'wesselvandenijssel'); ?> <span><time datetime="<?= esc_attr(get_the_modified_date('c')); ?>"><?= esc_html(get_the_modified_date('d M Y')); ?></time></span></div>
+							<span class="single__separator"></span>
+						<?php endif; ?>
 						<a class="single__author" href="<?= esc_url($author_url); ?>"><?= wp_kses_post(sprintf(__('Door: <span>%s</span>', 'wesselvandenijssel'), esc_html($author_name))); ?></a>
 						<span class="single__separator"></span>
 						<div class="single__reading-time"><?= wp_kses_post(sprintf(__('Leestijd: <span>%s</span>', 'wesselvandenijssel'), reading_time(get_the_ID()))); ?></div>
@@ -110,6 +118,15 @@ $post_url = get_permalink();
 								'phone' => esc_attr(!empty(get_the_author_meta('user_phone')) ? 'tel:' . get_the_author_meta('user_phone') : ''),
 							];
 
+							$social_labels = [
+								'twitter' => 'X',
+								'linkedin' => 'LinkedIn',
+								'facebook' => 'Facebook',
+								'instagram' => 'Instagram',
+								'mail' => __('E-mail', 'wesselvandenijssel'),
+								'phone' => __('Telefoon', 'wesselvandenijssel'),
+							];
+
 							foreach ($socials as $key => $url) :
 								if (empty($url)) continue; ?>
 
@@ -117,7 +134,7 @@ $post_url = get_permalink();
 									target="_blank"
 									rel="noopener noreferrer"
 									class="single__author-social-link single__author-social-link--<?= esc_attr($key); ?>">
-									<span class="screen-reader-text"><?= esc_html(ucfirst($key)); ?></span>
+									<span class="screen-reader-text"><?= esc_html($social_labels[$key] ?? ucfirst($key)); ?></span>
 								</a>
 
 							<?php endforeach; ?>

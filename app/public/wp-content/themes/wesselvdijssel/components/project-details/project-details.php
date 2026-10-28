@@ -6,6 +6,7 @@ $post_id = $post_id ?? get_the_ID();
 $client = get_field('client', $post_id) ?: '';
 $period = get_field('period', $post_id) ?: '';
 $website = get_field('website', $post_id) ?: '';
+$github = get_field('github', $post_id) ?: '';
 $tools = get_field('tools', $post_id) ?: '';
 $images = get_field('images', $post_id) ?: [];
 
@@ -17,7 +18,7 @@ $sections = [
 ];
 
 $tool_list = array_filter(array_map('trim', explode(',', $tools)));
-$has_facts = $client || $period || $website || $tool_list;
+$has_facts = $client || $period || $website || $github || $tool_list;
 ?>
 
 <div class="project-details">
@@ -43,6 +44,18 @@ $has_facts = $client || $period || $website || $tool_list;
 					<dd>
 						<a href="<?= esc_url($website); ?>" target="_blank" rel="noopener noreferrer">
 							<?= esc_html(preg_replace('#^https?://(www\.)?#', '', untrailingslashit($website))); ?>
+							<span class="screen-reader-text"><?= esc_html__('(opent in een nieuw venster)', 'wesselvandenijssel'); ?></span>
+						</a>
+					</dd>
+				</div>
+			<?php endif; ?>
+
+			<?php if ($github) : ?>
+				<div class="project-details__fact">
+					<dt><?= esc_html__('Broncode', 'wesselvandenijssel'); ?></dt>
+					<dd>
+						<a href="<?= esc_url($github); ?>" target="_blank" rel="noopener noreferrer">
+							<?= esc_html(preg_replace('#^https?://(www\.)?#', '', untrailingslashit($github))); ?>
 							<span class="screen-reader-text"><?= esc_html__('(opent in een nieuw venster)', 'wesselvandenijssel'); ?></span>
 						</a>
 					</dd>
