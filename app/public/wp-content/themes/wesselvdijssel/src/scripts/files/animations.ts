@@ -47,13 +47,16 @@ const SINGLES = [
 ].join(", ");
 
 /**
- * Checks whether an element sits in page content, not in the header, footer or a popup
+ * Checks whether an element sits in page content below the fold. Elements already on screen at load
+ * keep their first paint, so hiding and fading them in again does not delay LCP or shift the layout.
  *
  * @param element - The candidate element
  * @returns Whether the element may be animated
  */
 function isAnimatable(element: Element): boolean {
-	return !element.closest("header, footer, .popup");
+	if (element.closest("header, footer, .popup")) return false;
+
+	return element.getBoundingClientRect().top >= window.innerHeight;
 }
 
 /**
@@ -162,9 +165,14 @@ function fadeUp(element: Element, delay = 0): void {
  * @returns void
  */
 function initText(): void {
-	document.querySelectorAll<HTMLElement>(HEADING_SELECTORS).forEach((heading) => {
-		if (!isAnimatable(heading)) return;
+	const headings = Array.from(
+		document.querySelectorAll<HTMLElement>(HEADING_SELECTORS),
+	).filter(isAnimatable);
+	const copies = Array.from(
+		document.querySelectorAll<HTMLElement>(COPY_SELECTORS),
+	).filter((copy) => isAnimatable(copy) && !copy.closest(".reveal-item"));
 
+	headings.forEach((heading) => {
 		wrapWords(heading);
 
 		if (!heading.querySelector(".text-reveal__mask")) return;
@@ -173,9 +181,7 @@ function initText(): void {
 		inView(heading, () => revealHeading(heading), { margin: IN_VIEW_MARGIN });
 	});
 
-	document.querySelectorAll<HTMLElement>(COPY_SELECTORS).forEach((copy) => {
-		if (!isAnimatable(copy) || copy.closest(".reveal-item")) return;
-
+	copies.forEach((copy) => {
 		copy.classList.add("reveal-fade");
 		inView(copy, () => fadeUp(copy), { margin: IN_VIEW_MARGIN });
 	});
@@ -187,27 +193,27 @@ function initText(): void {
  * @returns void
  */
 function initGroups(): void {
-	GROUPS.forEach(([groupSelector, itemSelector]) => {
-		document.querySelectorAll<HTMLElement>(groupSelector).forEach((group) => {
-			if (!isAnimatable(group)) return;
+	const groups = GROUPS.flatMap(([groupSelector, itemSelector]) =>
+		Array.from(document.querySelectorAll<HTMLElement>(groupSelector)).map((group) =>
+			Array.from(group.querySelectorAll<HTMLElement>(itemSelector)).filter(isAnimatable),
+		),
+	);
+	const grouped = new Set(groups.flat());
+	const singles = Array.from(document.querySelectorAll<HTMLElement>(SINGLES)).filter(
+		(element) => !grouped.has(element) && isAnimatable(element),
+	);
 
-			const items = Array.from(group.querySelectorAll<HTMLElement>(itemSelector));
+	groups.forEach((items) => {
+		items.forEach((item) => item.classList.add("reveal-item"));
 
-			if (!items.length) return;
-
-			items.forEach((item) => item.classList.add("reveal-item"));
-
-			items.forEach((item, index) => {
-				inView(item, () => fadeUp(item, (index % 4) * ITEM_STAGGER), {
-					margin: IN_VIEW_MARGIN,
-				});
+		items.forEach((item, index) => {
+			inView(item, () => fadeUp(item, (index % 4) * ITEM_STAGGER), {
+				margin: IN_VIEW_MARGIN,
 			});
 		});
 	});
 
-	document.querySelectorAll<HTMLElement>(SINGLES).forEach((element) => {
-		if (!isAnimatable(element) || element.classList.contains("reveal-item")) return;
-
+	singles.forEach((element) => {
 		element.classList.add("reveal-item");
 		inView(element, () => fadeUp(element), { margin: IN_VIEW_MARGIN });
 	});

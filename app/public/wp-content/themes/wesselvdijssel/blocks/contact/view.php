@@ -27,29 +27,7 @@ echo !is_admin() ? '[raw]' : '';
 				}
 
 				if (function_exists('gravity_form')) {
-					$field_values = [];
-
-					$entry_id = get_validated_entry_id();
-
-					if ($entry_id) {
-						$entry = GFAPI::get_entry($entry_id);
-
-						if (!is_wp_error($entry)) {
-							$gf_form = GFAPI::get_form($entry['form_id']);
-
-							foreach ($gf_form['fields'] as $field) {
-								if (!empty($field->inputs)) {
-									foreach ($field->inputs as $input) {
-										$field_values[$input['id']] = rgar($entry, $input['id']);
-									}
-								} else {
-									$field_values[$field->id] = rgar($entry, $field->id);
-								}
-							}
-						}
-					}
-
-					gravity_form($form, false, false, false, $field_values, true);
+					gravity_form($form, false, false, false, null, true);
 				}
 				?>
 			</div>

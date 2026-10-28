@@ -227,38 +227,6 @@ function be_exclude_noindex_searchwp($ids) {
 add_filter('searchwp_exclude', 'be_exclude_noindex_searchwp');
 
 /**
- * Encrypt or decrypt a string using AES-256-CBC
- *
- * @param string $action	'encrypt' or 'decrypt'
- * @param string $string	The string to encrypt or decrypt
- *
- * @return string|false	The encrypted/decrypted string on success, or false on failure.
- *
- * Returns false if:
- * - The $action parameter is not 'encrypt' or 'decrypt'.
- * - The underlying OpenSSL encryption or decryption operation fails (e.g., due to invalid input or configuration).
- */
-function encrypt_decrypt($action, $string): string|false {
-	$output = false;
-	$encrypt_method = "AES-256-CBC";
-	$secret_key = 'U8CUZRKkzg5qfitrRUq3kKOfCdcrgpHpjDzjpWt94o3BWzyhf03xeL+x7wUsxlNP'; // 32 byte key, randomly generated with https://generate-random.org/encryption-key-generator
-	$secret_iv = 'hvbIh8YQjKr30aQXQ02rxgmenRAjpaC+pekPeSR8GUw='; // 16 byte iv, randomly generated with https://generate-random.org/encryption-key-generator
-
-	// hash
-	$key = hash('sha256', $secret_key);
-	// iv - encrypt method AES-256-CBC expects 16 bytes
-	$iv = substr(hash('sha256', $secret_iv), 0, 16);
-
-	if ($action == 'encrypt') {
-		$output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
-		$output = base64_encode($output);
-	} else if ($action == 'decrypt') {
-		$output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
-	}
-	return $output;
-}
-
-/**
  * Configure ACF WYSIWYG toolbar options
  *
  * @param array $toolbars Available toolbars
