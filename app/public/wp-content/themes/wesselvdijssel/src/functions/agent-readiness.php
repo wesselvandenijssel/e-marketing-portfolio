@@ -362,3 +362,15 @@ function wesselvandenijssel_rocket_skip_markdown(string $rules): string {
 	);
 }
 add_filter('rocket_htaccess_mod_rewrite', 'wesselvandenijssel_rocket_skip_markdown');
+
+/**
+ * Gives Markdown responses the same browser cache time as HTML. Without it they fall under
+ * WP Rocket's ExpiresDefault of one month.
+ *
+ * @param string $rules The mod_expires rules WP Rocket writes to .htaccess
+ * @return string
+ */
+function wesselvandenijssel_rocket_expires_markdown(string $rules): string {
+	return preg_replace('/^(\s*)ExpiresByType text\/html\s.*$/m', "$0\n$1ExpiresByType text/markdown \"access plus 0 seconds\"", $rules, 1);
+}
+add_filter('rocket_htaccess_mod_expires', 'wesselvandenijssel_rocket_expires_markdown');
