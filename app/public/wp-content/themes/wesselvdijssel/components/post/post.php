@@ -5,7 +5,6 @@ $title = $title ?? '';
 $image = $image ?? 0;
 $categories = $categories ?? [];
 $link = $link ?? [];
-$author = $author ?? '';
 $date = $date ?? '';
 $swiper = $swiper ?? false;
 $heading_level = isset($heading_level) ? max(2, min(6, absint($heading_level))) : 3;
@@ -43,21 +42,11 @@ if (!empty($swiper)) {
 		</div>
 
 		<div class="post__content">
-			<div class="post__meta">
-				<?php
-				$meta_items = [];
-
-				if (!empty($author)) {
-					$meta_items[] = '<span class="post__meta-item post__meta-item--author">' . esc_html__('Door:', 'wesselvandenijssel') . ' ' . esc_html($author) . '</span>';
-				}
-
-				if (!empty($date)) {
-					$meta_items[] = '<span class="post__meta-item post__meta-item--date">' . esc_html($date) . '</span>';
-				}
-
-				echo implode('<span class="post__separator">|</span>', $meta_items);
-				?>
-			</div>
+			<?php if (!empty($date)) : ?>
+				<div class="post__meta">
+					<span class="post__meta-item post__meta-item--date"><?= esc_html($date); ?></span>
+				</div>
+			<?php endif; ?>
 
 			<<?= $heading; ?> class="post__title h3">
 				<?= esc_html($title); ?>

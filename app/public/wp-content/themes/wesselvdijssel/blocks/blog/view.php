@@ -173,7 +173,6 @@ echo !is_admin() ? '[raw]' : '';
 								'title' => get_the_title(),
 								'target' => '_self',
 							],
-							'author' => get_the_author(),
 							'date' => get_the_date('d M Y'),
 							'swiper' => !$is_overview,
 							'heading_level' => $post_heading_level,
