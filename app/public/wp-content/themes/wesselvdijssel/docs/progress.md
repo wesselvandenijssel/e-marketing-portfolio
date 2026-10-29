@@ -121,7 +121,7 @@ Status: `Gepland` · `Bezig` · `Klaar` · `Geblokkeerd`
    - lumiedrinkz.nl: `debug.log` is openbaar (609 KB, wordt nog geschreven). Zelfde fix nodig.
    - na de deploy: controleren of `wp-content/advanced-cache.php` de Markdown-check nog bevat (`grep text/markdown`)
 13. **Content (D-101):**
-   - Cloudflare: de cache van `/wp-content/uploads/2026/10/cv-wessel-van-den-ijssel.pdf` legen. De server heeft het nieuwe cv al.
+   - Cloudflare: de cache legen van `/wp-content/uploads/2026/10/cv-wessel-van-den-ijssel.pdf` en van de fonts in `/wp-content/themes/wesselvdijssel/node_modules/@awesome.me/kit-47e6dc046c/icons/webfonts/` (het GitHub-icoon toont nu een leeg vakje, D-103)
    - na de deploy: bij Portfolio website het veld Website leegmaken, want de GitHub-link staat nu bij Broncode
    - na de deploy: de documentcache van Complianz opnieuw legen (`cmplz_transients`), zodat het filter op het cookiebeleid direct werkt
    - trackingartikel (concept, post 510): in GTM controleren of `generate_lead`, `cv_download`, `email_click` en `blog_scroll` echt vuren, dan publiceren en linken vanaf Portfolio website (D-101)
