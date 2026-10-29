@@ -6,6 +6,9 @@ $url = $url ?? '';
 $image = $image ?? 0;
 $categories = $categories ?? [];
 $excerpt = $excerpt ?? '';
+$role = $role ?? '';
+$tools = $tools ?? '';
+$tool_list = array_slice(array_filter(array_map('trim', explode(',', $tools))), 0, 3);
 $heading_level = isset($heading_level) ? max(2, min(6, absint($heading_level))) : 3;
 $eager = !empty($eager);
 
@@ -40,6 +43,17 @@ $heading = 'h' . $heading_level;
 		<<?= $heading; ?> class="project-card__title h3">
 			<a class="project-card__link" href="<?= esc_url($url); ?>"><?= esc_html($title); ?></a>
 		</<?= $heading; ?>>
+
+		<?php if (!empty($role) || !empty($tool_list)) : ?>
+			<p class="project-card__meta">
+				<?php if (!empty($role)) : ?>
+					<span class="project-card__role"><?= esc_html($role); ?></span>
+				<?php endif; ?>
+				<?php if (!empty($tool_list)) : ?>
+					<span class="project-card__tools"><?= esc_html(implode(', ', $tool_list)); ?></span>
+				<?php endif; ?>
+			</p>
+		<?php endif; ?>
 
 		<?php if (!empty($excerpt)) : ?>
 			<p class="project-card__excerpt"><?= esc_html(wp_strip_all_tags($excerpt)); ?></p>

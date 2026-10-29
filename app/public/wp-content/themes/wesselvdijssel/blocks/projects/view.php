@@ -198,6 +198,8 @@ echo !is_admin() ? '[raw]' : '';
 								'image' => get_post_thumbnail_id(),
 								'categories' => (!empty($project_categories) && !is_wp_error($project_categories)) ? $project_categories : [],
 								'excerpt' => get_the_excerpt(),
+								'role' => get_field('card_role') ?: '',
+								'tools' => get_field('tools') ?: '',
 								'heading_level' => $card_heading_level,
 								'eager' => $is_overview && $query->current_post === 0,
 							]); ?>
