@@ -50,6 +50,24 @@ add_action('acf/init', function () {
 						],
 					],
 					[
+						'key' => 'clone_buttons_buttons_group_tertiary',
+						'name' => 'tertiary',
+						'label' => esc_html__('Button - Tertiair', 'wesselvandenijssel'),
+						'sub_fields' => [
+							[
+								'key' => 'clone_buttons_buttons_group_tertiary_button_tertiary',
+								'label' => esc_html__('Button', 'wesselvandenijssel'),
+								'name' => 'button_tertiary',
+								'type' => 'clone',
+								'clone' => [
+									'clone_buttons_singular_button',
+								],
+								'display' => 'seamless',
+								'layout' => 'block',
+							],
+						],
+					],
+					[
 						'key' => 'clone_buttons_buttons_group_phone',
 						'name' => 'phone',
 						'label' => esc_html__('Telefoonnummer', 'wesselvandenijssel'),

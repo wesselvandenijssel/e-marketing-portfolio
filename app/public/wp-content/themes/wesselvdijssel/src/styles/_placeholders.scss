@@ -60,6 +60,23 @@
 	}
 }
 
+%btn--tertiary {
+	min-height: 44px;
+	align-items: center;
+	padding: 0;
+	border: none;
+	color: $link-color;
+	text-decoration: underline;
+
+	@extend %btn;
+
+	&:hover,
+	&:focus {
+		color: $hue-dark-1;
+		text-decoration: underline;
+	}
+}
+
 %btn-icon {
 	@media (prefers-reduced-motion: no-preference) {
 		&:hover::after,
