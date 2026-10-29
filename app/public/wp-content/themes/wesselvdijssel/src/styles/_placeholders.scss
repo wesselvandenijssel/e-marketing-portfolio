@@ -63,17 +63,28 @@
 %btn--tertiary {
 	min-height: 44px;
 	align-items: center;
-	padding: 0;
+	padding: 0 26px 0 0;
 	border: none;
-	color: $link-color;
+	color: $hue-dark-1;
 	text-decoration: underline;
+	text-decoration-color: $hue-accent-1;
+	text-decoration-thickness: 2px;
+	text-underline-offset: 6px;
 
 	@extend %btn;
+
+	&::after {
+		position: absolute;
+		top: 50%;
+		right: 0;
+		translate: 0 -50%;
+	}
 
 	&:hover,
 	&:focus {
 		color: $hue-dark-1;
 		text-decoration: underline;
+		text-decoration-color: $hue-dark-1;
 	}
 }
 

@@ -179,6 +179,16 @@ add_action('acf/init', function () {
 					],
 
 					[
+						'key' => 'theme_settings_social_media_github',
+						'name' => 'github',
+						'type' => 'link',
+						'label' => esc_html__('GitHub', 'wesselvandenijssel'),
+						'wrapper' => [
+							'width' => '25',
+						],
+					],
+
+					[
 						'key' => 'theme_settings_social_media_twitter',
 						'name' => 'twitter',
 						'type' => 'link',

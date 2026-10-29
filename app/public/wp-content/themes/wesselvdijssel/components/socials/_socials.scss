@@ -49,6 +49,10 @@
 			content: $fa-linkedin-in;
 		}
 
+		&--github::before {
+			content: $fa-github;
+		}
+
 		&--twitter::before {
 			content: $fa-twitter;
 		}

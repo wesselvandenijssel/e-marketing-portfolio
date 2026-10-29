@@ -145,6 +145,16 @@
 			a:focus-visible {
 				outline-color: $focus-color;
 			}
+
+			.buttons {
+				display: grid;
+				grid-template-columns: max-content;
+				justify-content: start;
+
+				@include bp("narrow") {
+					grid-template-columns: repeat(2, max-content);
+				}
+			}
 		}
 
 		#{$hero}__portrait {
