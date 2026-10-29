@@ -12,6 +12,14 @@
 		@extend %btn-icon;
 	}
 
+	&--tertiary {
+		flex-basis: 100%;
+		justify-content: flex-start;
+
+		@extend %btn--tertiary;
+		@extend %btn-icon;
+	}
+
 	&__filter {
 		background-color: transparent;
 		border-color: $hue-dark-1;
