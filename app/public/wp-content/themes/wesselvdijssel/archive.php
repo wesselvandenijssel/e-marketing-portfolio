@@ -46,7 +46,6 @@ get_header(); ?>
 								'title' => get_the_title(),
 								'target' => '_self',
 							],
-							'author' => get_the_author(),
 							'date' => get_the_date('d M Y'),
 							'heading_level' => 2,
 						]);

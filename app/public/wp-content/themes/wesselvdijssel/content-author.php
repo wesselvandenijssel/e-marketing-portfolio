@@ -129,7 +129,6 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 								'title' => get_the_title(),
 								'target' => '_self',
 							],
-							'author' => get_the_author(),
 							'date' => get_the_date('d M Y'),
 						]);
 					endwhile;

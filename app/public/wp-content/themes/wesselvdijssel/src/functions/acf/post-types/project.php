@@ -59,6 +59,13 @@ function wesselvandenijssel_project_fields(): void {
 				'wrapper' => ['width' => '50'],
 			],
 			[
+				'key' => 'project_details_card_role',
+				'name' => 'card_role',
+				'label' => esc_html__('Rol op de projectkaart', 'wesselvandenijssel'),
+				'type' => 'text',
+				'wrapper' => ['width' => '50'],
+			],
+			[
 				'key' => 'project_details_assignment',
 				'name' => 'assignment',
 				'label' => esc_html__('De opdracht', 'wesselvandenijssel'),
