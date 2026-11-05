@@ -68,14 +68,16 @@ $post_url = get_permalink();
 
 							<a class="single__share-link single__share-link--linkedin" href="<?= esc_url('https://www.linkedin.com/shareArticle?mini=true&url=' . urlencode($post_url)); ?>" target="_blank"
 								rel="noopener noreferrer"
-								onclick="window.open(this.href, 'linkedin-share', 'width=600,height=400');return false;"
-								aria-label="<?= esc_attr(__('Deel op LinkedIn', 'wesselvandenijssel')); ?>"></a>
+								onclick="window.open(this.href, 'linkedin-share', 'width=600,height=400');return false;">
+								<span class="screen-reader-text"><?= esc_html__('Deel op LinkedIn', 'wesselvandenijssel'); ?></span>
+							</a>
 
-							<a class="single__share-link single__share-link--facebook" href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode($post_url); ?>"
+							<a class="single__share-link single__share-link--facebook" href="<?= esc_url('https://www.facebook.com/sharer/sharer.php?u=' . urlencode($post_url)); ?>"
 								target="_blank"
 								rel="noopener noreferrer"
-								onclick="window.open(this.href, 'facebook-share', 'width=600,height=400');return false;"
-								aria-label="<?= esc_attr(__('Deel op Facebook', 'wesselvandenijssel')); ?>"></a>
+								onclick="window.open(this.href, 'facebook-share', 'width=600,height=400');return false;">
+								<span class="screen-reader-text"><?= esc_html__('Deel op Facebook', 'wesselvandenijssel'); ?></span>
+							</a>
 						</div>
 					</div>
 				</div>

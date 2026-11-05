@@ -58,7 +58,9 @@ if (!empty($has_non_empty_subkey) || !empty($footer['sub_footer'])) : ?>
 				<?= wp_kses_post($footer['sub_footer'] ?? ''); ?>
 			</div>
 
-			<a class="footer__top-link" href="#page" aria-label="<?= esc_attr__('Terug naar boven', 'wesselvandenijssel'); ?>"></a>
+			<a class="footer__top-link" href="#page">
+				<span class="screen-reader-text"><?= esc_html__('Terug naar boven', 'wesselvandenijssel'); ?></span>
+			</a>
 		</div>
 
 	</footer>

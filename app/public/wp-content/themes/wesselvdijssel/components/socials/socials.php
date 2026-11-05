@@ -10,11 +10,10 @@ if (empty($social_media)) return;
 		<?php if (empty($social_value['url'])) continue; ?>
 
 		<a href="<?= esc_url($social_value['url']); ?>"
-			title="<?= esc_attr($social_value['title'] ?? ''); ?>"
 			target="_blank"
-			rel="noopener noreferrer nofollow"
-			class="socials__item socials__item--<?= esc_attr($social_key); ?>"
-			aria-label="<?= esc_attr($social_value['title'] ?? ucfirst($social_key)); ?>">
+			rel="me noopener"
+			class="socials__item socials__item--<?= esc_attr($social_key); ?>">
+			<span class="screen-reader-text"><?= esc_html($social_value['title'] ?? ucfirst($social_key)); ?></span>
 		</a>
 	<?php endforeach; ?>
 </div>

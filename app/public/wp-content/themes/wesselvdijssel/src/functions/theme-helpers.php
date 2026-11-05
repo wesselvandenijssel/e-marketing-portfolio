@@ -381,7 +381,7 @@ function get_logo(array $args = []): string {
 		$logo_link_attr['class'][] = $args['class'];
 	}
 
-	$html = '<a %s>%s</a>';
+	$html = '<a %s>%s<span class="screen-reader-text">%s</span></a>';
 
 	/**
 	 * If the logo alt attribute is empty, get the site title and explicitly pass it to the attributes used by wp_get_attachment_image().
@@ -393,7 +393,6 @@ function get_logo(array $args = []): string {
 
 	$logo_link_attr['href'][] = esc_url(home_url('/'));
 	$logo_link_attr['rel'][] = 'home';
-	$logo_link_attr['aria-label'][] = get_bloginfo('name');
 
 
 	// Generate the img html
@@ -404,7 +403,7 @@ function get_logo(array $args = []): string {
 	$logo_link_attr_str = implode(' ', $logo_link_atts);
 
 	// Add all variables together and return the html string
-	return sprintf($html, $logo_link_attr_str, $image);
+	return sprintf($html, $logo_link_attr_str, $image, esc_html(get_bloginfo('name')));
 }
 
 /**
