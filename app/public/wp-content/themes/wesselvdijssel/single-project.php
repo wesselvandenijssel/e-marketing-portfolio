@@ -92,6 +92,8 @@ get_header(); ?>
 					</div>
 				</div>
 			</section>
+
+			<?php if (!$is_locked) component('related-projects', ['post_id' => get_the_ID()]); ?>
 		</div>
 
 	<?php endwhile; ?>
