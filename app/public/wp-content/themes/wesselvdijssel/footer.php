@@ -30,7 +30,7 @@ if (!empty($footer['footer_column'])) {
 }
 
 if (!empty($has_non_empty_subkey) || !empty($footer['sub_footer'])) : ?>
-	<footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	<footer class="footer">
 
 		<?php if (!empty($has_non_empty_subkey)) : ?>
 			<div class="footer__main-wrapper">

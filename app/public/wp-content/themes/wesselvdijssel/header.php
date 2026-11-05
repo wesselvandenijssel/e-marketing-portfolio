@@ -33,7 +33,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 $contact_details = get_field('contact_details', 'options');
 ?>
 
-<body <?php body_class(); ?> itemscope itemtype="http://schema.org/WebPage">
+<body <?php body_class(); ?>>
 	<?= get_field('body', 'scripts') ?? ''; ?>
 
 	<a class="skip-link screen-reader-text" href="#content"><?= esc_html__('Naar de inhoud', 'wesselvandenijssel'); ?></a>
@@ -92,7 +92,7 @@ $contact_details = get_field('contact_details', 'options');
 				<div class="header__main-wrapper">
 					<?= get_logo(['class' => 'header__logo']); ?>
 
-					<nav id="site-navigation" class="main-navigation" itemscope itemtype="http://schema.org/SiteNavigationElement">
+					<nav id="site-navigation" class="main-navigation">
 						<button type="button" class="menu-toggle" aria-label="<?= esc_attr__('Menu openen', 'wesselvandenijssel'); ?>" aria-expanded="false" aria-controls="site-navigation-content" data-label-open="<?= esc_attr__('Menu openen', 'wesselvandenijssel'); ?>" data-label-close="<?= esc_attr__('Menu sluiten', 'wesselvandenijssel'); ?>">
 							<span class="menu-toggle__lines">
 								<span class="menu-toggle__burger">
