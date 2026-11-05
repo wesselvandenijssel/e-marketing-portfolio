@@ -383,12 +383,6 @@ function get_logo(array $args = []): string {
 
 	$html = '<a %s>%s<span class="screen-reader-text">%s</span></a>';
 
-	/**
-	 * If the logo alt attribute is empty, get the site title and explicitly pass it to the attributes used by wp_get_attachment_image().
-	 */
-	$image_alt = get_post_meta($logo_id, '_wp_attachment_image_alt', true);
-	$logo_attr['alt'] = empty($image_alt) ? get_bloginfo('name') : $image_alt;
-
 	$logo_attr = array_merge($logo_attr, get_svg_dimensions($logo_id));
 
 	$logo_link_attr['href'][] = esc_url(home_url('/'));
