@@ -30,6 +30,11 @@ add_theme_support(
 // rss
 add_theme_support('automatic-feed-links');
 
+add_theme_support('title-tag');
+
+// Comments are disabled site-wide.
+add_filter('feed_links_show_comments_feed', '__return_false');
+
 // Enable support for HTML5 markup.
 add_theme_support(
 	'html5',
@@ -41,10 +46,6 @@ add_theme_support(
 		'style',
 	]
 );
-ob_start(function ($buffer) {
-	$buffer = str_replace(array('type="text/javascript"', "type='text/javascript'"), '', $buffer);
-	return $buffer;
-});
 
 
 // Add title attribute to breadcrumb
@@ -55,7 +56,7 @@ function breadcrumb_add_title_attribute($link_output, $link) {
 	$link_output = $element;
 	if (!empty($link['url'])) {
 		$link_output .= '<a href="' .
-			esc_url($link['url']) . '" title="' . $link['text'] . '">' .
+			esc_url($link['url']) . '" title="' . esc_attr($link['text'] ?? '') . '">' .
 
 			esc_html($link['text']) . '</a>';
 	}

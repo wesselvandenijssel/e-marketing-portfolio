@@ -103,43 +103,15 @@ echo !is_admin() ? '[raw]' : '';
 			]);
 		} ?>
 
-		<?php if ($is_overview) : ?>
-			<form class="blog__filter" action="<?= !empty($block['id']) ? '#' . esc_attr($block['id']) : get_the_permalink(); ?>">
-				<?php
-				$terms = get_terms([
-					'taxonomy' => 'category',
-				]);
-
-				if (!empty($terms)) : ?>
-					<button type="submit" name="category" value="*" class="btn__filter<?= !isset($_GET['category']) || sanitize_text_field($_GET['category']) === '*' ? ' btn__filter--active' : ''; ?>">
-						<?= esc_html__('Toon alle artikelen', 'wesselvandenijssel'); ?>
-					</button>
-
-					<?php foreach ($terms as $term) : ?>
-						<button type="submit" name="category" value="<?= esc_attr($term->slug); ?>" class="btn__filter<?= isset($_GET['category']) && sanitize_text_field($_GET['category']) === esc_attr($term->slug) ? ' btn__filter--active' : ''; ?>">
-							<?= esc_html($term->name); ?>
-						</button>
-					<?php endforeach; ?>
-				<?php endif; ?>
-			</form>
-
-			<form class="blog__filter--mobile" method="GET" action="<?= !empty($block['id']) ? '#' . esc_attr($block['id']) : get_the_permalink(); ?>">
-				<select class="blog__filter-select" name="category" aria-label="<?= esc_attr__('Filter', 'wesselvandenijssel'); ?>">
-					<option value="*" <?= !isset($_GET['category']) ? 'selected' : ''; ?>>
-						<?= esc_html__('Alle berichten', 'wesselvandenijssel'); ?>
-					</option>
-
-					<?php if (!empty($terms)) : ?>
-						<?php foreach ($terms as $term) : ?>
-							<option value="<?= esc_attr($term->slug); ?>"
-								<?= isset($_GET['category']) && esc_attr(sanitize_text_field($_GET['category'])) === esc_attr($term->slug) ? 'selected' : '' ?>>
-								<?= esc_html($term->name); ?>
-							</option>
-						<?php endforeach; ?>
-					<?php endif; ?>
-				</select>
-			</form>
-		<?php endif; ?>
+		<?php if ($is_overview) {
+			component('filter', [
+				'terms' => get_terms(['taxonomy' => 'category', 'hide_empty' => true]),
+				'name' => 'category',
+				'anchor' => $block['id'] ?? '',
+				'all_label' => __('Toon alle artikelen', 'wesselvandenijssel'),
+				'select_label' => __('Filter op categorie', 'wesselvandenijssel'),
+			]);
+		} ?>
 
 		<?php
 		$blog_grid_attr = [];
@@ -173,7 +145,7 @@ echo !is_admin() ? '[raw]' : '';
 								'title' => get_the_title(),
 								'target' => '_self',
 							],
-							'date' => get_the_date('d M Y'),
+							'date' => get_the_date('c'),
 							'swiper' => !$is_overview,
 							'heading_level' => $post_heading_level,
 						]);
@@ -189,7 +161,15 @@ echo !is_admin() ? '[raw]' : '';
 		</div>
 		<?php wp_reset_postdata(); ?>
 
-		<?php if ($is_overview) wpex_pagination_outside_query($total, $block['id']); ?>
+		<?php if ($is_overview) {
+			$pagination_args = [];
+
+			if (isset($_GET['category']) && $_GET['category'] !== '*') {
+				$pagination_args['category'] = sanitize_text_field(wp_unslash($_GET['category']));
+			}
+
+			wpex_pagination_outside_query($total, $block['id'], $pagination_args);
+		} ?>
 
 		<?php if (!empty($buttons_group) && is_array($buttons_group)) {
 			$button_group = new BlockButtons($buttons_group);

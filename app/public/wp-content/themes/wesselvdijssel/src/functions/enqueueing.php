@@ -33,6 +33,22 @@ function wesselvandenijssel_scripts_and_styles() {
 }
 
 /**
+ * Loads the Font Awesome stylesheet without blocking the first render.
+ *
+ * @param string $tag The link tag
+ * @param string $handle The style handle
+ * @return string
+ */
+add_filter('style_loader_tag', 'wesselvandenijssel_async_font_awesome', 10, 2);
+function wesselvandenijssel_async_font_awesome(string $tag, string $handle): string {
+	if ($handle !== 'wesselvandenijssel-font-awesome') {
+		return $tag;
+	}
+
+	return str_replace("media='all'", "media='print' onload=\"this.media='all'\"", $tag) . '<noscript>' . preg_replace("/\sid='[^']*'/", '', $tag, 1) . '</noscript>';
+}
+
+/**
  * Keep jQuery, Gravity Forms, the theme bundle and WP Rocket's own link preloading out of WP Rocket's
  * "Delay JavaScript Execution". The theme bundle sets the hidden start state of the scroll animations;
  * delayed until the first touch or scroll, it hides content that is already on screen and fades it in again.

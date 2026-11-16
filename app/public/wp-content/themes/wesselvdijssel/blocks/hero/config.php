@@ -104,6 +104,29 @@ return [
 					],
 				],
 			],
+			'wrapper' => [
+				'width' => '50',
+			],
+		],
+
+		'image_mobile' => [
+			'label' => esc_html__('Afbeelding mobiel', 'wesselvandenijssel'),
+			'type' => 'image',
+			'instructions' => esc_html__('Weergegeven als 780*600px', 'wesselvandenijssel'),
+			'return_format' => 'id',
+			'mime_types' => 'png,jpeg,jpg,webp',
+			'conditional_logic' => [
+				[
+					[
+						'field' => 'field_hero_type',
+						'operator' => '==',
+						'value' => 'image',
+					],
+				],
+			],
+			'wrapper' => [
+				'width' => '50',
+			],
 		],
 
 		'video' => [

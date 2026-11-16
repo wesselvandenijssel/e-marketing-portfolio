@@ -21,7 +21,7 @@ function component(string $component_name, array $args = []): void {
 		return;
 	}
 
-	extract($args);
+	extract($args, EXTR_SKIP);
 
 	include $template_path;
 }
@@ -38,7 +38,7 @@ function layout(string $layout_name, array $args = []): void {
 		return;
 	}
 
-	extract($args);
+	extract($args, EXTR_SKIP);
 
 	include $template_path;
 }
@@ -191,6 +191,7 @@ function get_flex_content(string $template_type): array {
 						'type' => 'image',
 						'mime_types' => 'svg, png, jpg, jpeg, webp',
 						'return_format' => 'id',
+						'max_size' => '256KB',
 					],
 				],
 			],
@@ -437,18 +438,64 @@ function get_svg_dimensions(int $attachment_id): array {
  * Get ID of the first ACF block on the page
  */
 function get_first_block_id() {
+	// Called for every block title, so the page is only parsed once per request.
+	static $first_block_ids = [];
+
 	$post = get_post();
 
-	if (has_blocks($post->post_content)) {
-		$blocks = parse_blocks($post->post_content);
+	if (!$post || !has_blocks($post->post_content)) return null;
 
-		// Extract the attributes of the first block
-		$first_block_attrs = !empty($blocks[0]['innerBlocks']) ? $blocks[0]['innerBlocks'][0]['attrs'] : $blocks[0]['attrs'];
+	if (array_key_exists($post->ID, $first_block_ids)) return $first_block_ids[$post->ID];
 
-		if (array_key_exists('id', $first_block_attrs)) {
-			return $first_block_attrs['id'];
+	$first_block_ids[$post->ID] = null;
+
+	foreach (parse_blocks($post->post_content) as $first_block) {
+		// parse_blocks() also returns nameless entries for the whitespace between blocks.
+		if (empty($first_block['blockName'])) continue;
+
+		// The background block only wraps other blocks, so the first block inside it is the first block of the page.
+		if ($first_block['blockName'] === 'acf/background' && !empty($first_block['innerBlocks'])) {
+			$first_block = $first_block['innerBlocks'][0];
+		}
+
+		$first_block_ids[$post->ID] = $first_block['attrs']['id'] ?? null;
+		break;
+	}
+
+	return $first_block_ids[$post->ID];
+}
+
+/**
+ * Whether an editor explicitly set a title on this page to h1, including titles in flexible content and background blocks.
+ */
+function page_has_chosen_h1() {
+	// Called for every block title, so the page is only parsed once per request.
+	static $chosen_h1 = [];
+
+	$post = get_post();
+
+	if (!$post || !has_blocks($post->post_content)) return false;
+
+	if (array_key_exists($post->ID, $chosen_h1)) return $chosen_h1[$post->ID];
+
+	$chosen_h1[$post->ID] = false;
+	$blocks = parse_blocks($post->post_content);
+
+	while (!empty($blocks) && !$chosen_h1[$post->ID]) {
+		$block = array_shift($blocks);
+		$blocks = array_merge($blocks, $block['innerBlocks'] ?? []);
+		$data = $block['attrs']['data'] ?? [];
+
+		foreach ($data as $name => $value) {
+			// ACF saves every value next to a "_<name>" entry holding its field key, which identifies the title type field.
+			if ($value === 'h1' && str_ends_with((string) ($data['_' . $name] ?? ''), 'title_group_title_type')) {
+				$chosen_h1[$post->ID] = true;
+				break;
+			}
 		}
 	}
+
+	return $chosen_h1[$post->ID];
 }
 
 /**
@@ -459,10 +506,11 @@ function get_first_block_id() {
  * @return int The calculated title element.
  */
 function calculate_title_element($block) {
-	$first = false;
 	if ($block && $block !== 'first') {
-		$first = $block['id'] === get_first_block_id();
-		return $first ? 1 : 2;
+		// An h1 chosen by the editor elsewhere on the page wins, so the automatic one steps down.
+		if (page_has_chosen_h1()) return 2;
+
+		return !empty($block['id']) && $block['id'] === get_first_block_id() ? 1 : 2;
 	} else if ($block === 'first') {
 		return 1;
 	} else {

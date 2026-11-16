@@ -5,6 +5,7 @@ import { pathToFileURL, fileURLToPath } from "url";
 const isDevWatch = process.env.NODE_ENV === "dev-watch";
 const autoprefixer = require("autoprefixer");
 const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const glob = require("glob");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -58,6 +59,8 @@ const entry = {
 const output = {
 	path: path.resolve(__dirname, "dist"),
 	filename: "[name].js",
+	chunkFilename: "chunks/[name].[contenthash].js",
+	clean: true,
 };
 
 const plugins = [
@@ -145,7 +148,10 @@ const config: webpack.Configuration = {
 			},
 		],
 	},
-	optimization: { minimize: !dev },
+	optimization: {
+		minimize: !dev,
+		minimizer: ["...", new CssMinimizerPlugin()],
+	},
 	watch: dev,
 };
 

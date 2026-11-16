@@ -1,18 +1,21 @@
 let didScroll = false;
 let lastScrollTop = 0;
 const delta = 5;
-const navbarHeight = document.querySelector("header").offsetHeight;
+const header = document.querySelector<HTMLElement>("header");
+const navbarHeight = header?.offsetHeight ?? 0;
 
 const hasScrolled = () => {
+	if (!header) return;
+
 	const st = window.scrollY;
 	if (st) if (Math.abs(lastScrollTop - st) <= delta) return;
 	if (st > lastScrollTop && st > navbarHeight) {
-		document.querySelector("header").classList.add("header--up");
+		header.classList.add("header--up");
 	} else if (
-		st + window.screen.height <
+		st + window.innerHeight <
 		document.documentElement.scrollHeight
 	) {
-		document.querySelector("header").classList.remove("header--up");
+		header.classList.remove("header--up");
 	}
 	lastScrollTop = st;
 };

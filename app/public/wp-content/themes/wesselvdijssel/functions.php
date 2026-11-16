@@ -23,8 +23,6 @@ function wesselvandenijssel_setup() {
 
 	// launching operation cleanup
 	add_action('init', 'wesselvandenijssel_head_cleanup');
-	// A better title
-	add_filter('wp_title', 'rw_title', 10, 3);
 	// remove WP version from RSS
 	add_filter('the_generator', 'wesselvandenijssel_rss_version');
 	// remove pesky injected css for recent comments widget

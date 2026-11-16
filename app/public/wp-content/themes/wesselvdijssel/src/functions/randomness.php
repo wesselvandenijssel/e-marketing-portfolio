@@ -147,13 +147,17 @@ add_action('admin_head', 'custom_admin_css');
  * Enable SVG file uploads in WordPress media library
  *
  * @param array $mimes Array of allowed mime types
+ * @param int|WP_User|null $user The user the mime types are checked for
  * @return array Modified array with SVG support
  */
-function cc_mime_types($mimes) {
-	$mimes['svg'] = 'image/svg+xml';
+function cc_mime_types($mimes, $user = null) {
+	if (user_can($user ?? wp_get_current_user(), 'unfiltered_html')) {
+		$mimes['svg'] = 'image/svg+xml';
+	}
+
 	return $mimes;
 }
-add_filter('upload_mimes', 'cc_mime_types');
+add_filter('upload_mimes', 'cc_mime_types', 10, 2);
 
 
 /**
@@ -389,4 +393,55 @@ function disable_comments_xmlrpc($methods) {
 	return array_diff_key($methods, $comment_methods);
 }
 add_filter('xmlrpc_methods', 'disable_comments_xmlrpc');
+
+/**
+ * Accessible name for an icon-only social media link.
+ *
+ * @param string $social_key The key of the social media option, e.g. 'facebook'
+ * @return string
+ */
+function get_social_label(string $social_key): string {
+	$platforms = [
+		'facebook' => 'Facebook',
+		'instagram' => 'Instagram',
+		'linkedin' => 'LinkedIn',
+		'tiktok' => 'TikTok',
+		'youtube' => 'YouTube',
+		'x' => 'X',
+		'twitter' => 'X',
+		'pinterest' => 'Pinterest',
+	];
+
+	$platform = $platforms[$social_key] ?? ucfirst($social_key);
+
+	return sprintf(__('%1$s op %2$s', 'wesselvandenijssel'), get_bloginfo('name'), $platform);
+}
+
+add_action('init', function () {
+	if (defined('XMLRPC_REQUEST') && XMLRPC_REQUEST) {
+		status_header(403);
+		exit;
+	}
+}, 0);
+
+remove_action('wp_head', 'rsd_link');
+add_filter('wp_headers', function (array $headers): array {
+	unset($headers['X-Pingback']);
+
+	return $headers;
+});
+
+/**
+ * Hides the users REST endpoints from logged-out visitors, so the API can't be used to list account names.
+ *
+ * @param array $endpoints The registered REST endpoints
+ */
+function restrict_users_rest_api($endpoints) {
+	if (is_user_logged_in()) return $endpoints;
+
+	unset($endpoints['/wp/v2/users'], $endpoints['/wp/v2/users/(?P<id>[\d]+)']);
+
+	return $endpoints;
+}
+add_filter('rest_endpoints', 'restrict_users_rest_api');
 ?>

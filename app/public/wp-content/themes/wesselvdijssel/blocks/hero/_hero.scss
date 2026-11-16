@@ -74,18 +74,12 @@
 				height: 100%;
 			}
 		}
+	}
 
-		&--mobile {
-			@include bp("narrow") {
-				display: none;
-			}
-		}
-
-		&--desktop {
-			@include bp("mobile") {
-				display: none;
-			}
-		}
+	&__picture {
+		display: block;
+		width: 100%;
+		height: 100%;
 	}
 
 	&__content {

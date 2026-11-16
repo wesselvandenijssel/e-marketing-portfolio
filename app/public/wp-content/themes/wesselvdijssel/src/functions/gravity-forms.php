@@ -71,7 +71,7 @@ function input_to_button($button, $form) {
 // Translate default form confirmation
 function gform_spam_notification_translation($translated_text, $text, $domain) {
 	$translated_text = match ($translated_text) {
-		'Thanks for contacting us! We will get in touch with you shortly.!' => __('Er lijkt iets mis te gaan met de inzending... Probeer het nog eens of neem contact op per telefoon.', 'woocommerce'),
+		'Thanks for contacting us! We will get in touch with you shortly.' => __('Er lijkt iets mis te gaan met de inzending... Probeer het nog eens of neem contact op per telefoon.', 'woocommerce'),
 		'Bedankt voor je bericht! We zullen binnenkort contact met je opnemen.' => __('Er lijkt iets mis te gaan met de inzending... Probeer het nog eens of neem contact op per telefoon.', 'woocommerce'),
 		default => $translated_text,
 	};
@@ -109,6 +109,9 @@ function enqueue_datalayer_script_on_redirect() {
 	$entry_id = get_validated_entry_id();
 
 	if (!$entry_id)
+		return;
+
+	if (!class_exists('GFAPI'))
 		return;
 
 	$entry = GFAPI::get_entry($entry_id);

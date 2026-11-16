@@ -1,4 +1,5 @@
 @use "abstracts" as *;
+@use "placeholders" as *;
 
 .notification {
 	display: none;
@@ -49,10 +50,12 @@
 	}
 
 	&__close {
-		cursor: pointer;
 		display: flex;
 		align-items: center;
 		column-gap: 10px;
+		flex-shrink: 0;
+
+		@extend %button-reset;
 	}
 
 	&__close-icon {

@@ -41,17 +41,17 @@
 		li:not(:last-child) {
 			margin-bottom: 0.55em;
 		}
+	}
 
-		.titles {
-			margin-bottom: 14px;
-		}
+	&__titles {
+		margin-bottom: 14px;
+	}
 
-		.main-title {
-			font-size: pxtorem(14);
-			letter-spacing: 0.1em;
-			text-transform: uppercase;
-			color: color.mix($hue-accent-1, $hue-white, 50%);
-		}
+	&__main-title {
+		font-size: pxtorem(14);
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: color.mix($hue-accent-1, $hue-white, 50%);
 	}
 
 	&__column {
@@ -62,7 +62,8 @@
 				max-width: 340px;
 			}
 
-			.main-title {
+			/* stylelint-disable-next-line selector-class-pattern */
+			.footer__main-title {
 				font-size: pxtorem(22);
 				letter-spacing: 0;
 				text-transform: none;
@@ -148,7 +149,8 @@
 	&__menu-fold-button {
 		font-weight: 600;
 		margin-top: 0.3em;
-		cursor: pointer;
+
+		@extend %button-reset;
 
 		&::after {
 			content: $fa-caret-down;

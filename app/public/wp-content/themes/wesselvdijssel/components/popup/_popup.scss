@@ -1,23 +1,30 @@
 @use "abstracts" as *;
+@use "placeholders" as *;
 
 /* stylelint-disable selector-class-pattern */
 
 .popup {
-	display: none;
 	position: fixed;
-	top: 100%;
-	left: 40px;
-	right: 40px;
+	inset: calc(50% + 20px) 40px auto;
+	width: auto;
+	height: auto;
 	max-width: 600px;
 	max-height: calc(100% - 20px);
 	transform: translateY(-50%);
 	margin: auto;
 	background-color: #fff;
-	z-index: 1001;
+	color: inherit;
+	border: 0;
+	padding: 0;
 	opacity: 0;
 	overflow: scroll;
 	-ms-overflow-style: none;
 	scrollbar-width: none;
+	transition:
+		opacity 0.4s ease-in-out,
+		top 0.4s ease-in-out,
+		overlay 0.4s allow-discrete,
+		display 0.4s allow-discrete;
 
 	@include bp("mobile") {
 		left: 10px;
@@ -28,13 +35,30 @@
 		display: none;
 	}
 
-	&--active {
-		display: block;
+	&::backdrop {
+		background-color: rgba(#000, 0);
+		transition:
+			background-color 0.4s ease-in-out,
+			overlay 0.4s allow-discrete,
+			display 0.4s allow-discrete;
 	}
 
-	&--show {
+	&[open] {
 		opacity: 1;
 		top: 50%;
+
+		@starting-style {
+			opacity: 0;
+			top: calc(50% + 20px);
+		}
+
+		&::backdrop {
+			background-color: rgba(#000, 0.7);
+
+			@starting-style {
+				background-color: rgba(#000, 0);
+			}
+		}
 	}
 
 	&__close {
@@ -43,7 +67,8 @@
 		right: 20px;
 		width: 40px;
 		aspect-ratio: 1/1;
-		cursor: pointer;
+
+		@extend %button-reset;
 
 		@include bp("mobile") {
 			top: 10px;
@@ -112,23 +137,6 @@
 				}
 			}
 		}
-	}
-}
-
-.popup-background {
-	display: none;
-	position: fixed;
-	inset: 0;
-	background: rgb(0 0 0 / 70%);
-	opacity: 0;
-	z-index: 1000;
-
-	&--active {
-		display: block;
-	}
-
-	&--show {
-		opacity: 1;
 	}
 }
 

@@ -22,10 +22,12 @@ class FlexContent {
 	 * @param string $html	The HTML
 	 */
 	function setFoldContent($html) {
-		$this->content = '<div class="fold-content">';
+		$fold_id = wp_unique_id('fold-content-');
+
+		$this->content = '<div class="fold-content" id="' . esc_attr($fold_id) . '">';
 		$this->content .= modify_video_attributes($html);
 		$this->content .= '</div>';
-		$this->content .= '<div class="fold-content-trigger">' . esc_html__('Lees meer', 'wesselvandenijssel') . '</div>';
+		$this->content .= '<button type="button" class="fold-content-trigger" aria-expanded="false" aria-controls="' . esc_attr($fold_id) . '">' . esc_html__('Lees meer', 'wesselvandenijssel') . '</button>';
 	}
 
 	/**
@@ -49,7 +51,7 @@ class FlexContent {
 
 		component('logo-wrapper', [
 			'logos' => $logos,
-			'swiper' => $is_swiper,
+			'is_swiper' => $is_swiper,
 		]);
 
 		$this->content .= ob_get_clean();

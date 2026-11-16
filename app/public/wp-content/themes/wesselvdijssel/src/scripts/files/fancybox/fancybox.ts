@@ -17,3 +17,14 @@ Fancybox.bind("[data-fancybox]", {
 		},
 	},
 });
+
+document
+	.querySelectorAll<HTMLElement>(".video-in-fancybox")
+	.forEach((trigger) =>
+		trigger.addEventListener("keydown", (e) => {
+			if (e.key !== "Enter" && e.key !== " ") return;
+
+			e.preventDefault();
+			trigger.click();
+		}),
+	);

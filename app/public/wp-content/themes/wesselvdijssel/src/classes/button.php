@@ -79,10 +79,9 @@ class BlockButton {
 		$this->popup = $popup;
 
 		$this->button = sprintf(
-			'<div class="%s show-popup" data-popup="%s" role="button" tabindex="0" aria-haspopup="true" aria-label="%s">%s</div>',
+			'<button type="button" class="%s show-popup" data-popup="%s" aria-haspopup="dialog">%s</button>',
 			esc_attr($this->type),
 			esc_attr($this->popup),
-			sprintf(esc_attr__('Open %s', 'wesselvandenijssel'), esc_attr($this->popup)),
 			wp_kses_post($this->text)
 		);
 	}
@@ -196,10 +195,13 @@ class BlockButtons {
 
 				case 'phone':
 					$contact_details = get_field('contact_details', 'options');
+
+					if (empty($contact_details['phone']) || empty($contact_details['phone_link']['url'])) break;
+
 					$phone_link = sprintf(
 						'<a href="%s" title="%s">%s</a>',
 						esc_url($contact_details['phone_link']['url']),
-						esc_attr($value['title_attr']),
+						esc_attr($value['title_attr'] ?? ''),
 						esc_html($contact_details['phone'])
 					);
 

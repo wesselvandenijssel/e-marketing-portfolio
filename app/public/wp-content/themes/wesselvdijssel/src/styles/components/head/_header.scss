@@ -162,6 +162,7 @@
 			@include bp("mobile") {
 				max-height: 45px;
 				max-width: 150px;
+				width: auto;
 			}
 		}
 	}
