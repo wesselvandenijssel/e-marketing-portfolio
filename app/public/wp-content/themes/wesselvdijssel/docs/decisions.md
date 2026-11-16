@@ -1274,6 +1274,7 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Uitgevoerd:**
   - Hoofddomein (`public_html`, Flynt-thema, pagina 89): in de hero staat nu de link "portfolio als front-end developer uit Utrecht". Backup op de server in `~/backups/`.
   - Home (pagina 8): live en lokaal gelijk bijgewerkt, met een backup op beide.
+  - Home, later op dezelfde dag (op verzoek van Wessel): de hero begint met "Ik heb 5 jaar ervaring als developer." (geteld vanaf september 2021, Het BUREAU). Het vak "Werken in een team" noemt samenwerken met designers en Figma. "Ervaring in het kort" noemt de talen: Nederlands als moedertaal en Engels op professioneel niveau (uit het cv).
 - **Let op:**
   - WP-CLI op de server heeft voor het portfolio meer geheugen nodig: `php -d memory_limit=512M $(which wp) ...`.
   - LinkedIn is zonder login niet uit te lezen. De stack komt uit het cv en van Wessel zelf.
