@@ -1263,3 +1263,18 @@ Format per beslissing: datum, beslissing, reden, gevolg.
 - **Andere projecten:** component `related-projects` onder elk project, in een lichtblauw achtergrondblok tussen "Terug naar projecten" en de footer. Het toont de volgende drie projecten op datum en begint na het laatste weer bij het eerste. Zo krijgt elk project precies drie extra interne links. Projecten op `?pagina=2` hadden in Semrush een ILR van 11. Projecten met een wachtwoord doen niet mee (`has_password => false`), net als in het projectenblok.
 - **Microdata:** `itemscope`/`itemtype` (WebPage, SiteNavigationElement, WPFooter) weg uit `header.php` en `footer.php`. Ze hadden geen eigenschappen en maakten een tweede WebPage naast de JSON-LD van Yoast.
 - **Niet aangepast:** `/portfolio-minor/` stuurt door naar de login, en Cloudflare geeft bots daar een 403. Dat geeft in Semrush 32 broken internal links en 32 temporary redirects. Dit is bedoeld. Sluit `/portfolio-minor/` en `/dash` uit in de crawlinstellingen van Semrush.
+
+## D-105: Meer focus op "front-end developer Utrecht" voor recruiters
+
+- **Datum:** 2026-11-16
+- **Aanleiding:** Search Console toont in drie maanden geen enkele vertoning op een zoekterm met "front-end". De pagina's zelf waren al ingericht op de zoekterm (D-083).
+- **Beslissing (van Wessel):**
+  - Het hoofddomein linkt naar het portfolio. Nog geen link vanaf GitHub of LinkedIn.
+  - Home, blok "Ervaring in het kort": woonplaats Utrecht (Leidsche Rijn), hybride werken, duaal studeren, afstuderen naar verwachting mei of juni 2027, en de stack. WordPress is de sterkste stack, daarnaast React, Vue, Svelte, Bootstrap, Laravel en Django.
+- **Uitgevoerd:**
+  - Hoofddomein (`public_html`, Flynt-thema, pagina 89): in de hero staat nu de link "portfolio als front-end developer uit Utrecht". Backup op de server in `~/backups/`.
+  - Home (pagina 8): live en lokaal gelijk bijgewerkt, met een backup op beide.
+- **Let op:**
+  - WP-CLI op de server heeft voor het portfolio meer geheugen nodig: `php -d memory_limit=512M $(which wp) ...`.
+  - De cv-pdf noemt augustus 2027 als einddatum van de studie. Home noemt mei of juni 2027.
+  - LinkedIn is zonder login niet uit te lezen. De stack komt uit het cv en van Wessel zelf.
