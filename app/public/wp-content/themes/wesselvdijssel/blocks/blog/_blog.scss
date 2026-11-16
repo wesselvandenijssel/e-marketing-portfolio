@@ -68,50 +68,6 @@
 		}
 	}
 
-	&__filter {
-		display: none;
-		justify-content: center;
-		align-items: center;
-		gap: 15px;
-
-		@include bp("normal") {
-			display: flex;
-			margin-bottom: pxtoem(60);
-		}
-
-		&--mobile {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin-bottom: pxtoem(15);
-			position: relative;
-
-			@include bp("narrow") {
-				margin-bottom: pxtoem(25);
-			}
-
-			@include bp("normal") {
-				display: none;
-			}
-
-			&::after {
-				content: $fa-angle-down;
-				font-weight: 400;
-				font-family: $fa;
-				position: absolute;
-				right: 20px;
-				pointer-events: none;
-				top: 50%;
-				transform: translateY(-50%);
-			}
-
-			select {
-				border: 1px solid $hue-dark-1;
-				border-radius: 10px;
-			}
-		}
-	}
-
 	.buttons {
 		margin-top: pxtoem(30);
 

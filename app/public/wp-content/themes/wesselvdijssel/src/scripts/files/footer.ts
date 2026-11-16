@@ -1,18 +1,22 @@
-const footerToggles = document.querySelectorAll<HTMLElement>(
-	".footer__menu-fold-button"
+const footerToggles = document.querySelectorAll<HTMLButtonElement>(
+	".footer__menu-fold-button",
 );
 
 footerToggles.forEach((footerToggle) =>
 	footerToggle.addEventListener("click", () => {
-		const currentFooterToggle = footerToggle;
-		currentFooterToggle.style.visibility = "hidden";
-		currentFooterToggle.setAttribute("aria-expanded", "true");
-
 		const footerFolded =
-			currentFooterToggle.previousElementSibling.querySelector<HTMLElement>(
-				".folded"
+			footerToggle.previousElementSibling?.querySelector<HTMLElement>(
+				".folded",
 			);
 
+		footerToggle.style.visibility = "hidden";
+		footerToggle.setAttribute("aria-expanded", "true");
+
+		if (!footerFolded) return;
+
 		footerFolded.slideDown(400);
-	})
+
+		// The button is hidden, so move focus to the first revealed link instead of losing it
+		footerFolded.querySelector<HTMLElement>("a, button")?.focus();
+	}),
 );

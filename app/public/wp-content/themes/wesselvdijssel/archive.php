@@ -46,7 +46,7 @@ get_header(); ?>
 								'title' => get_the_title(),
 								'target' => '_self',
 							],
-							'date' => get_the_date('d M Y'),
+							'date' => get_the_date('c'),
 							'heading_level' => 2,
 						]);
 					endwhile;

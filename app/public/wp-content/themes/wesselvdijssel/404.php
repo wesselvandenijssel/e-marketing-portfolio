@@ -19,7 +19,7 @@ get_header(); ?>
 					if (!empty($not_found['content'])) :
 						layout("content", [
 							'content' => $not_found['content'],
-							'block' => [],
+							'block' => 'first',
 						]);
 
 					else :

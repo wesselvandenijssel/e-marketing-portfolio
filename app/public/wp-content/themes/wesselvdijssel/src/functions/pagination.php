@@ -18,7 +18,7 @@ if (!function_exists('wpex_pagination')) {
 				$format = '&paged=%#%';
 			}
 
-			echo '<div class="page-number-wrapper">';
+			echo '<nav class="page-number-wrapper" aria-label="' . esc_attr__('Paginering', 'wesselvandenijssel') . '">';
 			echo paginate_links([
 				'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
 				'format' => $format,
@@ -29,7 +29,7 @@ if (!function_exists('wpex_pagination')) {
 				'prev_text' => $prev_arrow,
 				'next_text' => $next_arrow,
 			]);
-			echo '</div>';
+			echo '</nav>';
 		}
 	}
 }
@@ -41,9 +41,10 @@ if (!function_exists('wpex_pagination_outside_query')) {
 	 *
 	 * @param int $total Total number of pages
 	 * @param string $anchor Optional anchor ID to append to pagination URLs
+	 * @param array $add_args Optional query args to keep on pagination URLs (e.g. an active filter)
 	 * @return void
 	 */
-	function wpex_pagination_outside_query($total, $anchor = '') {
+	function wpex_pagination_outside_query($total, $anchor = '', $add_args = []) {
 		$total = absint($total);
 		if ($total <= 1) {
 			return;
@@ -60,7 +61,7 @@ if (!function_exists('wpex_pagination_outside_query')) {
 			$base .= '#' . $anchor;
 		}
 
-		echo '<div class="page-number-wrapper">';
+		echo '<nav class="page-number-wrapper" aria-label="' . esc_attr__('Paginering', 'wesselvandenijssel') . '">';
 		echo paginate_links([
 			'base' => $base,
 			'format' => '?pagina=%#%',
@@ -70,7 +71,8 @@ if (!function_exists('wpex_pagination_outside_query')) {
 			'type' => 'list',
 			'prev_text' => '<span class="screen-reader-text">' . esc_html__('Vorige pagina', 'wesselvandenijssel') . '</span>',
 			'next_text' => '<span class="screen-reader-text">' . esc_html__('Volgende pagina', 'wesselvandenijssel') . '</span>',
+			'add_args' => $add_args,
 		]);
-		echo '</div>';
+		echo '</nav>';
 	}
 }

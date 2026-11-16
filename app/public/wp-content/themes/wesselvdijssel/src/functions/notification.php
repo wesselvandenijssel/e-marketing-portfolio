@@ -26,15 +26,15 @@ function notification() {
 	}
 
 ?>
-	<div class="notification">
+	<div class="notification" role="region" aria-label="<?= esc_attr__('Melding', 'wesselvandenijssel'); ?>">
 		<div class="columns-12 center notification__grid">
 			<div class="notification__text">
-				<?= $notification_cf['text']; ?>
+				<?= wp_kses_post($notification_cf['text']); ?>
 			</div>
-			<div class="notification__close">
+			<button type="button" class="notification__close" aria-label="<?= esc_attr__('Melding sluiten', 'wesselvandenijssel'); ?>">
 				<?= esc_html__('sluiten', 'wesselvandenijssel'); ?>
-				<div class="notification__close-icon"></div>
-			</div>
+				<span class="notification__close-icon" aria-hidden="true"></span>
+			</button>
 		</div>
 	</div>
 <?php

@@ -58,7 +58,7 @@ function popup_shortcode($atts, $content = null) {
 	if (!empty($atts['popup_id'])) {
 		add_global_popup($atts['popup_id']);
 
-		return '<span class="show-popup" data-popup="' . $atts['popup_id'] . '">' . $content . '</span>';
+		return '<button type="button" class="show-popup show-popup--text" data-popup="' . esc_attr($atts['popup_id']) . '" aria-haspopup="dialog">' . wp_kses_post($content) . '</button>';
 	} else {
 		return $content;
 	}

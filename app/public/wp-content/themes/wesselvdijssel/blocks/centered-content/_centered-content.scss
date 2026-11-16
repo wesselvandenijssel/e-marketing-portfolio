@@ -67,11 +67,11 @@
 
 		.btn {
 			&--primary {
-				@extend %btn--on-dark;
+				@extend %btn-on-dark;
 			}
 
 			&--secondary {
-				@extend %btn--secondary-on-dark;
+				@extend %btn-secondary-on-dark;
 			}
 		}
 	}

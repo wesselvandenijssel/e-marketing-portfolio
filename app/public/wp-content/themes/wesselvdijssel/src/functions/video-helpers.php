@@ -13,6 +13,8 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 function modify_video_attributes($video) {
 	if (!preg_match('/src="(.+?)"/', $video, $matches)) return $video;
 
+	$video = preg_replace('/\s+frameborder="[^"]*"/i', '', $video);
+
 	$src = $matches[1];
 
 	// Check if the source is a YouTube link
@@ -28,6 +30,11 @@ function modify_video_attributes($video) {
 		if (strpos($video, 'loading=') === false) {
 			$video = preg_replace('/<iframe(.*?)>/', '<iframe loading="lazy"$1>', $video);
 		}
+	}
+
+	// Screen readers announce an iframe by its title, so embeds pasted without one get a generic label.
+	if (strpos($video, '<iframe') !== false && !preg_match('/<iframe[^>]*\stitle=/i', $video)) {
+		$video = preg_replace('/<iframe/', '<iframe title="' . esc_attr__('Video', 'wesselvandenijssel') . '"', $video, 1);
 	}
 
 	return $video;
@@ -95,6 +102,8 @@ function video_in_fancybox($video, $attrs = []) {
 		return $attrs;
 	}
 
+	wp_enqueue_script('wesselvandenijssel-fancybox');
+
 	$modified_video = modify_video_attributes($video);
 	$modified_video_url = '';
 
@@ -103,6 +112,9 @@ function video_in_fancybox($video, $attrs = []) {
 	}
 	if (!empty($modified_video_url)) {
 		$attrs['class'][] = 'video-in-fancybox';
+		$attrs['role'] = 'button';
+		$attrs['tabindex'] = '0';
+		$attrs['aria-label'] = __('Video afspelen', 'wesselvandenijssel');
 		$attrs['data-src'] = esc_url($modified_video_url);
 		$attrs['data-type'] = 'iframe';
 		$attrs['data-width'] = '1280';

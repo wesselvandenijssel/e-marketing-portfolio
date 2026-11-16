@@ -12,41 +12,26 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 <div class="popups">
 	<?php footer_popups(); ?>
 </div>
-<div class="popup-background"></div>
 </main>
 
 <?php $footer = get_field('footer', 'footer') ?? [];
+$footer_columns = array_filter((array) ($footer['footer_column'] ?? []));
 
-// Check if columns are empty
-if (!empty($footer['footer_column'])) {
-	$has_non_empty_subkey = false;
-	foreach ($footer['footer_column'] as $column) {
-		if (!empty($column)) {
-			$has_non_empty_subkey = true;
-		} else {
-			unset($column);
-		}
-	}
-}
-
-if (!empty($has_non_empty_subkey) || !empty($footer['sub_footer'])) : ?>
+if (!empty($footer_columns) || !empty($footer['sub_footer'])) : ?>
 	<footer class="footer">
 
-		<?php if (!empty($has_non_empty_subkey)) : ?>
+		<?php if (!empty($footer_columns)) : ?>
 			<div class="footer__main-wrapper">
 				<div class="footer__main">
-					<?php foreach ($footer['footer_column'] as $column_key => $column) : ?>
-						<?php if (empty($column)) continue; ?>
-
-						<article class="footer__column <?= $column_key; ?>">
-							<?php if (is_array($column)) {
+					<?php foreach ($footer_columns as $column_key => $column) : ?>
+						<div class="footer__column <?= esc_attr($column_key); ?>">
+							<?php
+							if (is_array($column)) {
 								foreach ($column as $column_value) :
 									component('footer-column', ['column_value' => $column_value ?? []]);
 								endforeach;
-							} else {
-								component('footer-column', ['column_value' => $column_value ?? []]);
-							}; ?>
-						</article>
+							} ?>
+						</div>
 
 					<?php endforeach; ?>
 				</div>

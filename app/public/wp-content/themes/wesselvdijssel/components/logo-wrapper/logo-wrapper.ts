@@ -3,27 +3,43 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
 
-new Swiper(".logo-wrapper.swiper", {
-	modules: [Autoplay],
+const reducedMotion = window.matchMedia(
+	"(prefers-reduced-motion: reduce)",
+).matches;
 
-	slidesPerView: 2,
+document
+	.querySelectorAll<HTMLElement>('.logo-wrapper[data-swiper="default"]')
+	.forEach((logoWrapper) => {
+		const swiper = new Swiper(logoWrapper, {
+			modules: [Autoplay],
 
-	loop: true,
+			slidesPerView: 2,
 
-	speed: 5000,
+			loop: true,
 
-	autoplay: {
-		delay: 0,
-	},
+			speed: reducedMotion ? 400 : 5000,
 
-	spaceBetween: 40,
+			autoplay: reducedMotion
+				? false
+				: {
+						delay: 0,
+						pauseOnMouseEnter: true,
+					},
 
-	breakpoints: {
-		739: {
-			slidesPerView: 3,
-		},
-		980: {
-			slidesPerView: 1,
-		},
-	},
-});
+			spaceBetween: 40,
+
+			breakpoints: {
+				739: {
+					slidesPerView: 3,
+				},
+				980: {
+					slidesPerView: 1,
+				},
+			},
+		});
+
+		if (reducedMotion) return;
+
+		logoWrapper.addEventListener("focusin", () => swiper.autoplay.stop());
+		logoWrapper.addEventListener("focusout", () => swiper.autoplay.start());
+	});

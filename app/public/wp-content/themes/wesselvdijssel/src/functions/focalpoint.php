@@ -45,19 +45,24 @@ function hook_focus_point_methods(): void {
 				return $file;
 			}
 
-			// Load the image using Imagick
-			$image = new Imagick($old_file_path);
+			try {
+				// Load the image using Imagick
+				$image = new Imagick($old_file_path);
 
-			// Compress the image
-			$quality = 75; // Adjust this value to control the compression level
-			$image->setImageCompressionQuality($quality);
-			$image->stripImage(); // Remove all profiles and comments to reduce file size
+				// Compress the image
+				$quality = 75; // Adjust this value to control the compression level
+				$image->setImageCompressionQuality($quality);
+				$image->stripImage(); // Remove all profiles and comments to reduce file size
 
-			// Convert the image to WebP
-			$image->setImageFormat('webp');
-			$image->setOption('webp:lossless', 'false');
-			$image->setOption('webp:method', '6'); // Adjust this value to control the compression level for WebP
-			$image->writeImage($webp_file_path);
+				// Convert the image to WebP
+				$image->setImageFormat('webp');
+				$image->setOption('webp:lossless', 'false');
+				$image->setOption('webp:method', '6'); // Adjust this value to control the compression level for WebP
+				$image->writeImage($webp_file_path);
+			} catch (\ImagickException $e) {
+				// Corrupt or unreadable image: leave the original upload untouched.
+				return $file;
+			}
 
 			// Delete the old image file
 			unlink($old_file_path);

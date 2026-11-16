@@ -12,7 +12,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 <div class="entry-content">
 	<?php component('breadcrumb'); ?>
 
-	<section class="section background has-background has-athens-gray-background-color">
+	<div class="section background has-background has-athens-gray-background-color">
 		<section class="section content-image pad--top-large pad--bottom-large">
 			<div class="columns-12 center">
 
@@ -36,7 +36,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 									'linkedin' => get_field('linkedin', $author_user_id),
 									'facebook' => get_field('facebook', $author_user_id),
 									'instagram' => get_field('instagram', $author_user_id),
-									'mail' => !empty(get_the_author_meta('user_email')) ? 'mailto:' . get_the_author_meta('user_email') : '',
+									'mail' => is_email((string) get_field('email', $author_user_id)) ? 'mailto:' . sanitize_email((string) get_field('email', $author_user_id)) : '',
 									'phone' => !empty(get_field('phone', $author_user_id)) ? 'tel:' . preg_replace('/[^0-9+\s\-\(\)]/', '', get_field('phone', $author_user_id)) : '',
 								];
 
@@ -80,7 +80,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 				</div>
 			</div>
 		</section>
-	</section>
+	</div>
 
 	<?php
 	$posts_per_page = 12;
@@ -129,7 +129,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 								'title' => get_the_title(),
 								'target' => '_self',
 							],
-							'date' => get_the_date('d M Y'),
+							'date' => get_the_date('c'),
 						]);
 					endwhile;
 

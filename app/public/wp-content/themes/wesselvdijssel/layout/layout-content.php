@@ -5,6 +5,8 @@ $content = $content ?? [];
 $block = $block ?? [];
 
 if (empty($content)) return;
+
+$first_title_is_h1 = $block === 'first';
 ?>
 <div class="content-layout">
 	<?php
@@ -13,8 +15,10 @@ if (empty($content)) return;
 			case 'title':
 				layout("title", [
 					'title' => $value['block_title'],
-					'block' => $block,
+					'block' => $first_title_is_h1 ? 'first' : [],
 				]);
+
+				$first_title_is_h1 = false;
 				break;
 
 			case 'content':
@@ -66,6 +70,8 @@ if (empty($content)) return;
 				break;
 
 			case 'buttons_clone':
+				if (empty($value['buttons_group']) || !is_array($value['buttons_group'])) break;
+
 				$content = new FlexContent();
 
 				$content->setButtons($value['buttons_group'] ?? []);

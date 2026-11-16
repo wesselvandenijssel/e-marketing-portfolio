@@ -1,0 +1,52 @@
+@use "abstracts" as *;
+
+.filter {
+	&__buttons {
+		display: none;
+		justify-content: center;
+		align-items: center;
+		gap: 15px;
+
+		@include bp("normal") {
+			display: flex;
+			margin-bottom: pxtoem(60);
+		}
+	}
+
+	&__mobile {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin-bottom: pxtoem(15);
+
+		@include bp("narrow") {
+			margin-bottom: pxtoem(25);
+		}
+
+		@include bp("normal") {
+			display: none;
+		}
+	}
+
+	&__field {
+		position: relative;
+		flex-grow: 1;
+
+		&::after {
+			content: $fa-angle-down;
+			font-weight: 400;
+			font-family: $fa;
+			position: absolute;
+			right: 20px;
+			pointer-events: none;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	}
+
+	&__select {
+		width: 100%;
+		border: 1px solid $hue-dark-1;
+		border-radius: 10px;
+	}
+}

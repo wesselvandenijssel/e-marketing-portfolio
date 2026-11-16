@@ -30,7 +30,7 @@ $post_url = get_permalink();
 					<?php endif; ?>
 
 					<div class="single__meta">
-						<div class="single__date"><?= wp_kses_post(sprintf(__('Datum: <span>%s</span>', 'wesselvandenijssel'), get_the_date('d M Y'))); ?></div>
+						<div class="single__date"><?= wp_kses_post(sprintf(__('Datum: <span>%s</span>', 'wesselvandenijssel'), '<time datetime="' . esc_attr(get_the_date('c')) . '">' . esc_html(get_the_date('d M Y')) . '</time>')); ?></div>
 						<span class="single__separator"></span>
 						<?php if (get_the_modified_date('Y-m-d') > get_the_date('Y-m-d')) : ?>
 							<div class="single__date"><?= esc_html__('Bijgewerkt op:', 'wesselvandenijssel'); ?> <span><time datetime="<?= esc_attr(get_the_modified_date('c')); ?>"><?= esc_html(get_the_modified_date('d M Y')); ?></time></span></div>
@@ -116,7 +116,7 @@ $post_url = get_permalink();
 								'linkedin' => esc_url(get_field('linkedin', 'user_' . $author_id)),
 								'facebook' => esc_url(get_field('facebook', 'user_' . $author_id)),
 								'instagram' => esc_url(get_field('instagram', 'user_' . $author_id)),
-								'mail' => esc_attr(!empty(get_the_author_meta('user_email')) ? 'mailto:' . get_the_author_meta('user_email') : ''),
+								'mail' => is_email((string) get_field('email', 'user_' . $author_id)) ? 'mailto:' . sanitize_email((string) get_field('email', 'user_' . $author_id)) : '',
 								'phone' => esc_attr(!empty(get_the_author_meta('user_phone')) ? 'tel:' . get_the_author_meta('user_phone') : ''),
 							];
 
@@ -180,7 +180,7 @@ $post_url = get_permalink();
 								'title' => get_the_title(),
 								'target' => '_self',
 							],
-							'date' => get_the_date('d M Y'),
+							'date' => get_the_date('c'),
 						]);
 					endwhile; ?>
 				</div>

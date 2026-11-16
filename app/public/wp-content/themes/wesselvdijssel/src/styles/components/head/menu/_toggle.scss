@@ -1,4 +1,5 @@
 @use "abstracts" as *;
+@use "placeholders" as *;
 
 .menu-toggle {
 	$menu-toggle: &;
@@ -20,6 +21,8 @@
 	color: inherit;
 	font: inherit;
 
+	@extend %button-reset;
+
 	@include bp("narrow") {
 		display: none;
 	}
@@ -30,8 +33,8 @@
 	}
 
 	&__lines {
-		position: relative;
 		display: block;
+		position: relative;
 		aspect-ratio: 1/1;
 		width: 26px;
 	}
@@ -135,13 +138,14 @@
 }
 
 .submenu-toggle {
-	cursor: pointer;
 	display: block;
 	background: none;
 	border: 0;
 	padding: 0;
 	color: inherit;
 	font: inherit;
+
+	@extend %button-reset;
 
 	@include bp("mobile") {
 		position: relative;

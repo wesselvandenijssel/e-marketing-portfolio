@@ -16,6 +16,7 @@ add_action('acf/init', function () {
 				'wrapper' => [
 					'width' => '25',
 				],
+				'max_size' => '256KB',
 			],
 			[
 				'key' => 'settings_author_excerpt',
@@ -25,6 +26,12 @@ add_action('acf/init', function () {
 				'wrapper' => [
 					'width' => '75',
 				],
+			],
+			[
+				'key' => 'settings_author_email',
+				'name' => 'email',
+				'type' => 'email',
+				'label' => esc_html__('Openbaar e-mailadres', 'wesselvandenijssel'),
 			],
 		],
 		'location' => [

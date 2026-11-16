@@ -5,7 +5,8 @@ $logos = $logos ?? [];
 $text = $text ?? '';
 $shuffle = $shuffle ?? false;
 $max_amount = $max_amount ?? false;
-$swiper = $swiper ?? false;
+$is_swiper = $is_swiper ?? false;
+$swiper_name = $swiper_name ?? 'default';
 
 $logo_counter = 0;
 
@@ -14,11 +15,13 @@ if (empty($logos)) return;
 if ($shuffle)
 	shuffle($logos);
 
+$logo_wrapper = [];
 $logo_wrapper['class'][] = 'logo-wrapper';
 $logo_wrapper_classes['class'][] = 'logo-wrapper__logos';
 
-if (!empty($swiper)) {
+if (!empty($is_swiper)) {
 	$logo_wrapper['class'][] = 'swiper';
+	$logo_wrapper['data-swiper'] = $swiper_name;
 	$logo_wrapper_classes['class'][] = 'swiper-wrapper';
 }
 ?>
@@ -41,7 +44,7 @@ if (!empty($swiper)) {
 			$logo_classes['class'][] = 'logo-wrapper__item';
 			$logo_classes['class'][] = 'logo-wrapper__item--logo';
 
-			if (!empty($swiper)) {
+			if (!empty($is_swiper)) {
 				$logo_classes['class'][] = 'swiper-slide';
 			}
 

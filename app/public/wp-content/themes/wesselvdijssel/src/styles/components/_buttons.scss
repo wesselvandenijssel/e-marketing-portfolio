@@ -3,12 +3,12 @@
 
 .btn {
 	&--primary {
-		@extend %btn--primary;
+		@extend %btn-primary;
 		@extend %btn-icon;
 	}
 
 	&--secondary {
-		@extend %btn--secondary;
+		@extend %btn-secondary;
 		@extend %btn-icon;
 	}
 
@@ -16,7 +16,7 @@
 		grid-column: 1 / -1;
 		justify-self: start;
 
-		@extend %btn--tertiary;
+		@extend %btn-tertiary;
 		@extend %btn-icon;
 	}
 

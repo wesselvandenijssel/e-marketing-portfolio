@@ -34,7 +34,9 @@ textarea,
 	border: 1px solid $hue-grey-1;
 	width: 100%;
 	background-color: $hue-white;
-	transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out,
+	transition:
+		color 0.4s ease-in-out,
+		background-color 0.4s ease-in-out,
 		border-color 0.4s ease-in-out;
 
 	@include bp("narrow") {
@@ -436,7 +438,7 @@ fieldset {
 
 	.gform_button,
 	.gform_next_button {
-		@extend %btn--primary;
+		@extend %btn-primary;
 		@extend %btn-icon;
 	}
 
