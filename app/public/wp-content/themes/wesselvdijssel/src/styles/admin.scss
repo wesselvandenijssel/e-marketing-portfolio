@@ -7,17 +7,23 @@
 
 	@include meta.load-css("partials/*");
 	@include meta.load-css("components/main");
+	/* stylelint-disable scss/load-partial-extension */
 	@include meta.load-css("../../blocks/*/*.scss");
 	@include meta.load-css("../../components/*/*.scss");
-}
+	/* stylelint-enable scss/load-partial-extension */
 
-.block-editor-page .editor-styles-wrapper {
 	.columns-12 {
 		width: 100%;
 	}
 
 	.subtitle {
 		padding: 0;
+	}
+
+	img {
+		max-width: 150px;
+		height: auto;
+		object-fit: contain;
 	}
 
 	.wp-block {
@@ -70,6 +76,10 @@
 
 			.text-center {
 				text-align: center;
+			}
+
+			a {
+				pointer-events: none;
 			}
 		}
 

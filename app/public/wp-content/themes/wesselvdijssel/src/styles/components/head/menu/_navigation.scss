@@ -346,7 +346,7 @@
 		}
 
 		&.menu-button > a {
-			@extend %btn--primary;
+			@extend %btn-primary;
 
 			@include bp("mobile") {
 				margin-inline: 10px;

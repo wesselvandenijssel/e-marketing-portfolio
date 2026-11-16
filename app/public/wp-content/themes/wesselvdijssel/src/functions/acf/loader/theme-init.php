@@ -25,7 +25,7 @@ if (class_exists('ACF') && function_exists('acf_register_block')) {
 
 		if (file_exists($view)) {
 			acf_setup_meta($block['data'] ?? [], $block['id'], true);
-			extract((array) get_field(sprintf('group_%s_fields', $blockslug), $block['id']));
+			extract((array) get_field(sprintf('group_%s_fields', $blockslug), $block['id']), EXTR_SKIP);
 			include $view;
 			acf_reset_meta($block['id']);
 		}
@@ -97,6 +97,12 @@ if (class_exists('ACF') && function_exists('acf_register_block')) {
 
 	// Get all blocks located in our theme folder
 	function get_blocks() {
+		static $cached_blocks = null;
+
+		if ($cached_blocks !== null) {
+			return $cached_blocks;
+		}
+
 		$directory = get_theme_file_path('blocks/');
 
 		$dirEntries = array_diff(scandir($directory), ['..', '.']);
@@ -128,7 +134,9 @@ if (class_exists('ACF') && function_exists('acf_register_block')) {
 			$dirEntries
 		);
 
-		return array_filter($blocks);
+		$cached_blocks = array_filter($blocks);
+
+		return $cached_blocks;
 	}
 
 	function block_path(string $block, string $filename = '') {
@@ -184,7 +192,12 @@ if (class_exists('ACF') && function_exists('acf_register_block')) {
 	}
 
 	function my_filter_block_type_metadata(array $metadata) {
-		$block_version = get_field('blocks', 'utilities')['version'] ?? 3;
+		// Runs for every registered block type, so the options page is only read once.
+		static $block_version = null;
+
+		if ($block_version === null) {
+			$block_version = get_field('blocks', 'utilities')['version'] ?? 3;
+		}
 
 		// Check if the block is an ACF block by looking for the 'acf' key in the metadata
 		if (isset($metadata['acf'])) {

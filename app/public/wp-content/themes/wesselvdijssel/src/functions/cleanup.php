@@ -16,35 +16,6 @@ function wesselvandenijssel_head_cleanup() {
 	remove_action('wp_head', 'wp_generator');
 }
 
-// http://www.deluxeblogtips.com/2012/03/better-title-meta-tag.html
-function rw_title($title, $sep, $seplocation) {
-	global $page, $paged;
-
-	// Don't affect in feeds.
-	if (is_feed()) return $title;
-
-	// Add the blog's name
-	if ('right' == $seplocation) {
-		$title .= get_bloginfo('name');
-	} else {
-		$title = get_bloginfo('name') . $title;
-	}
-
-	// Add the blog description for the home/front page.
-	$site_description = get_bloginfo('description', 'display');
-
-	if ($site_description && (is_home() || is_front_page())) {
-		$title .= " {$sep} {$site_description}";
-	}
-
-	// Add a page number if necessary:
-	if ($paged >= 2 || $page >= 2) {
-		$title .= " {$sep} " . sprintf(esc_html__('Pagina %s', 'wesselvandenijssel'), max($paged, $page));
-	}
-
-	return $title;
-}
-
 // remove WP version from RSS
 function wesselvandenijssel_rss_version() {
 	return '';
@@ -75,3 +46,16 @@ add_filter('body_class', 'wesselvandenijssel_remove_blog_body_class');
 function wesselvandenijssel_remove_blog_body_class(array $classes): array {
 	return array_values(array_diff($classes, ['blog']));
 }
+remove_action('wp_head', 'print_emoji_detection_script', 7);
+remove_action('wp_print_styles', 'print_emoji_styles');
+remove_filter('the_content_feed', 'wp_staticize_emoji');
+remove_filter('comment_text_rss', 'wp_staticize_emoji');
+remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
+
+add_action('wp_enqueue_scripts', 'wesselvandenijssel_dequeue_classic_theme_styles', 20);
+function wesselvandenijssel_dequeue_classic_theme_styles() {
+	wp_dequeue_style('classic-theme-styles');
+}
+
+remove_action('wp_enqueue_scripts', 'wp_enqueue_global_styles');
+remove_action('wp_footer', 'wp_enqueue_global_styles', 1);

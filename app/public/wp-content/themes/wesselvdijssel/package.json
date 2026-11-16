@@ -45,7 +45,7 @@
 		"style-loader": "^4.0.0",
 		"stylelint-config-standard-scss": "^15.0.1",
 		"stylelint-webpack-plugin": "^5.0.0",
-		"ts-loader": "^9.5.1",
+		"ts-loader": "^9.6.2",
 		"typescript": "^5.3.3",
 		"webpackbar": "^7.0.0"
 	},

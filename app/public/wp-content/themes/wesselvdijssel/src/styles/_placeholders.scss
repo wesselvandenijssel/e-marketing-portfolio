@@ -30,7 +30,21 @@
 	}
 }
 
-%btn--primary {
+%button-reset {
+	appearance: none;
+	background: none;
+	border: 0;
+	border-radius: 0;
+	padding: 0;
+	margin: 0;
+	color: inherit;
+	font: inherit;
+	line-height: inherit;
+	text-align: inherit;
+	cursor: pointer;
+}
+
+%btn-primary {
 	background-color: $btn-primary;
 	border-color: $btn-primary;
 	color: $hue-white;
@@ -45,7 +59,7 @@
 	}
 }
 
-%btn--secondary {
+%btn-secondary {
 	background-color: $hue-white;
 	border-color: $hue-dark-1;
 	color: $hue-dark-1;
@@ -60,7 +74,7 @@
 	}
 }
 
-%btn--tertiary {
+%btn-tertiary {
 	min-height: 44px;
 	align-items: center;
 	padding: 0 26px 0 0;
@@ -104,7 +118,7 @@
 	}
 }
 
-%btn--on-dark {
+%btn-on-dark {
 	background-color: $hue-white;
 	border-color: $hue-white;
 	color: $hue-dark-1;
@@ -117,7 +131,7 @@
 	}
 }
 
-%btn--secondary-on-dark {
+%btn-secondary-on-dark {
 	background-color: transparent;
 	border-color: $hue-white;
 	color: $hue-white;
@@ -145,5 +159,9 @@
 
 	@include bp("xl") {
 		width: 1280px;
+	}
+
+	@include bp("xxl") {
+		width: 1340px;
 	}
 }

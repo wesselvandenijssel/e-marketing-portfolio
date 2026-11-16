@@ -1,4 +1,5 @@
 @use "abstracts" as *;
+@use "placeholders" as *;
 
 .fold-content {
 	@include bp("mobile") {
@@ -22,10 +23,12 @@
 }
 
 .fold-content-trigger {
+	display: block;
 	font-weight: 600;
 	text-decoration: underline;
-	cursor: pointer;
 	margin-top: -1em;
+
+	@extend %button-reset;
 
 	@include bp("narrow") {
 		display: none;

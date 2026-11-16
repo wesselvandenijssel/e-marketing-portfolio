@@ -12,6 +12,7 @@ $section = general_section($block, [
 $type = $type ?? '';
 $size = $size ?? '';
 $image = $image ?? '';
+$image_mobile = $image_mobile ?? 0;
 $video = $video ?? '';
 $content = $content ?? [];
 $block_title = $block_title ?? [];
@@ -87,10 +88,14 @@ echo !is_admin() ? '[raw]' : '';
 		<div class="hero__media-wrapper">
 			<?php
 			switch ($type):
-				case 'image':
-					echo wp_get_attachment_image($image, $thumbnail, false, ['class' => 'hero__media hero__media--image hero__media--desktop', 'fetchpriority' => 'high', 'loading' => 'eager']);
-					echo wp_get_attachment_image($image, 'Hero mobile', false, ['class' => 'hero__media hero__media--image hero__media--mobile', 'fetchpriority' => 'high', 'loading' => 'eager']);
-					break;
+				case 'image': ?>
+					<picture class="hero__picture">
+						<?php if (!empty($image_mobile)) : ?>
+							<source media="(max-width: 739px)" srcset="<?= esc_url(wp_get_attachment_image_url($image_mobile, 'Hero mobile')); ?>">
+						<?php endif; ?>
+						<?= wp_get_attachment_image($image, $thumbnail, false, ['class' => 'hero__media hero__media--image', 'fetchpriority' => 'high', 'loading' => 'eager']); ?>
+					</picture>
+				<?php break;
 
 				case 'video': ?>
 					<div class="hero__media hero__media--video"><?= $video; ?></div>

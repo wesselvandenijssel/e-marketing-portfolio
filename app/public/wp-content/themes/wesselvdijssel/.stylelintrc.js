@@ -26,6 +26,7 @@ module.exports = {
 				ignoreAtRules: [
 					"else",
 					"extend",
+					"forward",
 					"function",
 					"if",
 					"include",

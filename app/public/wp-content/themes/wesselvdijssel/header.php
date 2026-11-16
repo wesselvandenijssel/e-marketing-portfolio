@@ -14,18 +14,16 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 <html <?php language_attributes(); ?>>
 
 <head>
-	<?= get_field('head', 'scripts') ?? ''; ?>
-
 	<meta charset="<?php bloginfo('charset'); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title><?php wp_title('|', true, 'right'); ?></title>
-	<link rel="profile" href="http://gmpg.org/xfn/11">
 	<link rel="icon" type="image/png" href="<?= assets('favicon-96x96.png'); ?>" sizes="96x96" />
 	<link rel="icon" type="image/svg+xml" href="<?= assets('favicon.svg'); ?>" />
 	<link rel="shortcut icon" href="<?= assets('favicon.ico'); ?>" />
 	<link rel="apple-touch-icon" sizes="180x180" href="<?= assets('apple-touch-icon.png'); ?>" />
 	<meta name="apple-mobile-web-app-title" content="Wessel" />
 	<link rel="manifest" href="<?= assets('site.webmanifest'); ?>" />
+
+	<?= get_field('head', 'scripts') ?? ''; ?>
 	<?php wp_head(); ?>
 </head>
 
@@ -105,7 +103,7 @@ $contact_details = get_field('contact_details', 'options');
 									<span class="menu-toggle__close-line menu-toggle__close-line--last"></span>
 								</span>
 							</span>
-							<span class="menu-toggle__text"><?= esc_html__('Menu', 'wesselvandenijssel'); ?></span>
+							<span class="menu-toggle__text" aria-hidden="true"><?= esc_html__('Menu', 'wesselvandenijssel'); ?></span>
 						</button>
 
 						<div id="site-navigation-content" class="main-navigation__content">
@@ -127,10 +125,12 @@ $contact_details = get_field('contact_details', 'options');
 							); ?>
 
 							<div class="header__buttons">
-								<?php if (!empty(get_field('header', 'options')['buttons'])) :
+								<?php
+								$header_options = get_field('header', 'options') ?: [];
+								if (!empty($header_options['buttons_group'])) :
 									$content = new FlexContent();
 
-									$content->setButtons(get_field('header', 'options')['buttons']);
+									$content->setButtons($header_options['buttons_group']);
 
 									echo $content->getContent();
 								endif; ?>

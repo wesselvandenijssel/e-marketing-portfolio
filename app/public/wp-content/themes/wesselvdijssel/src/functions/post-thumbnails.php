@@ -4,6 +4,16 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 // wp thumbnails
 add_theme_support('post-thumbnails');
 
+/**
+ * Stops WordPress from generating default sizes the theme doesn't use.
+ *
+ * @param array $sizes the image size names
+ */
+function remove_default_img_sizes($sizes) {
+	return array_values(array_diff($sizes, ['medium_large', '1536x1536', '2048x2048']));
+}
+add_filter('intermediate_image_sizes', 'remove_default_img_sizes');
+
 // Thumbnails
 add_action('acf/init', 'hook_thumbnail_methods', 20);
 
@@ -17,7 +27,9 @@ function hook_thumbnail_methods(): void {
 		add_image_size('Author thumb', 80, 80, true);
 		add_image_size('Blog detail', 610, 500, true);
 		add_image_size('Hero 900', 1920, 900, true);
-		add_image_size('Hero mobile', 740, 250, true);
+		add_image_size('Hero 900 medium', 1280, 600, true);
+		add_image_size('Hero 900 small', 960, 450, true);
+		add_image_size('Hero mobile', 780, 600, true); // 390x300 at 2x for retina phones
 		add_image_size('Project hero medium', 1100, 620, true);
 		add_image_size('Project hero small', 720, 405, true);
 		add_image_size('Post', 400, 270, true);

@@ -17,6 +17,9 @@
 
 		.swiper-button-prev,
 		.swiper-button-next {
+			appearance: none;
+			padding: 0;
+			cursor: pointer;
 			background-color: $btn-primary;
 			border: 2px solid transparent;
 			color: $hue-white;

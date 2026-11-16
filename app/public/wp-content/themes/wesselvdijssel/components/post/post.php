@@ -12,6 +12,7 @@ $heading = 'h' . $heading_level;
 
 if (empty($title) || empty($image)) return;
 
+$post_attr = [];
 $post_attr['class'][] = 'post';
 
 if (!empty($link['url'])) {
@@ -42,9 +43,10 @@ if (!empty($swiper)) {
 		</div>
 
 		<div class="post__content">
-			<?php if (!empty($date)) : ?>
+			<?php $timestamp = !empty($date) ? strtotime($date) : false; ?>
+			<?php if ($timestamp) : ?>
 				<div class="post__meta">
-					<span class="post__meta-item post__meta-item--date"><?= esc_html($date); ?></span>
+					<time class="post__meta-item post__meta-item--date" datetime="<?= esc_attr(wp_date('c', $timestamp)); ?>"><?= esc_html(wp_date('d M Y', $timestamp)); ?></time>
 				</div>
 			<?php endif; ?>
 
@@ -52,7 +54,6 @@ if (!empty($swiper)) {
 				<?= esc_html($title); ?>
 			</<?= $heading; ?>>
 
-			<span class="btn btn--read-more post__button"><?= esc_html__('Lees verder', 'wesselvandenijssel'); ?></span>
 		</div>
 		<?php if (empty($link['url'])) : ?>
 		</div>

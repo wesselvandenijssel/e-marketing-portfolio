@@ -21,11 +21,11 @@ class BlockTitle {
 	 */
 	function getTitle() {
 		return '
-			<div class="titles' . $this->classes . '">
+			<hgroup class="titles' . $this->classes . '">
 				' . $this->suptitle . '
 				<' . $this->type . ' class="' . implode(' ', $this->look) . '">' . $this->title . '</' . $this->type . '>
 				' . $this->subtitle . '
-			</div>
+			</hgroup>
 		';
 	}
 

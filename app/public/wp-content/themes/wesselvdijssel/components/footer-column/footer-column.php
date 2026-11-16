@@ -12,23 +12,12 @@ switch ($column_value['acf_fc_layout']):
 
 		if (empty($column_value['title'])) break;
 
-		$column_value['title'] = sanitize_title_custom($column_value['title']);
+		$title_look = !empty($column_value['title_type']) ? $column_value['title_type'] : 'h4'; ?>
 
-		$block_title = new BlockTitle(
-			$column_value['title'],
-		);
-
-		$block_title->setType('h2');
-
-		if (!empty($column_value['title_type'])) {
-
-			$block_title->setLook(
-				$column_value['title_type'],
-			);
-		}
-
-		echo $block_title->getTitle();
-		break;
+		<div class="footer__titles">
+			<p class="footer__main-title <?= esc_attr($title_look); ?>"><?= sanitize_title_custom($column_value['title']); ?></p>
+		</div>
+	<?php break;
 
 	case 'text':
 		if (empty($column_value['text'])) break; ?>
@@ -36,11 +25,8 @@ switch ($column_value['acf_fc_layout']):
 		<?php break;
 
 	case 'image':
-		if (!empty($column_value['image_group'])) {
-			layout("image", [
-				'image' => $column_value['image_group'],
-				'class' => 'footer__image',
-			]);
+		if (!empty($column_value['image'])) {
+			echo wp_get_attachment_image($column_value['image'], 'full', false, ['class' => 'footer__image', 'loading' => 'lazy']);
 		}
 		break;
 
@@ -118,20 +104,34 @@ switch ($column_value['acf_fc_layout']):
 
 	case 'menu':
 		if (!empty($column_value['menu']) && $column_value['menu'] != 'Geen') :
+
+			$visible_amount = (int) ($column_value['visible_amount'] ?? 4);
+			$foldable = !empty($column_value['foldable']);
+
+			if ($foldable) {
+				$menu_items = wp_get_nav_menu_items($column_value['menu']) ?: [];
+
+				$top_level_amount = count(array_filter($menu_items, function ($menu_item) {
+					return empty($menu_item->menu_item_parent);
+				}));
+
+				$foldable = $top_level_amount > $visible_amount;
+			}
+
 			wp_nav_menu(
 				[
 					'menu' => $column_value['menu'],
 					'container_class' => 'footer__menu',
 					'fallback_cb' => false,
 					'depth' => 1,
-					'walker' => (!empty($column_value['foldable']) ? new Walker_Fold_Menu : ''),
-					'visible_amount' => $column_value['visible_amount'] ?? 4,
+					'walker' => ($foldable ? new Walker_Fold_Menu : ''),
+					'visible_amount' => $visible_amount,
 				]
 			);
-			if (!empty($column_value['foldable'])) : ?>
-				<div class="footer__menu-fold-button" role="button" tabindex="0" aria-expanded="false"><?= esc_html($column_value['foldable_text'] ?? ''); ?></div>
-<?php
-			endif;
+
+			if ($foldable) : ?>
+				<button type="button" class="footer__menu-fold-button" aria-expanded="false"><?= esc_html($column_value['foldable_text'] ?? ''); ?></button>
+<?php endif;
 		endif;
 		break;
 endswitch; ?>

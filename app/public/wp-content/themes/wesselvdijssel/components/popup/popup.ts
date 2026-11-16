@@ -1,97 +1,49 @@
+/**
+ * Opens the popup as a modal <dialog>; the browser traps focus, closes it on Escape and returns focus to the trigger
+ *
+ * @param popupName	The data-popup attribute associated with the popup
+ */
 const openPopup = (popupName: string) => {
 	if (!popupName) return;
 
-	const popups = document.querySelectorAll<HTMLElement>(
-		`.popup[data-popup*='${popupName}']`
+	const popup = document.querySelector<HTMLDialogElement>(
+		`dialog.popup[data-popup="${CSS.escape(popupName)}"]`,
 	);
-	popups.forEach((el) => el.classList.add("popup--active"));
 
-	document
-		.querySelectorAll<HTMLElement>(`.popup-background`)
-		.forEach((el) => el.classList.add("popup-background--active"));
+	if (!popup || popup.open) return;
 
-	document.querySelector("body")?.classList.add("no-scroll");
-
-	setTimeout(() => {
-		document
-			.querySelector<HTMLElement>(".popup-background")
-			?.classList.add("popup-background--show");
-	}, 10);
-	setTimeout(() => {
-		popups.forEach((el) => el.classList.add("popup--show"));
-
-		const activePopup = document.querySelector<HTMLElement>(
-			`.popup[data-popup*='${popupName}'].popup--active`
-		);
-		if (activePopup) {
-			const firstFocusable = activePopup.querySelector<HTMLElement>(
-				'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-			);
-			if (firstFocusable) {
-				firstFocusable.focus();
-			} else {
-				const closeButton =
-					activePopup.querySelector<HTMLElement>(".popup__close");
-				closeButton?.focus();
-			}
-		}
-	}, 100);
+	popup.showModal();
+	document.body.classList.add("no-scroll");
 };
 
-const closePopup = () => {
-	document
-		.querySelectorAll<HTMLElement>(".popup")
-		.forEach((el) => el.classList.remove("popup--active", "popup--show"));
-
-	document
-		.querySelectorAll<HTMLElement>(".popup-background")
-		.forEach((el) =>
-			el.classList.remove(
-				"popup-background--active",
-				"popup-background--show"
-			)
-		);
-
-	document.querySelector("body")?.classList.remove("no-scroll");
+/**
+ * Closes the given popup
+ *
+ * @param popup The popup dialog element
+ */
+const closePopup = (popup: HTMLDialogElement) => {
+	if (popup.open) popup.close();
 };
 
-const showPopupButtons = document.querySelectorAll<HTMLElement>(".show-popup");
-
-showPopupButtons.forEach((showPopupButton) => {
+document.querySelectorAll<HTMLElement>(".show-popup").forEach((showPopupButton) =>
 	showPopupButton.addEventListener("click", () =>
-		openPopup(showPopupButton.dataset.popup ?? "")
-	);
-
-	showPopupButton.addEventListener("keydown", (e) => {
-		if (e.key === "Enter" || e.key === " ") {
-			e.preventDefault();
-			openPopup(showPopupButton.dataset.popup ?? "");
-		}
-	});
-});
-
-const closePopupButtons = document.querySelectorAll<HTMLElement>(
-	".popup__close, .popup-background"
+		openPopup(showPopupButton.dataset.popup ?? ""),
+	),
 );
 
-closePopupButtons.forEach((closePopupButton) => {
-	closePopupButton.addEventListener("click", () => closePopup());
+document.querySelectorAll<HTMLDialogElement>("dialog.popup").forEach((popup) => {
+	popup
+		.querySelector(".popup__close")
+		?.addEventListener("click", () => closePopup(popup));
 
-	if (closePopupButton.classList.contains("popup__close")) {
-		closePopupButton.addEventListener("keydown", (e) => {
-			if (e.key === "Enter" || e.key === " ") {
-				e.preventDefault();
-				closePopup();
-			}
-		});
-	}
-});
+	// A click on the dialog element itself (not its content) is a click on the backdrop
+	popup.addEventListener("click", (e) => {
+		if (e.target === popup) closePopup(popup);
+	});
 
-document.addEventListener("keydown", (e) => {
-	if (e.key === "Escape") {
-		const activePopup = document.querySelector(".popup--active");
-		if (activePopup) {
-			closePopup();
-		}
-	}
+	// Fires for every way of closing, including the native Escape handling
+	popup.addEventListener("close", () => {
+		if (!document.querySelector("dialog.popup[open]"))
+			document.body.classList.remove("no-scroll");
+	});
 });

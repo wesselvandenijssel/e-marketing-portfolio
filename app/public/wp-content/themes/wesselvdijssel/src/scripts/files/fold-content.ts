@@ -1,13 +1,20 @@
-const triggers = document.querySelectorAll<HTMLElement>(
-	".fold-content-trigger"
+const triggers = document.querySelectorAll<HTMLButtonElement>(
+	".fold-content-trigger",
 );
 
 triggers.forEach((trigger) =>
 	trigger.addEventListener("click", () => {
-		const currentTrigger = trigger;
-		currentTrigger.style.visibility = "hidden";
-		currentTrigger.previousElementSibling?.classList.add(
-			"fold-content--active"
-		);
-	})
+		const content = trigger.previousElementSibling;
+
+		trigger.setAttribute("aria-expanded", "true");
+		trigger.style.visibility = "hidden";
+
+		if (!(content instanceof HTMLElement)) return;
+
+		content.classList.add("fold-content--active");
+
+		// The trigger is hidden, so move focus to the revealed text instead of losing it
+		content.tabIndex = -1;
+		content.focus({ preventScroll: true });
+	}),
 );
